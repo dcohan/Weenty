@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5e1d9c60ab864b409cf58551d7476130" Name="Diagram1">
+        <EntityTypeShape EntityType="CuponeraModel.campaign" Width="1.5" PointX="8.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.coupons" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.deviceos" Width="1.5" PointX="1.5" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.devicetypes" Width="1.5" PointX="1.5" PointY="26.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.enabledsections" Width="1.5" PointX="3.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.failednotification" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.homeoffers" Width="1.5" PointX="5.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.imagesizes" Width="1.5" PointX="3.75" PointY="30.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.lookbookattributecategories" Width="1.5" PointX="8.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.lookbookattributes" Width="1.5" PointX="11" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.lookbookitemattributes" Width="1.5" PointX="13.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.lookbookitems" Width="1.5" PointX="11" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.modules" Width="1.5" PointX="10.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.pendingnotification" Width="1.5" PointX="10.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.permissions" Width="1.5" PointX="12.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.prehomeimages" Width="1.5" PointX="12.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.profilegroupdeviceos" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.profilegroupmembers" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.profilegroupmemberstemporary" Width="1.5" PointX="0.75" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.profilegroups" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.profilegroupstates" Width="1.5" PointX="6" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.profilegroupzipcodes" Width="1.5" PointX="3" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.profiles" Width="1.5" PointX="3.75" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.pushnotificationsratio" Width="1.5" PointX="13.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.roles" Width="1.5" PointX="5.75" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.socialfeedaccesslog" Width="1.5" PointX="14.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.socialupdates" Width="1.5" PointX="14.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.sqlscriptlog" Width="1.5" PointX="14.75" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.states" Width="1.5" PointX="3.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.stores" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.succeednotification" Width="1.5" PointX="15.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.users" Width="1.5" PointX="15.75" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="CuponeraModel.coupons_fk_ix_coupons_profilegroupid" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.enabledsections_ix_es_IdDeviceOs" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.imagesizes_ix_IdDeviceOs" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profilegroupdeviceos_ix_pgd_IdDeviceOs" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profiles_fk_Profiles_DeviceOs1" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profiles_fk_Profiles_DeviceTypes1" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.lookbookattributes_fk_LookBookFilters_LookBookFiltersCategories1" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.lookbookitemattributes_fk_LookBookItemAttributes_LookBookAttributes1" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.lookbookitemattributes_fk_LookBookItemAttributes_LookBookItems1" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profilegroupdeviceos_ix_pgd_IdProfileGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profilegroupmembers_ix_pgm_group" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profilegroupmembers_ix_pgm_profile" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profilegroupstates_ix_pgs_group" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profilegroupzipcodes_ix_pgz_group" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profilegroupstates_ix_pgs_state" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profiles_fk_idstate" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.stores_IdState" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
