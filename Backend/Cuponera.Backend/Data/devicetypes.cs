@@ -22,6 +22,6 @@ namespace Cuponera.Backend.Data
         public int IdDeviceType { get; set; }
         public string Code { get; set; }
     
-        public ICollection<profiles> profiles { get; set; }
+        public virtual ICollection<profiles> profiles { get; set; }
     }
 }

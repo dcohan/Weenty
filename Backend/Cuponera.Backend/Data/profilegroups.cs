@@ -17,10 +17,6 @@ namespace Cuponera.Backend.Data
         public profilegroups()
         {
             this.coupons = new HashSet<coupons>();
-            this.profilegroupdeviceos = new HashSet<profilegroupdeviceos>();
-            this.profilegroupmembers = new HashSet<profilegroupmembers>();
-            this.profilegroupstates = new HashSet<profilegroupstates>();
-            this.profilegroupzipcodes = new HashSet<profilegroupzipcodes>();
         }
     
         public int IdProfileGroup { get; set; }
@@ -42,9 +38,5 @@ namespace Cuponera.Backend.Data
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
         public virtual ICollection<coupons> coupons { get; set; }
-        public virtual ICollection<profilegroupdeviceos> profilegroupdeviceos { get; set; }
-        public virtual ICollection<profilegroupmembers> profilegroupmembers { get; set; }
-        public virtual ICollection<profilegroupstates> profilegroupstates { get; set; }
-        public virtual ICollection<profilegroupzipcodes> profilegroupzipcodes { get; set; }
     }
 }

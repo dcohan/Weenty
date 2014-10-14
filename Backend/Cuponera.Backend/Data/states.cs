@@ -16,7 +16,6 @@ namespace Cuponera.Backend.Data
     {
         public states()
         {
-            this.profilegroupstates = new HashSet<profilegroupstates>();
             this.profiles = new HashSet<profiles>();
             this.stores = new HashSet<stores>();
         }
@@ -24,7 +23,6 @@ namespace Cuponera.Backend.Data
         public string IdState { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<profilegroupstates> profilegroupstates { get; set; }
         public virtual ICollection<profiles> profiles { get; set; }
         public virtual ICollection<stores> stores { get; set; }
     }

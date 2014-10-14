@@ -14,11 +14,6 @@ namespace Cuponera.Backend.Data
     
     public partial class profiles
     {
-        public profiles()
-        {
-            this.profilegroupmembers = new HashSet<profilegroupmembers>();
-        }
-    
         public int IdProfile { get; set; }
         public string DeviceId { get; set; }
         public int IdDeviceType { get; set; }
@@ -53,7 +48,6 @@ namespace Cuponera.Backend.Data
     
         public virtual deviceos deviceos { get; set; }
         public virtual devicetypes devicetypes { get; set; }
-        public virtual ICollection<profilegroupmembers> profilegroupmembers { get; set; }
         public virtual states states { get; set; }
     }
 }
