@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="15dp"
+    android:layout_margin="10dp"
+    android:background="@color/white" >
+
+    <RelativeLayout
+        android:id="@+id/push_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="3dp"
+        android:gravity="center_vertical"
+        android:paddingRight="0dp" >
+
+        <TextView
+            android:id="@+id/offer_notifications_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="@string/push_notifications"
+            android:textColor="@color/gray_dark"
+            android:textSize="18sp" />
+
+        <ToggleButton
+            android:id="@+id/offers_notifications"
+            style="@style/ToggleButtonSettings"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:checked="false" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/divider_push"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/push_relative"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="3dp"
+        android:background="@color/gray_light" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider_push"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="3dp"
+        android:paddingRight="0dp" >
+
+        <TextView
+            android:id="@+id/allow_location_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="@string/location_services"
+            android:textColor="@color/gray_dark"
+            android:textSize="18sp" />
+
+        <ToggleButton
+            android:id="@+id/allow_location"
+            style="@style/ToggleButtonSettings"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:checked="false" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/selector_button_orange"
+        android:enabled="false"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</RelativeLayout>

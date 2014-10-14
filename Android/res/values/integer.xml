@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Generic animation parameters -->
+    <integer name="anim_duration_faster">200</integer>
+    <integer name="anim_duration_fast">500</integer>
+    <integer name="anim_duration_normal">700</integer>
+    <integer name="anim_duration_slow">1000</integer>
+    
+</resources>

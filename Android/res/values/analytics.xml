@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
+
+    <!-- GA ID -->
+    <string name="ga_trackingId">UA-42986567-4</string>
+
+    <!-- Enable automatic activity tracking -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!-- Enable automatic exception tracking -->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <!-- The dispatch period in seconds. Defaults to 30 minutes. -->
+    <integer name="ga_dispatchPeriod">1</integer>
+
+    <!-- The amount of time (in seconds) your application can stay in the background before the session is ended. Default is 30 seconds. Negative value disables EasyTracker session management. -->
+    <integer name="ga_sessionTimeout">900000</integer>
+
+    <!-- The screen names that will appear in your reporting -->
+    <string name="com.payless.home.HomeFragment">Home</string>
+    <string name="com.payless.prehome.PreHomeFragment">PreHome</string>
+
+</resources>
