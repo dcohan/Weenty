@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 import com.payless.model.HomeOffer;
 import com.payless.model.HomeOffers;
 import com.payless.navigation.HeaderImageInterface;
@@ -107,7 +107,7 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 	public HeaderImageInterface getRightImage() {
 		return null;
 	}
-	
+
 	@Override
 	protected boolean showHomeButton() {
 		return false;

@@ -6,8 +6,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.cuponera.R;
 import com.payless.BaseActivity;
-import com.payless.R;
 import com.payless.event.EventBus;
 import com.payless.model.Profile;
 import com.payless.service.profile.CreateProfileRequest;
@@ -17,10 +17,6 @@ import com.payless.service.startapp.StartAppRequest;
 import com.payless.service.startapp.StartAppResponse;
 import com.payless.utils.PaylessErrorHandler;
 import com.payless.utils.Utils;
-import com.payless.utils.ValidationUtils;
-import com.xtify.sdk.api.NotificationsPreference;
-import com.xtify.sdk.api.XtifyLocation;
-import com.xtify.sdk.api.XtifySDK;
 
 public class PreHomeActivity extends BaseActivity {
 
@@ -31,17 +27,10 @@ public class PreHomeActivity extends BaseActivity {
 	private boolean locationEnabled;
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		XtifyLocation.enableRepetitiveLocUpdate(getApplicationContext());
-	}
-
-	@Override
 	protected void onResume() {
 		super.onResume();
-		EventBus.getInstance().removeListener(mEventListener); // Pre home has
-																// no event
-																// listener.
+		EventBus.getInstance().removeListener(mEventListener);
+
 	}
 
 	@Override
@@ -53,9 +42,6 @@ public class PreHomeActivity extends BaseActivity {
 
 		preHomeFragment = new PreHomeFragment();
 		startFragment(preHomeFragment, false);
-		
-		NotificationsPreference.setSoundEnabled(getApplicationContext(), true);
-		NotificationsPreference.setIcon(getApplicationContext(), R.drawable.icon);
 
 		StartAppRequest request = new StartAppRequest(PreHomeActivity.this) {
 
@@ -64,7 +50,7 @@ public class PreHomeActivity extends BaseActivity {
 
 				if (result.succes()) {
 					// For test
-//					getSettings().setStartAppDigest(null);
+					// getSettings().setStartAppDigest(null);
 
 					if (result.getDigest() != null && !result.getDigest().equals(getSettings().getStartAppDigest())) {
 						getSettings().setStartAppDigest(result.getDigest());
@@ -82,19 +68,7 @@ public class PreHomeActivity extends BaseActivity {
 
 					}
 				}
-				if (ValidationUtils.isNullOrEmpty(getSettings().getProfile().getProfileID()) || getSettings().getProfile().isFirstRun()) {
-					initXtify();
-					askNotifications();
-				} else if (ValidationUtils.isNullOrEmpty(getSettings().getProfile().getXID())) {
-					initXtify();
-					if (!ValidationUtils.isNullOrEmpty(XtifySDK.getXidKey(PreHomeActivity.this))) {
-						updateProfile();
-					} else {
-						preHomeFragment.reload();
-					}
-				} else {
-					preHomeFragment.reload();
-				}
+				askNotifications();
 			}
 
 			@Override
@@ -133,19 +107,7 @@ public class PreHomeActivity extends BaseActivity {
 			}
 
 		};
-		String xid = XtifySDK.getXidKey(this);
-		if (!ValidationUtils.isNullOrEmpty(xid)) {
-			request.setXid(xid);
-		}
 		request.execute();
-	}
-
-	private void initXtify() {
-		try {
-			XtifySDK.start(getApplicationContext(), getString(R.string.xtify_app_key), getString(R.string.xtify_sender_id));
-		} catch (Exception e) {
-			Log.d("PreHomeActivity", "Xtify Failed");
-		}
 	}
 
 	private void updateProfile() {
@@ -164,7 +126,6 @@ public class PreHomeActivity extends BaseActivity {
 			}
 
 		};
-		request.setXid(XtifySDK.getXidKey(this));
 		request.execute();
 
 	}

@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+import com.cuponera.R;
 import com.payless.BaseActivity;
-import com.payless.R;
 import com.payless.helpers.AnalyticsHelper;
 import com.payless.model.SocialEntry;
 import com.payless.utils.BaseListAdapter;

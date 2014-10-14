@@ -3,7 +3,6 @@ package com.payless.service;
 import android.content.Context;
 
 import com.payless.service.config.BuildConfig;
-import com.payless.utils.Utils;
 
 public class ServiceConfig {
 	public final static String LOG_TAG = "com.payless.service";
@@ -30,11 +29,7 @@ public class ServiceConfig {
 	}
 
 	public static int getAppType(Context mContext) {
-		if (Utils.isTablet(mContext)) {
-			return APP_TYPE_TABLET;
-		} else {
-			return APP_TYPE_PHONE;
-		}
+		return APP_TYPE_PHONE;
 	}
 
 }

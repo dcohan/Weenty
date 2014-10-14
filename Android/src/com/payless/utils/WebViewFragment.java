@@ -7,15 +7,12 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 
 
 public abstract class WebViewFragment extends BaseFragment {
 	
-	public static final String BASE_URL = "http://m.payless.com";
-	public static final String TERMS_AND_CONDITIONS = BASE_URL+"/terms";
-
 	protected WebView mWebView;
 	
 	@Override

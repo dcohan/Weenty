@@ -7,8 +7,8 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 
 public class MenuFragment extends BaseFragment {
 

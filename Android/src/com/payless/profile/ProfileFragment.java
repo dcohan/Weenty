@@ -13,16 +13,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 import com.payless.event.ErrorEvent;
 import com.payless.event.EventBus;
 import com.payless.helpers.AnalyticsHelper;
@@ -40,7 +40,6 @@ import com.payless.utils.Utils;
 import com.payless.utils.ValidationUtils;
 import com.payless.utils.Validator;
 import com.payless.utils.Validator.ValidationType;
-import com.payless.utils.WebViewFragment;
 
 public class ProfileFragment extends BaseFragment implements HeaderInterface {
 
@@ -124,7 +123,6 @@ public class ProfileFragment extends BaseFragment implements HeaderInterface {
 			@Override
 			public void onClick(View v) {
 				AnalyticsHelper.logEventWithCategory(AnalyticsHelper.MY_PROFILE, AnalyticsHelper.TERMS_AND_CONDITIONS);
-				getBaseActivity().openURL(WebViewFragment.TERMS_AND_CONDITIONS, getString(R.string.terms_and_conditions));
 			}
 		};
 

@@ -17,8 +17,8 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.LinearLayout;
 
+import com.cuponera.R;
 import com.payless.BaseActivity;
-import com.payless.R;
 import com.payless.helpers.AnalyticsHelper;
 import com.payless.map.GoogleMapFragment;
 import com.payless.model.Item;

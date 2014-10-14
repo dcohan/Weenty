@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 import com.payless.helpers.AnalyticsHelper;
 import com.payless.model.HomeOffer;
 import com.payless.utils.Utils;

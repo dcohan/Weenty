@@ -9,7 +9,7 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.payless.R;
+import com.cuponera.R;
 
 public class Validator {
 

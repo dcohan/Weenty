@@ -7,12 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 import com.payless.model.Coupon;
 import com.payless.navigation.HeaderImageInterface;
 import com.payless.navigation.HeaderInterface;
-import com.payless.utils.WebViewFragment;
 
 public class MyCouponsFragment extends BaseFragment implements HeaderInterface {
 	public final static String COUPONS_ID = "couponId";
@@ -66,7 +65,7 @@ public class MyCouponsFragment extends BaseFragment implements HeaderInterface {
 
 			@Override
 			public void onClickListener() {
-				getBaseActivity().openURL(WebViewFragment.TERMS_AND_CONDITIONS, getString(R.string.terms_and_conditions));
+				getBaseActivity().openURL(null, getString(R.string.terms_and_conditions));
 			}
 
 			@Override

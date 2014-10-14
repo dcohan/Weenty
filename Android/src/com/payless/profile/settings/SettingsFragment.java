@@ -8,8 +8,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 import com.payless.event.ErrorEvent;
 import com.payless.event.EventBus;
 import com.payless.model.Profile;

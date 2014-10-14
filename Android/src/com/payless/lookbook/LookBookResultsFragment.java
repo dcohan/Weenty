@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 import com.payless.model.LookBookItem;
 import com.payless.navigation.HeaderImageInterface;
 import com.payless.navigation.HeaderInterface;

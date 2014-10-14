@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.ImageView.ScaleType;
 
 import com.androidquery.AQuery;
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 import com.payless.model.PreHome;
 import com.payless.utils.DrawableDownloadTask;
 import com.payless.utils.Utils;

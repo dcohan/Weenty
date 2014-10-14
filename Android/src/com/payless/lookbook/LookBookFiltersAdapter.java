@@ -10,8 +10,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 
+import com.cuponera.R;
 import com.payless.BaseActivity;
-import com.payless.R;
 import com.payless.model.LookBookFilter;
 import com.payless.model.LookBookFilterOption;
 import com.payless.model.LookBookFilters;

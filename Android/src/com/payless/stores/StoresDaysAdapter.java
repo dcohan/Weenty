@@ -6,7 +6,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.payless.R;
+import com.cuponera.R;
 import com.payless.model.StoreHours;
 import com.payless.utils.BaseListAdapter;
 import com.payless.utils.ViewProxy;

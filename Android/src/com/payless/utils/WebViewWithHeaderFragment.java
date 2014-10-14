@@ -3,7 +3,7 @@ package com.payless.utils;
 import android.os.Bundle;
 import android.view.View;
 
-import com.payless.R;
+import com.cuponera.R;
 import com.payless.navigation.HeaderImageInterface;
 import com.payless.navigation.HeaderInterface;
 

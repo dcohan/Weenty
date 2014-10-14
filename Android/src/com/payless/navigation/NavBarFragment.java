@@ -6,8 +6,8 @@ import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 import com.payless.navigation.MenuFragment.MenuInterface;
 import com.payless.utils.Utils;
 

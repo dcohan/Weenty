@@ -17,20 +17,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.androidquery.AQuery;
-import com.payless.R;
 
 public class Utils {
-	
+
 	public static final boolean memCache = true;
 	public static final boolean fileCache = true;
-
-	public static boolean isTablet(Context context) {
-		return context.getResources().getBoolean(R.bool.isTablet) ? true : false;
-	}
-
-	public static boolean isPhone(Context context) {
-		return context.getResources().getBoolean(R.bool.isTablet) ? false : true;
-	}
 
 	public static String getAppVersion(Context context) {
 

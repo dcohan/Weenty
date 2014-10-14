@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
 
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 import com.payless.event.ErrorEvent;
 import com.payless.event.EventBus;
 import com.payless.helpers.AnalyticsHelper;

@@ -1,6 +1,5 @@
 package com.payless;
 
-import net.hockeyapp.android.CrashManager;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -9,9 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 
+import com.cuponera.R;
 import com.payless.coupons.MyCouponsFragment;
 import com.payless.event.ErrorEvent;
 import com.payless.event.EventBus;
@@ -30,19 +29,14 @@ import com.payless.social.SocialFragment;
 import com.payless.stores.StoreFinderFragment;
 import com.payless.trackers.GoogleAnalyticsTracker;
 import com.payless.utils.LocationServices;
-import com.payless.utils.PaylessErrorHandler;
 import com.payless.utils.WebViewWithHeaderFragment;
 
 public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	protected NavBarFragment navBarFragment;
-	private AlertDialog sslAlert;
 	private ProgressDialog loadingDialog;
 	private boolean errorDialogPresent;
 	private AlertDialog alertDialog;
-	private static final String APP_ID = "d9aa8f67593cae1805402849d1dce8d3";
-
-	public static final String ACTIVITY_TEST_ACTION = "ActivityTestFlag";
 
 	@Override
 	protected void onStart() {
@@ -58,7 +52,8 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_base);
 
-		navBarFragment = (NavBarFragment) getSupportFragmentManager().findFragmentById(R.id.navBar);
+		navBarFragment = (NavBarFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.navBar);
 
 		navBarFragment.toString();
 
@@ -69,7 +64,6 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 		super.onResume();
 		LocationServices.getInstance(this).startTracking();
 		EventBus.getInstance().addListener(mEventListener, ErrorEvent.class);
-		checkForCrashes();
 	}
 
 	@Override
@@ -169,10 +163,12 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	}
 
 	protected void startFragment(Fragment fragment, boolean animated) {
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		FragmentTransaction transaction = getSupportFragmentManager()
+				.beginTransaction();
 		transaction.replace(R.id.container, fragment);
 		if (animated) {
-			transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			transaction
+					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		}
 		transaction.commit();
 		navBarFragment.getMenu().close();
@@ -182,34 +178,16 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 		replaceFragment(fragment, R.id.container, addToBackStack);
 	}
 
-	public void replaceFragment(Fragment fragment, int containerId, boolean addToBackStack) {
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+	public void replaceFragment(Fragment fragment, int containerId,
+			boolean addToBackStack) {
+		FragmentTransaction transaction = getSupportFragmentManager()
+				.beginTransaction();
 		transaction.replace(containerId, fragment);
 		if (addToBackStack) {
 			transaction.addToBackStack(fragment.getClass().getName());
 		}
 		transaction.commit();
 		navBarFragment.getMenu().close();
-	}
-
-	public void throwSSLErrorMessage() {
-		try {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(PaylessErrorHandler.SYSTEM_SSL_ERROR);
-			builder.setCancelable(true);
-			builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.dismiss();
-					android.os.Process.killProcess(android.os.Process.myPid());
-				}
-			});
-
-			sslAlert = builder.create();
-			sslAlert.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-			Log.e("Common Base Activity", "SSL error msg");
-		}
 	}
 
 	public void showLoading() {
@@ -232,9 +210,6 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	public void runHomeActivity() {
 		Intent intent = new Intent();
 		intent = new Intent(BaseActivity.this, HomeActivity.class);
-		if (isValidPushData()) {
-			intent.setData(getIntent().getData());
-		}
 		startActivity(intent);
 		finish();
 	}
@@ -309,11 +284,13 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(message);
-			builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					errorDialogPresent = false;
-				}
-			});
+			builder.setPositiveButton(R.string.ok,
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							errorDialogPresent = false;
+						}
+					});
 			try {
 				alertDialog = builder.create();
 				if (!isFinishing()) {
@@ -328,23 +305,10 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 		}
 	}
 
-	private void checkForCrashes() {
-		//Avoid to show the crash dialog while performing ui tests.
-		if (!ACTIVITY_TEST_ACTION.equals(getIntent().getAction())) {
-			CrashManager.register(this, APP_ID);
-		}
-	}
-
 	@Override
 	public void onChangeState(boolean open) {
 		// TODO Auto-generated method stub
 
-	}
-
-	protected boolean isValidPushData() {
-		return (getIntent().getAction() != null
-				&& (getIntent().getAction().equals(Intent.ACTION_VIEW) || getIntent().getAction().equals(BaseActivity.ACTIVITY_TEST_ACTION)) && getIntent()
-				.getData() != null);
 	}
 
 }

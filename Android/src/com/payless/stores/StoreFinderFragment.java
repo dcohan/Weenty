@@ -24,8 +24,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cuponera.R;
 import com.payless.BaseFragment;
-import com.payless.R;
 import com.payless.event.ErrorEvent;
 import com.payless.event.EventBus;
 import com.payless.helpers.AnalyticsHelper;
@@ -39,7 +39,6 @@ import com.payless.utils.LocationServices.RequestLocationListener;
 import com.payless.utils.PaylessErrorHandler;
 import com.payless.utils.Utils;
 import com.payless.utils.ValidationUtils;
-import com.payless.utils.WebViewFragment;
 
 public class StoreFinderFragment extends BaseFragment implements HeaderInterface {
 
@@ -306,7 +305,6 @@ public class StoreFinderFragment extends BaseFragment implements HeaderInterface
 			@Override
 			public void onClickListener() {
 				Utils.hideKeyboard(getActivity(), getView());
-				getBaseActivity().openURL(WebViewFragment.TERMS_AND_CONDITIONS, getString(R.string.terms_and_conditions));
 			}
 
 			@Override
