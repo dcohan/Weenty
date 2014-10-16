@@ -187,11 +187,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\imagesizesController.cs" />
     <Compile Include="Controllers\permissionsController.cs" />
-    <Compile Include="Controllers\prehomeimages1Controller.cs" />
     <Compile Include="Controllers\prehomeimagesController.cs" />
     <Compile Include="Controllers\productsController.cs" />
     <Compile Include="Controllers\profilesController.cs" />
     <Compile Include="Controllers\statesController.cs" />
+    <Compile Include="Controllers\storesController.cs" />
+    <Compile Include="Controllers\subscriptionsController.cs" />
+    <Compile Include="Controllers\usersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Data\deviceos.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -375,11 +377,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\prehomeimages1\Create.cshtml" />
-    <Content Include="Views\prehomeimages1\Delete.cshtml" />
-    <Content Include="Views\prehomeimages1\Details.cshtml" />
-    <Content Include="Views\prehomeimages1\Edit.cshtml" />
-    <Content Include="Views\prehomeimages1\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
