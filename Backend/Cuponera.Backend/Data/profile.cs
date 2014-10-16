@@ -12,7 +12,7 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class profiles
+    public partial class profile
     {
         public int IdProfile { get; set; }
         public string DeviceId { get; set; }
@@ -48,6 +48,6 @@ namespace Cuponera.Backend.Data
     
         public virtual deviceos deviceos { get; set; }
         public virtual devicetypes devicetypes { get; set; }
-        public virtual states states { get; set; }
+        public virtual state state { get; set; }
     }
 }

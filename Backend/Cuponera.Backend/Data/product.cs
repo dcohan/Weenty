@@ -12,22 +12,21 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class lookbookattributes
+    public partial class product
     {
-        public lookbookattributes()
-        {
-            this.lookbookitemattributes = new HashSet<lookbookitemattributes>();
-        }
-    
-        public int IdLookBookAttribute { get; set; }
-        public int IdLookBookAttributeCategory { get; set; }
-        public string Name { get; set; }
+        public int IdCoupon { get; set; }
+        public string Title { get; set; }
+        public string PromoCode { get; set; }
+        public string TargetURL { get; set; }
+        public Nullable<int> Active { get; set; }
+        public Nullable<System.DateTime> StartDatetime { get; set; }
+        public Nullable<System.DateTime> ExpirationDatetime { get; set; }
         public Nullable<int> ItemOrder { get; set; }
+        public int IdStore { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
-        public virtual lookbookattributecategories lookbookattributecategories { get; set; }
-        public virtual ICollection<lookbookitemattributes> lookbookitemattributes { get; set; }
+        public virtual store store { get; set; }
     }
 }

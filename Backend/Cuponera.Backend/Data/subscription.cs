@@ -12,21 +12,21 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class lookbookitems
+    public partial class subscription
     {
-        public lookbookitems()
+        public subscription()
         {
-            this.lookbookitemattributes = new HashSet<lookbookitemattributes>();
+            this.userSubscription = new HashSet<userSubscription>();
         }
     
-        public int IdLookBookItem { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public string LotId { get; set; }
+        public decimal Pricing { get; set; }
+        public int SortFactor { get; set; }
+        public int Idsubscription { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
-        public virtual ICollection<lookbookitemattributes> lookbookitemattributes { get; set; }
+        public virtual ICollection<userSubscription> userSubscription { get; set; }
     }
 }

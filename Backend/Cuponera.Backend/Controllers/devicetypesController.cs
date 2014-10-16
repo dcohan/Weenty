@@ -22,31 +22,30 @@ namespace Cuponera.Backend.Controllers
     using System.Web.Http.OData.Extensions;
     using Cuponera.Backend.Data;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<deviceos>("deviceos");
-    builder.EntitySet<imagesizes>("imagesizes"); 
+    builder.EntitySet<devicetypes>("devicetypes");
     builder.EntitySet<profile>("profile"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class deviceosController : ODataController
+    public class devicetypesController : ODataController
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: odata/deviceos
+        // GET: odata/devicetypes
         [EnableQuery]
-        public IQueryable<deviceos> Getdeviceos()
+        public IQueryable<devicetypes> Getdevicetypes()
         {
-            return db.deviceos;
+            return db.devicetypes;
         }
 
-        // GET: odata/deviceos(5)
+        // GET: odata/devicetypes(5)
         [EnableQuery]
-        public SingleResult<deviceos> Getdeviceos([FromODataUri] int key)
+        public SingleResult<devicetypes> Getdevicetypes([FromODataUri] int key)
         {
-            return SingleResult.Create(db.deviceos.Where(deviceos => deviceos.IdDeviceOs == key));
+            return SingleResult.Create(db.devicetypes.Where(devicetypes => devicetypes.IdDeviceType == key));
         }
 
-        // PUT: odata/deviceos(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<deviceos> patch)
+        // PUT: odata/devicetypes(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<devicetypes> patch)
         {
             Validate(patch.GetEntity());
 
@@ -55,13 +54,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            deviceos deviceos = await db.deviceos.FindAsync(key);
-            if (deviceos == null)
+            devicetypes devicetypes = await db.devicetypes.FindAsync(key);
+            if (devicetypes == null)
             {
                 return NotFound();
             }
 
-            patch.Put(deviceos);
+            patch.Put(devicetypes);
 
             try
             {
@@ -69,7 +68,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!deviceosExists(key))
+                if (!devicetypesExists(key))
                 {
                     return NotFound();
                 }
@@ -79,26 +78,26 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(deviceos);
+            return Updated(devicetypes);
         }
 
-        // POST: odata/deviceos
-        public async Task<IHttpActionResult> Post(deviceos deviceos)
+        // POST: odata/devicetypes
+        public async Task<IHttpActionResult> Post(devicetypes devicetypes)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.deviceos.Add(deviceos);
+            db.devicetypes.Add(devicetypes);
             await db.SaveChangesAsync();
 
-            return Created(deviceos);
+            return Created(devicetypes);
         }
 
-        // PATCH: odata/deviceos(5)
+        // PATCH: odata/devicetypes(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<deviceos> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<devicetypes> patch)
         {
             Validate(patch.GetEntity());
 
@@ -107,13 +106,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            deviceos deviceos = await db.deviceos.FindAsync(key);
-            if (deviceos == null)
+            devicetypes devicetypes = await db.devicetypes.FindAsync(key);
+            if (devicetypes == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(deviceos);
+            patch.Patch(devicetypes);
 
             try
             {
@@ -121,7 +120,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!deviceosExists(key))
+                if (!devicetypesExists(key))
                 {
                     return NotFound();
                 }
@@ -131,36 +130,29 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(deviceos);
+            return Updated(devicetypes);
         }
 
-        // DELETE: odata/deviceos(5)
+        // DELETE: odata/devicetypes(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            deviceos deviceos = await db.deviceos.FindAsync(key);
-            if (deviceos == null)
+            devicetypes devicetypes = await db.devicetypes.FindAsync(key);
+            if (devicetypes == null)
             {
                 return NotFound();
             }
 
-            db.deviceos.Remove(deviceos);
+            db.devicetypes.Remove(devicetypes);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/deviceos(5)/imagesizes
-        [EnableQuery]
-        public IQueryable<imagesizes> Getimagesizes([FromODataUri] int key)
-        {
-            return db.deviceos.Where(m => m.IdDeviceOs == key).SelectMany(m => m.imagesizes);
-        }
-
-        // GET: odata/deviceos(5)/profile
+        // GET: odata/devicetypes(5)/profile
         [EnableQuery]
         public IQueryable<profile> Getprofile([FromODataUri] int key)
         {
-            return db.deviceos.Where(m => m.IdDeviceOs == key).SelectMany(m => m.profile);
+            return db.devicetypes.Where(m => m.IdDeviceType == key).SelectMany(m => m.profile);
         }
 
         protected override void Dispose(bool disposing)
@@ -172,9 +164,9 @@ namespace Cuponera.Backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool deviceosExists(int key)
+        private bool devicetypesExists(int key)
         {
-            return db.deviceos.Count(e => e.IdDeviceOs == key) > 0;
+            return db.devicetypes.Count(e => e.IdDeviceType == key) > 0;
         }
     }
 }

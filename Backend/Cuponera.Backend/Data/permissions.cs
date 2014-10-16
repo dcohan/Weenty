@@ -16,7 +16,6 @@ namespace Cuponera.Backend.Data
     {
         public int idPermission { get; set; }
         public int IdRole { get; set; }
-        public int IdModule { get; set; }
         public Nullable<short> Read { get; set; }
         public Nullable<short> Create { get; set; }
         public Nullable<short> Update { get; set; }

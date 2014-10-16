@@ -12,13 +12,19 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class lookbookitemattributes
+    public partial class state
     {
-        public int idLookBookItemAttribute { get; set; }
-        public int IdLookBookItem { get; set; }
-        public int IdLookBookAttribute { get; set; }
+        public state()
+        {
+            this.profile = new HashSet<profile>();
+            this.store = new HashSet<store>();
+        }
     
-        public virtual lookbookattributes lookbookattributes { get; set; }
-        public virtual lookbookitems lookbookitems { get; set; }
+        public string IdState { get; set; }
+        public string Name { get; set; }
+        public string Link { get; set; }
+    
+        public virtual ICollection<profile> profile { get; set; }
+        public virtual ICollection<store> store { get; set; }
     }
 }

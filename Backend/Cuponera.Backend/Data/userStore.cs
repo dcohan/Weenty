@@ -12,10 +12,13 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class roles
+    public partial class userStore
     {
-        public int idRole { get; set; }
-        public string Name { get; set; }
-        public string Rolescol { get; set; }
+        public int IdUserStore { get; set; }
+        public int IdUser { get; set; }
+        public int IdStore { get; set; }
+    
+        public virtual store store { get; set; }
+        public virtual user user { get; set; }
     }
 }

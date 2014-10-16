@@ -12,8 +12,14 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class stores
+    public partial class store
     {
+        public store()
+        {
+            this.product = new HashSet<product>();
+            this.userStore = new HashSet<userStore>();
+        }
+    
         public int IdStore { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
@@ -30,6 +36,8 @@ namespace Cuponera.Backend.Data
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
-        public virtual states states { get; set; }
+        public virtual ICollection<product> product { get; set; }
+        public virtual state state { get; set; }
+        public virtual ICollection<userStore> userStore { get; set; }
     }
 }

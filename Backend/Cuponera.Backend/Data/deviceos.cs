@@ -16,16 +16,14 @@ namespace Cuponera.Backend.Data
     {
         public deviceos()
         {
-            this.enabledsections = new HashSet<enabledsections>();
             this.imagesizes = new HashSet<imagesizes>();
-            this.profiles = new HashSet<profiles>();
+            this.profile = new HashSet<profile>();
         }
     
         public int IdDeviceOs { get; set; }
         public string Code { get; set; }
     
-        public ICollection<enabledsections> enabledsections { get; set; }
-        public ICollection<imagesizes> imagesizes { get; set; }
-        public ICollection<profiles> profiles { get; set; }
+        public virtual ICollection<imagesizes> imagesizes { get; set; }
+        public virtual ICollection<profile> profile { get; set; }
     }
 }

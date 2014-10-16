@@ -12,9 +12,17 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class modules
+    public partial class role
     {
-        public int idModule { get; set; }
+        public role()
+        {
+            this.user = new HashSet<user>();
+        }
+    
+        public int idRole { get; set; }
         public string Name { get; set; }
+        public string Rolescol { get; set; }
+    
+        public virtual ICollection<user> user { get; set; }
     }
 }

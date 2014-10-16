@@ -12,16 +12,25 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class homeoffers
+    public partial class user
     {
-        public int IdHomeOffer { get; set; }
-        public string TargetURL { get; set; }
-        public Nullable<int> Active { get; set; }
-        public Nullable<System.DateTime> StartDatetime { get; set; }
-        public Nullable<System.DateTime> ExpirationDatetime { get; set; }
-        public Nullable<int> ItemOrder { get; set; }
+        public user()
+        {
+            this.userStore = new HashSet<userStore>();
+            this.userSubscription = new HashSet<userSubscription>();
+        }
+    
+        public int IdUser { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Name { get; set; }
+        public Nullable<int> IdRole { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
+    
+        public virtual role role { get; set; }
+        public virtual ICollection<userStore> userStore { get; set; }
+        public virtual ICollection<userSubscription> userSubscription { get; set; }
     }
 }

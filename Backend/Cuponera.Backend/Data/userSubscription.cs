@@ -12,10 +12,16 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class socialfeedaccesslog
+    public partial class userSubscription
     {
-        public int IdSocialFeedAccessLog { get; set; }
-        public string Source { get; set; }
+        public int IdUserSubscription { get; set; }
+        public int IdUser { get; set; }
+        public int IdSubscription { get; set; }
+        public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
+        public Nullable<System.DateTime> DeletionDatetime { get; set; }
+    
+        public virtual subscription subscription { get; set; }
+        public virtual user user { get; set; }
     }
 }

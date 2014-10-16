@@ -5,23 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="coupons">
-          <Key>
-            <PropertyRef Name="IdCoupon" />
-          </Key>
-          <Property Name="IdCoupon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="100" />
-          <Property Name="PromoCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="TargetURL" Type="nvarchar" MaxLength="255" />
-          <Property Name="Active" Type="int" />
-          <Property Name="StartDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ExpirationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ItemOrder" Type="int" />
-          <Property Name="IdProfileGroup" Type="int" />
-          <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-        </EntityType>
         <EntityType Name="deviceos">
           <Key>
             <PropertyRef Name="IdDeviceOs" />
@@ -36,29 +19,6 @@
           <Property Name="IdDeviceType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
-        <EntityType Name="enabledsections">
-          <Key>
-            <PropertyRef Name="IdEnabledSection" />
-          </Key>
-          <Property Name="IdEnabledSection" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Section" Type="varchar" MaxLength="45" />
-          <Property Name="IdDeviceOs" Type="int" />
-          <Property Name="IsEnabled" Type="int" />
-        </EntityType>
-        <EntityType Name="homeoffers">
-          <Key>
-            <PropertyRef Name="IdHomeOffer" />
-          </Key>
-          <Property Name="IdHomeOffer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TargetURL" Type="nvarchar" MaxLength="255" />
-          <Property Name="Active" Type="int" />
-          <Property Name="StartDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ExpirationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ItemOrder" Type="int" />
-          <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-        </EntityType>
         <EntityType Name="imagesizes">
           <Key>
             <PropertyRef Name="IdImageSize" />
@@ -69,64 +29,12 @@
           <Property Name="Width" Type="int" />
           <Property Name="Height" Type="int" />
         </EntityType>
-        <EntityType Name="lookbookattributecategories">
-          <Key>
-            <PropertyRef Name="IdLookBookAttributeCategory" />
-          </Key>
-          <Property Name="IdLookBookAttributeCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Code" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" />
-          <Property Name="ItemOrder" Type="int" />
-          <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-        </EntityType>
-        <EntityType Name="lookbookattributes">
-          <Key>
-            <PropertyRef Name="IdLookBookAttribute" />
-          </Key>
-          <Property Name="IdLookBookAttribute" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdLookBookAttributeCategory" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="255" />
-          <Property Name="ItemOrder" Type="int" />
-          <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-        </EntityType>
-        <EntityType Name="lookbookitemattributes">
-          <Key>
-            <PropertyRef Name="idLookBookItemAttribute" />
-          </Key>
-          <Property Name="idLookBookItemAttribute" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdLookBookItem" Type="int" Nullable="false" />
-          <Property Name="IdLookBookAttribute" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="lookbookitems">
-          <Key>
-            <PropertyRef Name="IdLookBookItem" />
-          </Key>
-          <Property Name="IdLookBookItem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="255" />
-          <Property Name="Description" Type="nvarchar" MaxLength="800" />
-          <Property Name="LotId" Type="nvarchar" MaxLength="100" />
-          <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-        </EntityType>
-        <EntityType Name="modules">
-          <Key>
-            <PropertyRef Name="idModule" />
-          </Key>
-          <Property Name="idModule" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="45" Nullable="false" />
-        </EntityType>
         <EntityType Name="permissions">
           <Key>
             <PropertyRef Name="idPermission" />
           </Key>
           <Property Name="idPermission" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdRole" Type="int" Nullable="false" />
-          <Property Name="IdModule" Type="int" Nullable="false" />
           <Property Name="Read" Type="smallint" />
           <Property Name="Create" Type="smallint" />
           <Property Name="Update" Type="smallint" />
@@ -142,29 +50,24 @@
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
         </EntityType>
-        <EntityType Name="profilegroups">
+        <EntityType Name="product">
           <Key>
-            <PropertyRef Name="IdProfileGroup" />
+            <PropertyRef Name="IdCoupon" />
           </Key>
-          <Property Name="IdProfileGroup" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="45" />
-          <Property Name="IsFixed" Type="int" />
-          <Property Name="AppVersion" Type="nvarchar" MaxLength="45" />
-          <Property Name="Geolocation" Type="int" />
-          <Property Name="PushNotification" Type="int" />
-          <Property Name="SMSNotification" Type="int" />
-          <Property Name="EmailNotification" Type="int" />
-          <Property Name="PostalNotification" Type="int" />
-          <Property Name="MinAge" Type="int" />
-          <Property Name="MembersCount" Type="int" />
-          <Property Name="MembersComputingDatetime" Type="datetime2" Precision="0" />
-          <Property Name="LockId" Type="nchar" MaxLength="40" />
-          <Property Name="LockDate" Type="datetime2" Precision="0" />
+          <Property Name="IdCoupon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="PromoCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="TargetURL" Type="nvarchar" MaxLength="255" />
+          <Property Name="Active" Type="int" />
+          <Property Name="StartDatetime" Type="datetime2" Precision="0" />
+          <Property Name="ExpirationDatetime" Type="datetime2" Precision="0" />
+          <Property Name="ItemOrder" Type="int" />
+          <Property Name="IdStore" Type="int" Nullable="false" />
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
         </EntityType>
-        <EntityType Name="profiles">
+        <EntityType Name="profile">
           <Key>
             <PropertyRef Name="IdProfile" />
           </Key>
@@ -200,7 +103,7 @@
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
         </EntityType>
-        <EntityType Name="roles">
+        <EntityType Name="role">
           <Key>
             <PropertyRef Name="idRole" />
           </Key>
@@ -208,38 +111,15 @@
           <Property Name="Name" Type="nvarchar" MaxLength="45" Nullable="false" />
           <Property Name="Rolescol" Type="nvarchar" MaxLength="45" />
         </EntityType>
-        <EntityType Name="socialfeedaccesslog">
-          <Key>
-            <PropertyRef Name="IdSocialFeedAccessLog" />
-          </Key>
-          <Property Name="IdSocialFeedAccessLog" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Source" Type="nvarchar" MaxLength="255" />
-          <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
-        </EntityType>
-        <EntityType Name="socialupdates">
-          <Key>
-            <PropertyRef Name="IdSocialUpdate" />
-          </Key>
-          <Property Name="IdSocialUpdate" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdSourceItem" Type="nchar" MaxLength="32" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="800" />
-          <Property Name="Text" Type="nvarchar" MaxLength="800" />
-          <Property Name="ImageURL" Type="nvarchar" MaxLength="255" />
-          <Property Name="TargetURL" Type="nvarchar" MaxLength="255" />
-          <Property Name="Source" Type="nchar" MaxLength="2" Nullable="false" />
-          <Property Name="SocialItemDatetime" Type="datetime2" Precision="0" />
-          <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-        </EntityType>
-        <EntityType Name="states">
+        <EntityType Name="state">
           <Key>
             <PropertyRef Name="IdState" />
           </Key>
           <Property Name="IdState" Type="nchar" MaxLength="2" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Link" Type="varchar" MaxLength="255" />
         </EntityType>
-        <EntityType Name="stores">
+        <EntityType Name="store">
           <Key>
             <PropertyRef Name="IdStore" />
           </Key>
@@ -259,6 +139,18 @@
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
         </EntityType>
+        <EntityType Name="subscription">
+          <Key>
+            <PropertyRef Name="Idsubscription" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pricing" Type="money" Nullable="false" />
+          <Property Name="SortFactor" Type="int" Nullable="false" />
+          <Property Name="Idsubscription" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
+          <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
+          <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -269,7 +161,7 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <EntityType Name="users">
+        <EntityType Name="user">
           <Key>
             <PropertyRef Name="IdUser" />
           </Key>
@@ -282,27 +174,94 @@
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
         </EntityType>
-        <Association Name="coupons$fk_ix_coupons_profilegroupid">
-          <End Role="profilegroups" Type="Self.profilegroups" Multiplicity="0..1" />
-          <End Role="coupons" Type="Self.coupons" Multiplicity="*" />
+        <EntityType Name="userStore">
+          <Key>
+            <PropertyRef Name="IdUserStore" />
+          </Key>
+          <Property Name="IdUserStore" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="IdStore" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userSubscription">
+          <Key>
+            <PropertyRef Name="IdUserSubscription" />
+          </Key>
+          <Property Name="IdUserSubscription" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="IdSubscription" Type="int" Nullable="false" />
+          <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
+          <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
+          <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
+        </EntityType>
+        <Association Name="FK_coupon_store">
+          <End Role="store" Type="Self.store" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="profilegroups">
-              <PropertyRef Name="IdProfileGroup" />
+            <Principal Role="store">
+              <PropertyRef Name="IdStore" />
             </Principal>
-            <Dependent Role="coupons">
-              <PropertyRef Name="IdProfileGroup" />
+            <Dependent Role="product">
+              <PropertyRef Name="IdStore" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="enabledsections$ix_es_IdDeviceOs">
-          <End Role="deviceos" Type="Self.deviceos" Multiplicity="0..1" />
-          <End Role="enabledsections" Type="Self.enabledsections" Multiplicity="*" />
+        <Association Name="FK_roleStore_store">
+          <End Role="store" Type="Self.store" Multiplicity="1" />
+          <End Role="userStore" Type="Self.userStore" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="deviceos">
-              <PropertyRef Name="IdDeviceOs" />
+            <Principal Role="store">
+              <PropertyRef Name="IdStore" />
             </Principal>
-            <Dependent Role="enabledsections">
-              <PropertyRef Name="IdDeviceOs" />
+            <Dependent Role="userStore">
+              <PropertyRef Name="IdStore" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role">
+          <End Role="role" Type="Self.role" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="idRole" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userStore_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="userStore" Type="Self.userStore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="userStore">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userSubscription_subscription">
+          <End Role="subscription" Type="Self.subscription" Multiplicity="1" />
+          <End Role="userSubscription" Type="Self.userSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subscription">
+              <PropertyRef Name="Idsubscription" />
+            </Principal>
+            <Dependent Role="userSubscription">
+              <PropertyRef Name="IdSubscription" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userSubscription_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="userSubscription" Type="Self.userSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="userSubscription">
+              <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -318,152 +277,113 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="lookbookattributes$fk_LookBookFilters_LookBookFiltersCategories1">
-          <End Role="lookbookattributecategories" Type="Self.lookbookattributecategories" Multiplicity="1" />
-          <End Role="lookbookattributes" Type="Self.lookbookattributes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="lookbookattributecategories">
-              <PropertyRef Name="IdLookBookAttributeCategory" />
-            </Principal>
-            <Dependent Role="lookbookattributes">
-              <PropertyRef Name="IdLookBookAttributeCategory" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="lookbookitemattributes$fk_LookBookItemAttributes_LookBookAttributes1">
-          <End Role="lookbookattributes" Type="Self.lookbookattributes" Multiplicity="1" />
-          <End Role="lookbookitemattributes" Type="Self.lookbookitemattributes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="lookbookattributes">
-              <PropertyRef Name="IdLookBookAttribute" />
-            </Principal>
-            <Dependent Role="lookbookitemattributes">
-              <PropertyRef Name="IdLookBookAttribute" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="lookbookitemattributes$fk_LookBookItemAttributes_LookBookItems1">
-          <End Role="lookbookitems" Type="Self.lookbookitems" Multiplicity="1" />
-          <End Role="lookbookitemattributes" Type="Self.lookbookitemattributes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="lookbookitems">
-              <PropertyRef Name="IdLookBookItem" />
-            </Principal>
-            <Dependent Role="lookbookitemattributes">
-              <PropertyRef Name="IdLookBookItem" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="profiles$fk_idstate">
-          <End Role="states" Type="Self.states" Multiplicity="0..1" />
-          <End Role="profiles" Type="Self.profiles" Multiplicity="*" />
+          <End Role="state" Type="Self.state" Multiplicity="0..1" />
+          <End Role="profile" Type="Self.profile" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="states">
+            <Principal Role="state">
               <PropertyRef Name="IdState" />
             </Principal>
-            <Dependent Role="profiles">
+            <Dependent Role="profile">
               <PropertyRef Name="IdState" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="profiles$fk_Profiles_DeviceOs1">
           <End Role="deviceos" Type="Self.deviceos" Multiplicity="1" />
-          <End Role="profiles" Type="Self.profiles" Multiplicity="*" />
+          <End Role="profile" Type="Self.profile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="deviceos">
               <PropertyRef Name="IdDeviceOs" />
             </Principal>
-            <Dependent Role="profiles">
+            <Dependent Role="profile">
               <PropertyRef Name="IdDeviceOs" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="profiles$fk_Profiles_DeviceTypes1">
           <End Role="devicetypes" Type="Self.devicetypes" Multiplicity="1" />
-          <End Role="profiles" Type="Self.profiles" Multiplicity="*" />
+          <End Role="profile" Type="Self.profile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="devicetypes">
               <PropertyRef Name="IdDeviceType" />
             </Principal>
-            <Dependent Role="profiles">
+            <Dependent Role="profile">
               <PropertyRef Name="IdDeviceType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="stores$IdState">
-          <End Role="states" Type="Self.states" Multiplicity="1" />
-          <End Role="stores" Type="Self.stores" Multiplicity="*" />
+          <End Role="state" Type="Self.state" Multiplicity="1" />
+          <End Role="store" Type="Self.store" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="states">
+            <Principal Role="state">
               <PropertyRef Name="IdState" />
             </Principal>
-            <Dependent Role="stores">
+            <Dependent Role="store">
               <PropertyRef Name="IdState" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="CuponeraModelStoreContainer">
-          <EntitySet Name="coupons" EntityType="Self.coupons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="deviceos" EntityType="Self.deviceos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="devicetypes" EntityType="Self.devicetypes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="enabledsections" EntityType="Self.enabledsections" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="homeoffers" EntityType="Self.homeoffers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="imagesizes" EntityType="Self.imagesizes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="lookbookattributecategories" EntityType="Self.lookbookattributecategories" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="lookbookattributes" EntityType="Self.lookbookattributes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="lookbookitemattributes" EntityType="Self.lookbookitemattributes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="lookbookitems" EntityType="Self.lookbookitems" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="modules" EntityType="Self.modules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="permissions" EntityType="Self.permissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="prehomeimages" EntityType="Self.prehomeimages" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="profilegroups" EntityType="Self.profilegroups" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="profiles" EntityType="Self.profiles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="socialfeedaccesslog" EntityType="Self.socialfeedaccesslog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="socialupdates" EntityType="Self.socialupdates" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="stores" EntityType="Self.stores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="profile" EntityType="Self.profile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="state" EntityType="Self.state" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="store" EntityType="Self.store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="subscription" EntityType="Self.subscription" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="coupons$fk_ix_coupons_profilegroupid" Association="Self.coupons$fk_ix_coupons_profilegroupid">
-            <End Role="profilegroups" EntitySet="profilegroups" />
-            <End Role="coupons" EntitySet="coupons" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userStore" EntityType="Self.userStore" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userSubscription" EntityType="Self.userSubscription" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_coupon_store" Association="Self.FK_coupon_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="product" EntitySet="product" />
           </AssociationSet>
-          <AssociationSet Name="enabledsections$ix_es_IdDeviceOs" Association="Self.enabledsections$ix_es_IdDeviceOs">
-            <End Role="deviceos" EntitySet="deviceos" />
-            <End Role="enabledsections" EntitySet="enabledsections" />
+          <AssociationSet Name="FK_roleStore_store" Association="Self.FK_roleStore_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="userStore" EntitySet="userStore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userStore_user" Association="Self.FK_userStore_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="userStore" EntitySet="userStore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userSubscription_subscription" Association="Self.FK_userSubscription_subscription">
+            <End Role="subscription" EntitySet="subscription" />
+            <End Role="userSubscription" EntitySet="userSubscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userSubscription_user" Association="Self.FK_userSubscription_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="userSubscription" EntitySet="userSubscription" />
           </AssociationSet>
           <AssociationSet Name="imagesizes$ix_IdDeviceOs" Association="Self.imagesizes$ix_IdDeviceOs">
             <End Role="deviceos" EntitySet="deviceos" />
             <End Role="imagesizes" EntitySet="imagesizes" />
           </AssociationSet>
-          <AssociationSet Name="lookbookattributes$fk_LookBookFilters_LookBookFiltersCategories1" Association="Self.lookbookattributes$fk_LookBookFilters_LookBookFiltersCategories1">
-            <End Role="lookbookattributecategories" EntitySet="lookbookattributecategories" />
-            <End Role="lookbookattributes" EntitySet="lookbookattributes" />
-          </AssociationSet>
-          <AssociationSet Name="lookbookitemattributes$fk_LookBookItemAttributes_LookBookAttributes1" Association="Self.lookbookitemattributes$fk_LookBookItemAttributes_LookBookAttributes1">
-            <End Role="lookbookattributes" EntitySet="lookbookattributes" />
-            <End Role="lookbookitemattributes" EntitySet="lookbookitemattributes" />
-          </AssociationSet>
-          <AssociationSet Name="lookbookitemattributes$fk_LookBookItemAttributes_LookBookItems1" Association="Self.lookbookitemattributes$fk_LookBookItemAttributes_LookBookItems1">
-            <End Role="lookbookitems" EntitySet="lookbookitems" />
-            <End Role="lookbookitemattributes" EntitySet="lookbookitemattributes" />
-          </AssociationSet>
           <AssociationSet Name="profiles$fk_idstate" Association="Self.profiles$fk_idstate">
-            <End Role="states" EntitySet="states" />
-            <End Role="profiles" EntitySet="profiles" />
+            <End Role="state" EntitySet="state" />
+            <End Role="profile" EntitySet="profile" />
           </AssociationSet>
           <AssociationSet Name="profiles$fk_Profiles_DeviceOs1" Association="Self.profiles$fk_Profiles_DeviceOs1">
             <End Role="deviceos" EntitySet="deviceos" />
-            <End Role="profiles" EntitySet="profiles" />
+            <End Role="profile" EntitySet="profile" />
           </AssociationSet>
           <AssociationSet Name="profiles$fk_Profiles_DeviceTypes1" Association="Self.profiles$fk_Profiles_DeviceTypes1">
             <End Role="devicetypes" EntitySet="devicetypes" />
-            <End Role="profiles" EntitySet="profiles" />
+            <End Role="profile" EntitySet="profile" />
           </AssociationSet>
           <AssociationSet Name="stores$IdState" Association="Self.stores$IdState">
-            <End Role="states" EntitySet="states" />
-            <End Role="stores" EntitySet="stores" />
+            <End Role="state" EntitySet="state" />
+            <End Role="store" EntitySet="store" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -471,96 +391,74 @@
     <edmx:ConceptualModels>
       <Schema Namespace="CuponeraModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CuponeraEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="coupons" EntityType="CuponeraModel.coupons" />
           <EntitySet Name="deviceos" EntityType="CuponeraModel.deviceos" />
           <EntitySet Name="devicetypes" EntityType="CuponeraModel.devicetypes" />
-          <EntitySet Name="enabledsections" EntityType="CuponeraModel.enabledsections" />
-          <EntitySet Name="homeoffers" EntityType="CuponeraModel.homeoffers" />
           <EntitySet Name="imagesizes" EntityType="CuponeraModel.imagesizes" />
-          <EntitySet Name="lookbookattributecategories" EntityType="CuponeraModel.lookbookattributecategories" />
-          <EntitySet Name="lookbookattributes" EntityType="CuponeraModel.lookbookattributes" />
-          <EntitySet Name="lookbookitemattributes" EntityType="CuponeraModel.lookbookitemattributes" />
-          <EntitySet Name="lookbookitems" EntityType="CuponeraModel.lookbookitems" />
-          <EntitySet Name="modules" EntityType="CuponeraModel.modules" />
           <EntitySet Name="permissions" EntityType="CuponeraModel.permissions" />
           <EntitySet Name="prehomeimages" EntityType="CuponeraModel.prehomeimages" />
-          <EntitySet Name="profilegroups" EntityType="CuponeraModel.profilegroups" />
-          <EntitySet Name="profiles" EntityType="CuponeraModel.profiles" />
-          <EntitySet Name="roles" EntityType="CuponeraModel.roles" />
-          <EntitySet Name="socialfeedaccesslog" EntityType="CuponeraModel.socialfeedaccesslog" />
-          <EntitySet Name="socialupdates" EntityType="CuponeraModel.socialupdates" />
-          <EntitySet Name="states" EntityType="CuponeraModel.states" />
-          <EntitySet Name="stores" EntityType="CuponeraModel.stores" />
+          <EntitySet Name="product" EntityType="CuponeraModel.product" />
+          <EntitySet Name="profile" EntityType="CuponeraModel.profile" />
+          <EntitySet Name="role" EntityType="CuponeraModel.role" />
+          <EntitySet Name="state" EntityType="CuponeraModel.state" />
+          <EntitySet Name="store" EntityType="CuponeraModel.store" />
+          <EntitySet Name="subscription" EntityType="CuponeraModel.subscription" />
           <EntitySet Name="sysdiagrams" EntityType="CuponeraModel.sysdiagrams" />
-          <EntitySet Name="users" EntityType="CuponeraModel.users" />
-          <AssociationSet Name="coupons_fk_ix_coupons_profilegroupid" Association="CuponeraModel.coupons_fk_ix_coupons_profilegroupid">
-            <End Role="profilegroups" EntitySet="profilegroups" />
-            <End Role="coupons" EntitySet="coupons" />
-          </AssociationSet>
-          <AssociationSet Name="enabledsections_ix_es_IdDeviceOs" Association="CuponeraModel.enabledsections_ix_es_IdDeviceOs">
-            <End Role="deviceos" EntitySet="deviceos" />
-            <End Role="enabledsections" EntitySet="enabledsections" />
-          </AssociationSet>
+          <EntitySet Name="user" EntityType="CuponeraModel.user" />
+          <EntitySet Name="userStore" EntityType="CuponeraModel.userStore" />
+          <EntitySet Name="userSubscription" EntityType="CuponeraModel.userSubscription" />
           <AssociationSet Name="imagesizes_ix_IdDeviceOs" Association="CuponeraModel.imagesizes_ix_IdDeviceOs">
             <End Role="deviceos" EntitySet="deviceos" />
             <End Role="imagesizes" EntitySet="imagesizes" />
           </AssociationSet>
           <AssociationSet Name="profiles_fk_Profiles_DeviceOs1" Association="CuponeraModel.profiles_fk_Profiles_DeviceOs1">
             <End Role="deviceos" EntitySet="deviceos" />
-            <End Role="profiles" EntitySet="profiles" />
+            <End Role="profile" EntitySet="profile" />
           </AssociationSet>
           <AssociationSet Name="profiles_fk_Profiles_DeviceTypes1" Association="CuponeraModel.profiles_fk_Profiles_DeviceTypes1">
             <End Role="devicetypes" EntitySet="devicetypes" />
-            <End Role="profiles" EntitySet="profiles" />
+            <End Role="profile" EntitySet="profile" />
           </AssociationSet>
-          <AssociationSet Name="lookbookattributes_fk_LookBookFilters_LookBookFiltersCategories1" Association="CuponeraModel.lookbookattributes_fk_LookBookFilters_LookBookFiltersCategories1">
-            <End Role="lookbookattributecategories" EntitySet="lookbookattributecategories" />
-            <End Role="lookbookattributes" EntitySet="lookbookattributes" />
-          </AssociationSet>
-          <AssociationSet Name="lookbookitemattributes_fk_LookBookItemAttributes_LookBookAttributes1" Association="CuponeraModel.lookbookitemattributes_fk_LookBookItemAttributes_LookBookAttributes1">
-            <End Role="lookbookattributes" EntitySet="lookbookattributes" />
-            <End Role="lookbookitemattributes" EntitySet="lookbookitemattributes" />
-          </AssociationSet>
-          <AssociationSet Name="lookbookitemattributes_fk_LookBookItemAttributes_LookBookItems1" Association="CuponeraModel.lookbookitemattributes_fk_LookBookItemAttributes_LookBookItems1">
-            <End Role="lookbookitems" EntitySet="lookbookitems" />
-            <End Role="lookbookitemattributes" EntitySet="lookbookitemattributes" />
+          <AssociationSet Name="FK_coupon_store" Association="CuponeraModel.FK_coupon_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="product" EntitySet="product" />
           </AssociationSet>
           <AssociationSet Name="profiles_fk_idstate" Association="CuponeraModel.profiles_fk_idstate">
-            <End Role="states" EntitySet="states" />
-            <End Role="profiles" EntitySet="profiles" />
+            <End Role="state" EntitySet="state" />
+            <End Role="profile" EntitySet="profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role" Association="CuponeraModel.FK_user_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
           </AssociationSet>
           <AssociationSet Name="stores_IdState" Association="CuponeraModel.stores_IdState">
-            <End Role="states" EntitySet="states" />
-            <End Role="stores" EntitySet="stores" />
+            <End Role="state" EntitySet="state" />
+            <End Role="store" EntitySet="store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_roleStore_store" Association="CuponeraModel.FK_roleStore_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="userStore" EntitySet="userStore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userSubscription_subscription" Association="CuponeraModel.FK_userSubscription_subscription">
+            <End Role="subscription" EntitySet="subscription" />
+            <End Role="userSubscription" EntitySet="userSubscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userStore_user" Association="CuponeraModel.FK_userStore_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="userStore" EntitySet="userStore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userSubscription_user" Association="CuponeraModel.FK_userSubscription_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="userSubscription" EntitySet="userSubscription" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="coupons">
-          <Key>
-            <PropertyRef Name="IdCoupon" />
-          </Key>
-          <Property Name="IdCoupon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PromoCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TargetURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Int32" />
-          <Property Name="StartDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ExpirationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ItemOrder" Type="Int32" />
-          <Property Name="IdProfileGroup" Type="Int32" />
-          <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="profilegroups" Relationship="CuponeraModel.coupons_fk_ix_coupons_profilegroupid" FromRole="coupons" ToRole="profilegroups" />
-        </EntityType>
         <EntityType Name="deviceos">
           <Key>
             <PropertyRef Name="IdDeviceOs" />
           </Key>
           <Property Name="IdDeviceOs" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="enabledsections" Relationship="CuponeraModel.enabledsections_ix_es_IdDeviceOs" FromRole="deviceos" ToRole="enabledsections" />
           <NavigationProperty Name="imagesizes" Relationship="CuponeraModel.imagesizes_ix_IdDeviceOs" FromRole="deviceos" ToRole="imagesizes" />
-          <NavigationProperty Name="profiles" Relationship="CuponeraModel.profiles_fk_Profiles_DeviceOs1" FromRole="deviceos" ToRole="profiles" />
+          <NavigationProperty Name="profile" Relationship="CuponeraModel.profiles_fk_Profiles_DeviceOs1" FromRole="deviceos" ToRole="profile" />
         </EntityType>
         <EntityType Name="devicetypes">
           <Key>
@@ -568,31 +466,7 @@
           </Key>
           <Property Name="IdDeviceType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="profiles" Relationship="CuponeraModel.profiles_fk_Profiles_DeviceTypes1" FromRole="devicetypes" ToRole="profiles" />
-        </EntityType>
-        <EntityType Name="enabledsections">
-          <Key>
-            <PropertyRef Name="IdEnabledSection" />
-          </Key>
-          <Property Name="IdEnabledSection" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Section" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="IdDeviceOs" Type="Int32" />
-          <Property Name="IsEnabled" Type="Int32" />
-          <NavigationProperty Name="deviceos" Relationship="CuponeraModel.enabledsections_ix_es_IdDeviceOs" FromRole="enabledsections" ToRole="deviceos" />
-        </EntityType>
-        <EntityType Name="homeoffers">
-          <Key>
-            <PropertyRef Name="IdHomeOffer" />
-          </Key>
-          <Property Name="IdHomeOffer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TargetURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Int32" />
-          <Property Name="StartDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ExpirationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ItemOrder" Type="Int32" />
-          <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="profile" Relationship="CuponeraModel.profiles_fk_Profiles_DeviceTypes1" FromRole="devicetypes" ToRole="profile" />
         </EntityType>
         <EntityType Name="imagesizes">
           <Key>
@@ -605,70 +479,12 @@
           <Property Name="Height" Type="Int32" />
           <NavigationProperty Name="deviceos" Relationship="CuponeraModel.imagesizes_ix_IdDeviceOs" FromRole="imagesizes" ToRole="deviceos" />
         </EntityType>
-        <EntityType Name="lookbookattributecategories">
-          <Key>
-            <PropertyRef Name="IdLookBookAttributeCategory" />
-          </Key>
-          <Property Name="IdLookBookAttributeCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ItemOrder" Type="Int32" />
-          <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="lookbookattributes" Relationship="CuponeraModel.lookbookattributes_fk_LookBookFilters_LookBookFiltersCategories1" FromRole="lookbookattributecategories" ToRole="lookbookattributes" />
-        </EntityType>
-        <EntityType Name="lookbookattributes">
-          <Key>
-            <PropertyRef Name="IdLookBookAttribute" />
-          </Key>
-          <Property Name="IdLookBookAttribute" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdLookBookAttributeCategory" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ItemOrder" Type="Int32" />
-          <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="lookbookattributecategories" Relationship="CuponeraModel.lookbookattributes_fk_LookBookFilters_LookBookFiltersCategories1" FromRole="lookbookattributes" ToRole="lookbookattributecategories" />
-          <NavigationProperty Name="lookbookitemattributes" Relationship="CuponeraModel.lookbookitemattributes_fk_LookBookItemAttributes_LookBookAttributes1" FromRole="lookbookattributes" ToRole="lookbookitemattributes" />
-        </EntityType>
-        <EntityType Name="lookbookitemattributes">
-          <Key>
-            <PropertyRef Name="idLookBookItemAttribute" />
-          </Key>
-          <Property Name="idLookBookItemAttribute" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdLookBookItem" Type="Int32" Nullable="false" />
-          <Property Name="IdLookBookAttribute" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="lookbookattributes" Relationship="CuponeraModel.lookbookitemattributes_fk_LookBookItemAttributes_LookBookAttributes1" FromRole="lookbookitemattributes" ToRole="lookbookattributes" />
-          <NavigationProperty Name="lookbookitems" Relationship="CuponeraModel.lookbookitemattributes_fk_LookBookItemAttributes_LookBookItems1" FromRole="lookbookitemattributes" ToRole="lookbookitems" />
-        </EntityType>
-        <EntityType Name="lookbookitems">
-          <Key>
-            <PropertyRef Name="IdLookBookItem" />
-          </Key>
-          <Property Name="IdLookBookItem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
-          <Property Name="LotId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="lookbookitemattributes" Relationship="CuponeraModel.lookbookitemattributes_fk_LookBookItemAttributes_LookBookItems1" FromRole="lookbookitems" ToRole="lookbookitemattributes" />
-        </EntityType>
-        <EntityType Name="modules">
-          <Key>
-            <PropertyRef Name="idModule" />
-          </Key>
-          <Property Name="idModule" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="permissions">
           <Key>
             <PropertyRef Name="idPermission" />
           </Key>
           <Property Name="idPermission" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdRole" Type="Int32" Nullable="false" />
-          <Property Name="IdModule" Type="Int32" Nullable="false" />
           <Property Name="Read" Type="Int16" />
           <Property Name="Create" Type="Int16" />
           <Property Name="Update" Type="Int16" />
@@ -684,30 +500,25 @@
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
         </EntityType>
-        <EntityType Name="profilegroups">
+        <EntityType Name="product">
           <Key>
-            <PropertyRef Name="IdProfileGroup" />
+            <PropertyRef Name="IdCoupon" />
           </Key>
-          <Property Name="IdProfileGroup" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
-          <Property Name="IsFixed" Type="Int32" />
-          <Property Name="AppVersion" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
-          <Property Name="Geolocation" Type="Int32" />
-          <Property Name="PushNotification" Type="Int32" />
-          <Property Name="SMSNotification" Type="Int32" />
-          <Property Name="EmailNotification" Type="Int32" />
-          <Property Name="PostalNotification" Type="Int32" />
-          <Property Name="MinAge" Type="Int32" />
-          <Property Name="MembersCount" Type="Int32" />
-          <Property Name="MembersComputingDatetime" Type="DateTime" Precision="0" />
-          <Property Name="LockId" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
-          <Property Name="LockDate" Type="DateTime" Precision="0" />
+          <Property Name="IdCoupon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PromoCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TargetURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Int32" />
+          <Property Name="StartDatetime" Type="DateTime" Precision="0" />
+          <Property Name="ExpirationDatetime" Type="DateTime" Precision="0" />
+          <Property Name="ItemOrder" Type="Int32" />
+          <Property Name="IdStore" Type="Int32" Nullable="false" />
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="coupons" Relationship="CuponeraModel.coupons_fk_ix_coupons_profilegroupid" FromRole="profilegroups" ToRole="coupons" />
+          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_coupon_store" FromRole="product" ToRole="store" />
         </EntityType>
-        <EntityType Name="profiles">
+        <EntityType Name="profile">
           <Key>
             <PropertyRef Name="IdProfile" />
           </Key>
@@ -742,52 +553,30 @@
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="deviceos" Relationship="CuponeraModel.profiles_fk_Profiles_DeviceOs1" FromRole="profiles" ToRole="deviceos" />
-          <NavigationProperty Name="devicetypes" Relationship="CuponeraModel.profiles_fk_Profiles_DeviceTypes1" FromRole="profiles" ToRole="devicetypes" />
-          <NavigationProperty Name="states" Relationship="CuponeraModel.profiles_fk_idstate" FromRole="profiles" ToRole="states" />
+          <NavigationProperty Name="deviceos" Relationship="CuponeraModel.profiles_fk_Profiles_DeviceOs1" FromRole="profile" ToRole="deviceos" />
+          <NavigationProperty Name="devicetypes" Relationship="CuponeraModel.profiles_fk_Profiles_DeviceTypes1" FromRole="profile" ToRole="devicetypes" />
+          <NavigationProperty Name="state" Relationship="CuponeraModel.profiles_fk_idstate" FromRole="profile" ToRole="state" />
         </EntityType>
-        <EntityType Name="roles">
+        <EntityType Name="role">
           <Key>
             <PropertyRef Name="idRole" />
           </Key>
           <Property Name="idRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="Rolescol" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="CuponeraModel.FK_user_role" FromRole="role" ToRole="user" />
         </EntityType>
-        <EntityType Name="socialfeedaccesslog">
-          <Key>
-            <PropertyRef Name="IdSocialFeedAccessLog" />
-          </Key>
-          <Property Name="IdSocialFeedAccessLog" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Source" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="socialupdates">
-          <Key>
-            <PropertyRef Name="IdSocialUpdate" />
-          </Key>
-          <Property Name="IdSocialUpdate" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdSourceItem" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
-          <Property Name="Text" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
-          <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="TargetURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Source" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="SocialItemDatetime" Type="DateTime" Precision="0" />
-          <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="states">
+        <EntityType Name="state">
           <Key>
             <PropertyRef Name="IdState" />
           </Key>
           <Property Name="IdState" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="profiles" Relationship="CuponeraModel.profiles_fk_idstate" FromRole="states" ToRole="profiles" />
-          <NavigationProperty Name="stores" Relationship="CuponeraModel.stores_IdState" FromRole="states" ToRole="stores" />
+          <Property Name="Link" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="profile" Relationship="CuponeraModel.profiles_fk_idstate" FromRole="state" ToRole="profile" />
+          <NavigationProperty Name="store" Relationship="CuponeraModel.stores_IdState" FromRole="state" ToRole="store" />
         </EntityType>
-        <EntityType Name="stores">
+        <EntityType Name="store">
           <Key>
             <PropertyRef Name="IdStore" />
           </Key>
@@ -806,7 +595,22 @@
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="states" Relationship="CuponeraModel.stores_IdState" FromRole="stores" ToRole="states" />
+          <NavigationProperty Name="product" Relationship="CuponeraModel.FK_coupon_store" FromRole="store" ToRole="product" />
+          <NavigationProperty Name="state" Relationship="CuponeraModel.stores_IdState" FromRole="store" ToRole="state" />
+          <NavigationProperty Name="userStore" Relationship="CuponeraModel.FK_roleStore_store" FromRole="store" ToRole="userStore" />
+        </EntityType>
+        <EntityType Name="subscription">
+          <Key>
+            <PropertyRef Name="Idsubscription" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pricing" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="SortFactor" Type="Int32" Nullable="false" />
+          <Property Name="Idsubscription" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
+          <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
+          <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="userSubscription" Relationship="CuponeraModel.FK_userSubscription_subscription" FromRole="subscription" ToRole="userSubscription" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -818,7 +622,7 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="users">
+        <EntityType Name="user">
           <Key>
             <PropertyRef Name="IdUser" />
           </Key>
@@ -830,31 +634,33 @@
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="role" Relationship="CuponeraModel.FK_user_role" FromRole="user" ToRole="role" />
+          <NavigationProperty Name="userStore" Relationship="CuponeraModel.FK_userStore_user" FromRole="user" ToRole="userStore" />
+          <NavigationProperty Name="userSubscription" Relationship="CuponeraModel.FK_userSubscription_user" FromRole="user" ToRole="userSubscription" />
         </EntityType>
-        <Association Name="coupons_fk_ix_coupons_profilegroupid">
-          <End Type="CuponeraModel.profilegroups" Role="profilegroups" Multiplicity="0..1" />
-          <End Type="CuponeraModel.coupons" Role="coupons" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="profilegroups">
-              <PropertyRef Name="IdProfileGroup" />
-            </Principal>
-            <Dependent Role="coupons">
-              <PropertyRef Name="IdProfileGroup" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="enabledsections_ix_es_IdDeviceOs">
-          <End Type="CuponeraModel.deviceos" Role="deviceos" Multiplicity="0..1" />
-          <End Type="CuponeraModel.enabledsections" Role="enabledsections" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="deviceos">
-              <PropertyRef Name="IdDeviceOs" />
-            </Principal>
-            <Dependent Role="enabledsections">
-              <PropertyRef Name="IdDeviceOs" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="userStore">
+          <Key>
+            <PropertyRef Name="IdUserStore" />
+          </Key>
+          <Property Name="IdUserStore" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="IdStore" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_roleStore_store" FromRole="userStore" ToRole="store" />
+          <NavigationProperty Name="user" Relationship="CuponeraModel.FK_userStore_user" FromRole="userStore" ToRole="user" />
+        </EntityType>
+        <EntityType Name="userSubscription">
+          <Key>
+            <PropertyRef Name="IdUserSubscription" />
+          </Key>
+          <Property Name="IdUserSubscription" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="IdSubscription" Type="Int32" Nullable="false" />
+          <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
+          <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
+          <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="subscription" Relationship="CuponeraModel.FK_userSubscription_subscription" FromRole="userSubscription" ToRole="subscription" />
+          <NavigationProperty Name="user" Relationship="CuponeraModel.FK_userSubscription_user" FromRole="userSubscription" ToRole="user" />
+        </EntityType>
         <Association Name="imagesizes_ix_IdDeviceOs">
           <End Type="CuponeraModel.deviceos" Role="deviceos" Multiplicity="1" />
           <End Type="CuponeraModel.imagesizes" Role="imagesizes" Multiplicity="*" />
@@ -869,112 +675,130 @@
         </Association>
         <Association Name="profiles_fk_Profiles_DeviceOs1">
           <End Type="CuponeraModel.deviceos" Role="deviceos" Multiplicity="1" />
-          <End Type="CuponeraModel.profiles" Role="profiles" Multiplicity="*" />
+          <End Type="CuponeraModel.profile" Role="profile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="deviceos">
               <PropertyRef Name="IdDeviceOs" />
             </Principal>
-            <Dependent Role="profiles">
+            <Dependent Role="profile">
               <PropertyRef Name="IdDeviceOs" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="profiles_fk_Profiles_DeviceTypes1">
           <End Type="CuponeraModel.devicetypes" Role="devicetypes" Multiplicity="1" />
-          <End Type="CuponeraModel.profiles" Role="profiles" Multiplicity="*" />
+          <End Type="CuponeraModel.profile" Role="profile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="devicetypes">
               <PropertyRef Name="IdDeviceType" />
             </Principal>
-            <Dependent Role="profiles">
+            <Dependent Role="profile">
               <PropertyRef Name="IdDeviceType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="lookbookattributes_fk_LookBookFilters_LookBookFiltersCategories1">
-          <End Type="CuponeraModel.lookbookattributecategories" Role="lookbookattributecategories" Multiplicity="1" />
-          <End Type="CuponeraModel.lookbookattributes" Role="lookbookattributes" Multiplicity="*" />
+        <Association Name="FK_coupon_store">
+          <End Type="CuponeraModel.store" Role="store" Multiplicity="1" />
+          <End Type="CuponeraModel.product" Role="product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="lookbookattributecategories">
-              <PropertyRef Name="IdLookBookAttributeCategory" />
+            <Principal Role="store">
+              <PropertyRef Name="IdStore" />
             </Principal>
-            <Dependent Role="lookbookattributes">
-              <PropertyRef Name="IdLookBookAttributeCategory" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="lookbookitemattributes_fk_LookBookItemAttributes_LookBookAttributes1">
-          <End Type="CuponeraModel.lookbookattributes" Role="lookbookattributes" Multiplicity="1" />
-          <End Type="CuponeraModel.lookbookitemattributes" Role="lookbookitemattributes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="lookbookattributes">
-              <PropertyRef Name="IdLookBookAttribute" />
-            </Principal>
-            <Dependent Role="lookbookitemattributes">
-              <PropertyRef Name="IdLookBookAttribute" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="lookbookitemattributes_fk_LookBookItemAttributes_LookBookItems1">
-          <End Type="CuponeraModel.lookbookitems" Role="lookbookitems" Multiplicity="1" />
-          <End Type="CuponeraModel.lookbookitemattributes" Role="lookbookitemattributes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="lookbookitems">
-              <PropertyRef Name="IdLookBookItem" />
-            </Principal>
-            <Dependent Role="lookbookitemattributes">
-              <PropertyRef Name="IdLookBookItem" />
+            <Dependent Role="product">
+              <PropertyRef Name="IdStore" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="profiles_fk_idstate">
-          <End Type="CuponeraModel.states" Role="states" Multiplicity="0..1" />
-          <End Type="CuponeraModel.profiles" Role="profiles" Multiplicity="*" />
+          <End Type="CuponeraModel.state" Role="state" Multiplicity="0..1" />
+          <End Type="CuponeraModel.profile" Role="profile" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="states">
+            <Principal Role="state">
               <PropertyRef Name="IdState" />
             </Principal>
-            <Dependent Role="profiles">
+            <Dependent Role="profile">
               <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role">
+          <End Type="CuponeraModel.role" Role="role" Multiplicity="0..1" />
+          <End Type="CuponeraModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="idRole" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="IdRole" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="stores_IdState">
-          <End Type="CuponeraModel.states" Role="states" Multiplicity="1" />
-          <End Type="CuponeraModel.stores" Role="stores" Multiplicity="*" />
+          <End Type="CuponeraModel.state" Role="state" Multiplicity="1" />
+          <End Type="CuponeraModel.store" Role="store" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="states">
+            <Principal Role="state">
               <PropertyRef Name="IdState" />
             </Principal>
-            <Dependent Role="stores">
+            <Dependent Role="store">
               <PropertyRef Name="IdState" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_roleStore_store">
+          <End Type="CuponeraModel.store" Role="store" Multiplicity="1" />
+          <End Type="CuponeraModel.userStore" Role="userStore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="IdStore" />
+            </Principal>
+            <Dependent Role="userStore">
+              <PropertyRef Name="IdStore" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userSubscription_subscription">
+          <End Type="CuponeraModel.subscription" Role="subscription" Multiplicity="1" />
+          <End Type="CuponeraModel.userSubscription" Role="userSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subscription">
+              <PropertyRef Name="Idsubscription" />
+            </Principal>
+            <Dependent Role="userSubscription">
+              <PropertyRef Name="IdSubscription" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userStore_user">
+          <End Type="CuponeraModel.user" Role="user" Multiplicity="1" />
+          <End Type="CuponeraModel.userStore" Role="userStore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="userStore">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userSubscription_user">
+          <End Type="CuponeraModel.user" Role="user" Multiplicity="1" />
+          <End Type="CuponeraModel.userSubscription" Role="userSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="userSubscription">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CuponeraModelStoreContainer" CdmEntityContainer="CuponeraEntities">
-          <EntitySetMapping Name="coupons">
-            <EntityTypeMapping TypeName="CuponeraModel.coupons">
-              <MappingFragment StoreEntitySet="coupons">
-                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
-                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
-                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
-                <ScalarProperty Name="IdProfileGroup" ColumnName="IdProfileGroup" />
-                <ScalarProperty Name="ItemOrder" ColumnName="ItemOrder" />
-                <ScalarProperty Name="ExpirationDatetime" ColumnName="ExpirationDatetime" />
-                <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="TargetURL" ColumnName="TargetURL" />
-                <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="IdCoupon" ColumnName="IdCoupon" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="deviceos">
             <EntityTypeMapping TypeName="CuponeraModel.deviceos">
               <MappingFragment StoreEntitySet="deviceos">
@@ -991,31 +815,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="enabledsections">
-            <EntityTypeMapping TypeName="CuponeraModel.enabledsections">
-              <MappingFragment StoreEntitySet="enabledsections">
-                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
-                <ScalarProperty Name="IdDeviceOs" ColumnName="IdDeviceOs" />
-                <ScalarProperty Name="Section" ColumnName="Section" />
-                <ScalarProperty Name="IdEnabledSection" ColumnName="IdEnabledSection" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="homeoffers">
-            <EntityTypeMapping TypeName="CuponeraModel.homeoffers">
-              <MappingFragment StoreEntitySet="homeoffers">
-                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
-                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
-                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
-                <ScalarProperty Name="ItemOrder" ColumnName="ItemOrder" />
-                <ScalarProperty Name="ExpirationDatetime" ColumnName="ExpirationDatetime" />
-                <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="TargetURL" ColumnName="TargetURL" />
-                <ScalarProperty Name="IdHomeOffer" ColumnName="IdHomeOffer" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="imagesizes">
             <EntityTypeMapping TypeName="CuponeraModel.imagesizes">
               <MappingFragment StoreEntitySet="imagesizes">
@@ -1027,62 +826,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="lookbookattributecategories">
-            <EntityTypeMapping TypeName="CuponeraModel.lookbookattributecategories">
-              <MappingFragment StoreEntitySet="lookbookattributecategories">
-                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
-                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
-                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
-                <ScalarProperty Name="ItemOrder" ColumnName="ItemOrder" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="IdLookBookAttributeCategory" ColumnName="IdLookBookAttributeCategory" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="lookbookattributes">
-            <EntityTypeMapping TypeName="CuponeraModel.lookbookattributes">
-              <MappingFragment StoreEntitySet="lookbookattributes">
-                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
-                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
-                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
-                <ScalarProperty Name="ItemOrder" ColumnName="ItemOrder" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdLookBookAttributeCategory" ColumnName="IdLookBookAttributeCategory" />
-                <ScalarProperty Name="IdLookBookAttribute" ColumnName="IdLookBookAttribute" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="lookbookitemattributes">
-            <EntityTypeMapping TypeName="CuponeraModel.lookbookitemattributes">
-              <MappingFragment StoreEntitySet="lookbookitemattributes">
-                <ScalarProperty Name="IdLookBookAttribute" ColumnName="IdLookBookAttribute" />
-                <ScalarProperty Name="IdLookBookItem" ColumnName="IdLookBookItem" />
-                <ScalarProperty Name="idLookBookItemAttribute" ColumnName="idLookBookItemAttribute" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="lookbookitems">
-            <EntityTypeMapping TypeName="CuponeraModel.lookbookitems">
-              <MappingFragment StoreEntitySet="lookbookitems">
-                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
-                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
-                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
-                <ScalarProperty Name="LotId" ColumnName="LotId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdLookBookItem" ColumnName="IdLookBookItem" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="modules">
-            <EntityTypeMapping TypeName="CuponeraModel.modules">
-              <MappingFragment StoreEntitySet="modules">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="idModule" ColumnName="idModule" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="permissions">
             <EntityTypeMapping TypeName="CuponeraModel.permissions">
               <MappingFragment StoreEntitySet="permissions">
@@ -1090,7 +833,6 @@
                 <ScalarProperty Name="Update" ColumnName="Update" />
                 <ScalarProperty Name="Create" ColumnName="Create" />
                 <ScalarProperty Name="Read" ColumnName="Read" />
-                <ScalarProperty Name="IdModule" ColumnName="IdModule" />
                 <ScalarProperty Name="IdRole" ColumnName="IdRole" />
                 <ScalarProperty Name="idPermission" ColumnName="idPermission" />
               </MappingFragment>
@@ -1107,32 +849,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="profilegroups">
-            <EntityTypeMapping TypeName="CuponeraModel.profilegroups">
-              <MappingFragment StoreEntitySet="profilegroups">
+          <EntitySetMapping Name="product">
+            <EntityTypeMapping TypeName="CuponeraModel.product">
+              <MappingFragment StoreEntitySet="product">
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
-                <ScalarProperty Name="LockDate" ColumnName="LockDate" />
-                <ScalarProperty Name="LockId" ColumnName="LockId" />
-                <ScalarProperty Name="MembersComputingDatetime" ColumnName="MembersComputingDatetime" />
-                <ScalarProperty Name="MembersCount" ColumnName="MembersCount" />
-                <ScalarProperty Name="MinAge" ColumnName="MinAge" />
-                <ScalarProperty Name="PostalNotification" ColumnName="PostalNotification" />
-                <ScalarProperty Name="EmailNotification" ColumnName="EmailNotification" />
-                <ScalarProperty Name="SMSNotification" ColumnName="SMSNotification" />
-                <ScalarProperty Name="PushNotification" ColumnName="PushNotification" />
-                <ScalarProperty Name="Geolocation" ColumnName="Geolocation" />
-                <ScalarProperty Name="AppVersion" ColumnName="AppVersion" />
-                <ScalarProperty Name="IsFixed" ColumnName="IsFixed" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdProfileGroup" ColumnName="IdProfileGroup" />
+                <ScalarProperty Name="IdStore" ColumnName="IdStore" />
+                <ScalarProperty Name="ItemOrder" ColumnName="ItemOrder" />
+                <ScalarProperty Name="ExpirationDatetime" ColumnName="ExpirationDatetime" />
+                <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="TargetURL" ColumnName="TargetURL" />
+                <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="IdCoupon" ColumnName="IdCoupon" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="profiles">
-            <EntityTypeMapping TypeName="CuponeraModel.profiles">
-              <MappingFragment StoreEntitySet="profiles">
+          <EntitySetMapping Name="profile">
+            <EntityTypeMapping TypeName="CuponeraModel.profile">
+              <MappingFragment StoreEntitySet="profile">
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
@@ -1167,52 +904,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="roles">
-            <EntityTypeMapping TypeName="CuponeraModel.roles">
-              <MappingFragment StoreEntitySet="roles">
+          <EntitySetMapping Name="role">
+            <EntityTypeMapping TypeName="CuponeraModel.role">
+              <MappingFragment StoreEntitySet="role">
                 <ScalarProperty Name="Rolescol" ColumnName="Rolescol" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="idRole" ColumnName="idRole" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="socialfeedaccesslog">
-            <EntityTypeMapping TypeName="CuponeraModel.socialfeedaccesslog">
-              <MappingFragment StoreEntitySet="socialfeedaccesslog">
-                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
-                <ScalarProperty Name="Source" ColumnName="Source" />
-                <ScalarProperty Name="IdSocialFeedAccessLog" ColumnName="IdSocialFeedAccessLog" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="socialupdates">
-            <EntityTypeMapping TypeName="CuponeraModel.socialupdates">
-              <MappingFragment StoreEntitySet="socialupdates">
-                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
-                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
-                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
-                <ScalarProperty Name="SocialItemDatetime" ColumnName="SocialItemDatetime" />
-                <ScalarProperty Name="Source" ColumnName="Source" />
-                <ScalarProperty Name="TargetURL" ColumnName="TargetURL" />
-                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdSourceItem" ColumnName="IdSourceItem" />
-                <ScalarProperty Name="IdSocialUpdate" ColumnName="IdSocialUpdate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="states">
-            <EntityTypeMapping TypeName="CuponeraModel.states">
-              <MappingFragment StoreEntitySet="states">
+          <EntitySetMapping Name="state">
+            <EntityTypeMapping TypeName="CuponeraModel.state">
+              <MappingFragment StoreEntitySet="state">
+                <ScalarProperty Name="Link" ColumnName="Link" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="IdState" ColumnName="IdState" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="stores">
-            <EntityTypeMapping TypeName="CuponeraModel.stores">
-              <MappingFragment StoreEntitySet="stores">
+          <EntitySetMapping Name="store">
+            <EntityTypeMapping TypeName="CuponeraModel.store">
+              <MappingFragment StoreEntitySet="store">
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
@@ -1231,6 +943,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="subscription">
+            <EntityTypeMapping TypeName="CuponeraModel.subscription">
+              <MappingFragment StoreEntitySet="subscription">
+                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
+                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
+                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
+                <ScalarProperty Name="Idsubscription" ColumnName="Idsubscription" />
+                <ScalarProperty Name="SortFactor" ColumnName="SortFactor" />
+                <ScalarProperty Name="Pricing" ColumnName="Pricing" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="CuponeraModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -1242,9 +967,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="CuponeraModel.users">
-              <MappingFragment StoreEntitySet="users">
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="CuponeraModel.user">
+              <MappingFragment StoreEntitySet="user">
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
@@ -1253,6 +978,27 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userStore">
+            <EntityTypeMapping TypeName="CuponeraModel.userStore">
+              <MappingFragment StoreEntitySet="userStore">
+                <ScalarProperty Name="IdStore" ColumnName="IdStore" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdUserStore" ColumnName="IdUserStore" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userSubscription">
+            <EntityTypeMapping TypeName="CuponeraModel.userSubscription">
+              <MappingFragment StoreEntitySet="userSubscription">
+                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
+                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
+                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
+                <ScalarProperty Name="IdSubscription" ColumnName="IdSubscription" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdUserSubscription" ColumnName="IdUserSubscription" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

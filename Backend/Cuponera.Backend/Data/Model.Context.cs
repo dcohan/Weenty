@@ -25,27 +25,20 @@ namespace Cuponera.Backend.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<coupons> coupons { get; set; }
         public DbSet<deviceos> deviceos { get; set; }
         public DbSet<devicetypes> devicetypes { get; set; }
-        public DbSet<enabledsections> enabledsections { get; set; }
-        public DbSet<homeoffers> homeoffers { get; set; }
         public DbSet<imagesizes> imagesizes { get; set; }
-        public DbSet<lookbookattributecategories> lookbookattributecategories { get; set; }
-        public DbSet<lookbookattributes> lookbookattributes { get; set; }
-        public DbSet<lookbookitemattributes> lookbookitemattributes { get; set; }
-        public DbSet<lookbookitems> lookbookitems { get; set; }
-        public DbSet<modules> modules { get; set; }
         public DbSet<permissions> permissions { get; set; }
         public DbSet<prehomeimages> prehomeimages { get; set; }
-        public DbSet<profilegroups> profilegroups { get; set; }
-        public DbSet<profiles> profiles { get; set; }
-        public DbSet<roles> roles { get; set; }
-        public DbSet<socialfeedaccesslog> socialfeedaccesslog { get; set; }
-        public DbSet<socialupdates> socialupdates { get; set; }
-        public DbSet<states> states { get; set; }
-        public DbSet<stores> stores { get; set; }
+        public DbSet<product> product { get; set; }
+        public DbSet<profile> profile { get; set; }
+        public DbSet<role> role { get; set; }
+        public DbSet<state> state { get; set; }
+        public DbSet<store> store { get; set; }
+        public DbSet<subscription> subscription { get; set; }
         public DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public DbSet<users> users { get; set; }
+        public DbSet<user> user { get; set; }
+        public DbSet<userStore> userStore { get; set; }
+        public DbSet<userSubscription> userSubscription { get; set; }
     }
 }

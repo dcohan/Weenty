@@ -16,12 +16,12 @@ namespace Cuponera.Backend.Data
     {
         public devicetypes()
         {
-            this.profiles = new HashSet<profiles>();
+            this.profile = new HashSet<profile>();
         }
     
         public int IdDeviceType { get; set; }
         public string Code { get; set; }
     
-        public virtual ICollection<profiles> profiles { get; set; }
+        public virtual ICollection<profile> profile { get; set; }
     }
 }
