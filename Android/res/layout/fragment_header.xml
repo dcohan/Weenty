@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/headerHeight"
+        android:background="@drawable/web_view_header_background" >
+
+        <TextView
+            android:id="@+id/headerTitle"
+            style="@style/HeaderText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical" >
+
+            <ImageView
+                android:id="@+id/homeButton"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/unknown"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/homeicon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical" >
+
+            <ImageView
+                android:id="@+id/auxiliarImage"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/unknown"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/homeicon"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/menuButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/unknown"
+                android:padding="10dp"
+                android:scaleType="center"
+                android:src="@drawable/menu_top" />
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <FrameLayout
+            android:id="@+id/menuOutside"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:visibility="gone" />
+        
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.payless.navigation.MenuFragment"
+        android:layout_width="@dimen/menuWidth"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+</LinearLayout>

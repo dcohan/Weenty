@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="10dp"
+    android:layout_height="10dp" >
+
+    <ImageView
+        android:id="@+id/dot"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:contentDescription="@string/unknown"
+        android:src="@drawable/navigation_dot"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp" />
+
+</LinearLayout>

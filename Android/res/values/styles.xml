@@ -1,0 +1,70 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <!-- Menu -->
+    <style name="MenuButtonsStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@color/orange_dark</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">18dp</item>
+    </style>
+
+    <!-- Header -->
+    <style name="HeaderText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">@color/gray_light</item>
+        <item name="android:shadowDx">-1</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="store_checkBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:paddingBottom">@dimen/checkBox_padding</item>
+        <item name="android:paddingTop">@dimen/checkBox_padding</item>
+        <item name="android:button">@drawable/checkbox_store</item>
+    </style>
+
+    <style name="checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:drawableLeft">@drawable/checkbox</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:textSize">@dimen/forms_text_size</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="ToggleButtonSettings">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">74dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:button">@drawable/selector_settings_button</item>
+        <item name="android:textOn">@null</item>
+        <item name="android:textOff">@null</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+</resources>

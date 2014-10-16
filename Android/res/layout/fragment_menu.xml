@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/menuButtonHome"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/home_drop"
+            android:text="@string/menu_home"
+            android:layout_marginBottom="1dp" />
+
+        <Button
+            android:id="@+id/menuButtonShop"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/shop_drop"
+            android:text="@string/menu_shop"
+            android:layout_marginBottom="1dp" />
+
+        <Button
+            android:id="@+id/menuButtonCoupons"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/coupons_drop"
+            android:text="@string/menu_coupons"
+            android:layout_marginBottom="1dp" />
+
+        <Button
+            android:id="@+id/menuButtonLookBook"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/lookbook_drop"
+            android:text="@string/menu_look_book"
+            android:layout_marginBottom="1dp" />
+
+        <Button
+            android:id="@+id/menuButtonProfile"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/profile_drop"
+            android:text="@string/menu_profile"
+            android:layout_marginBottom="1dp" />
+
+        <Button
+            android:id="@+id/menuButtonSocial"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/social_drop"
+            android:text="@string/menu_social"
+            android:layout_marginBottom="1dp" />
+
+        <Button
+            android:id="@+id/menuButtonStores"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/stores_drop"
+            android:text="@string/menu_stores"
+            android:layout_marginBottom="1dp" />
+        
+        <Button
+            android:id="@+id/menuButtonSettings"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/settings_drop"
+            android:text="@string/menu_settings" />
+        
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+
+    <target name="-pre-build" depends="DisableDebuggable, InsertCommitId">
+
+        <property name="config-target-path" value="${source.dir}/com/payless/service/config" />
+
+        <!-- Copy the configuration file, replacing tokens in the file. -->
+
+        <copy encoding="utf-8" file="config/BuildConfig.java" overwrite="true" todir="${config-target-path}" >
+
+            <filterset>
+                <filter token="CONFIG.ENDPOINT" value="${endpoint}" />
+                <filter token="CONFIG.LOGGING" value="${logging}" />
+                </filterset>
+        </copy>
+
+    </target>
+    
+    <target name="help">
+    </target>
+
+	<target name="DisableDebuggable" description="Change debbug mode in AndroidManifest.xml">
+
+        <echo message="Debug Setting: ${debuggable.enabled}" />
+            
+        <replaceregexp file="AndroidManifest.xml"
+                match='android:debuggable="[^"]*"'
+                replace='android:debuggable="${debuggable.enabled}"' />
+    </target>
+	
+	<target name="UpdateVersionName" description="Update VersionName in AndroidManifest.xml">
+
+        <echo>VersionCode: ${minor.build}</echo>
+            
+        <replaceregexp file="AndroidManifest.xml"
+                match='android:versionName="(.*)"'
+                replace='android:versionName="\1.${minor.build}"' />
+    </target>
+	
+	<target name="InsertCommitId" description="Insert commitId in AndroidManifest.xml">
+
+        <echo>SCM CommitID: ${scm.commitid}</echo>
+            
+        <replaceregexp file="AndroidManifest.xml"
+                match='android:name="GIT_SHA" android:value="[^"]*"'
+                replace='android:name="GIT_SHA" android:value="${scm.commitid}"' />
+    </target>
+	
+	
+
+</project>
