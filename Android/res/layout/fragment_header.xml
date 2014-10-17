@@ -76,7 +76,7 @@
         
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.payless.navigation.MenuFragment"
+        android:name="com.cuponera.navigation.MenuFragment"
         android:layout_width="@dimen/menuWidth"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true" />
