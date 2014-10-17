@@ -185,7 +185,7 @@
     <Compile Include="Controllers\deviceosController.cs" />
     <Compile Include="Controllers\devicetypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\imagesizesController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\permissionsController.cs" />
     <Compile Include="Controllers\prehomeimagesController.cs" />
     <Compile Include="Controllers\productsController.cs" />
@@ -199,9 +199,6 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\devicetypes.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\imagesizes.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Model.Context.cs">
@@ -380,7 +377,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -149,13 +149,6 @@ namespace Cuponera.Backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/deviceos(5)/imagesizes
-        [EnableQuery]
-        public IQueryable<imagesizes> Getimagesizes([FromODataUri] int key)
-        {
-            return db.deviceos.Where(m => m.IdDeviceOs == key).SelectMany(m => m.imagesizes);
-        }
-
         // GET: odata/deviceos(5)/profile
         [EnableQuery]
         public IQueryable<profile> Getprofile([FromODataUri] int key)

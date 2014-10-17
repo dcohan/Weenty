@@ -27,7 +27,6 @@ namespace Cuponera.Backend.Data
     
         public DbSet<deviceos> deviceos { get; set; }
         public DbSet<devicetypes> devicetypes { get; set; }
-        public DbSet<imagesizes> imagesizes { get; set; }
         public DbSet<permissions> permissions { get; set; }
         public DbSet<prehomeimages> prehomeimages { get; set; }
         public DbSet<product> product { get; set; }

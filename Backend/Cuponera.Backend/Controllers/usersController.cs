@@ -46,6 +46,13 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.user.Where(user => user.IdUser == key));
         }
 
+        [HttpGet]
+        public async Task<IHttpActionResult> Login(ODataActionParameters parameters)
+        {
+            
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
         // PUT: odata/users(5)
         public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<user> patch)
         {

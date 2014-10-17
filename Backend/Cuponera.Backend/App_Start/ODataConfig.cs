@@ -16,25 +16,29 @@ namespace Cuponera.Backend
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<deviceos>("deviceos");
             builder.EntitySet<devicetypes>("devicetypes");
-            builder.EntitySet<imagesizes>("imagesizes");
             builder.EntitySet<permissions>("permissions");
             builder.EntitySet<prehomeimages>("prehomeimages");
-            builder.EntitySet<product>("product");
-            builder.EntitySet<profile>("profile");
-            builder.EntitySet<role>("role");
-            builder.EntitySet<state>("state");
-            builder.EntitySet<store>("store");
-            builder.EntitySet<subscription>("subscription");
-            builder.EntitySet<user>("user");
-            builder.EntitySet<userStore>("userStore");
-            builder.EntitySet<userSubscription>("userSubscription");
+            builder.EntitySet<product>("products");
+            builder.EntitySet<profile>("profiles");
+            builder.EntitySet<role>("roles");
+            builder.EntitySet<state>("states");
+            builder.EntitySet<store>("stores");
+            builder.EntitySet<subscription>("subscriptions");
+            builder.EntitySet<userStore>("userStores");
+            builder.EntitySet<userSubscription>("userSubscriptions");
+
+            // New code:
+            builder.Namespace = "usersService";
+            builder.EntitySet<user>("users").EntityType.Collection
+                .Action("Login")
+                .Parameter<string>("UserName");
 
             return builder.GetEdmModel();
         }
 
         public static void Register(HttpConfiguration config)
         {
-            config.Routes.MapODataServiceRoute("odata", "api", GetModel());
+            config.Routes.MapODataServiceRoute("odata", "data", GetModel());
             config.EnsureInitialized();
         }
     }

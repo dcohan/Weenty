@@ -5,22 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5e1d9c60ab864b409cf58551d7476130" Name="Diagram1" ZoomLevel="100">
-        <EntityTypeShape EntityType="CuponeraModel.deviceos" Width="1.5" PointX="5.75" PointY="13.125" />
-        <EntityTypeShape EntityType="CuponeraModel.devicetypes" Width="1.5" PointX="5.75" PointY="15.625" />
-        <EntityTypeShape EntityType="CuponeraModel.imagesizes" Width="1.5" PointX="8" PointY="15" />
-        <EntityTypeShape EntityType="CuponeraModel.permissions" Width="1.5" PointX="7.75" PointY="1.75" />
-        <EntityTypeShape EntityType="CuponeraModel.prehomeimages" Width="1.5" PointX="9.75" PointY="1.75" />
-        <EntityTypeShape EntityType="CuponeraModel.product" Width="1.5" PointX="5.25" PointY="8.5" />
-        <EntityTypeShape EntityType="CuponeraModel.profile" Width="1.5" PointX="8" PointY="6.375" />
-        <EntityTypeShape EntityType="CuponeraModel.role" Width="1.5" PointX="0.75" PointY="3.875" />
-        <EntityTypeShape EntityType="CuponeraModel.state" Width="1.5" PointX="0.75" PointY="9.25" />
-        <EntityTypeShape EntityType="CuponeraModel.store" Width="1.5" PointX="3" PointY="8" />
-        <EntityTypeShape EntityType="CuponeraModel.subscription" Width="1.5" PointX="3" PointY="13.5" />
-        <EntityTypeShape EntityType="CuponeraModel.sysdiagrams" Width="1.5" PointX="10.75" PointY="4.75" />
-        <EntityTypeShape EntityType="CuponeraModel.user" Width="1.5" PointX="3" PointY="3.125" />
-        <EntityTypeShape EntityType="CuponeraModel.userStore" Width="1.5" PointX="5.25" PointY="0.75" />
-        <EntityTypeShape EntityType="CuponeraModel.userSubscription" Width="1.5" PointX="5.25" PointY="3.5" />
-        <AssociationConnector Association="CuponeraModel.imagesizes_ix_IdDeviceOs" />
+        <EntityTypeShape EntityType="CuponeraModel.deviceos" Width="1.5" PointX="5.75" PointY="9" />
+        <EntityTypeShape EntityType="CuponeraModel.devicetypes" Width="1.5" PointX="5.75" PointY="17.375" />
+        <EntityTypeShape EntityType="CuponeraModel.permissions" Width="1.5" PointX="7.75" PointY="2" />
+        <EntityTypeShape EntityType="CuponeraModel.prehomeimages" Width="1.5" PointX="7.75" PointY="5" />
+        <EntityTypeShape EntityType="CuponeraModel.product" Width="1.5" PointX="5.25" PointY="12.125" />
+        <EntityTypeShape EntityType="CuponeraModel.profile" Width="1.5" PointX="8" PointY="11.75" />
+        <EntityTypeShape EntityType="CuponeraModel.role" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="CuponeraModel.state" Width="1.5" PointX="0.75" PointY="13" />
+        <EntityTypeShape EntityType="CuponeraModel.store" Width="1.5" PointX="3" PointY="11.75" />
+        <EntityTypeShape EntityType="CuponeraModel.subscription" Width="1.5" PointX="3" PointY="8.375" />
+        <EntityTypeShape EntityType="CuponeraModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="8" />
+        <EntityTypeShape EntityType="CuponeraModel.user" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="CuponeraModel.userStore" Width="1.5" PointX="5.25" PointY="4" />
+        <EntityTypeShape EntityType="CuponeraModel.userSubscription" Width="1.5" PointX="5.25" PointY="0.75" />
         <AssociationConnector Association="CuponeraModel.profiles_fk_Profiles_DeviceOs1" />
         <AssociationConnector Association="CuponeraModel.profiles_fk_Profiles_DeviceTypes1" />
         <AssociationConnector Association="CuponeraModel.FK_coupon_store" />

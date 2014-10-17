@@ -21,26 +21,10 @@ namespace Cuponera.Backend.Data
         public string AppVersion { get; set; }
         public Nullable<int> ResolutionWidth { get; set; }
         public Nullable<int> ResolutionHeight { get; set; }
-        public Nullable<int> CompletedRegistration { get; set; }
         public Nullable<double> Latitude { get; set; }
         public Nullable<double> Longitude { get; set; }
         public Nullable<int> Geolocation { get; set; }
-        public Nullable<int> PushNotification { get; set; }
-        public Nullable<int> SMSNotification { get; set; }
-        public string Xid { get; set; }
-        public Nullable<int> EmailNotification { get; set; }
-        public Nullable<int> PostalNotification { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public Nullable<System.DateTime> BirthDate { get; set; }
-        public string Gender { get; set; }
-        public string Address_1 { get; set; }
-        public string Address_2 { get; set; }
-        public string City { get; set; }
         public string IdState { get; set; }
-        public string ZipCode { get; set; }
-        public string PhoneNumber { get; set; }
         public Nullable<System.DateTime> LastAppUseDatetime { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }

@@ -18,10 +18,12 @@ namespace Cuponera.Backend
         {
             AreaRegistration.RegisterAllAreas();
 
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
             ODataConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
             
         }
     }
