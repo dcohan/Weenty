@@ -1,4 +1,5 @@
 package com.cuponera.yahoo;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -6,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.SocketTimeoutException;
+import java.util.logging.Handler;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,36 +26,38 @@ import android.content.Context;
 import android.location.Location;
 import android.os.AsyncTask;
 
-import com.cuponera.yahoo.UserLocationUtils.LocationResult;
+import com.cuponera.utils.LocationServices.RequestLocationListener;
+import com.cuponera.utils.LocationServices;
+import com.cuponera.utils.Utils;
 import com.cuponera.yahoo.WeatherInfo.ForecastInfo;
 
 /**
- * A wrapper for accessing Yahoo weather informations. 
+ * A wrapper for accessing Yahoo weather informations.
+ * 
  * @author Zhenghong Wang
  */
-public class YahooWeather implements LocationResult {
-    
-    private static final int CONNECT_TIMEOUT_DEFAULT = 20 * 1000;
-    private static final int SOCKET_TIMEOUT_DEFAULT = 20 * 1000;
+public class YahooWeather {
+
+	private static final int CONNECT_TIMEOUT_DEFAULT = 20 * 1000;
+	private static final int SOCKET_TIMEOUT_DEFAULT = 20 * 1000;
 
 	public enum SEARCH_MODE {
-		GPS,
-		PLACE_NAME
+		GPS, PLACE_NAME
 	}
-	
+
 	public static final String YAHOO_WEATHER_ERROR = "Yahoo! Weather - Error";
 
 	public static final int FORECAST_INFO_MAX_SIZE = 5;
-	
+
 	private String mWoeidNumber;
 	private YahooWeatherInfoListener mWeatherInfoResult;
 	private YahooWeatherExceptionListener mExceptionListener;
 	private boolean mNeedDownloadIcons;
 	private SEARCH_MODE mSearchMode;
-	
+
 	private Context mContext;
 	private static YahooWeather mInstance = new YahooWeather();
-	
+
 	public SEARCH_MODE getSearchMode() {
 		return mSearchMode;
 	}
@@ -63,158 +67,175 @@ public class YahooWeather implements LocationResult {
 	}
 
 	/**
-	 * Get the YahooWeather instance.
-	 * Use this to query weather information from Yahoo.
+	 * Get the YahooWeather instance. Use this to query weather information from
+	 * Yahoo.
+	 * 
 	 * @return YahooWeather instance
 	 */
 	public static YahooWeather getInstance() {
-	    getInstance(CONNECT_TIMEOUT_DEFAULT, SOCKET_TIMEOUT_DEFAULT);
+		getInstance(CONNECT_TIMEOUT_DEFAULT, SOCKET_TIMEOUT_DEFAULT);
 		return mInstance;
 	}
-	
+
 	/**
-	 * Get the YahooWeather instance.
-	 * Use this to query weather information from Yahoo.
-	 * @param connectTimeout in milliseconds, 5 seconds in default
-	 * @param socketTimeout in milliseconds, 5 seconds in default
+	 * Get the YahooWeather instance. Use this to query weather information from
+	 * Yahoo.
+	 * 
+	 * @param connectTimeout
+	 *            in milliseconds, 5 seconds in default
+	 * @param socketTimeout
+	 *            in milliseconds, 5 seconds in default
 	 * @return YahooWeather instance
 	 */
 	public static YahooWeather getInstance(int connectTimeout, int socketTimeout) {
-	    return getInstance(connectTimeout, socketTimeout, false);
+		return getInstance(connectTimeout, socketTimeout, false);
 	}
-	
+
 	/**
-	 * Get the YahooWeather instance.
-	 * Use this to query weather information from Yahoo.
-	 * @param connectTimeout in milliseconds, 5 seconds in default
-	 * @param socketTimeout in milliseconds, 5 seconds in default
-	 * @param isDebbugable set if you want some debug log in Logcat
+	 * Get the YahooWeather instance. Use this to query weather information from
+	 * Yahoo.
+	 * 
+	 * @param connectTimeout
+	 *            in milliseconds, 5 seconds in default
+	 * @param socketTimeout
+	 *            in milliseconds, 5 seconds in default
+	 * @param isDebbugable
+	 *            set if you want some debug log in Logcat
 	 * @return YahooWeather instance
 	 */
 	public static YahooWeather getInstance(int connectTimeout, int socketTimeout, boolean isDebuggable) {
-	    YahooWeatherLog.setDebuggable(isDebuggable);
-	    NetworkUtils.getInstance().setConnectTimeout(connectTimeout);
-	    NetworkUtils.getInstance().setSocketTimeout(socketTimeout);
+		NetworkUtils.getInstance().setConnectTimeout(connectTimeout);
+		NetworkUtils.getInstance().setSocketTimeout(socketTimeout);
 		return mInstance;
 	}
-	
+
 	/**
-	 * Set it to true will enable downloading the default weather icons.
-	 * The Default icons are too tiny, so in most cases, you don't need them.
-	 * @param needDownloadIcons Weather it will enable downloading the default weather icons
+	 * Set it to true will enable downloading the default weather icons. The
+	 * Default icons are too tiny, so in most cases, you don't need them.
+	 * 
+	 * @param needDownloadIcons
+	 *            Weather it will enable downloading the default weather icons
 	 */
 	public void setNeedDownloadIcons(final boolean needDownloadIcons) {
 		mNeedDownloadIcons = needDownloadIcons;
 	}
-	
+
 	/**
-	 * Set exception listener. 
-	 * If this is not set, stack info will be printed in logcat if {@link isDebuggable} is set to true.
-	 * Remember, these methodas may be called on background thread. Therefore, any UI related
-	 * activities must be post to UI thread, using {@link Handler} or something else.
+	 * Set exception listener. If this is not set, stack info will be printed in
+	 * logcat if {@link isDebuggable} is set to true. Remember, these methodas
+	 * may be called on background thread. Therefore, any UI related activities
+	 * must be post to UI thread, using {@link Handler} or something else.
+	 * 
 	 * @param exceptionListener
 	 */
 	public void setExceptionListener(final YahooWeatherExceptionListener exceptionListener) {
-	    this.mExceptionListener = exceptionListener;
-	    WOEIDUtils.getInstance().setExceptionListener(exceptionListener);
+		this.mExceptionListener = exceptionListener;
+		WOEIDUtils.getInstance().setExceptionListener(exceptionListener);
 	}
-	
+
 	/**
-	 * Use a name of place to query Yahoo weather apis for weather information. 
+	 * Use a name of place to query Yahoo weather apis for weather information.
 	 * Querying will be run on a separated thread to accessing Yahoo's apis.
-	 * When it is completed, a callback will be fired.
-	 * See {@link YahooWeatherInfoListener} for detail.
-	 * @param context app's context
-	 * @param cityAreaOrLocation A city name, like "Shanghai"; an area name, like "Mountain View";
-	 * a pair of city and country, like "Tokyo, Japan"; a location or view spot, like "Eiffel Tower";
-	 * Yahoo's apis will find a closest position for you.
-	 * @param result A {@link WeatherInfo} instance.
+	 * When it is completed, a callback will be fired. See
+	 * {@link YahooWeatherInfoListener} for detail.
+	 * 
+	 * @param context
+	 *            app's context
+	 * @param cityAreaOrLocation
+	 *            A city name, like "Shanghai"; an area name, like
+	 *            "Mountain View"; a pair of city and country, like
+	 *            "Tokyo, Japan"; a location or view spot, like "Eiffel Tower";
+	 *            Yahoo's apis will find a closest position for you.
+	 * @param result
+	 *            A {@link WeatherInfo} instance.
 	 */
-	public void queryYahooWeatherByPlaceName(final Context context, final String cityAreaOrLocation, 
-			final YahooWeatherInfoListener result) {
-		YahooWeatherLog.d("query yahoo weather by name of place");
+	public void queryYahooWeatherByPlaceName(final Context context, final String cityAreaOrLocation, final YahooWeatherInfoListener result) {
 		mContext = context;
-        if (!NetworkUtils.isConnected(context)) {
-            if (mExceptionListener != null) mExceptionListener.onFailConnection(
-                    new Exception("Network is not avaiable"));
-        	return;
-        }
-        final String convertedlocation = AsciiUtils.convertNonAscii(cityAreaOrLocation);
+		if (!NetworkUtils.isConnected(context)) {
+			if (mExceptionListener != null)
+				mExceptionListener.onFailConnection(new Exception("Network is not avaiable"));
+			return;
+		}
+		final String convertedlocation = AsciiUtils.convertNonAscii(cityAreaOrLocation);
 		mWeatherInfoResult = result;
 		final WeatherQueryByPlaceTask task = new WeatherQueryByPlaceTask();
-		task.execute(new String[]{convertedlocation});
+		task.execute(new String[] { convertedlocation });
 	}
-	
-	/** 
+
+	/**
 	 * Use lat & lon pair to query Yahoo weather apis for weather information.
 	 * Querying will be run on a separated thread to accessing Yahoo's apis.
-	 * When it is completed, a callback will be fired.
-	 * See {@link YahooWeatherInfoListener} for detail.
-	 * @param context app's context
-	 * @param lat A string of latitude value
-	 * @param lon A string of longitude value
-	 * @param result A {@link WeatherInfo} instance
+	 * When it is completed, a callback will be fired. See
+	 * {@link YahooWeatherInfoListener} for detail.
+	 * 
+	 * @param context
+	 *            app's context
+	 * @param lat
+	 *            A string of latitude value
+	 * @param lon
+	 *            A string of longitude value
+	 * @param result
+	 *            A {@link WeatherInfo} instance
 	 */
-	public void queryYahooWeatherByLatLon(final Context context, final String lat, final String lon, 
-			final YahooWeatherInfoListener result) {
-		YahooWeatherLog.d("query yahoo weather by lat lon");
+	public void queryYahooWeatherByLatLon(final Context context, final String lat, final String lon, final YahooWeatherInfoListener result) {
 		mContext = context;
-        if (!NetworkUtils.isConnected(context)) {
-            if (mExceptionListener != null) mExceptionListener.onFailConnection(
-                    new Exception("Network is not avaiable"));
-        	return;
-        }
+		if (!NetworkUtils.isConnected(context)) {
+			if (mExceptionListener != null)
+				mExceptionListener.onFailConnection(new Exception("Network is not avaiable"));
+			return;
+		}
 		mWeatherInfoResult = result;
 		final WeatherQueryByLatLonTask task = new WeatherQueryByLatLonTask();
-		task.execute(new String[]{lat, lon});
+		task.execute(new String[] { lat, lon });
 	}
-	
+
 	/**
-	 * Use your device's GPS to automatically detect where you are, then query Yahoo weather apis
-	 * for weather information.
-	 * @param context app's context
-	 * @param result A {@link WeatherInfo} instance
+	 * Use your device's GPS to automatically detect where you are, then query
+	 * Yahoo weather apis for weather information.
+	 * 
+	 * @param context
+	 *            app's context
+	 * @param result
+	 *            A {@link WeatherInfo} instance
 	 */
 	public void queryYahooWeatherByGPS(final Context context, final YahooWeatherInfoListener result) {
-		YahooWeatherLog.d("query yahoo weather by gps");
-        if (!NetworkUtils.isConnected(context)) {
-            if (mExceptionListener != null) mExceptionListener.onFailConnection(
-                    new Exception("Network is not avaiable"));
-        	return;
-        }
+		if (!NetworkUtils.isConnected(context)) {
+			if (mExceptionListener != null)
+				mExceptionListener.onFailConnection(new Exception("Network is not avaiable"));
+			return;
+		}
 		mContext = context;
 		mWeatherInfoResult = result;
-		(new UserLocationUtils()).findUserLocation(context, this);
-	}
-	
-	@Override
-	public void gotLocation(Location location) {
-	    if (location == null) {
-	        if (mExceptionListener != null) mExceptionListener.onFailFindLocation(
-	                new Exception("Location cannot be found"));
-	        return;
-	    }
-		final String lat = String.valueOf(location.getLatitude());
-		final String lon = String.valueOf(location.getLongitude());
-		final WeatherQueryByLatLonTask task = new WeatherQueryByLatLonTask();
-		task.execute(new String[]{lat, lon});
+		LocationServices.getInstance(context).requestAccurateLocation(new RequestLocationListener() {
+
+			@Override
+			public void onLocationReceived(Location location) {
+				if (location == null) {
+					if (mExceptionListener != null)
+						mExceptionListener.onFailFindLocation(new Exception("Location cannot be found"));
+					return;
+				}
+				final String lat = String.valueOf(location.getLatitude());
+				final String lon = String.valueOf(location.getLongitude());
+				final WeatherQueryByLatLonTask task = new WeatherQueryByLatLonTask();
+				task.execute(new String[] { lat, lon });
+			}
+		});
+
 	}
 
 	private String getWeatherString(Context context, String woeidNumber) {
-		YahooWeatherLog.d("query yahoo weather with WOEID number : " + woeidNumber);
 
 		String qResult = "";
 		String queryUrl = "http://weather.yahooapis.com/forecastrss?w=" + woeidNumber;
-		
-		YahooWeatherLog.d("query url : " + queryUrl);
-		
+
 		HttpClient httpClient = NetworkUtils.createHttpClient();
 
 		HttpGet httpGet = new HttpGet(queryUrl);
 
 		try {
 			HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
-			
+
 			if (httpEntity != null) {
 				InputStream inputStream = httpEntity.getContent();
 				Reader in = new InputStreamReader(inputStream);
@@ -224,7 +245,6 @@ public class YahooWeather implements LocationResult {
 				String readLine = null;
 
 				while ((readLine = bufferedreader.readLine()) != null) {
-					YahooWeatherLog.d(readLine);
 					stringBuilder.append(readLine + "\n");
 				}
 
@@ -232,17 +252,17 @@ public class YahooWeather implements LocationResult {
 			}
 
 		} catch (ClientProtocolException e) {
-			YahooWeatherLog.printStack(e);
-			if (mExceptionListener != null) mExceptionListener.onFailConnection(e);
+			if (mExceptionListener != null)
+				mExceptionListener.onFailConnection(e);
 		} catch (ConnectTimeoutException e) {
-			YahooWeatherLog.printStack(e);
-			if (mExceptionListener != null) mExceptionListener.onFailConnection(e);
+			if (mExceptionListener != null)
+				mExceptionListener.onFailConnection(e);
 		} catch (SocketTimeoutException e) {
-			YahooWeatherLog.printStack(e);
-			if (mExceptionListener != null) mExceptionListener.onFailConnection(e);
+			if (mExceptionListener != null)
+				mExceptionListener.onFailConnection(e);
 		} catch (IOException e) {
-			YahooWeatherLog.printStack(e);
-			if (mExceptionListener != null) mExceptionListener.onFailConnection(e);
+			if (mExceptionListener != null)
+				mExceptionListener.onFailConnection(e);
 		} finally {
 			httpClient.getConnectionManager().shutdown();
 		}
@@ -260,77 +280,57 @@ public class YahooWeather implements LocationResult {
 			parser = dbFactory.newDocumentBuilder();
 			dest = parser.parse(new ByteArrayInputStream(src.getBytes()));
 		} catch (ParserConfigurationException e) {
-			YahooWeatherLog.printStack(e);
-			if (mExceptionListener != null) mExceptionListener.onFailParsing(e);
+			if (mExceptionListener != null)
+				mExceptionListener.onFailParsing(e);
 		} catch (SAXException e) {
-			YahooWeatherLog.printStack(e);
-			if (mExceptionListener != null) mExceptionListener.onFailParsing(e);
+			if (mExceptionListener != null)
+				mExceptionListener.onFailParsing(e);
 		} catch (IOException e) {
-			YahooWeatherLog.printStack(e);
-			if (mExceptionListener != null) mExceptionListener.onFailParsing(e);
+			if (mExceptionListener != null)
+				mExceptionListener.onFailParsing(e);
 		}
 
 		return dest;
 	}
-	
+
 	private WeatherInfo parseWeatherInfo(Context context, Document doc, WOEIDInfo woeidInfo) {
 		WeatherInfo weatherInfo = new WeatherInfo();
 		try {
-			
+
 			Node titleNode = doc.getElementsByTagName("title").item(0);
-			
-			if(titleNode.getTextContent().equals(YAHOO_WEATHER_ERROR)) {
+
+			if (titleNode.getTextContent().equals(YAHOO_WEATHER_ERROR)) {
 				return null;
 			}
-			
+
 			weatherInfo.setTitle(titleNode.getTextContent());
 			weatherInfo.setDescription(doc.getElementsByTagName("description").item(0).getTextContent());
-			weatherInfo.setLanguage(doc.getElementsByTagName("language").item(0).getTextContent());
-			weatherInfo.setLastBuildDate(doc.getElementsByTagName("lastBuildDate").item(0).getTextContent());
-			
+
 			Node locationNode = doc.getElementsByTagName("yweather:location").item(0);
 			weatherInfo.setLocationCity(locationNode.getAttributes().getNamedItem("city").getNodeValue());
 			weatherInfo.setLocationRegion(locationNode.getAttributes().getNamedItem("region").getNodeValue());
 			weatherInfo.setLocationCountry(locationNode.getAttributes().getNamedItem("country").getNodeValue());
-			
-			Node windNode = doc.getElementsByTagName("yweather:wind").item(0);
-			weatherInfo.setWindChill(windNode.getAttributes().getNamedItem("chill").getNodeValue());
-			weatherInfo.setWindDirection(windNode.getAttributes().getNamedItem("direction").getNodeValue());
-			weatherInfo.setWindSpeed(windNode.getAttributes().getNamedItem("speed").getNodeValue());
-			
+
 			Node atmosphereNode = doc.getElementsByTagName("yweather:atmosphere").item(0);
 			weatherInfo.setAtmosphereHumidity(atmosphereNode.getAttributes().getNamedItem("humidity").getNodeValue());
 			weatherInfo.setAtmosphereVisibility(atmosphereNode.getAttributes().getNamedItem("visibility").getNodeValue());
 			weatherInfo.setAtmospherePressure(atmosphereNode.getAttributes().getNamedItem("pressure").getNodeValue());
 			weatherInfo.setAtmosphereRising(atmosphereNode.getAttributes().getNamedItem("rising").getNodeValue());
-			
-			Node astronomyNode = doc.getElementsByTagName("yweather:astronomy").item(0);
-			weatherInfo.setAstronomySunrise(astronomyNode.getAttributes().getNamedItem("sunrise").getNodeValue());
-			weatherInfo.setAstronomySunset(astronomyNode.getAttributes().getNamedItem("sunset").getNodeValue());
-			
+
 			weatherInfo.setConditionTitle(doc.getElementsByTagName("title").item(2).getTextContent());
 			weatherInfo.setConditionLat(doc.getElementsByTagName("geo:lat").item(0).getTextContent());
 			weatherInfo.setConditionLon(doc.getElementsByTagName("geo:long").item(0).getTextContent());
-			
+
 			Node currentConditionNode = doc.getElementsByTagName("yweather:condition").item(0);
-			weatherInfo.setCurrentCode(
-					Integer.parseInt(
-							currentConditionNode.getAttributes().getNamedItem("code").getNodeValue()
-							));
-			weatherInfo.setCurrentText(
-					currentConditionNode.getAttributes().getNamedItem("text").getNodeValue());
-			weatherInfo.setCurrentTempF(
-					Integer.parseInt(
-							currentConditionNode.getAttributes().getNamedItem("temp").getNodeValue()
-							));
-			weatherInfo.setCurrentConditionDate(
-					currentConditionNode.getAttributes().getNamedItem("date").getNodeValue());
-			
+			weatherInfo.setCurrentCode(Integer.parseInt(currentConditionNode.getAttributes().getNamedItem("code").getNodeValue()));
+			weatherInfo.setCurrentText(currentConditionNode.getAttributes().getNamedItem("text").getNodeValue());
+			weatherInfo.setCurrentTempF(Integer.parseInt(currentConditionNode.getAttributes().getNamedItem("temp").getNodeValue()));
+			weatherInfo.setCurrentConditionDate(currentConditionNode.getAttributes().getNamedItem("date").getNodeValue());
+
 			if (mNeedDownloadIcons) {
-				weatherInfo.setCurrentConditionIcon(ImageUtils.getBitmapFromWeb(
-						weatherInfo.getCurrentConditionIconURL()));
+				weatherInfo.setCurrentConditionIcon(Utils.getBitmapFromWeb(weatherInfo.getCurrentConditionIconURL()));
 			}
-			
+
 			for (int i = 0; i < FORECAST_INFO_MAX_SIZE; i++) {
 				this.parseForecastInfo(weatherInfo.getForecastInfoList().get(i), doc, i);
 			}
@@ -344,39 +344,27 @@ public class YahooWeather implements LocationResult {
 			weatherInfo.mWOEIDCountry = woeidInfo.mCountry;
 
 		} catch (NullPointerException e) {
-		    YahooWeatherLog.printStack(e);
-			if (mExceptionListener != null) mExceptionListener.onFailParsing(e);
+			if (mExceptionListener != null)
+				mExceptionListener.onFailParsing(e);
 			weatherInfo = null;
 		}
-		
+
 		return weatherInfo;
 	}
-	
+
 	private void parseForecastInfo(final ForecastInfo forecastInfo, final Document doc, final int index) {
 		Node forecast1ConditionNode = doc.getElementsByTagName("yweather:forecast").item(index);
-		forecastInfo.setForecastCode(Integer.parseInt(
-				forecast1ConditionNode.getAttributes().getNamedItem("code").getNodeValue()
-				));
-		forecastInfo.setForecastText(
-				forecast1ConditionNode.getAttributes().getNamedItem("text").getNodeValue());
-		forecastInfo.setForecastDate(
-				forecast1ConditionNode.getAttributes().getNamedItem("date").getNodeValue());
-		forecastInfo.setForecastDay(
-				forecast1ConditionNode.getAttributes().getNamedItem("day").getNodeValue());
-		forecastInfo.setForecastTempHighF(
-				Integer.parseInt(
-						forecast1ConditionNode.getAttributes().getNamedItem("high").getNodeValue()
-						));
-		forecastInfo.setForecastTempLowF(
-				Integer.parseInt(
-						forecast1ConditionNode.getAttributes().getNamedItem("low").getNodeValue()
-						));
+		forecastInfo.setForecastCode(Integer.parseInt(forecast1ConditionNode.getAttributes().getNamedItem("code").getNodeValue()));
+		forecastInfo.setForecastText(forecast1ConditionNode.getAttributes().getNamedItem("text").getNodeValue());
+		forecastInfo.setForecastDate(forecast1ConditionNode.getAttributes().getNamedItem("date").getNodeValue());
+		forecastInfo.setForecastDay(forecast1ConditionNode.getAttributes().getNamedItem("day").getNodeValue());
+		forecastInfo.setForecastTempHighF(Integer.parseInt(forecast1ConditionNode.getAttributes().getNamedItem("high").getNodeValue()));
+		forecastInfo.setForecastTempLowF(Integer.parseInt(forecast1ConditionNode.getAttributes().getNamedItem("low").getNodeValue()));
 		if (mNeedDownloadIcons) {
-			forecastInfo.setForecastConditionIcon(
-					ImageUtils.getBitmapFromWeb(forecastInfo.getForecastConditionIconURL()));
+			forecastInfo.setForecastConditionIcon(Utils.getBitmapFromWeb(forecastInfo.getForecastConditionIconURL()));
 		}
 	}
-	
+
 	private class WeatherQueryByPlaceTask extends AsyncTask<String, Void, WeatherInfo> {
 		@Override
 		protected WeatherInfo doInBackground(String... cityName) {
@@ -385,7 +373,7 @@ public class YahooWeather implements LocationResult {
 			}
 			WOEIDUtils woeidUtils = WOEIDUtils.getInstance();
 			mWoeidNumber = woeidUtils.getWOEID(mContext, cityName[0]);
-			if(!mWoeidNumber.equals(WOEIDUtils.WOEID_NOT_FOUND)) {
+			if (!mWoeidNumber.equals(WOEIDUtils.WOEID_NOT_FOUND)) {
 				String weatherString = getWeatherString(mContext, mWoeidNumber);
 				Document weatherDoc = convertStringToDocument(mContext, weatherString);
 				WeatherInfo weatherInfo = parseWeatherInfo(mContext, weatherDoc, woeidUtils.getWoeidInfo());
@@ -406,7 +394,7 @@ public class YahooWeather implements LocationResult {
 
 	private class WeatherQueryByLatLonTask extends AsyncTask<String, Void, WeatherInfo> {
 
-        @Override
+		@Override
 		protected WeatherInfo doInBackground(String... params) {
 			if (params == null || params.length != 2) {
 				throw new IllegalArgumentException("Parameter of WeatherQueryByLatLonTask is illegal");
@@ -432,5 +420,4 @@ public class YahooWeather implements LocationResult {
 			mContext = null;
 		}
 	}
-
 }

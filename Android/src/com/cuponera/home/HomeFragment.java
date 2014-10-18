@@ -21,6 +21,7 @@ public class HomeFragment extends BaseFragment implements HeaderInterface, Yahoo
 	protected int getLayout() {
 		return R.layout.fragment_home;
 	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,8 +48,8 @@ public class HomeFragment extends BaseFragment implements HeaderInterface, Yahoo
 	protected boolean showHomeButton() {
 		return false;
 	}
-	
-	private void getWeather(){
+
+	private void getWeather() {
 		mYahooWeather.setExceptionListener(this);
 		getBaseActivity().showLoading();
 		mYahooWeather.setNeedDownloadIcons(true);
@@ -78,9 +79,7 @@ public class HomeFragment extends BaseFragment implements HeaderInterface, Yahoo
 	public void gotWeatherInfo(WeatherInfo weatherInfo) {
 		getBaseActivity().hideLoading();
 		if (weatherInfo != null) {
-			mViewProxy.findTextView(R.id.textview_forecast_info).setText(
-					weatherInfo.getTitle() + "\n" + weatherInfo.getWOEIDneighborhood() + ", " + weatherInfo.getWOEIDCounty() + ", "
-							+ weatherInfo.getWOEIDState() + ", " + weatherInfo.getWOEIDCountry());
+			mViewProxy.findTextView(R.id.textview_forecast_info).setText(weatherInfo.getWOEIDCounty() + ", " + weatherInfo.getCurrentTempC() + " grados");
 			if (weatherInfo.getCurrentConditionIcon() != null) {
 				mViewProxy.findImageView(R.id.imageview_forecast_info).setImageBitmap(weatherInfo.getCurrentConditionIcon());
 			}

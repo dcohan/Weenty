@@ -6,9 +6,9 @@ import com.cuponera.BaseActivity;
 import com.cuponera.service.BaseResponse;
 import com.cuponera.service.ServiceConfig;
 
-public abstract class PaylessAsyncPoolRequest<ResponseClass extends BaseResponse> extends BaseAsyncPoolRequest<ResponseClass> {
+public abstract class AsyncPoolRequest<ResponseClass extends BaseResponse> extends BaseAsyncPoolRequest<ResponseClass> {
 
-	public PaylessAsyncPoolRequest(Context context) {
+	public AsyncPoolRequest(Context context) {
 		super(context);
 	}
 	

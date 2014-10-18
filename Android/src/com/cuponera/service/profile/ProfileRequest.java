@@ -5,11 +5,11 @@ import java.util.Map;
 
 import android.content.Context;
 
-import com.cuponera.pool.PaylessAsyncPoolRequest;
+import com.cuponera.pool.AsyncPoolRequest;
 import com.cuponera.settings.Settings;
 import com.cuponera.utils.ValidationUtils;
 
-public abstract class ProfileRequest extends PaylessAsyncPoolRequest<ProfileResponse> {
+public abstract class ProfileRequest extends AsyncPoolRequest<ProfileResponse> {
 
 	private String idProfile;
 

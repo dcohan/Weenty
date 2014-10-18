@@ -17,14 +17,12 @@ import com.cuponera.event.EventListener;
 import com.cuponera.helpers.AnalyticsHelper;
 import com.cuponera.home.HomeActivity;
 import com.cuponera.home.HomeFragment;
-import com.cuponera.lookbook.LookBookFragment;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.navigation.NavBarFragment;
 import com.cuponera.settings.Settings;
 import com.cuponera.shop.ShopFragment;
 import com.cuponera.social.SocialFragment;
 import com.cuponera.stores.StoreFinderFragment;
-import com.cuponera.trackers.GoogleAnalyticsTracker;
 import com.cuponera.utils.LocationServices;
 import com.cuponera.utils.WebViewWithHeaderFragment;
 
@@ -38,10 +36,10 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		GoogleAnalyticsTracker analytics = new GoogleAnalyticsTracker();
-		analytics.startTracking(this);
-		AnalyticsHelper.addTracker(analytics);
-		AnalyticsHelper.startTracking(this);
+//		GoogleAnalyticsTracker analytics = new GoogleAnalyticsTracker();
+//		analytics.startTracking(this);
+//		AnalyticsHelper.addTracker(analytics);
+//		AnalyticsHelper.startTracking(this);
 	}
 
 	@Override
@@ -73,8 +71,8 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	@Override
 	public void onStop() {
 		super.onStop();
-		GoogleAnalyticsTracker analytics = new GoogleAnalyticsTracker();
-		analytics.stopTracking(this);
+//		GoogleAnalyticsTracker analytics = new GoogleAnalyticsTracker();
+//		analytics.stopTracking(this);
 	}
 
 	public Settings getSettings() {
@@ -125,12 +123,6 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	}
 
 	@Override
-	public void onLookBookButton() {
-		AnalyticsHelper.logEvent(AnalyticsHelper.LOOK_BOOK_SCREEN);
-		startFragment(new LookBookFragment());
-	}
-
-	@Override
 	public void onSocialButton() {
 		AnalyticsHelper.logEvent(AnalyticsHelper.SOCIAL_SCREEN);
 		startFragment(new SocialFragment());
@@ -138,6 +130,13 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	@Override
 	public void onStoresButton() {
+		AnalyticsHelper.logEvent(AnalyticsHelper.STORES_SCREEN);
+		startFragment(new StoreFinderFragment());
+
+	}
+	
+	@Override
+	public void onMoreButton() {
 		AnalyticsHelper.logEvent(AnalyticsHelper.STORES_SCREEN);
 		startFragment(new StoreFinderFragment());
 

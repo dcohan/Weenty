@@ -50,11 +50,10 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 				getMenu().toggle();
 			}
 		});
-		
-		
+
 		menuOutside = mViewProxy.findFrameLayout(R.id.menuOutside);
 		menuOutside.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				getMenu().close();
@@ -102,7 +101,7 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 	@Override
 	public void onChangeState(boolean open) {
 		menuButton.setActivated(open);
-		if(open) {
+		if (open) {
 			menuOutside.setVisibility(View.VISIBLE);
 		} else {
 			menuOutside.setVisibility(View.GONE);
@@ -126,11 +125,6 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 	}
 
 	@Override
-	public void onLookBookButton() {
-		getBaseActivity().onLookBookButton();
-	}
-
-	@Override
 	public void onSocialButton() {
 		getBaseActivity().onSocialButton();
 	}
@@ -140,8 +134,13 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 		getBaseActivity().onStoresButton();
 	}
 
-	
-	public void showHomeButton(boolean show){
+	@Override
+	public void onMoreButton() {
+		getBaseActivity().onMoreButton();
+	}
+
+	public void showHomeButton(boolean show) {
 		mViewProxy.findImageView(R.id.homeButton).setVisibility((show) ? View.VISIBLE : View.GONE);
 	}
+
 }

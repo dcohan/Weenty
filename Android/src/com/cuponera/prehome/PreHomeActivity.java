@@ -12,7 +12,7 @@ import com.cuponera.model.Profile;
 import com.cuponera.service.profile.CreateProfileRequest;
 import com.cuponera.service.profile.ProfileResponse;
 import com.cuponera.service.profile.UpdateProfileRequest;
-import com.cuponera.utils.PaylessErrorHandler;
+import com.cuponera.utils.ErrorHandler;
 
 public class PreHomeActivity extends BaseActivity {
 
@@ -139,7 +139,7 @@ public class PreHomeActivity extends BaseActivity {
 	protected void showNoInternetConnectionMessage() {
 		if (alertDialog == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(PaylessErrorHandler.NO_INTERNET_ERROR);
+			builder.setMessage(ErrorHandler.NO_INTERNET_ERROR);
 			builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					System.exit(0);

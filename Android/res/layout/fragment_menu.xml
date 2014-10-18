@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,64 +15,55 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
             android:drawableLeft="@drawable/home_drop"
-            android:text="@string/menu_home"
-            android:layout_marginBottom="1dp" />
+            android:text="@string/menu_home" />
 
         <Button
             android:id="@+id/menuButtonShop"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
             android:drawableLeft="@drawable/shop_drop"
-            android:text="@string/menu_shop"
-            android:layout_marginBottom="1dp" />
+            android:text="@string/menu_shop" />
 
         <Button
             android:id="@+id/menuButtonCoupons"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
             android:drawableLeft="@drawable/coupons_drop"
-            android:text="@string/menu_coupons"
-            android:layout_marginBottom="1dp" />
-
-        <Button
-            android:id="@+id/menuButtonLookBook"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/lookbook_drop"
-            android:text="@string/menu_look_book"
-            android:layout_marginBottom="1dp" />
-
-        <Button
-            android:id="@+id/menuButtonProfile"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/profile_drop"
-            android:text="@string/menu_profile"
-            android:layout_marginBottom="1dp" />
+            android:text="@string/menu_coupons" />
 
         <Button
             android:id="@+id/menuButtonSocial"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
             android:drawableLeft="@drawable/social_drop"
-            android:text="@string/menu_social"
-            android:layout_marginBottom="1dp" />
+            android:text="@string/menu_social" />
 
         <Button
             android:id="@+id/menuButtonStores"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
             android:drawableLeft="@drawable/stores_drop"
-            android:text="@string/menu_stores"
-            android:layout_marginBottom="1dp" />
-        
+            android:text="@string/menu_stores" />
+
+        <Button
+            android:id="@+id/menuButtonMore"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:drawableLeft="@drawable/settings_drop"
+            android:text="@string/menu_more" />
+
         <Button
             android:id="@+id/menuButtonSettings"
             style="@style/MenuButtonsStyle"
@@ -80,7 +71,6 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/settings_drop"
             android:text="@string/menu_settings" />
-        
     </LinearLayout>
 
 </LinearLayout>

@@ -1,6 +1,6 @@
 package com.cuponera.utils;
 
-public class PaylessErrorHandler {
+public class ErrorHandler {
 
 	public static final String SYSTEM_SERVER_ERROR = "Oops! It looks like the server is temporarily unavailable. We will get this fixed as soon as possible. Please try again later";
 	public static final String NO_RESULTS_FOUND = "No Results Found";

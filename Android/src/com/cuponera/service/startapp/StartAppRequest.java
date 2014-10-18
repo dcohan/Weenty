@@ -4,10 +4,10 @@ import java.util.Map;
 
 import android.content.Context;
 
-import com.cuponera.pool.PaylessAsyncPoolRequest;
+import com.cuponera.pool.AsyncPoolRequest;
 import com.cuponera.pool.AsyncPoolLoader.HTTPMethod;
 
-public abstract class StartAppRequest extends PaylessAsyncPoolRequest<StartAppResponse> {
+public abstract class StartAppRequest extends AsyncPoolRequest<StartAppResponse> {
 
 	public StartAppRequest(Context context) {
 		super(context);

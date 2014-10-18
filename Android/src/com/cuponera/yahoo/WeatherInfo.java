@@ -14,22 +14,14 @@ public class WeatherInfo {
 	String mTitle = "";
 	String mDescription = "";
 	String mLanguage = "";
-	String mLastBuildDate = "";
 	String mLocationCity = "";
 	String mLocationRegion = "";
 	String mLocationCountry = "";
-	
-	String mWindChill = "";
-	String mWindDirection = "";
-	String mWindSpeed = "";
 	
 	String mAtmosphereHumidity = "";
 	String mAtmosphereVisibility = "";
 	String mAtmospherePressure = "";
 	String mAtmosphereRising = "";
-	
-	String mAstronomySunrise = "";
-	String mAstronomySunset = "";
 	
 	String mConditionTitle = "";
 	String mConditionLat = "";
@@ -180,14 +172,6 @@ public class WeatherInfo {
 		mLanguage = language;
 	}
 
-	public String getLastBuildDate() {
-		return mLastBuildDate;
-	}
-
-	protected void setLastBuildDate(String lastBuildDate) {
-		mLastBuildDate = lastBuildDate;
-	}
-
 	public String getLocationCity() {
 		return mLocationCity;
 	}
@@ -210,30 +194,6 @@ public class WeatherInfo {
 
 	protected void setLocationCountry(String locationCountry) {
 		mLocationCountry = locationCountry;
-	}
-
-	public String getWindChill() {
-		return mWindChill;
-	}
-
-	protected void setWindChill(String windChill) {
-		mWindChill = windChill;
-	}
-
-	public String getWindDirection() {
-		return mWindDirection;
-	}
-
-	protected void setWindDirection(String windDirection) {
-		mWindDirection = windDirection;
-	}
-
-	public String getWindSpeed() {
-		return mWindSpeed;
-	}
-
-	protected void setWindSpeed(String windSpeed) {
-		mWindSpeed = windSpeed;
 	}
 
 	public String getAtmosphereHumidity() {
@@ -266,22 +226,6 @@ public class WeatherInfo {
 
 	protected void setAtmosphereRising(String atmosphereRising) {
 		mAtmosphereRising = atmosphereRising;
-	}
-
-	public String getAstronomySunrise() {
-		return mAstronomySunrise;
-	}
-
-	protected void setAstronomySunrise(String astronomySunrise) {
-		mAstronomySunrise = astronomySunrise;
-	}
-
-	public String getAstronomySunset() {
-		return mAstronomySunset;
-	}
-
-	protected void setAstronomySunset(String astronomySunset) {
-		mAstronomySunset = astronomySunset;
 	}
 
 	public String getConditionTitle() {

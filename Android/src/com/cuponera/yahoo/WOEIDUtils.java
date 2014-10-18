@@ -80,15 +80,12 @@ class WOEIDUtils {
 	}
 
 	private String queryWOEIDfromYahooAPIs(Context context, String uriPlace) {
-		YahooWeatherLog.d("Query WOEID by name of place");
 
 		yahooAPIsQuery = WOEID_QUERY_PREFIX_FIND_BY_PLACE + "%22" + uriPlace + "%22"
 				+ WOEID_QUERY_SUFFIX_FORMAT;
 		
 		yahooAPIsQuery = yahooAPIsQuery.replace(" ", "%20");
 		
-		YahooWeatherLog.d("Query WOEID: " + yahooAPIsQuery);
-
 		String woeidString = fetchWOEIDxmlString(context, yahooAPIsQuery);
 		Document woeidDoc = convertStringToDocument(context, woeidString);
 		if (woeidDoc == null) {
@@ -103,7 +100,6 @@ class WOEIDUtils {
 	}
 	
 	private String queryWOEIDfromYahooAPIs(Context context, String lat, String lon) {
-		YahooWeatherLog.d("Query WOEID by latlon");
 		
 		yahooAPIsQuery = WOEID_QUERY_PREFIX_FIND_BY_GPS + lat +
 						 WOEID_QUERY_CONSECTION_FIND_BY_GPS + lon +
@@ -111,7 +107,6 @@ class WOEIDUtils {
 		
 		yahooAPIsQuery = yahooAPIsQuery.replace(" ", "%20");
 		
-		YahooWeatherLog.d("Query WOEID: " + yahooAPIsQuery);
 		String woeidString = fetchWOEIDxmlString(context, yahooAPIsQuery);
 		Document woeidDoc = convertStringToDocument(context, woeidString);
 		if (woeidDoc == null) {
@@ -126,7 +121,6 @@ class WOEIDUtils {
 	}
 	
 	private String fetchWOEIDxmlString(Context context, String queryString) {
-		YahooWeatherLog.d("fetch WOEID xml string");
 		String qResult = "";
 
 		HttpClient httpClient = NetworkUtils.createHttpClient();
@@ -145,7 +139,6 @@ class WOEIDUtils {
 				String readLine = null;
 
 				while ((readLine = bufferedreader.readLine()) != null) {
-					YahooWeatherLog.d(readLine);
 					stringBuilder.append(readLine + "\n");
 				}
 
@@ -153,16 +146,12 @@ class WOEIDUtils {
 			}
 
 		} catch (ClientProtocolException e) {
-		    YahooWeatherLog.printStack(e);
 			if (mExceptionListener != null) mExceptionListener.onFailConnection(e);
 		} catch (ConnectTimeoutException e) {
-		    YahooWeatherLog.printStack(e);
 			if (mExceptionListener != null) mExceptionListener.onFailConnection(e);
 		} catch (SocketTimeoutException e) {
-		    YahooWeatherLog.printStack(e);
 			if (mExceptionListener != null) mExceptionListener.onFailConnection(e);
 		} catch (IOException e) {
-		    YahooWeatherLog.printStack(e);
 			if (mExceptionListener != null) mExceptionListener.onFailConnection(e);
 		} finally {
 			httpClient.getConnectionManager().shutdown();
@@ -172,7 +161,6 @@ class WOEIDUtils {
 	}
 	
 	private Document convertStringToDocument(Context context, String src) {
-		YahooWeatherLog.d("convert string to document");
 		Document dest = null;
 
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -182,13 +170,10 @@ class WOEIDUtils {
 			parser = dbFactory.newDocumentBuilder();
 			dest = parser.parse(new ByteArrayInputStream(src.getBytes()));
 		} catch (ParserConfigurationException e) {
-		    YahooWeatherLog.printStack(e);
 			if (mExceptionListener != null) mExceptionListener.onFailParsing(e);
 		} catch (SAXException e) {
-		    YahooWeatherLog.printStack(e);
 			if (mExceptionListener != null) mExceptionListener.onFailParsing(e);
 		} catch (IOException e) {
-		    YahooWeatherLog.printStack(e);
 			if (mExceptionListener != null) mExceptionListener.onFailParsing(e);
 		}
 
@@ -196,8 +181,6 @@ class WOEIDUtils {
 	}
 	
 	private void parseWOEID(Document srcDoc) {
-		YahooWeatherLog.d("parse WOEID");
-		
 		mParsedResult = new HashMap<String, String>();
 		for (int i = 1; i <= 4; i++) {
 			String name = "line" + i;

@@ -35,7 +35,7 @@ import com.cuponera.service.stores.StoresRequest;
 import com.cuponera.service.stores.StoresResponse;
 import com.cuponera.utils.KeyValueArrayAdapter;
 import com.cuponera.utils.LocationServices;
-import com.cuponera.utils.PaylessErrorHandler;
+import com.cuponera.utils.ErrorHandler;
 import com.cuponera.utils.Utils;
 import com.cuponera.utils.ValidationUtils;
 import com.cuponera.utils.LocationServices.RequestLocationListener;
@@ -124,7 +124,7 @@ public class StoreFinderFragment extends BaseFragment implements HeaderInterface
 							if (result.succes() && result.getTotal() > 0) {
 								getBaseActivity().pushFragment(StoreFinderSearchViewFragment.newInstance(result.getItems(), requestParams), true);
 							} else {
-								EventBus.getInstance().dispatchEvent(new ErrorEvent(0, PaylessErrorHandler.NO_RESULTS_FOUND));
+								EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.NO_RESULTS_FOUND));
 							}
 						}
 

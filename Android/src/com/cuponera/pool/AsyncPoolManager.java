@@ -16,7 +16,7 @@ import com.cuponera.event.LoaderEvent;
 import com.cuponera.service.HttpService;
 import com.cuponera.service.ServiceConfig;
 import com.cuponera.ui.loader.LoaderInfo;
-import com.cuponera.utils.PaylessErrorHandler;
+import com.cuponera.utils.ErrorHandler;
 import com.cuponera.utils.Utils;
 import com.cuponera.utils.ValidationUtils;
 
@@ -91,7 +91,7 @@ public class AsyncPoolManager {
 
 				throwErrorMessage = true;
 				callbackHandledError = true;
-				EventBus.getInstance().dispatchEvent(new ErrorEvent(0, PaylessErrorHandler.NO_INTERNET_ERROR));
+				EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.NO_INTERNET_ERROR));
 
 			} else {
 
@@ -149,7 +149,7 @@ public class AsyncPoolManager {
 
 	private void showServerErrorPopUp() {
 		throwErrorMessage = false;
-		EventBus.getInstance().dispatchEvent(new ErrorEvent(0, PaylessErrorHandler.SYSTEM_SERVER_ERROR));
+		EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.SYSTEM_SERVER_ERROR));
 	}
 
 	private Map<String, Object> getDefaultParams(Context context) {

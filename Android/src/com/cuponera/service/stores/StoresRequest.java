@@ -8,11 +8,11 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.cuponera.pool.PaylessAsyncPoolRequest;
+import com.cuponera.pool.AsyncPoolRequest;
 import com.cuponera.pool.AsyncPoolLoader.HTTPMethod;
 
 @SuppressLint("ParcelCreator")
-public abstract class StoresRequest extends PaylessAsyncPoolRequest<StoresResponse> implements Parcelable {
+public abstract class StoresRequest extends AsyncPoolRequest<StoresResponse> implements Parcelable {
 
 	private Double latitude;
 	private Double longitud;

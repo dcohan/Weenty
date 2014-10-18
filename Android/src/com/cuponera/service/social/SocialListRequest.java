@@ -5,10 +5,10 @@ import java.util.Map;
 
 import android.content.Context;
 
-import com.cuponera.pool.PaylessAsyncPoolRequest;
+import com.cuponera.pool.AsyncPoolRequest;
 import com.cuponera.pool.AsyncPoolLoader.HTTPMethod;
 
-public abstract class SocialListRequest extends PaylessAsyncPoolRequest<SocialListResponse> {
+public abstract class SocialListRequest extends AsyncPoolRequest<SocialListResponse> {
 	
 	private int page = 1;
 	

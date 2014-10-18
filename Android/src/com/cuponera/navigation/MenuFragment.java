@@ -133,19 +133,19 @@ public class MenuFragment extends BaseFragment {
 			}
 		});
 
-		mViewProxy.findButton(R.id.menuButtonLookBook).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				getDelegate().onLookBookButton();
-			}
-		});
-
 		mViewProxy.findButton(R.id.menuButtonSocial).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				getDelegate().onSocialButton();
+			}
+		});
+
+		mViewProxy.findButton(R.id.menuButtonMore).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				getDelegate().onMoreButton();
 			}
 		});
 
@@ -185,11 +185,11 @@ public class MenuFragment extends BaseFragment {
 
 		public void onMyCouponsButton();
 
-		public void onLookBookButton();
-
 		public void onSocialButton();
 
 		public void onStoresButton();
+
+		public void onMoreButton();
 
 	}
 
