@@ -23,7 +23,7 @@ namespace Cuponera.Backend.Controllers
     using Cuponera.Backend.Data;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<subscription>("subscriptions");
-    builder.EntitySet<userSubscription>("userSubscription"); 
+    builder.EntitySet<companySubscription>("companySubscription"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class subscriptionsController : ODataController
@@ -148,11 +148,11 @@ namespace Cuponera.Backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/subscriptions(5)/userSubscription
+        // GET: odata/subscriptions(5)/companySubscription
         [EnableQuery]
-        public IQueryable<userSubscription> GetuserSubscription([FromODataUri] int key)
+        public IQueryable<companySubscription> GetcompanySubscription([FromODataUri] int key)
         {
-            return db.subscription.Where(m => m.Idsubscription == key).SelectMany(m => m.userSubscription);
+            return db.subscription.Where(m => m.Idsubscription == key).SelectMany(m => m.companySubscription);
         }
 
         protected override void Dispose(bool disposing)

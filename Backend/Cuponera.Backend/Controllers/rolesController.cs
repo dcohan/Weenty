@@ -22,32 +22,31 @@ namespace Cuponera.Backend.Controllers
     using System.Web.Http.OData.Extensions;
     using Cuponera.Backend.Data;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<store>("stores");
-    builder.EntitySet<product>("product"); 
-    builder.EntitySet<state>("state"); 
-    builder.EntitySet<userStore>("userStore"); 
+    builder.EntitySet<role>("roles");
+    builder.EntitySet<user>("user"); 
+    builder.EntitySet<permissions>("permissions"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class storesController : ODataController
+    public class rolesController : ODataController
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: odata/stores
+        // GET: odata/roles
         [EnableQuery]
-        public IQueryable<store> Getstores()
+        public IQueryable<role> Getroles()
         {
-            return db.store;
+            return db.role;
         }
 
-        // GET: odata/stores(5)
+        // GET: odata/roles(5)
         [EnableQuery]
-        public SingleResult<store> Getstore([FromODataUri] int key)
+        public SingleResult<role> Getrole([FromODataUri] int key)
         {
-            return SingleResult.Create(db.store.Where(store => store.IdStore == key));
+            return SingleResult.Create(db.role.Where(role => role.idRole == key));
         }
 
-        // PUT: odata/stores(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<store> patch)
+        // PUT: odata/roles(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<role> patch)
         {
             Validate(patch.GetEntity());
 
@@ -56,13 +55,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            store store = await db.store.FindAsync(key);
-            if (store == null)
+            role role = await db.role.FindAsync(key);
+            if (role == null)
             {
                 return NotFound();
             }
 
-            patch.Put(store);
+            patch.Put(role);
 
             try
             {
@@ -70,7 +69,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!storeExists(key))
+                if (!roleExists(key))
                 {
                     return NotFound();
                 }
@@ -80,41 +79,26 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(store);
+            return Updated(role);
         }
 
-        // POST: odata/stores
-        public async Task<IHttpActionResult> Post(store store)
+        // POST: odata/roles
+        public async Task<IHttpActionResult> Post(role role)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.store.Add(store);
+            db.role.Add(role);
+            await db.SaveChangesAsync();
 
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (storeExists(store.IdStore))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Created(store);
+            return Created(role);
         }
 
-        // PATCH: odata/stores(5)
+        // PATCH: odata/roles(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<store> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<role> patch)
         {
             Validate(patch.GetEntity());
 
@@ -123,13 +107,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            store store = await db.store.FindAsync(key);
-            if (store == null)
+            role role = await db.role.FindAsync(key);
+            if (role == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(store);
+            patch.Patch(role);
 
             try
             {
@@ -137,7 +121,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!storeExists(key))
+                if (!roleExists(key))
                 {
                     return NotFound();
                 }
@@ -147,43 +131,36 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(store);
+            return Updated(role);
         }
 
-        // DELETE: odata/stores(5)
+        // DELETE: odata/roles(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            store store = await db.store.FindAsync(key);
-            if (store == null)
+            role role = await db.role.FindAsync(key);
+            if (role == null)
             {
                 return NotFound();
             }
 
-            db.store.Remove(store);
+            db.role.Remove(role);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/stores(5)/product
+        // GET: odata/roles(5)/user
         [EnableQuery]
-        public IQueryable<product> Getproduct([FromODataUri] int key)
+        public IQueryable<user> Getuser([FromODataUri] int key)
         {
-            return db.store.Where(m => m.IdStore == key).SelectMany(m => m.product);
+            return db.role.Where(m => m.idRole == key).SelectMany(m => m.user);
         }
 
-        // GET: odata/stores(5)/state
+        // GET: odata/roles(5)/permissions
         [EnableQuery]
-        public SingleResult<state> Getstate([FromODataUri] int key)
+        public IQueryable<permissions> Getpermissions([FromODataUri] int key)
         {
-            return SingleResult.Create(db.store.Where(m => m.IdStore == key).Select(m => m.state));
-        }
-
-        // GET: odata/stores(5)/userStore
-        [EnableQuery]
-        public IQueryable<userStore> GetuserStore([FromODataUri] int key)
-        {
-            return db.store.Where(m => m.IdStore == key).SelectMany(m => m.userStore);
+            return db.role.Where(m => m.idRole == key).SelectMany(m => m.permissions);
         }
 
         protected override void Dispose(bool disposing)
@@ -195,9 +172,9 @@ namespace Cuponera.Backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool storeExists(int key)
+        private bool roleExists(int key)
         {
-            return db.store.Count(e => e.IdStore == key) > 0;
+            return db.role.Count(e => e.idRole == key) > 0;
         }
     }
 }

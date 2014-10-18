@@ -12,15 +12,9 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class product
+    public partial class offer
     {
-        public product()
-        {
-            this.images = new HashSet<images>();
-            this.offer = new HashSet<offer>();
-        }
-    
-        public int IdProduct { get; set; }
+        public int IdOffer { get; set; }
         public string Title { get; set; }
         public string PromoCode { get; set; }
         public string TargetURL { get; set; }
@@ -28,14 +22,12 @@ namespace Cuponera.Backend.Data
         public Nullable<System.DateTime> StartDatetime { get; set; }
         public Nullable<System.DateTime> ExpirationDatetime { get; set; }
         public Nullable<int> ItemOrder { get; set; }
-        public int IdCompany { get; set; }
+        public int IdProduct { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
         public string ImagePath { get; set; }
     
-        public virtual company company { get; set; }
-        public virtual ICollection<images> images { get; set; }
-        public virtual ICollection<offer> offer { get; set; }
+        public virtual product product { get; set; }
     }
 }

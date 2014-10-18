@@ -16,8 +16,7 @@ namespace Cuponera.Backend.Data
     {
         public user()
         {
-            this.userStore = new HashSet<userStore>();
-            this.userSubscription = new HashSet<userSubscription>();
+            this.userCompany = new HashSet<userCompany>();
         }
     
         public int IdUser { get; set; }
@@ -30,7 +29,6 @@ namespace Cuponera.Backend.Data
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
         public virtual role role { get; set; }
-        public virtual ICollection<userStore> userStore { get; set; }
-        public virtual ICollection<userSubscription> userSubscription { get; set; }
+        public virtual ICollection<userCompany> userCompany { get; set; }
     }
 }

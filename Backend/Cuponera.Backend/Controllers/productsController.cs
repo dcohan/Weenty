@@ -23,7 +23,9 @@ namespace Cuponera.Backend.Controllers
     using Cuponera.Backend.Data;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<product>("products");
-    builder.EntitySet<store>("store"); 
+    builder.EntitySet<company>("company"); 
+    builder.EntitySet<images>("images"); 
+    builder.EntitySet<offer>("offer"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class productsController : ODataController
@@ -41,7 +43,7 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public SingleResult<product> Getproduct([FromODataUri] int key)
         {
-            return SingleResult.Create(db.product.Where(product => product.IdCoupon == key));
+            return SingleResult.Create(db.product.Where(product => product.IdProduct == key));
         }
 
         // PUT: odata/products(5)
@@ -148,11 +150,25 @@ namespace Cuponera.Backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/products(5)/store
+        // GET: odata/products(5)/company
         [EnableQuery]
-        public SingleResult<store> Getstore([FromODataUri] int key)
+        public SingleResult<company> Getcompany([FromODataUri] int key)
         {
-            return SingleResult.Create(db.product.Where(m => m.IdCoupon == key).Select(m => m.store));
+            return SingleResult.Create(db.product.Where(m => m.IdProduct == key).Select(m => m.company));
+        }
+
+        // GET: odata/products(5)/images
+        [EnableQuery]
+        public IQueryable<images> Getimages([FromODataUri] int key)
+        {
+            return db.product.Where(m => m.IdProduct == key).SelectMany(m => m.images);
+        }
+
+        // GET: odata/products(5)/offer
+        [EnableQuery]
+        public IQueryable<offer> Getoffer([FromODataUri] int key)
+        {
+            return db.product.Where(m => m.IdProduct == key).SelectMany(m => m.offer);
         }
 
         protected override void Dispose(bool disposing)
@@ -166,7 +182,7 @@ namespace Cuponera.Backend.Controllers
 
         private bool productExists(int key)
         {
-            return db.product.Count(e => e.IdCoupon == key) > 0;
+            return db.product.Count(e => e.IdProduct == key) > 0;
         }
     }
 }

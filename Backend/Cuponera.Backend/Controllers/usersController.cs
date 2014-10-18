@@ -24,8 +24,7 @@ namespace Cuponera.Backend.Controllers
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<user>("users");
     builder.EntitySet<role>("role"); 
-    builder.EntitySet<userStore>("userStore"); 
-    builder.EntitySet<userSubscription>("userSubscription"); 
+    builder.EntitySet<userCompany>("userCompany"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class usersController : ODataController
@@ -44,13 +43,6 @@ namespace Cuponera.Backend.Controllers
         public SingleResult<user> Getuser([FromODataUri] int key)
         {
             return SingleResult.Create(db.user.Where(user => user.IdUser == key));
-        }
-
-        [HttpGet]
-        public async Task<IHttpActionResult> Login(ODataActionParameters parameters)
-        {
-            
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // PUT: odata/users(5)
@@ -164,18 +156,11 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.user.Where(m => m.IdUser == key).Select(m => m.role));
         }
 
-        // GET: odata/users(5)/userStore
+        // GET: odata/users(5)/userCompany
         [EnableQuery]
-        public IQueryable<userStore> GetuserStore([FromODataUri] int key)
+        public IQueryable<userCompany> GetuserCompany([FromODataUri] int key)
         {
-            return db.user.Where(m => m.IdUser == key).SelectMany(m => m.userStore);
-        }
-
-        // GET: odata/users(5)/userSubscription
-        [EnableQuery]
-        public IQueryable<userSubscription> GetuserSubscription([FromODataUri] int key)
-        {
-            return db.user.Where(m => m.IdUser == key).SelectMany(m => m.userSubscription);
+            return db.user.Where(m => m.IdUser == key).SelectMany(m => m.userCompany);
         }
 
         protected override void Dispose(bool disposing)

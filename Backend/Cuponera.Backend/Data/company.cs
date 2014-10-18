@@ -12,22 +12,22 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class subscription
+    public partial class company
     {
-        public subscription()
+        public company()
         {
             this.companySubscription = new HashSet<companySubscription>();
+            this.product = new HashSet<product>();
+            this.userCompany = new HashSet<userCompany>();
+            this.companyStore = new HashSet<companyStore>();
         }
     
+        public int IdCompany { get; set; }
         public string Name { get; set; }
-        public decimal Pricing { get; set; }
-        public int SortFactor { get; set; }
-        public int Idsubscription { get; set; }
-        public Nullable<System.DateTime> CreationDatetime { get; set; }
-        public Nullable<System.DateTime> ModificationDatetime { get; set; }
-        public Nullable<System.DateTime> DeletionDatetime { get; set; }
-        public System.DateTime EndDate { get; set; }
     
         public virtual ICollection<companySubscription> companySubscription { get; set; }
+        public virtual ICollection<product> product { get; set; }
+        public virtual ICollection<userCompany> userCompany { get; set; }
+        public virtual ICollection<companyStore> companyStore { get; set; }
     }
 }

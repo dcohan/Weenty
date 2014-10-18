@@ -23,6 +23,7 @@ namespace Cuponera.Backend.Controllers
     using Cuponera.Backend.Data;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<permissions>("permissions");
+    builder.EntitySet<role>("role"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class permissionsController : ODataController
@@ -145,6 +146,13 @@ namespace Cuponera.Backend.Controllers
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // GET: odata/permissions(5)/role
+        [EnableQuery]
+        public SingleResult<role> Getrole([FromODataUri] int key)
+        {
+            return SingleResult.Create(db.permissions.Where(m => m.idPermission == key).Select(m => m.role));
         }
 
         protected override void Dispose(bool disposing)

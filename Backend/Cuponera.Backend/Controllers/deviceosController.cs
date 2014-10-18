@@ -23,7 +23,6 @@ namespace Cuponera.Backend.Controllers
     using Cuponera.Backend.Data;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<deviceos>("deviceos");
-    builder.EntitySet<imagesizes>("imagesizes"); 
     builder.EntitySet<profile>("profile"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */

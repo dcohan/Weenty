@@ -182,23 +182,41 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\companiesController.cs" />
+    <Compile Include="Controllers\companyStoresController.cs" />
+    <Compile Include="Controllers\companySubscriptionsController.cs" />
     <Compile Include="Controllers\deviceosController.cs" />
     <Compile Include="Controllers\devicetypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\imagesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\offersController.cs" />
     <Compile Include="Controllers\permissionsController.cs" />
     <Compile Include="Controllers\prehomeimagesController.cs" />
     <Compile Include="Controllers\productsController.cs" />
     <Compile Include="Controllers\profilesController.cs" />
+    <Compile Include="Controllers\rolesController.cs" />
     <Compile Include="Controllers\statesController.cs" />
-    <Compile Include="Controllers\storesController.cs" />
     <Compile Include="Controllers\subscriptionsController.cs" />
+    <Compile Include="Controllers\userCompaniesController.cs" />
     <Compile Include="Controllers\usersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Data\company.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\companyStore.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\companySubscription.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\deviceos.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\devicetypes.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\images.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Model.Context.cs">
@@ -215,6 +233,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\offer.cs">
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\permissions.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -240,16 +261,10 @@
     <Compile Include="Data\subscription.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\sysdiagrams.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\user.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\userStore.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\userSubscription.cs">
+    <Compile Include="Data\userCompany.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">

@@ -14,8 +14,13 @@ namespace Cuponera.Backend
         public static IEdmModel GetModel()
         {
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<deviceos>("deviceos");
-            builder.EntitySet<devicetypes>("devicetypes");
+            builder.EntitySet<company>("companies");
+            builder.EntitySet<companyStore>("companyStores");
+            builder.EntitySet<companySubscription>("companySubscriptions");
+            builder.EntitySet<deviceos>("devicesos");
+            builder.EntitySet<devicetypes>("devicestypes");
+            builder.EntitySet<images>("images");
+            builder.EntitySet<offer>("offers");
             builder.EntitySet<permissions>("permissions");
             builder.EntitySet<prehomeimages>("prehomeimages");
             builder.EntitySet<product>("products");
@@ -24,8 +29,8 @@ namespace Cuponera.Backend
             builder.EntitySet<state>("states");
             builder.EntitySet<store>("stores");
             builder.EntitySet<subscription>("subscriptions");
-            builder.EntitySet<userStore>("userStores");
-            builder.EntitySet<userSubscription>("userSubscriptions");
+            builder.EntitySet<user>("users");
+            builder.EntitySet<userCompany>("userCompanies");
 
             // New code:
             builder.Namespace = "usersService";

@@ -12,7 +12,9 @@ http://localhost:13883/data/deviceos
 Como hacer un GET de un objeto por ID:
 http://localhost:13883/data/deviceos(1)
 
-Como hacer un GET por alguna property, custom request, en estos casos vamos a necesitar armar el custom get
+Como hacer un GET por alguna property, ver este post para entender cómo extender los gets
+http://www.asp.net/web-api/overview/odata-support-in-aspnet-web-api/using-$select,-$expand,-and-$value
+
 
 Como llamar a entidades relacionadas: es posible obtener los datos relacionados a una entity, por ejemplo podemos 
 obtener todos los profiles del deviceos id=1 (ver el modelo de datos para verificar cuales asociaciones existen...
@@ -31,3 +33,5 @@ Como actualizar un objeto: (HTTP Code: 204)
 http://localhost:13883/data/deviceos(5) (VERB: PUT, Header Content-Type = application/json)
 raw body: { code:"i", idDeviceos:"5" } 
 ( son los datos de la entity que queremos actualizar, cuidado con el tipo de dato!, ojo se tienen que repetir los id, como parte de la url REST y como data en el json!)
+
+

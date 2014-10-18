@@ -20,5 +20,7 @@ namespace Cuponera.Backend.Data
         public Nullable<short> Create { get; set; }
         public Nullable<short> Update { get; set; }
         public Nullable<short> Delete { get; set; }
+    
+        public virtual role role { get; set; }
     }
 }

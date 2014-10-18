@@ -22,32 +22,33 @@ namespace Cuponera.Backend.Controllers
     using System.Web.Http.OData.Extensions;
     using Cuponera.Backend.Data;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<profile>("profiles");
-    builder.EntitySet<deviceos>("deviceos"); 
-    builder.EntitySet<devicetypes>("devicetypes"); 
-    builder.EntitySet<state>("state"); 
+    builder.EntitySet<company>("companies");
+    builder.EntitySet<companySubscription>("companySubscription"); 
+    builder.EntitySet<product>("product"); 
+    builder.EntitySet<userCompany>("userCompany"); 
+    builder.EntitySet<companyStore>("companyStore"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class profilesController : ODataController
+    public class companiesController : ODataController
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: odata/profiles
+        // GET: odata/companies
         [EnableQuery]
-        public IQueryable<profile> Getprofiles()
+        public IQueryable<company> Getcompanies()
         {
-            return db.profile;
+            return db.company;
         }
 
-        // GET: odata/profiles(5)
+        // GET: odata/companies(5)
         [EnableQuery]
-        public SingleResult<profile> Getprofile([FromODataUri] int key)
+        public SingleResult<company> Getcompany([FromODataUri] int key)
         {
-            return SingleResult.Create(db.profile.Where(profile => profile.IdProfile == key));
+            return SingleResult.Create(db.company.Where(company => company.IdCompany == key));
         }
 
-        // PUT: odata/profiles(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<profile> patch)
+        // PUT: odata/companies(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<company> patch)
         {
             Validate(patch.GetEntity());
 
@@ -56,13 +57,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            profile profile = await db.profile.FindAsync(key);
-            if (profile == null)
+            company company = await db.company.FindAsync(key);
+            if (company == null)
             {
                 return NotFound();
             }
 
-            patch.Put(profile);
+            patch.Put(company);
 
             try
             {
@@ -70,7 +71,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!profileExists(key))
+                if (!companyExists(key))
                 {
                     return NotFound();
                 }
@@ -80,26 +81,26 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(profile);
+            return Updated(company);
         }
 
-        // POST: odata/profiles
-        public async Task<IHttpActionResult> Post(profile profile)
+        // POST: odata/companies
+        public async Task<IHttpActionResult> Post(company company)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.profile.Add(profile);
+            db.company.Add(company);
             await db.SaveChangesAsync();
 
-            return Created(profile);
+            return Created(company);
         }
 
-        // PATCH: odata/profiles(5)
+        // PATCH: odata/companies(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<profile> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<company> patch)
         {
             Validate(patch.GetEntity());
 
@@ -108,13 +109,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            profile profile = await db.profile.FindAsync(key);
-            if (profile == null)
+            company company = await db.company.FindAsync(key);
+            if (company == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(profile);
+            patch.Patch(company);
 
             try
             {
@@ -122,7 +123,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!profileExists(key))
+                if (!companyExists(key))
                 {
                     return NotFound();
                 }
@@ -132,43 +133,50 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(profile);
+            return Updated(company);
         }
 
-        // DELETE: odata/profiles(5)
+        // DELETE: odata/companies(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            profile profile = await db.profile.FindAsync(key);
-            if (profile == null)
+            company company = await db.company.FindAsync(key);
+            if (company == null)
             {
                 return NotFound();
             }
 
-            db.profile.Remove(profile);
+            db.company.Remove(company);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/profiles(5)/deviceos
+        // GET: odata/companies(5)/companySubscription
         [EnableQuery]
-        public SingleResult<deviceos> Getdeviceos([FromODataUri] int key)
+        public IQueryable<companySubscription> GetcompanySubscription([FromODataUri] int key)
         {
-            return SingleResult.Create(db.profile.Where(m => m.IdProfile == key).Select(m => m.deviceos));
+            return db.company.Where(m => m.IdCompany == key).SelectMany(m => m.companySubscription);
         }
 
-        // GET: odata/profiles(5)/devicetypes
+        // GET: odata/companies(5)/product
         [EnableQuery]
-        public SingleResult<devicetypes> Getdevicetypes([FromODataUri] int key)
+        public IQueryable<product> Getproduct([FromODataUri] int key)
         {
-            return SingleResult.Create(db.profile.Where(m => m.IdProfile == key).Select(m => m.devicetypes));
+            return db.company.Where(m => m.IdCompany == key).SelectMany(m => m.product);
         }
 
-        // GET: odata/profiles(5)/state
+        // GET: odata/companies(5)/userCompany
         [EnableQuery]
-        public SingleResult<state> Getstate([FromODataUri] int key)
+        public IQueryable<userCompany> GetuserCompany([FromODataUri] int key)
         {
-            return SingleResult.Create(db.profile.Where(m => m.IdProfile == key).Select(m => m.state));
+            return db.company.Where(m => m.IdCompany == key).SelectMany(m => m.userCompany);
+        }
+
+        // GET: odata/companies(5)/companyStore
+        [EnableQuery]
+        public IQueryable<companyStore> GetcompanyStore([FromODataUri] int key)
+        {
+            return db.company.Where(m => m.IdCompany == key).SelectMany(m => m.companyStore);
         }
 
         protected override void Dispose(bool disposing)
@@ -180,9 +188,9 @@ namespace Cuponera.Backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool profileExists(int key)
+        private bool companyExists(int key)
         {
-            return db.profile.Count(e => e.IdProfile == key) > 0;
+            return db.company.Count(e => e.IdCompany == key) > 0;
         }
     }
 }

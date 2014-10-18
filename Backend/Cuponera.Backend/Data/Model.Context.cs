@@ -25,8 +25,12 @@ namespace Cuponera.Backend.Data
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<company> company { get; set; }
+        public DbSet<companySubscription> companySubscription { get; set; }
         public DbSet<deviceos> deviceos { get; set; }
         public DbSet<devicetypes> devicetypes { get; set; }
+        public DbSet<images> images { get; set; }
+        public DbSet<offer> offer { get; set; }
         public DbSet<permissions> permissions { get; set; }
         public DbSet<prehomeimages> prehomeimages { get; set; }
         public DbSet<product> product { get; set; }
@@ -35,9 +39,8 @@ namespace Cuponera.Backend.Data
         public DbSet<state> state { get; set; }
         public DbSet<store> store { get; set; }
         public DbSet<subscription> subscription { get; set; }
-        public DbSet<sysdiagrams> sysdiagrams { get; set; }
         public DbSet<user> user { get; set; }
-        public DbSet<userStore> userStore { get; set; }
-        public DbSet<userSubscription> userSubscription { get; set; }
+        public DbSet<userCompany> userCompany { get; set; }
+        public DbSet<companyStore> companyStore { get; set; }
     }
 }
