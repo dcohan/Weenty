@@ -33,10 +33,10 @@ namespace Cuponera.Backend
             builder.EntitySet<userCompany>("userCompanies");
 
             // New code:
-            builder.Namespace = "usersService";
-            builder.EntitySet<user>("users").EntityType.Collection
-                .Action("Login")
-                .Parameter<string>("UserName");
+            //builder.Namespace = "usersService";
+            //builder.EntitySet<user>("users").EntityType.Collection
+            //    .Action("Login")
+            //    .Parameter<string>("UserName");
 
             return builder.GetEdmModel();
         }
