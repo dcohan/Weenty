@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- XTify -->
-    <!-- Productivo -->
-    <!-- <string name="xtify_app_key">1bfa2c42-b083-4f27-b2c3-f52acb2d19bc</string> -->
-    <string name="xtify_app_key">be309566-dde0-40da-a247-5f0338fa4c33</string>
-    <string name="xtify_sender_id">1073354896351</string>
 
     <!-- Maps Key -->
     <string name="maps_api_key">AIzaSyC-IALoh0jrU1YLfuL9Xp6nClAdtono21M</string>
-    <string name="app_name">Payless</string>
+    <string name="app_name">Cuponera</string>
     <string name="unknown"></string>
     <string name="loading">Loading...</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="server_error"></string>
     <string name="ok">OK</string>
-    <string name="home_title">Payless ShoeSource</string>
+    <string name="home_title">Cuponera</string>
 
     <!-- Common -->
     <string name="current_location">GPS/Current Location</string>

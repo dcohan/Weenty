@@ -5,7 +5,6 @@ import java.util.Map;
 
 import android.content.Context;
 
-import com.cuponera.model.Profile;
 import com.cuponera.pool.PaylessAsyncPoolRequest;
 import com.cuponera.settings.Settings;
 import com.cuponera.utils.ValidationUtils;
@@ -13,17 +12,9 @@ import com.cuponera.utils.ValidationUtils;
 public abstract class ProfileRequest extends PaylessAsyncPoolRequest<ProfileResponse> {
 
 	private String idProfile;
-	private String xid;
-	private boolean geolocation;
-	private boolean pushNotification;
 
 	public ProfileRequest(Context context) {
 		super(context);
-		Profile profile = Settings.getInstance(context).getProfile();
-		if (profile != null) {
-			setGeolocation(profile.isGeolocation());
-			setPushNotification(profile.isPushNotification());
-		}
 	}
 
 	@Override
@@ -55,14 +46,9 @@ public abstract class ProfileRequest extends PaylessAsyncPoolRequest<ProfileResp
 	public Map<String, Object> getUriParams() {
 		Map<String, Object> params = new HashMap<String, Object>();
 
-		if (!ValidationUtils.isNullOrEmpty(getXid())) {
-			params.put("Xid", getXid());
-		}
 		if (!ValidationUtils.isNullOrEmpty(getIdProfile())) {
 			params.put("IdProfile", getIdProfile());
 		}
-		params.put("Geolocation", isGeolocation());
-		params.put("PushNotification", isPushNotification());
 
 		return params;
 	}
@@ -80,13 +66,6 @@ public abstract class ProfileRequest extends PaylessAsyncPoolRequest<ProfileResp
 	public void showLoading() {
 	}
 
-	public String getXid() {
-		return xid;
-	}
-
-	public void setXid(String xid) {
-		this.xid = xid;
-	}
 
 	public String getIdProfile() {
 		return idProfile;
@@ -94,22 +73,6 @@ public abstract class ProfileRequest extends PaylessAsyncPoolRequest<ProfileResp
 
 	public void setIdProfile(String idProfile) {
 		this.idProfile = idProfile;
-	}
-
-	public boolean isGeolocation() {
-		return geolocation;
-	}
-
-	public void setGeolocation(boolean geolocation) {
-		this.geolocation = geolocation;
-	}
-
-	public boolean isPushNotification() {
-		return pushNotification;
-	}
-
-	public void setPushNotification(boolean pushNotification) {
-		this.pushNotification = pushNotification;
 	}
 
 	@Override

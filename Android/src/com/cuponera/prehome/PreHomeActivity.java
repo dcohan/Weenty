@@ -1,7 +1,6 @@
 package com.cuponera.prehome;
 
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,18 +12,12 @@ import com.cuponera.model.Profile;
 import com.cuponera.service.profile.CreateProfileRequest;
 import com.cuponera.service.profile.ProfileResponse;
 import com.cuponera.service.profile.UpdateProfileRequest;
-import com.cuponera.service.startapp.StartAppRequest;
-import com.cuponera.service.startapp.StartAppResponse;
 import com.cuponera.utils.PaylessErrorHandler;
-import com.cuponera.utils.Utils;
 
 public class PreHomeActivity extends BaseActivity {
 
 	private PreHomeFragment preHomeFragment;
 	private AlertDialog alertDialog;
-	private AlertDialog askDialog;
-	private boolean pushEnabled;
-	private boolean locationEnabled;
 
 	@Override
 	protected void onResume() {
@@ -43,52 +36,52 @@ public class PreHomeActivity extends BaseActivity {
 		preHomeFragment = new PreHomeFragment();
 		startFragment(preHomeFragment, false);
 
-		StartAppRequest request = new StartAppRequest(PreHomeActivity.this) {
-
-			@Override
-			public void onServiceReturned(StartAppResponse result) {
-
-				if (result.succes()) {
-					// For test
-					// getSettings().setStartAppDigest(null);
-
-					if (result.getDigest() != null && !result.getDigest().equals(getSettings().getStartAppDigest())) {
-						getSettings().setStartAppDigest(result.getDigest());
-
-						getSettings().setPrehomeInfo(result.getPreHome());
-
-						getSettings().setHomeOffers(result.getHomeOffers());
-
-						getSettings().setCoupons(result.getCoupons());
-
-						getSettings().setLookBookFilters(result.getLookBookFilters());
-						if (result.getProfile() != null) {
-							getSettings().setProfile(result.getProfile());
-						}
-
-					}
-				}
-				askNotifications();
-			}
-
-			@Override
-			public void loadWasCancelled() {
-				super.loadWasCancelled();
-				preHomeFragment.reload();
-			}
-
-			@Override
-			public void loadFailed() {
-				if (Utils.hasInternetConnection(PreHomeActivity.this)) {
-					preHomeFragment.reload();
-				} else {
-					showNoInternetConnectionMessage();
-				}
-			}
-
-		};
-
-		request.execute();
+//		StartAppRequest request = new StartAppRequest(PreHomeActivity.this) {
+//
+//			@Override
+//			public void onServiceReturned(StartAppResponse result) {
+//
+//				if (result.succes()) {
+//					// For test
+//					// getSettings().setStartAppDigest(null);
+//
+//					if (result.getDigest() != null && !result.getDigest().equals(getSettings().getStartAppDigest())) {
+//						getSettings().setStartAppDigest(result.getDigest());
+//
+//						getSettings().setPrehomeInfo(result.getPreHome());
+//
+//						getSettings().setHomeOffers(result.getHomeOffers());
+//
+//						getSettings().setCoupons(result.getCoupons());
+//
+//						getSettings().setLookBookFilters(result.getLookBookFilters());
+//						if (result.getProfile() != null) {
+//							getSettings().setProfile(result.getProfile());
+//						}
+//
+//					}
+//				}
+//				askNotifications();
+//			}
+//
+//			@Override
+//			public void loadWasCancelled() {
+//				super.loadWasCancelled();
+//				preHomeFragment.reload();
+//			}
+//
+//			@Override
+//			public void loadFailed() {
+//				if (Utils.hasInternetConnection(PreHomeActivity.this)) {
+//					preHomeFragment.reload();
+//				} else {
+//					showNoInternetConnectionMessage();
+//				}
+//			}
+//
+//		};
+//
+//		request.execute();
 
 	}
 
@@ -130,60 +123,9 @@ public class PreHomeActivity extends BaseActivity {
 
 	}
 
-	private void askNotifications() {
-
-		Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
-		builder.setIcon(android.R.drawable.ic_dialog_alert).setMessage(getString(R.string.enable_push_notifications))
-				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						pushEnabled = true;
-						askLBS();
-					}
-				}).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						pushEnabled = false;
-						askLBS();
-					}
-				});
-
-		askDialog = builder.create();
-		askDialog.show();
-	}
-
-	private void askLBS() {
-
-		Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
-
-		builder.setIcon(android.R.drawable.ic_dialog_alert).setMessage(getString(R.string.enable_location_service))
-				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						locationEnabled = true;
-						setPopupsPreferenceAndRunService();
-					}
-				}).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						locationEnabled = false;
-						setPopupsPreferenceAndRunService();
-					}
-				});
-
-		askDialog = builder.create();
-		askDialog.show();
-
-	}
 
 	private void setPopupsPreferenceAndRunService() {
 		Profile p = getSettings().getProfile();
-		p.setPushNotification(pushEnabled);
-		p.setGeolocation(locationEnabled);
 		getSettings().setProfile(p);
 
 		if (getSettings().getProfile().isFirstRun()) {

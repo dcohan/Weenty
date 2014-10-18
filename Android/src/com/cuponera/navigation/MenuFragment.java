@@ -157,22 +157,6 @@ public class MenuFragment extends BaseFragment {
 			}
 		});
 
-		mViewProxy.findButton(R.id.menuButtonProfile).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				getDelegate().onProfileButton();
-			}
-		});
-
-		mViewProxy.findButton(R.id.menuButtonSettings).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				getDelegate().onSettingsButton();
-			}
-		});
-
 	}
 
 	public MenuInterface getDelegate() {
@@ -207,9 +191,6 @@ public class MenuFragment extends BaseFragment {
 
 		public void onStoresButton();
 
-		public void onProfileButton();
-
-		public void onSettingsButton();
 	}
 
 }

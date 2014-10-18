@@ -1,100 +1,35 @@
 package com.cuponera.home;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
-import com.cuponera.model.HomeOffer;
-import com.cuponera.model.HomeOffers;
 import com.cuponera.navigation.HeaderImageInterface;
 import com.cuponera.navigation.HeaderInterface;
-import com.cuponera.utils.ViewProxy;
+import com.cuponera.yahoo.WeatherInfo;
+import com.cuponera.yahoo.YahooWeather;
+import com.cuponera.yahoo.YahooWeather.SEARCH_MODE;
+import com.cuponera.yahoo.YahooWeatherExceptionListener;
+import com.cuponera.yahoo.YahooWeatherInfoListener;
 
-public class HomeFragment extends BaseFragment implements HeaderInterface {
+public class HomeFragment extends BaseFragment implements HeaderInterface, YahooWeatherInfoListener, YahooWeatherExceptionListener {
 
-	private ViewPager mViewPager;
-	private HomeOffers homeOffers;
-	private LinearLayout navigationDots;
+	private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, 5000, true);
 
 	@Override
 	protected int getLayout() {
 		return R.layout.fragment_home;
 	}
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		getWeather();
+	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
-		homeOffers = getBaseActivity().getSettings().getHomeOffers();
-		if (homeOffers != null && homeOffers.getOffers() != null) {
-			mViewPager = (ViewPager) mViewProxy.findView(R.id.list);
-
-			final HomeGalleryAdapter adapter = new HomeGalleryAdapter(getChildFragmentManager());
-			adapter.setData(homeOffers);
-
-			mViewPager.setAdapter(adapter);
-			mViewPager.setCurrentItem(1);
-			mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
-
-				@Override
-				public void onPageSelected(int arg0) {
-					if (adapter.hasInfiniteScroll() && arg0 == adapter.getCount() - 1) {
-						arg0 = 1;
-					} else if (adapter.hasInfiniteScroll() && arg0 == 0) {
-						arg0 = adapter.getCount() - 2;
-					}
-					enableNavigationDotAtIndex(arg0 - 1);
-				}
-
-				@Override
-				public void onPageScrolled(int arg0, float arg1, int arg2) {
-					if (arg1 == 0) {
-						if (adapter.hasInfiniteScroll() && arg0 == adapter.getCount() - 1) {
-							mViewPager.setCurrentItem(1, false);
-						} else if (adapter.hasInfiniteScroll() && arg0 == 0) {
-							mViewPager.setCurrentItem(adapter.getCount() - 2, false);
-						}
-					}
-
-				}
-
-				@Override
-				public void onPageScrollStateChanged(int arg0) {
-				}
-			});
-
-			setNavigationDots();
-
-		}
-
-	}
-
-	public void setNavigationDots() {
-		navigationDots = mViewProxy.findLinearLayout(R.id.navigationDots);
-
-		for (HomeOffer offer : homeOffers.getOffers()) {
-			ViewProxy dotProxy = new ViewProxy(getBaseActivity(), R.layout.fragment_navigation_dot);
-			navigationDots.addView(dotProxy.getView(), homeOffers.getOffers().indexOf(offer));
-		}
-		enableNavigationDotAtIndex(0);
-	}
-
-	public void enableNavigationDotAtIndex(int index) {
-
-		for (int i = 0; i < navigationDots.getChildCount(); i++) {
-			View v = navigationDots.getChildAt(i);
-			if (v != null) {
-				if (v.findViewById(R.id.dot) != null) {
-					boolean enabled = (index == i) ? false : true;
-					((ImageView) v.findViewById(R.id.dot)).setEnabled(enabled);
-				}
-			}
-		}
 
 	}
 
@@ -111,6 +46,46 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 	@Override
 	protected boolean showHomeButton() {
 		return false;
+	}
+	
+	private void getWeather(){
+		mYahooWeather.setExceptionListener(this);
+		getBaseActivity().showLoading();
+		mYahooWeather.setNeedDownloadIcons(true);
+		mYahooWeather.setSearchMode(SEARCH_MODE.GPS);
+		mYahooWeather.queryYahooWeatherByGPS(getBaseActivity().getApplicationContext(), this);
+	}
+
+	@Override
+	public void onFailConnection(Exception e) {
+		getBaseActivity().hideLoading();
+
+	}
+
+	@Override
+	public void onFailParsing(Exception e) {
+		getBaseActivity().hideLoading();
+
+	}
+
+	@Override
+	public void onFailFindLocation(Exception e) {
+		getBaseActivity().hideLoading();
+
+	}
+
+	@Override
+	public void gotWeatherInfo(WeatherInfo weatherInfo) {
+		getBaseActivity().hideLoading();
+		if (weatherInfo != null) {
+			mViewProxy.findTextView(R.id.textview_forecast_info).setText(
+					weatherInfo.getTitle() + "\n" + weatherInfo.getWOEIDneighborhood() + ", " + weatherInfo.getWOEIDCounty() + ", "
+							+ weatherInfo.getWOEIDState() + ", " + weatherInfo.getWOEIDCountry());
+			if (weatherInfo.getCurrentConditionIcon() != null) {
+				mViewProxy.findImageView(R.id.imageview_forecast_info).setImageBitmap(weatherInfo.getCurrentConditionIcon());
+			}
+
+		}
 	}
 
 }
