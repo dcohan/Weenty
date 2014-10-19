@@ -4,39 +4,39 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5e1d9c60ab864b409cf58551d7476130" Name="Diagram1" ZoomLevel="100">
-        <EntityTypeShape EntityType="CuponeraModel.company" Width="1.5" PointX="5.375" PointY="8.625" />
-        <EntityTypeShape EntityType="CuponeraModel.companySubscription" Width="1.5" PointX="7.5" PointY="11.625" />
-        <EntityTypeShape EntityType="CuponeraModel.deviceos" Width="1.5" PointX="0.625" PointY="3.375" />
-        <EntityTypeShape EntityType="CuponeraModel.devicetypes" Width="1.5" PointX="2.5" PointY="3.375" />
-        <EntityTypeShape EntityType="CuponeraModel.images" Width="1.5" PointX="3.75" PointY="19.875" />
-        <EntityTypeShape EntityType="CuponeraModel.offer" Width="1.5" PointX="9" PointY="17.625" />
-        <EntityTypeShape EntityType="CuponeraModel.permissions" Width="1.5" PointX="0.625" PointY="0.625" />
-        <EntityTypeShape EntityType="CuponeraModel.prehomeimages" Width="1.5" PointX="10" PointY="0.625" />
-        <EntityTypeShape EntityType="CuponeraModel.product" Width="1.5" PointX="5.25" PointY="15.125" />
-        <EntityTypeShape EntityType="CuponeraModel.profile" Width="1.5" PointX="0.625" PointY="6" />
-        <EntityTypeShape EntityType="CuponeraModel.role" Width="1.5" PointX="2.875" PointY="0.625" />
-        <EntityTypeShape EntityType="CuponeraModel.state" Width="1.5" PointX="0.625" PointY="11.125" />
-        <EntityTypeShape EntityType="CuponeraModel.store" Width="1.5" PointX="3" PointY="10.75" />
-        <EntityTypeShape EntityType="CuponeraModel.subscription" Width="1.5" PointX="11.25" PointY="8.625" />
-        <EntityTypeShape EntityType="CuponeraModel.user" Width="1.5" PointX="5.25" PointY="0.625" />
-        <EntityTypeShape EntityType="CuponeraModel.userCompany" Width="1.5" PointX="7.75" PointY="0.625" />
-        <AssociationConnector Association="CuponeraModel.FK_companySubscription_company" />
-        <AssociationConnector Association="CuponeraModel.FK_product_company" />
-        <AssociationConnector Association="CuponeraModel.FK_userCompany_company" />
-        <AssociationConnector Association="CuponeraModel.FK_companySubscription_subscription" />
-        <AssociationConnector Association="CuponeraModel.profiles_fk_Profiles_DeviceOs1" />
-        <AssociationConnector Association="CuponeraModel.profiles_fk_Profiles_DeviceTypes1" />
-        <AssociationConnector Association="CuponeraModel.FK_images_product" />
-        <AssociationConnector Association="CuponeraModel.FK_offer_product" />
-        <AssociationConnector Association="CuponeraModel.FK_permissions_role" />
-        <AssociationConnector Association="CuponeraModel.profiles_fk_idstate" />
-        <AssociationConnector Association="CuponeraModel.FK_user_role" />
-        <AssociationConnector Association="CuponeraModel.stores_IdState" />
-        <AssociationConnector Association="CuponeraModel.FK_userCompany_user" />
-        <EntityTypeShape EntityType="CuponeraModel.companyStore" Width="1.5" PointX="5" PointY="5.375" />
-        <AssociationConnector Association="CuponeraModel.FK_companyStore_company" />
-        <AssociationConnector Association="CuponeraModel.FK_companyStore_store" />
+      <Diagram DiagramId="6a0f0a64164e4f6a91bd829e8afeb76e" Name="Diagram1">
+        <EntityTypeShape EntityType="CuponeraModel.company" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.companyStore" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.companySubscription" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.deviceos" Width="1.5" PointX="1.5" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.devicetypes" Width="1.5" PointX="1.5" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.images" Width="1.5" PointX="5.25" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.offer" Width="1.5" PointX="5.25" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.permissions" Width="1.5" PointX="3.75" PointY="26.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.prehomeimages" Width="1.5" PointX="5.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.product" Width="1.5" PointX="3" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.profile" Width="1.5" PointX="3.75" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.role" Width="1.5" PointX="1.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.state" Width="1.5" PointX="1.5" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.store" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.subscription" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.user" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuponeraModel.userCompany" Width="1.5" PointX="6" PointY="9.25" IsExpanded="true" />
+        <AssociationConnector Association="CuponeraModel.FK_companyStore_company" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.FK_companySubscription_company" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.FK_product_company" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.FK_userCompany_company" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.FK_companyStore_store" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.FK_companySubscription_subscription" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profiles_fk_Profiles_DeviceOs1" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profiles_fk_Profiles_DeviceTypes1" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.FK_images_product" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.FK_offer_product" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.FK_permissions_role" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.profiles_fk_idstate" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.FK_user_role" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.stores_IdState" ManuallyRouted="false" />
+        <AssociationConnector Association="CuponeraModel.FK_userCompany_user" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
