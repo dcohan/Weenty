@@ -35,14 +35,14 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<store> Getstore()
         {
-            return db.store;
+            return db.store.Where(s => !s.DeletionDatetime.HasValue);
         }
 
         // GET: odata/store(5)
         [EnableQuery]
         public SingleResult<store> Getstore([FromODataUri] int key)
         {
-            return SingleResult.Create(db.store.Where(store => store.IdStore == key));
+            return SingleResult.Create(db.store.Where(store => store.IdStore == key && !store.DeletionDatetime.HasValue));
         }
 
         // PUT: odata/store(5)
@@ -158,7 +158,7 @@ namespace Cuponera.Backend.Controllers
                 return NotFound();
             }
 
-            db.store.Remove(store);
+            store.ModificationDatetime = DateTime.UtcNow;
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -168,14 +168,14 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<companyStore> GetcompanyStore([FromODataUri] int key)
         {
-            return db.store.Where(m => m.IdStore == key).SelectMany(m => m.companyStore);
+            return db.store.Where(m => m.IdStore == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.companyStore);
         }
 
         // GET: odata/store(5)/state
         [EnableQuery]
         public SingleResult<state> Getstate([FromODataUri] int key)
         {
-            return SingleResult.Create(db.store.Where(m => m.IdStore == key).Select(m => m.state));
+            return SingleResult.Create(db.store.Where(m => m.IdStore == key && !m.DeletionDatetime.HasValue).Select(m => m.state));
         }
 
         protected override void Dispose(bool disposing)

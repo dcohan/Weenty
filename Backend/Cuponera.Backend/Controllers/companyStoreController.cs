@@ -35,14 +35,14 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<companyStore> GetcompanyStore()
         {
-            return db.companyStore;
+            return db.companyStore.Where(c => !c.DeletionDatetime.HasValue);
         }
 
         // GET: odata/companyStore(5)
         [EnableQuery]
         public SingleResult<companyStore> GetcompanyStore([FromODataUri] int key)
         {
-            return SingleResult.Create(db.companyStore.Where(companyStore => companyStore.IdCompanyStore == key));
+            return SingleResult.Create(db.companyStore.Where(companyStore => companyStore.IdCompanyStore == key && !companyStore.DeletionDatetime.HasValue));
         }
 
         // PUT: odata/companyStore(5)
@@ -143,7 +143,7 @@ namespace Cuponera.Backend.Controllers
                 return NotFound();
             }
 
-            db.companyStore.Remove(companyStore);
+            companyStore.ModificationDatetime = DateTime.UtcNow;
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);

@@ -33,7 +33,9 @@ namespace Cuponera.Backend.Data
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
         public string ImagePath { get; set; }
+        public int IdCategory { get; set; }
     
+        public virtual category category { get; set; }
         public virtual company company { get; set; }
         public virtual ICollection<images> images { get; set; }
         public virtual ICollection<offer> offer { get; set; }

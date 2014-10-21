@@ -14,6 +14,7 @@ namespace Cuponera.Backend
         public static IEdmModel GetModel()
         {
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<category>("category");
             builder.EntitySet<company>("company");
             builder.EntitySet<companyStore>("companyStore");
             builder.EntitySet<companySubscription>("companySubscription");

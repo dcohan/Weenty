@@ -12,15 +12,10 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class userCompany
+    public partial class webpages_OAuthMembership
     {
-        public int IdUserCompany { get; set; }
-        public int IdUser { get; set; }
-        public int IdCompany { get; set; }
-        public bool IsAdmin { get; set; }
-        public Nullable<int> IdStore { get; set; }
-    
-        public virtual company company { get; set; }
-        public virtual user user { get; set; }
+        public string Provider { get; set; }
+        public string ProviderUserId { get; set; }
+        public int UserId { get; set; }
     }
 }

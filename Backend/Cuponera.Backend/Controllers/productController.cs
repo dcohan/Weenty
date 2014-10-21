@@ -36,14 +36,14 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<product> Getproduct()
         {
-            return db.product;
+            return db.product.Where(p => !p.DeletionDatetime.HasValue);
         }
 
         // GET: odata/product(5)
         [EnableQuery]
         public SingleResult<product> Getproduct([FromODataUri] int key)
         {
-            return SingleResult.Create(db.product.Where(product => product.IdProduct == key));
+            return SingleResult.Create(db.product.Where(product => product.IdProduct == key && !product.DeletionDatetime.HasValue));
         }
 
         // PUT: odata/product(5)
@@ -144,7 +144,7 @@ namespace Cuponera.Backend.Controllers
                 return NotFound();
             }
 
-            db.product.Remove(product);
+            product.ModificationDatetime = DateTime.UtcNow;
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -154,21 +154,21 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public SingleResult<company> Getcompany([FromODataUri] int key)
         {
-            return SingleResult.Create(db.product.Where(m => m.IdProduct == key).Select(m => m.company));
+            return SingleResult.Create(db.product.Where(m => m.IdProduct == key && !m.DeletionDatetime.HasValue).Select(m => m.company));
         }
 
         // GET: odata/product(5)/images
         [EnableQuery]
         public IQueryable<images> Getimages([FromODataUri] int key)
         {
-            return db.product.Where(m => m.IdProduct == key).SelectMany(m => m.images);
+            return db.product.Where(m => m.IdProduct == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.images);
         }
 
         // GET: odata/product(5)/offer
         [EnableQuery]
         public IQueryable<offer> Getoffer([FromODataUri] int key)
         {
-            return db.product.Where(m => m.IdProduct == key).SelectMany(m => m.offer);
+            return db.product.Where(m => m.IdProduct == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.offer);
         }
 
         protected override void Dispose(bool disposing)

@@ -25,6 +25,7 @@ namespace Cuponera.Backend.Data
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<category> category { get; set; }
         public virtual DbSet<company> company { get; set; }
         public virtual DbSet<companyStore> companyStore { get; set; }
         public virtual DbSet<companySubscription> companySubscription { get; set; }
@@ -41,6 +42,10 @@ namespace Cuponera.Backend.Data
         public virtual DbSet<store> store { get; set; }
         public virtual DbSet<subscription> subscription { get; set; }
         public virtual DbSet<user> user { get; set; }
+        public virtual DbSet<UserProfile> UserProfile { get; set; }
+        public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
+        public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
+        public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
         public virtual DbSet<userCompany> userCompany { get; set; }
     }
 }

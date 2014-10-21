@@ -22,31 +22,30 @@ namespace Cuponera.Backend.Controllers
     using System.Web.Http.OData.Extensions;
     using Cuponera.Backend.Data;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<companySubscription>("companySubscription");
-    builder.EntitySet<company>("company"); 
-    builder.EntitySet<subscription>("subscription"); 
+    builder.EntitySet<category>("category");
+    builder.EntitySet<product>("product"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class companySubscriptionController : ODataController
+    public class categoryController : ODataController
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: odata/companySubscription
+        // GET: odata/category
         [EnableQuery]
-        public IQueryable<companySubscription> GetcompanySubscription()
+        public IQueryable<category> Getcategory()
         {
-            return db.companySubscription.Where(c => !!c.DeletionDatetime.HasValue);
+            return db.category.Where(c => !c.DeletionDatetime.HasValue);
         }
 
-        // GET: odata/companySubscription(5)
+        // GET: odata/category(5)
         [EnableQuery]
-        public SingleResult<companySubscription> GetcompanySubscription([FromODataUri] int key)
+        public SingleResult<category> Getcategory([FromODataUri] int key)
         {
-            return SingleResult.Create(db.companySubscription.Where(companySubscription => companySubscription.IdCompanySubscription == key && !companySubscription.DeletionDatetime.HasValue));
+            return SingleResult.Create(db.category.Where(category => category.IdCategory == key && !category.DeletionDatetime.HasValue));
         }
 
-        // PUT: odata/companySubscription(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<companySubscription> patch)
+        // PUT: odata/category(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<category> patch)
         {
             Validate(patch.GetEntity());
 
@@ -55,13 +54,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            companySubscription companySubscription = await db.companySubscription.FindAsync(key);
-            if (companySubscription == null)
+            category category = await db.category.FindAsync(key);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            patch.Put(companySubscription);
+            patch.Put(category);
 
             try
             {
@@ -69,7 +68,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!companySubscriptionExists(key))
+                if (!categoryExists(key))
                 {
                     return NotFound();
                 }
@@ -79,26 +78,26 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(companySubscription);
+            return Updated(category);
         }
 
-        // POST: odata/companySubscription
-        public async Task<IHttpActionResult> Post(companySubscription companySubscription)
+        // POST: odata/category
+        public async Task<IHttpActionResult> Post(category category)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.companySubscription.Add(companySubscription);
+            db.category.Add(category);
             await db.SaveChangesAsync();
 
-            return Created(companySubscription);
+            return Created(category);
         }
 
-        // PATCH: odata/companySubscription(5)
+        // PATCH: odata/category(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<companySubscription> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<category> patch)
         {
             Validate(patch.GetEntity());
 
@@ -107,13 +106,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            companySubscription companySubscription = await db.companySubscription.FindAsync(key);
-            if (companySubscription == null)
+            category category = await db.category.FindAsync(key);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(companySubscription);
+            patch.Patch(category);
 
             try
             {
@@ -121,7 +120,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!companySubscriptionExists(key))
+                if (!categoryExists(key))
                 {
                     return NotFound();
                 }
@@ -131,36 +130,29 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(companySubscription);
+            return Updated(category);
         }
 
-        // DELETE: odata/companySubscription(5)
+        // DELETE: odata/category(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            companySubscription companySubscription = await db.companySubscription.FindAsync(key);
-            if (companySubscription == null)
+            category category = await db.category.FindAsync(key);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            companySubscription.ModificationDatetime = DateTime.UtcNow;
+            category.ModificationDatetime = DateTime.UtcNow;
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/companySubscription(5)/company
+        // GET: odata/category(5)/product
         [EnableQuery]
-        public SingleResult<company> Getcompany([FromODataUri] int key)
+        public IQueryable<product> Getproduct([FromODataUri] int key)
         {
-            return SingleResult.Create(db.companySubscription.Where(m => m.IdCompanySubscription == key && !m.DeletionDatetime.HasValue).Select(m => m.company));
-        }
-
-        // GET: odata/companySubscription(5)/subscription
-        [EnableQuery]
-        public SingleResult<subscription> Getsubscription([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.companySubscription.Where(m => m.IdCompanySubscription == key && !m.DeletionDatetime.HasValue).Select(m => m.subscription));
+            return db.category.Where(m => m.IdCategory == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.product);
         }
 
         protected override void Dispose(bool disposing)
@@ -172,9 +164,9 @@ namespace Cuponera.Backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool companySubscriptionExists(int key)
+        private bool categoryExists(int key)
         {
-            return db.companySubscription.Count(e => e.IdCompanySubscription == key) > 0;
+            return db.category.Count(e => e.IdCategory == key) > 0;
         }
     }
 }

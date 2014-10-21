@@ -37,14 +37,14 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<company> Getcompany()
         {
-            return db.company;
+            return db.company.Where(c => !c.DeletionDatetime.HasValue);
         }
 
         // GET: odata/company(5)
         [EnableQuery]
         public SingleResult<company> Getcompany([FromODataUri] int key)
         {
-            return SingleResult.Create(db.company.Where(company => company.IdCompany == key));
+            return SingleResult.Create(db.company.Where(company => company.IdCompany == key && !company.DeletionDatetime.HasValue));
         }
 
         // PUT: odata/company(5)
@@ -145,7 +145,7 @@ namespace Cuponera.Backend.Controllers
                 return NotFound();
             }
 
-            db.company.Remove(company);
+            company.ModificationDatetime = DateTime.UtcNow;
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -176,7 +176,7 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<userCompany> GetuserCompany([FromODataUri] int key)
         {
-            return db.company.Where(m => m.IdCompany == key).SelectMany(m => m.userCompany);
+            return db.company.Where(m => m.IdCompany == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.userCompany);
         }
 
         protected override void Dispose(bool disposing)

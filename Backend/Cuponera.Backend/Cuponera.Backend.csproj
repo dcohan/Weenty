@@ -195,6 +195,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\categoryController.cs" />
     <Compile Include="Controllers\companyController.cs" />
     <Compile Include="Controllers\companyStoreController.cs" />
     <Compile Include="Controllers\companySubscriptionController.cs" />
@@ -215,6 +216,9 @@
     <Compile Include="Controllers\userCompanyController.cs" />
     <Compile Include="Controllers\userController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Data\category.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\company.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -279,6 +283,18 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\userCompany.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UserProfile.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\webpages_Membership.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\webpages_OAuthMembership.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\webpages_Roles.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />

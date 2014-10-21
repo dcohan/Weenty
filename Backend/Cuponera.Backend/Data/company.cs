@@ -24,6 +24,9 @@ namespace Cuponera.Backend.Data
     
         public int IdCompany { get; set; }
         public string Name { get; set; }
+        public Nullable<System.DateTime> CreationDatetime { get; set; }
+        public Nullable<System.DateTime> ModificationDatetime { get; set; }
+        public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
         public virtual ICollection<companyStore> companyStore { get; set; }
         public virtual ICollection<companySubscription> companySubscription { get; set; }

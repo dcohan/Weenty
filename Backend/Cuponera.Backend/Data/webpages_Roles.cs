@@ -12,15 +12,16 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class userCompany
+    public partial class webpages_Roles
     {
-        public int IdUserCompany { get; set; }
-        public int IdUser { get; set; }
-        public int IdCompany { get; set; }
-        public bool IsAdmin { get; set; }
-        public Nullable<int> IdStore { get; set; }
+        public webpages_Roles()
+        {
+            this.UserProfile = new HashSet<UserProfile>();
+        }
     
-        public virtual company company { get; set; }
-        public virtual user user { get; set; }
+        public int RoleId { get; set; }
+        public string RoleName { get; set; }
+    
+        public virtual ICollection<UserProfile> UserProfile { get; set; }
     }
 }

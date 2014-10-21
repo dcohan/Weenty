@@ -12,22 +12,19 @@ namespace Cuponera.Backend.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class state
+    public partial class category
     {
-        public state()
+        public category()
         {
-            this.profile = new HashSet<profile>();
-            this.store = new HashSet<store>();
+            this.product = new HashSet<product>();
         }
     
-        public string IdState { get; set; }
+        public int IdCategory { get; set; }
         public string Name { get; set; }
-        public string Link { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
-        public virtual ICollection<profile> profile { get; set; }
-        public virtual ICollection<store> store { get; set; }
+        public virtual ICollection<product> product { get; set; }
     }
 }
