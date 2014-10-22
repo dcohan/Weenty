@@ -43,7 +43,7 @@ import android.util.Log;
 public class HttpService {
 
 	private Context mContext;
-	private final static String LOG_TAG_SERVICE = "com.payless";
+	private final static String LOG_TAG_SERVICE = "com.cuponera";
 	private final static int CONNECTION_TIME_OUT = 35000;
 	private final static int MAX_CONNECTIONS = 1;
 	private final static int RESPONSE_200 = 200;

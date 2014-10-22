@@ -19,7 +19,7 @@ public abstract class ProfileRequest extends AsyncPoolRequest<ProfileResponse> {
 
 	@Override
 	public String getPath() {
-		return "/Profile";
+		return "/data/Profile";
 	}
 
 	@Override

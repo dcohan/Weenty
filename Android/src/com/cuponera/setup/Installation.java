@@ -12,8 +12,8 @@ import com.cuponera.settings.Settings;
 import com.cuponera.utils.Utils;
 
 public class Installation {
-    private static final String INSTALLATION_DEVICE = "PAYLESS_INSTALLATION_DEVICE";
-    private static final String INSTALLATION_IDENTITY = "PAYLESS_INSTALLATION_IDENTITY";
+    private static final String INSTALLATION_DEVICE = "cuponera_INSTALLATION_DEVICE";
+    private static final String INSTALLATION_IDENTITY = "cuponera_INSTALLATION_IDENTITY";
 
     private static String deviceId = null;
 

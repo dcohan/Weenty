@@ -29,59 +29,58 @@ public class PreHomeActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		navBarFragment.hide();
 		navBarFragment.getMenu().disable();
 
-		preHomeFragment = new PreHomeFragment();
-		startFragment(preHomeFragment, false);
+		setPopupsPreferenceAndRunService();
 
-//		StartAppRequest request = new StartAppRequest(PreHomeActivity.this) {
-//
-//			@Override
-//			public void onServiceReturned(StartAppResponse result) {
-//
-//				if (result.succes()) {
-//					// For test
-//					// getSettings().setStartAppDigest(null);
-//
-//					if (result.getDigest() != null && !result.getDigest().equals(getSettings().getStartAppDigest())) {
-//						getSettings().setStartAppDigest(result.getDigest());
-//
-//						getSettings().setPrehomeInfo(result.getPreHome());
-//
-//						getSettings().setHomeOffers(result.getHomeOffers());
-//
-//						getSettings().setCoupons(result.getCoupons());
-//
-//						getSettings().setLookBookFilters(result.getLookBookFilters());
-//						if (result.getProfile() != null) {
-//							getSettings().setProfile(result.getProfile());
-//						}
-//
-//					}
-//				}
-//				askNotifications();
-//			}
-//
-//			@Override
-//			public void loadWasCancelled() {
-//				super.loadWasCancelled();
-//				preHomeFragment.reload();
-//			}
-//
-//			@Override
-//			public void loadFailed() {
-//				if (Utils.hasInternetConnection(PreHomeActivity.this)) {
-//					preHomeFragment.reload();
-//				} else {
-//					showNoInternetConnectionMessage();
-//				}
-//			}
-//
-//		};
-//
-//		request.execute();
+		// StartAppRequest request = new StartAppRequest(PreHomeActivity.this) {
+		//
+		// @Override
+		// public void onServiceReturned(StartAppResponse result) {
+		//
+		// if (result.succes()) {
+		// // For test
+		// // getSettings().setStartAppDigest(null);
+		//
+		// if (result.getDigest() != null &&
+		// !result.getDigest().equals(getSettings().getStartAppDigest())) {
+		// getSettings().setStartAppDigest(result.getDigest());
+		//
+		// getSettings().setPrehomeInfo(result.getPreHome());
+		//
+		// getSettings().setHomeOffers(result.getHomeOffers());
+		//
+		// getSettings().setCoupons(result.getCoupons());
+		//
+		// getSettings().setLookBookFilters(result.getLookBookFilters());
+		// if (result.getProfile() != null) {
+		// getSettings().setProfile(result.getProfile());
+		// }
+		//
+		// }
+		// }
+		// askNotifications();
+		// }
+		//
+		// @Override
+		// public void loadWasCancelled() {
+		// super.loadWasCancelled();
+		// preHomeFragment.reload();
+		// }
+		//
+		// @Override
+		// public void loadFailed() {
+		// if (Utils.hasInternetConnection(PreHomeActivity.this)) {
+		// preHomeFragment.reload();
+		// } else {
+		// showNoInternetConnectionMessage();
+		// }
+		// }
+		//
+		// };
+		//
+		// request.execute();
 
 	}
 
@@ -123,16 +122,17 @@ public class PreHomeActivity extends BaseActivity {
 
 	}
 
-
 	private void setPopupsPreferenceAndRunService() {
 		Profile p = getSettings().getProfile();
 		getSettings().setProfile(p);
 
 		if (getSettings().getProfile().isFirstRun()) {
-			updateProfile();
-		} else {
 			createProfile();
+		} else {
+			updateProfile();
 		}
+		preHomeFragment = new PreHomeFragment();
+		startFragment(preHomeFragment, false);
 
 	}
 

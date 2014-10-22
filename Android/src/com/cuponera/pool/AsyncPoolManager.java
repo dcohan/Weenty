@@ -159,8 +159,8 @@ public class AsyncPoolManager {
 		defaultParams.put("IdDeviceOs", ServiceConfig.DEVICE_TYPE);
 		defaultParams.put("IdDeviceType", ServiceConfig.getAppType(context));
 		defaultParams.put("AppVersion", Utils.getAppVersion(context));
-		defaultParams.put("ResolutionWidth", Utils.getScreenForEmerios(context).x);
-		defaultParams.put("ResolutionHeight", Utils.getScreenForEmerios(context).y);
+		defaultParams.put("ResolutionWidth", Utils.getScreen(context).x);
+		defaultParams.put("ResolutionHeight", Utils.getScreen(context).y);
 
 		return defaultParams;
 	}

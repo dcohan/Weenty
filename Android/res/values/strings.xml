@@ -38,7 +38,7 @@
     
 
     <!-- Shop -->
-    <string name="shop_title">Shop @ Payless</string>
+    <string name="shop_title">Shop @ cuponera</string>
 
     <!-- Stores -->
     <string name="stores_title">Store Finder</string>
@@ -91,7 +91,7 @@
     <string name="state_placeholder">Select State</string>
     <string name="zipcode_label">Zip Code:</string>
     <string name="zipcode_placeholder">Enter Zip Code</string>
-    <string name="marketing_channels_description">By giving Payless ShoeSource your information and checking any of the boxes below, you are giving us permission to send future marketing messages from Payless ShoeSource via the selected marketing channels.</string>
+    <string name="marketing_channels_description">By giving cuponera ShoeSource your information and checking any of the boxes below, you are giving us permission to send future marketing messages from cuponera ShoeSource via the selected marketing channels.</string>
     <string name="push_notifications">Push Notifications</string>
     <string name="text_message">Text Message</string>
     <string name="email">E-mail</string>

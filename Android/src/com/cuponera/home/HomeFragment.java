@@ -7,6 +7,7 @@ import com.cuponera.BaseFragment;
 import com.cuponera.R;
 import com.cuponera.navigation.HeaderImageInterface;
 import com.cuponera.navigation.HeaderInterface;
+import com.cuponera.utils.LocationServices;
 import com.cuponera.yahoo.WeatherInfo;
 import com.cuponera.yahoo.YahooWeather;
 import com.cuponera.yahoo.YahooWeather.SEARCH_MODE;
@@ -23,14 +24,9 @@ public class HomeFragment extends BaseFragment implements HeaderInterface, Yahoo
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		getWeather();
-	}
-
-	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		getWeather();
 
 	}
 
@@ -50,29 +46,33 @@ public class HomeFragment extends BaseFragment implements HeaderInterface, Yahoo
 	}
 
 	private void getWeather() {
-		mYahooWeather.setExceptionListener(this);
-		getBaseActivity().showLoading();
-		mYahooWeather.setNeedDownloadIcons(true);
-		mYahooWeather.setSearchMode(SEARCH_MODE.GPS);
-		mYahooWeather.queryYahooWeatherByGPS(getBaseActivity().getApplicationContext(), this);
+		if (LocationServices.getInstance(getActivity()).isLocationEnabled()) {
+			mYahooWeather.setExceptionListener(this);
+			mYahooWeather.setNeedDownloadIcons(true);
+			mYahooWeather.setSearchMode(SEARCH_MODE.GPS);
+			mYahooWeather.queryYahooWeatherByGPS(getBaseActivity().getApplicationContext(), this);
+		}else{
+			mViewProxy.findLinearLayout(R.id.weather_layout).setVisibility(View.GONE);
+		}
 	}
 
 	@Override
 	public void onFailConnection(Exception e) {
 		getBaseActivity().hideLoading();
+		mViewProxy.findLinearLayout(R.id.weather_layout).setVisibility(View.GONE);
 
 	}
 
 	@Override
 	public void onFailParsing(Exception e) {
 		getBaseActivity().hideLoading();
-
+		mViewProxy.findLinearLayout(R.id.weather_layout).setVisibility(View.GONE);
 	}
 
 	@Override
 	public void onFailFindLocation(Exception e) {
 		getBaseActivity().hideLoading();
-
+		mViewProxy.findLinearLayout(R.id.weather_layout).setVisibility(View.GONE);
 	}
 
 	@Override

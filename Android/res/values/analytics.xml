@@ -17,7 +17,7 @@
     <integer name="ga_sessionTimeout">900000</integer>
 
     <!-- The screen names that will appear in your reporting -->
-    <string name="com.payless.home.HomeFragment">Home</string>
-    <string name="com.payless.prehome.PreHomeFragment">PreHome</string>
+    <string name="com.cuponera.home.HomeFragment">Home</string>
+    <string name="com.cuponera.prehome.PreHomeFragment">PreHome</string>
 
 </resources>

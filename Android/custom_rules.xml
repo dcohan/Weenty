@@ -3,7 +3,7 @@
 
     <target name="-pre-build" depends="DisableDebuggable, InsertCommitId">
 
-        <property name="config-target-path" value="${source.dir}/com/payless/service/config" />
+        <property name="config-target-path" value="${source.dir}/com/cuponera/service/config" />
 
         <!-- Copy the configuration file, replacing tokens in the file. -->
 

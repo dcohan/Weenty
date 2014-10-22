@@ -72,7 +72,7 @@ public class Utils {
 	 *         Emerios Supported Values: Android480x854 Android480x800
 	 *         Android320x480 Android240x400
 	 */
-	public static Point getScreenForEmerios(Context ctx) {
+	public static Point getScreen(Context ctx) {
 		DisplayMetrics dm = new DisplayMetrics();
 		WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
 		wm.getDefaultDisplay().getMetrics(dm);

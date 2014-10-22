@@ -56,20 +56,20 @@ public class StoreFinderAdapter extends BaseListAdapter {
 		final LinearLayout datesList = mViewProxy.findLinearLayout(R.id.dates_listview_containter);
 		i = items.get(position);
 
-		mViewProxy.findTextView(R.id.payless_store_name).setText(i.getName());
-		mViewProxy.findTextView(R.id.payless_address).setText(i.getAddress());
-		mViewProxy.findTextView(R.id.payless_distance).setText(
+		mViewProxy.findTextView(R.id.cuponera_store_name).setText(i.getName());
+		mViewProxy.findTextView(R.id.cuponera_address).setText(i.getAddress());
+		mViewProxy.findTextView(R.id.cuponera_distance).setText(
 				String.format(activity.getResources().getString(R.string.store_distance), i.getDistance()));
 		if (i.getDistance() != -1.0) {
-			SpannableStringBuilder sb = new SpannableStringBuilder(mViewProxy.findTextView(R.id.payless_distance).getText() + " miles");
+			SpannableStringBuilder sb = new SpannableStringBuilder(mViewProxy.findTextView(R.id.cuponera_distance).getText() + " miles");
 			ForegroundColorSpan fcs = new ForegroundColorSpan(activity.getResources().getColor(R.color.orange_dark));
 			sb.setSpan(fcs, 0, 9, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-			mViewProxy.findTextView(R.id.payless_distance).setText(sb);
-			mViewProxy.findTextView(R.id.payless_distance).setVisibility(View.VISIBLE);
+			mViewProxy.findTextView(R.id.cuponera_distance).setText(sb);
+			mViewProxy.findTextView(R.id.cuponera_distance).setVisibility(View.VISIBLE);
 		}
-		mViewProxy.findTextView(R.id.payless_phone).setText(i.getContactNumber());
-		mViewProxy.findTextView(R.id.payless_store_name_with_hours).setText(
+		mViewProxy.findTextView(R.id.cuponera_phone).setText(i.getContactNumber());
+		mViewProxy.findTextView(R.id.cuponera_store_name_with_hours).setText(
 				i.getName() + " " + activity.getResources().getString(R.string.store_hours));
 
 		StoresDaysAdapter storeDaysAdapter = new StoresDaysAdapter(activity, i.getStoreHours());
@@ -104,7 +104,7 @@ public class StoreFinderAdapter extends BaseListAdapter {
 				AnalyticsHelper.logEventWithCategoryAndLabelAndValue(AnalyticsHelper.STORE, AnalyticsHelper.LIST, AnalyticsHelper.TELEPHONE,
 						i.getIdStore());
 				Intent intent = new Intent(Intent.ACTION_DIAL);
-				intent.setData(Uri.parse("tel:" + mViewProxy.findTextView(R.id.payless_phone).getText()));
+				intent.setData(Uri.parse("tel:" + mViewProxy.findTextView(R.id.cuponera_phone).getText()));
 				activity.startActivity(intent);
 			}
 		});

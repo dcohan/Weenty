@@ -1,4 +1,4 @@
-package com.payless.service.config;
+package com.cuponera.service.config;
 
 /**
  * This file <B>WILL BE OVERRIDEN</B> when building with ant

@@ -1,17 +1,11 @@
 package com.cuponera.service.config;
 
 public enum Endpoint {
-	production("https", "payless.emerios.com/Emerios/Payless/v1/"),
+	production("https", ""),
 
-	uat("http", "payless.uat.emerios.com/Emerios/Payless/v1/"),
-
-	preproduction("http", "payless.pre.emerios.com/Emerios/Payless/v1/"),
-
-	test("http", "payless.test.emerios.com/Emerios/Payless/v1/"),
-
-	dev("http", "payless.dev.emerios.com/Emerios/Payless/v1/"),
+	dev("http", ""),
 	
-	local("http","10.10.3.90/Emerios/Payless/v1/");
+	local("http","localhost:6569/");
 
 	private String apiHost;
 	private String apiProtocol;

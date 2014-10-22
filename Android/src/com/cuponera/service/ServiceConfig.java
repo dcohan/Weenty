@@ -5,7 +5,7 @@ import android.content.Context;
 import com.cuponera.service.config.BuildConfig;
 
 public class ServiceConfig {
-	public final static String LOG_TAG = "com.payless.service";
+	public final static String LOG_TAG = "com.cuponera.service";
 
 	public final static String API_PROTOCOL = BuildConfig.endpoint.getApiProtocol();
 	public final static String API_HOST = BuildConfig.endpoint.getApiHost();

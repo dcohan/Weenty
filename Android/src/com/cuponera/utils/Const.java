@@ -1,6 +1,6 @@
 package com.cuponera.utils;
 
 public class Const {
-	public final static String SETTINGS = "com.payless.settings";
+	public final static String SETTINGS = "com.cuponera.settings";
 
 }

@@ -65,28 +65,28 @@ public class AnalyticsHelper {
 
 	public static void logEvent(String event) {
 		for (Tracker t : trackers) {
-			t.logEvent(event);
+		//	t.logEvent(event);
 		}
 		Log.d("ANALYTICS", event);
 	}
 
 	public static void logEventWithCategory(String category, String event) {
 		for (Tracker t : trackers) {
-			t.logEvent(category, event);
+			//t.logEvent(category, event);
 		}
 		Log.d("ANALYTICS", category + " " + event);
 	}
 
 	public static void logEventWithCategoryAndLabel(String category, String event, String label) {
 		for (Tracker t : trackers) {
-			t.logEvent(category, event, label);
+		//	t.logEvent(category, event, label);
 		}
 		Log.d("ANALYTICS", category + " " + event + " " + label);
 	}
 
 	public static void logEventWithCategoryAndLabelAndValue(String category, String event, String label, long value) {
 		for (Tracker t : trackers) {
-			t.logEvent(category, event, label, value);
+			//t.logEvent(category, event, label, value);
 		}
 		Log.d("ANALYTICS", category + " " + event + " " + label + " " + value);
 	}

@@ -19,7 +19,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/payless_store_name"
+                android:id="@+id/cuponera_store_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
@@ -27,14 +27,14 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/payless_address"
+                android:id="@+id/cuponera_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_medium"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/payless_distance"
+                android:id="@+id/cuponera_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -69,7 +69,7 @@
                     android:src="@drawable/call_icon" />
 
                 <TextView
-                    android:id="@+id/payless_phone"
+                    android:id="@+id/cuponera_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -98,7 +98,7 @@
         android:visibility="gone" >
 
         <TextView
-            android:id="@+id/payless_store_name_with_hours"
+            android:id="@+id/cuponera_store_name_with_hours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAllCaps="true"
