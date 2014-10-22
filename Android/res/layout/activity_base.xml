@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/navBar"
-        android:name="com.payless.navigation.NavBarFragment"
+        android:name="com.cuponera.navigation.NavBarFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

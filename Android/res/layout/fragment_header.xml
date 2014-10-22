@@ -23,16 +23,18 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical" >
-
-            <ImageView
-                android:id="@+id/homeButton"
-                android:layout_width="40dp"
+            
+                        <ImageView
+                android:id="@+id/menuButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/unknown"
                 android:padding="10dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/homeicon" />
+                android:scaleType="center"
+                android:src="@drawable/menu_top" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -51,16 +53,18 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/homeicon"
                 android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/menuButton"
-                android:layout_width="wrap_content"
+            
+                        <ImageView
+                android:id="@+id/homeButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/unknown"
                 android:padding="10dp"
-                android:scaleType="center"
-                android:src="@drawable/menu_top" />
+                android:scaleType="fitXY"
+                android:src="@drawable/homeicon" />
+
+
         </LinearLayout>
     </RelativeLayout>
     <RelativeLayout
@@ -76,10 +80,10 @@
         
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.payless.navigation.MenuFragment"
+        android:name="com.cuponera.navigation.MenuFragment"
         android:layout_width="@dimen/menuWidth"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentLeft="true" />
     </RelativeLayout>
 
 </LinearLayout>
