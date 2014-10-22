@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cuponera.Backend.Data
+namespace Cuponera.Entities
 {
     using System;
     using System.Data.Entity;
@@ -42,10 +42,10 @@ namespace Cuponera.Backend.Data
         public virtual DbSet<store> store { get; set; }
         public virtual DbSet<subscription> subscription { get; set; }
         public virtual DbSet<user> user { get; set; }
+        public virtual DbSet<userCompany> userCompany { get; set; }
         public virtual DbSet<UserProfile> UserProfile { get; set; }
         public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
         public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
-        public virtual DbSet<userCompany> userCompany { get; set; }
     }
 }

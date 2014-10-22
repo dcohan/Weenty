@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cuponera.Backend.Data
+namespace Cuponera.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class permissions
+    public partial class userCompany
     {
-        public int idPermission { get; set; }
-        public int IdRole { get; set; }
-        public Nullable<short> Read { get; set; }
-        public Nullable<short> Create { get; set; }
-        public Nullable<short> Update { get; set; }
-        public Nullable<short> Delete { get; set; }
+        public int IdUserCompany { get; set; }
+        public int IdUser { get; set; }
+        public int IdCompany { get; set; }
+        public bool IsAdmin { get; set; }
+        public Nullable<int> IdStore { get; set; }
     
-        public virtual role role { get; set; }
+        public virtual company company { get; set; }
+        public virtual user user { get; set; }
     }
 }

@@ -7,28 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cuponera.Backend.Data
+namespace Cuponera.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class company
     {
-        public user()
+        public company()
         {
+            this.companyStore = new HashSet<companyStore>();
+            this.companySubscription = new HashSet<companySubscription>();
+            this.product = new HashSet<product>();
             this.userCompany = new HashSet<userCompany>();
         }
     
-        public int IdUser { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public int IdCompany { get; set; }
         public string Name { get; set; }
-        public Nullable<int> IdRole { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
-        public virtual role role { get; set; }
+        public virtual ICollection<companyStore> companyStore { get; set; }
+        public virtual ICollection<companySubscription> companySubscription { get; set; }
+        public virtual ICollection<product> product { get; set; }
         public virtual ICollection<userCompany> userCompany { get; set; }
     }
 }

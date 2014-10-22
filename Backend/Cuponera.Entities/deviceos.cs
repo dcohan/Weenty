@@ -7,17 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cuponera.Backend.Data
+namespace Cuponera.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class images
+    public partial class deviceos
     {
-        public int IdImage { get; set; }
-        public string ImagePath { get; set; }
-        public int IdProduct { get; set; }
+        public deviceos()
+        {
+            this.profile = new HashSet<profile>();
+        }
     
-        public virtual product product { get; set; }
+        public int IdDeviceOs { get; set; }
+        public string Code { get; set; }
+    
+        public virtual ICollection<profile> profile { get; set; }
     }
 }

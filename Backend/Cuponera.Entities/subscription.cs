@@ -7,21 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cuponera.Backend.Data
+namespace Cuponera.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class companySubscription
+    public partial class subscription
     {
-        public int IdCompanySubscription { get; set; }
-        public int IdCompany { get; set; }
-        public int IdSubscription { get; set; }
+        public subscription()
+        {
+            this.companySubscription = new HashSet<companySubscription>();
+        }
+    
+        public string Name { get; set; }
+        public decimal Pricing { get; set; }
+        public int SortFactor { get; set; }
+        public int Idsubscription { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
+        public System.DateTime EndDate { get; set; }
     
-        public virtual company company { get; set; }
-        public virtual subscription subscription { get; set; }
+        public virtual ICollection<companySubscription> companySubscription { get; set; }
     }
 }

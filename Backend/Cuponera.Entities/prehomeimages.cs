@@ -7,21 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cuponera.Backend.Data
+namespace Cuponera.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class devicetypes
+    public partial class prehomeimages
     {
-        public devicetypes()
-        {
-            this.profile = new HashSet<profile>();
-        }
-    
-        public int IdDeviceType { get; set; }
-        public string Code { get; set; }
-    
-        public virtual ICollection<profile> profile { get; set; }
+        public int IdPreHomeImage { get; set; }
+        public Nullable<int> Active { get; set; }
+        public Nullable<System.DateTime> CreationDatetime { get; set; }
+        public Nullable<System.DateTime> ModificationDatetime { get; set; }
+        public Nullable<System.DateTime> DeletionDatetime { get; set; }
+        public string ImagePath { get; set; }
     }
 }

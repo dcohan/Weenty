@@ -7,18 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cuponera.Backend.Data
+namespace Cuponera.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class prehomeimages
+    public partial class permissions
     {
-        public int IdPreHomeImage { get; set; }
-        public Nullable<int> Active { get; set; }
-        public Nullable<System.DateTime> CreationDatetime { get; set; }
-        public Nullable<System.DateTime> ModificationDatetime { get; set; }
-        public Nullable<System.DateTime> DeletionDatetime { get; set; }
-        public string ImagePath { get; set; }
+        public int idPermission { get; set; }
+        public int IdRole { get; set; }
+        public Nullable<short> Read { get; set; }
+        public Nullable<short> Create { get; set; }
+        public Nullable<short> Update { get; set; }
+        public Nullable<short> Delete { get; set; }
+    
+        public virtual role role { get; set; }
     }
 }

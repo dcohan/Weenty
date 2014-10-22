@@ -11,7 +11,7 @@ using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Routing;
-using Cuponera.Backend.Data;
+using Cuponera.Entities;
 
 namespace Cuponera.Backend.Controllers
 {
@@ -20,7 +20,7 @@ namespace Cuponera.Backend.Controllers
 
     using System.Web.Http.OData.Builder;
     using System.Web.Http.OData.Extensions;
-    using Cuponera.Backend.Data;
+    using Cuponera.Entities;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<state>("state");
     builder.EntitySet<profile>("profile"); 

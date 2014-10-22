@@ -7,15 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cuponera.Backend.Data
+namespace Cuponera.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class webpages_OAuthMembership
+    public partial class webpages_Roles
     {
-        public string Provider { get; set; }
-        public string ProviderUserId { get; set; }
-        public int UserId { get; set; }
+        public webpages_Roles()
+        {
+            this.UserProfile = new HashSet<UserProfile>();
+        }
+    
+        public int RoleId { get; set; }
+        public string RoleName { get; set; }
+    
+        public virtual ICollection<UserProfile> UserProfile { get; set; }
     }
 }

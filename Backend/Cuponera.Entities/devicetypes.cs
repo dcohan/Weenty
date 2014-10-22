@@ -7,20 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cuponera.Backend.Data
+namespace Cuponera.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class userCompany
+    public partial class devicetypes
     {
-        public int IdUserCompany { get; set; }
-        public int IdUser { get; set; }
-        public int IdCompany { get; set; }
-        public bool IsAdmin { get; set; }
-        public Nullable<int> IdStore { get; set; }
+        public devicetypes()
+        {
+            this.profile = new HashSet<profile>();
+        }
     
-        public virtual company company { get; set; }
-        public virtual user user { get; set; }
+        public int IdDeviceType { get; set; }
+        public string Code { get; set; }
+    
+        public virtual ICollection<profile> profile { get; set; }
     }
 }

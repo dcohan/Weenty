@@ -7,24 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cuponera.Backend.Data
+namespace Cuponera.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class category
+    public partial class UserProfile
     {
-        public category()
+        public UserProfile()
         {
-            this.product = new HashSet<product>();
+            this.webpages_Roles = new HashSet<webpages_Roles>();
         }
     
-        public int IdCategory { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.DateTime> CreationDatetime { get; set; }
-        public Nullable<System.DateTime> ModificationDatetime { get; set; }
-        public Nullable<System.DateTime> DeletionDatetime { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
     
-        public virtual ICollection<product> product { get; set; }
+        public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
     }
 }

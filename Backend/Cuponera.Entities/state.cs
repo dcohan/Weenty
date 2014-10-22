@@ -7,21 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cuponera.Backend.Data
+namespace Cuponera.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class deviceos
+    public partial class state
     {
-        public deviceos()
+        public state()
         {
             this.profile = new HashSet<profile>();
+            this.store = new HashSet<store>();
         }
     
-        public int IdDeviceOs { get; set; }
-        public string Code { get; set; }
+        public string IdState { get; set; }
+        public string Name { get; set; }
+        public string Link { get; set; }
+        public Nullable<System.DateTime> CreationDatetime { get; set; }
+        public Nullable<System.DateTime> ModificationDatetime { get; set; }
+        public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
         public virtual ICollection<profile> profile { get; set; }
+        public virtual ICollection<store> store { get; set; }
     }
 }
