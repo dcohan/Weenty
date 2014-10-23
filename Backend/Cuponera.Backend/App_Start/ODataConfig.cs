@@ -33,18 +33,12 @@ namespace Cuponera.Backend
             builder.EntitySet<user>("user");
             builder.EntitySet<userCompany>("userCompany");
 
-            // New code:
-            //builder.Namespace = "usersService";
-            //builder.EntitySet<user>("users").EntityType.Collection
-            //    .Action("Login")
-            //    .Parameter<string>("UserName");
-
             return builder.GetEdmModel();
         }
 
         public static void Register(HttpConfiguration config)
         {
-            config.Routes.MapODataServiceRoute("odata", "", GetModel());
+            config.Routes.MapODataServiceRoute("data", "", GetModel());
             config.EnsureInitialized();
         }
     }
