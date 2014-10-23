@@ -1,0 +1,64 @@
+﻿@model Cuponera.Entities.companyStore
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>companyStore</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModificationDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModificationDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeletionDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeletionDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.company.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.company.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.store.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.store.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

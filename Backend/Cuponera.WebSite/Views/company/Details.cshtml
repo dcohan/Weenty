@@ -1,0 +1,50 @@
+﻿@model Cuponera.Entities.company
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>company</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModificationDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModificationDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeletionDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeletionDatetime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdCompany }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
