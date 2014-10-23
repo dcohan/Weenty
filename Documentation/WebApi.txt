@@ -13,7 +13,12 @@ Como hacer un GET de un objeto por ID:
 http://localhost:13883/data/deviceos(1)
 
 Como hacer un GET por alguna property, ver este post para entender cómo extender los gets
-http://www.asp.net/web-api/overview/odata-support-in-aspnet-web-api/using-$select,-$expand,-and-$value
+http://www.asp.net/web-api/overview/odata-support-in-aspnet-web-api/supporting-odata-query-options
+Este post comenta como hacer un get y filtrarlos
+
+Ejemplo: http://localhost:6569/data/company?$filter=Name%20eq%20%27david%27and%20IdCompany%20eq%202
+Busca en la tabla company, un nombre igual a David y con id =2
+
 
 
 Como llamar a entidades relacionadas: es posible obtener los datos relacionados a una entity, por ejemplo podemos 

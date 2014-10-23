@@ -44,7 +44,7 @@ namespace Cuponera.Backend
 
         public static void Register(HttpConfiguration config)
         {
-            config.Routes.MapODataServiceRoute("odata", "data", GetModel());
+            config.Routes.MapODataServiceRoute("odata", "", GetModel());
             config.EnsureInitialized();
         }
     }
