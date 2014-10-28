@@ -22,6 +22,7 @@
 *.sbr
 *.sdf
 *.opensdf
+*.suo
 *.unsuccessfulbuild
 ipch/
 obj/
