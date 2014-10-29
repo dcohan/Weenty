@@ -1,7 +1,5 @@
 package com.cuponera.service;
 
-import android.content.Context;
-
 import com.cuponera.service.config.BuildConfig;
 
 public class ServiceConfig {

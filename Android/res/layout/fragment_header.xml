@@ -23,18 +23,16 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical" >
-            
-                        <ImageView
+
+            <ImageView
                 android:id="@+id/menuButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/unknown"
                 android:padding="10dp"
-                android:scaleType="center"
-                android:src="@drawable/menu_top" />
-
-
+                android:scaleType="centerInside"
+                android:src="@drawable/menu_dropdown" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,8 +51,8 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/homeicon"
                 android:visibility="gone" />
-            
-                        <ImageView
+
+            <ImageView
                 android:id="@+id/homeButton"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
@@ -63,27 +61,26 @@
                 android:padding="10dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/homeicon" />
-
-
         </LinearLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        
+        android:layout_height="match_parent" >
+
         <FrameLayout
             android:id="@+id/menuOutside"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:visibility="gone" />
-        
-    <fragment
-        android:id="@+id/menuFragment"
-        android:name="com.cuponera.navigation.MenuFragment"
-        android:layout_width="@dimen/menuWidth"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true" />
+
+        <fragment
+            android:id="@+id/menuFragment"
+            android:name="com.cuponera.navigation.MenuFragment"
+            android:layout_width="@dimen/menuWidth"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true" />
     </RelativeLayout>
 
 </LinearLayout>

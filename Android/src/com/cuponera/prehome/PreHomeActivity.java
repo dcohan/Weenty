@@ -107,7 +107,6 @@ public class PreHomeActivity extends BaseActivity {
 	private void continueCicle(){
 		preHomeFragment = new PreHomeFragment();
 		startFragment(preHomeFragment, false);
-		preHomeFragment.reload();
 	}
 
 }
