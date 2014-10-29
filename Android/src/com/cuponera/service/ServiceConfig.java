@@ -16,7 +16,6 @@ public class ServiceConfig {
 	public static final int APP_TYPE_PHONE = 1;
 	public static final float LOCATION_UPDATES_MIN_DISTANCE = 200.0f; // 200
 	public static final long LOCATION_UPDATES_MIN_TIME = 60000; // 60 seconds
-	public static final String DEVICE_TYPE = "1";
 
 	private static String deviceId = null;
 
@@ -26,10 +25,6 @@ public class ServiceConfig {
 
 	public static void setDeviceId(String deviceId) {
 		ServiceConfig.deviceId = deviceId;
-	}
-
-	public static int getAppType(Context mContext) {
-		return APP_TYPE_PHONE;
 	}
 
 }

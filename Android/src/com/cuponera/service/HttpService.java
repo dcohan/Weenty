@@ -47,6 +47,7 @@ public class HttpService {
 	private final static int CONNECTION_TIME_OUT = 35000;
 	private final static int MAX_CONNECTIONS = 1;
 	private final static int RESPONSE_200 = 200;
+	private final static int RESPONSE_201 = 201;
 	private final static int RESPONSE_400 = 400;
 	private final static int RESPONSE_403 = 403;
 	private final static int RESPONSE_500 = 500;
@@ -115,7 +116,7 @@ public class HttpService {
 
 			HttpResponse httpResponse = client.execute(request);
 
-			if (httpResponse.getStatusLine().getStatusCode() == RESPONSE_200
+			if (httpResponse.getStatusLine().getStatusCode() == RESPONSE_200 || httpResponse.getStatusLine().getStatusCode() == RESPONSE_201
 					|| httpResponse.getStatusLine().getStatusCode() == RESPONSE_400) {
 				readResponseBody(sb, httpResponse);
 			} else {

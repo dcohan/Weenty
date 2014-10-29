@@ -15,8 +15,7 @@ import com.cuponera.pool.AsyncPoolLoader.HTTPMethod;
 import com.cuponera.pool.AsyncPoolLoader.ServiceCallback;
 import com.cuponera.service.BaseResponse;
 
-
-public abstract class BaseAsyncPoolRequest <ResponseClass extends BaseResponse> implements ServiceCallback {
+public abstract class BaseAsyncPoolRequest<ResponseClass extends BaseResponse> implements ServiceCallback {
 	protected Context context;
 
 	protected int loadingView;
@@ -45,25 +44,22 @@ public abstract class BaseAsyncPoolRequest <ResponseClass extends BaseResponse> 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US));
-		
-		//Base Response
+		httpResponse = "{\"Data\": " + httpResponse + "}";
+		// Base Response
 		BaseResponse baseResponse = new BaseResponse();
 		baseResponse = (BaseResponse) mapper.readValue(httpResponse, BaseResponse.class);
-		
-		//Real response
+
+		// Real response
 		ResponseClass responseClass = (ResponseClass) getResponseClass().newInstance();
 
-		if(baseResponse.succes()) {
-			JSONObject responseJson = new JSONObject(new JSONTokener(httpResponse));
-			JSONObject data = responseJson.getJSONObject("Data");
-			
-			responseClass = (ResponseClass) mapper.readValue(data.toString(), getResponseClass());
-			
-			responseClass.setData(data);
-		}
+		JSONObject responseJson = new JSONObject(new JSONTokener(httpResponse));
+
+		responseClass = (ResponseClass) mapper.readValue(responseJson.toString(), getResponseClass());
+
+		responseClass.setData(responseJson);
 		responseClass.setResult(baseResponse.getResult());
 		responseClass.setErrors(baseResponse.getErrors());
-		
+
 		onServiceReturned(responseClass);
 	}
 
@@ -83,11 +79,11 @@ public abstract class BaseAsyncPoolRequest <ResponseClass extends BaseResponse> 
 	public void setLoadingView(int loadingView) {
 		this.loadingView = loadingView;
 	}
-	
-	public void execute(){
+
+	public void execute() {
 		AsyncPoolManager.getInstance(getContext()).executeLoaderWith(this);
 	}
-	
+
 	protected abstract Class<?> getResponseClass();
-	
+
 }

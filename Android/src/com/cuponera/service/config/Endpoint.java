@@ -5,7 +5,7 @@ public enum Endpoint {
 
 	dev("http", ""),
 	
-	local("http","localhost:6569/");
+	local("http","192.168.1.103:6569");
 
 	private String apiHost;
 	private String apiProtocol;

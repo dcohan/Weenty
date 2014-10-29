@@ -9,7 +9,7 @@ public class ProfileResponse extends BaseResponse {
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("Profile")
+	@JsonProperty("Data")
 	private Profile profile;
 
 	public Profile getProfile() {
