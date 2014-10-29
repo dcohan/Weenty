@@ -29,13 +29,13 @@
             android:text="@string/menu_shop" />
 
         <Button
-            android:id="@+id/menuButtonCoupons"
+            android:id="@+id/menuOfertas"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1dp"
             android:drawableLeft="@drawable/coupons_drop"
-            android:text="@string/menu_coupons" />
+            android:text="@string/menu_ofertas" />
 
         <Button
             android:id="@+id/menuButtonSocial"

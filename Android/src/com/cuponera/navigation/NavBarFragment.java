@@ -119,8 +119,8 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 	}
 
 	@Override
-	public void onMyCouponsButton() {
-		getBaseActivity().onMyCouponsButton();
+	public void onSpecialOffers() {
+		getBaseActivity().onSpecialOffers();
 
 	}
 

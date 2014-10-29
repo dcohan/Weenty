@@ -13,11 +13,11 @@ import com.cuponera.model.Coupon;
 import com.cuponera.navigation.HeaderImageInterface;
 import com.cuponera.navigation.HeaderInterface;
 
-public class MyCouponsFragment extends BaseFragment implements HeaderInterface {
+public class MyOffersFragment extends BaseFragment implements HeaderInterface {
 	public final static String COUPONS_ID = "couponId";
 
-	public static MyCouponsFragment newInstance(String couponId) {
-		MyCouponsFragment myCouponsFragment = new MyCouponsFragment();
+	public static MyOffersFragment newInstance(String couponId) {
+		MyOffersFragment myCouponsFragment = new MyOffersFragment();
 		Bundle b = new Bundle();
 		b.putString(COUPONS_ID, couponId);
 		myCouponsFragment.setArguments(b);
@@ -26,7 +26,7 @@ public class MyCouponsFragment extends BaseFragment implements HeaderInterface {
 
 	@Override
 	public String getTitle() {
-		return getString(R.string.menu_coupons);
+		return getString(R.string.menu_ofertas);
 	}
 
 	@Override

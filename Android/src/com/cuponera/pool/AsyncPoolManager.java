@@ -14,7 +14,6 @@ import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.event.LoaderEvent;
 import com.cuponera.service.HttpService;
-import com.cuponera.service.ServiceConfig;
 import com.cuponera.ui.loader.LoaderInfo;
 import com.cuponera.utils.ErrorHandler;
 import com.cuponera.utils.Utils;
@@ -155,7 +154,7 @@ public class AsyncPoolManager {
 	private Map<String, Object> getDefaultParams(Context context) {
 		Map<String, Object> defaultParams = new HashMap<String, Object>();
 
-		defaultParams.put("DeviceId", "012vrrf22");
+		defaultParams.put("DeviceId", "01xxxr2342rf22");
 		defaultParams.put("IdDeviceOs", 5);
 		defaultParams.put("IdDeviceType",4);
 		defaultParams.put("AppVersion", Utils.getAppVersion(context));

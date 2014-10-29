@@ -30,7 +30,7 @@
     <!-- Menu -->
     <string name="menu_home">Inicio</string>
     <string name="menu_shop">Shop</string>
-    <string name="menu_coupons">Ofertas Especiales</string>
+    <string name="menu_ofertas">Ofertas Especiales</string>
     <string name="menu_social">Social</string>
     <string name="menu_stores">Stores</string>
     <string name="menu_more">Más</string>

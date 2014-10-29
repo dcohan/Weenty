@@ -44,7 +44,8 @@ public abstract class BaseAsyncPoolRequest<ResponseClass extends BaseResponse> i
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US));
-		httpResponse = "{\"Data\": " + httpResponse + "}";
+		if (getResponseClass().getName().contains("Profile"))
+			httpResponse = "{\"Data\": " + httpResponse + "}";
 		// Base Response
 		BaseResponse baseResponse = new BaseResponse();
 		baseResponse = (BaseResponse) mapper.readValue(httpResponse, BaseResponse.class);

@@ -10,13 +10,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 
-import com.cuponera.coupons.MyCouponsFragment;
+import com.cuponera.coupons.MyOffersFragment;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.event.EventListener;
 import com.cuponera.helpers.AnalyticsHelper;
 import com.cuponera.home.HomeActivity;
 import com.cuponera.home.HomeFragment;
+import com.cuponera.more.MoreFragment;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.navigation.NavBarFragment;
 import com.cuponera.settings.Settings;
@@ -116,9 +117,9 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	}
 
 	@Override
-	public void onMyCouponsButton() {
+	public void onSpecialOffers() {
 		AnalyticsHelper.logEvent(AnalyticsHelper.COUPONS_SCREEN);
-		startFragment(new MyCouponsFragment());
+		startFragment(new MyOffersFragment());
 
 	}
 
@@ -138,7 +139,7 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	@Override
 	public void onMoreButton() {
 		AnalyticsHelper.logEvent(AnalyticsHelper.STORES_SCREEN);
-		startFragment(new StoreFinderFragment());
+		startFragment(new MoreFragment());
 
 	}
 
