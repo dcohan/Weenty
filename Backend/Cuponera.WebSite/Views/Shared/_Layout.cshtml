@@ -6,7 +6,22 @@
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
         @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/common")
+
+        <script type="text/javascript">
+        $(function(){
+            $("[data-popup-to-open]").click(function () {
+                var popup_to_open = $(this).data('popup-to-open');
+                var $popup = $("." + popup_to_open);
+                if ($popup.dialog) {
+                    $popup.dialog('open');
+                }
+            });
+        });
+        </script>
     </head>
     <body>
         <header>
@@ -20,9 +35,9 @@
                     </section>
                     <nav>
                         <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Categorías", "Index", "category")</li>
+                            <li>@Html.ActionLink("Empresas", "Index", "company")</li>
+                            <li>@Html.ActionLink("Sucursales", "Index", "companyStore")</li>
                         </ul>
                     </nav>
                 </div>
@@ -44,5 +59,10 @@
 
         @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
+
+
+
+
+        @Html.Partial("Popups")
     </body>
 </html>

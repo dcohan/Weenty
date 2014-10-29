@@ -754,3 +754,19 @@ tr.pager td {
             margin: 0;
         }
 }
+
+
+
+.table-all tbody td.current-status{
+    padding-right: 0px;
+    text-align:center;
+}
+
+.table-all tbody td.current-status img{
+    height: 20px;
+    width: 20px;
+}
+
+.hidden{
+    display: none;
+}

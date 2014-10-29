@@ -240,6 +240,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
@@ -309,9 +310,11 @@
     <Content Include="Views\companyStore\Details.cshtml" />
     <Content Include="Views\companyStore\Edit.cshtml" />
     <Content Include="Views\companyStore\Index.cshtml" />
+    <Content Include="Views\Shared\Popups.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Subviews\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

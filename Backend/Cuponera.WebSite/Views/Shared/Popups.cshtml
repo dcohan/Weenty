@@ -1,0 +1,24 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //$('.dialogs').addClass('hidden');
+
+        $(".dialog-confirm-delete").dialog({
+            resizable: false,
+            height: 140,
+            modal: true,
+            buttons: {
+                "Eliminar?": function () {
+                    $(this).dialog("close");
+                },
+                "Cancelar": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+
+</script>
+
+<div id="confirmDelete" class="dialogs dialog-confirm-delete" title="Eliminar?">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>¿Realmente desea eliminar el <span class="element"></span>?</p>
+</div>
