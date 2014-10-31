@@ -113,9 +113,16 @@ namespace Cuponera.WebSite.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             company company = await db.company.FindAsync(id);
-            db.company.Remove(company);
+            if (company == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+
+            company.DeletionDatetime = DateTime.UtcNow;
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         protected override void Dispose(bool disposing)

@@ -4,7 +4,16 @@
     ViewBag.Title = "Index";
 }
 
+<script type="text/javascript">
+    function confirmDelete(id) {
+        deleteElement({ controller: 'company', id: id });
+    }
+
+</script>
+
 <h2>Index</h2>
+
+@Html.Partial("AntiForgeryTokenForm")
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -24,9 +33,9 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr data-company-id="@item.IdCompany">
+            <tr data-item-id="@item.IdCompany">
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    <span class="item-name">@Html.DisplayFor(modelItem => item.Name)</span>
                 </td>
                 <td class="current-status">
                     @if (item.DeletionDatetime == null)
@@ -41,7 +50,7 @@
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.IdCompany }) |
                     @Html.ActionLink("Details", "Details", new { id = item.IdCompany }) |
-                    <a href="" class="delete" data-popup-to-open="dialog-confirm-delete">Eliminar</a>
+                    <a href="#" class="delete" data-popup-to-open="dialog-confirm-delete">Eliminar</a>
                     @Html.ActionLink("Delete", "Delete", new { id = item.IdCompany })
                 </td>
             </tr>

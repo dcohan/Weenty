@@ -1,13 +1,14 @@
 ﻿<script type="text/javascript">
     $(function () {
-        //$('.dialogs').addClass('hidden');
-
         $(".dialog-confirm-delete").dialog({
             resizable: false,
-            height: 140,
+            height: 200,
             modal: true,
+            autoOpen: false,
             buttons: {
-                "Eliminar?": function () {
+                "Eliminar": function () {
+                    var id = $(this).data('id');
+                    confirmDelete(id);
                     $(this).dialog("close");
                 },
                 "Cancelar": function () {
@@ -16,9 +17,17 @@
             }
         });
     });
+    
 
+    function setDataInPopUp($popup, args) {
+        $popup.find('.name_to_display').html(args.name_to_display);
+        $popup.data('id', args.id);
+    }
 </script>
 
-<div id="confirmDelete" class="dialogs dialog-confirm-delete" title="Eliminar?">
-    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>¿Realmente desea eliminar el <span class="element"></span>?</p>
+<div id="confirmDelete" class="dialogs dialog-confirm-delete" title="Eliminar?" data-id="">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+        ¿Realmente desea eliminar <span class="name_to_display"></span>?
+    </p>
 </div>

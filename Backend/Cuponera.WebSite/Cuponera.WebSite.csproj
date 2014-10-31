@@ -311,6 +311,7 @@
     <Content Include="Views\companyStore\Edit.cshtml" />
     <Content Include="Views\companyStore\Index.cshtml" />
     <Content Include="Views\Shared\Popups.cshtml" />
+    <Content Include="Views\Shared\AntiForgeryTokenForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
