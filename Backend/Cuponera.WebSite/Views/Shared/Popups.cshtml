@@ -1,6 +1,6 @@
 ﻿<script type="text/javascript">
     $(function () {
-        $(".dialog-confirm-delete").dialog({
+        $(".dialog-confirm-deactivate").dialog({
             resizable: false,
             height: 200,
             modal: true,
@@ -16,8 +16,24 @@
                 }
             }
         });
+
+        $(".dialog-confirm-activate").dialog({
+            resizable: false,
+            height: 200,
+            modal: true,
+            autoOpen: false,
+            buttons: {
+                "Activar": function () {
+                    var id = $(this).data('id');
+                    confirmActivate(id);
+                    $(this).dialog("close");
+                },
+                "Cancelar": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
     });
-    
 
     function setDataInPopUp($popup, args) {
         $popup.find('.name_to_display').html(args.name_to_display);
@@ -25,9 +41,16 @@
     }
 </script>
 
-<div id="confirmDelete" class="dialogs dialog-confirm-delete" title="Eliminar?" data-id="">
+<div id="confirmDelete" class="dialogs dialog-confirm-deactivate" title="Eliminar?" data-id="">
     <p>
         <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-        ¿Realmente desea eliminar <span class="name_to_display"></span>?
+        ¿Realmente desea eliminar "<span class="name_to_display"></span>"?
+    </p>
+</div>
+
+<div id="confirmDelete" class="dialogs dialog-confirm-activate" title="Eliminar?" data-id="">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+        ¿Realmente desea reactivar "<span class="name_to_display"></span>"?
     </p>
 </div>

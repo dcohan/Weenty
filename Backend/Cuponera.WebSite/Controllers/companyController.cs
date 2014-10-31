@@ -125,6 +125,23 @@ namespace Cuponera.WebSite.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Activate(int id)
+        {
+            company company = await db.company.FindAsync(id);
+            if (company == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+
+            company.DeletionDatetime = null;
+            await db.SaveChangesAsync();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

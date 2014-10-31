@@ -8,6 +8,10 @@
     function confirmDelete(id) {
         deleteElement({ controller: 'company', id: id });
     }
+
+    function confirmActivate(id) {
+        activateElement({ controller: 'company', id: id });
+    }
 </script>
 
 <h2>Empresas</h2>
@@ -47,7 +51,15 @@
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.IdCompany }) |
                     @Html.ActionLink("Details", "Details", new { id = item.IdCompany }) |
-                    <a href="#" class="delete" data-popup-to-open="dialog-confirm-delete">Eliminar</a>
+                    
+                    @if (item.DeletionDatetime == null)
+                    {
+                    <a href="#" class="delete" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                    }
+                    else
+                    {
+                        <a href="#" class="delete" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                    }
                 </td>
             </tr>
         }
