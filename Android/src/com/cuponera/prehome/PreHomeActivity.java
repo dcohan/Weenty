@@ -2,6 +2,7 @@ package com.cuponera.prehome;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.location.Location;
 import android.os.Bundle;
 
 import com.cuponera.BaseActivity;
@@ -12,7 +13,9 @@ import com.cuponera.service.profile.CreateProfileRequest;
 import com.cuponera.service.profile.ProfileResponse;
 import com.cuponera.service.profile.UpdateProfileRequest;
 import com.cuponera.utils.ErrorHandler;
+import com.cuponera.utils.LocationServices;
 import com.cuponera.utils.ValidationUtils;
+import com.cuponera.utils.LocationServices.RequestLocationListener;
 
 public class PreHomeActivity extends BaseActivity {
 
@@ -32,7 +35,7 @@ public class PreHomeActivity extends BaseActivity {
 		navBarFragment.hide();
 		navBarFragment.getMenu().disable();
 
-		setPopupsPreferenceAndRunService();
+		getLatitudeAndRun();
 	}
 
 	private void createProfile() {
@@ -76,16 +79,26 @@ public class PreHomeActivity extends BaseActivity {
 
 	}
 
-	private void setPopupsPreferenceAndRunService() {
+	private void getLatitudeAndRun() {
+		LocationServices.getInstance(this).requestAccurateLocation(new RequestLocationListener() {
+
+			@Override
+			public void onLocationReceived(Location location) {
+
+				if (location != null) {
+					getSettings().setLatitude(location.getLatitude());
+					getSettings().setLongitude(location.getLongitude());
+				}
+			}
+
+		});
 		Profile p = getSettings().getProfile();
 		getSettings().setProfile(p);
-
 		if (ValidationUtils.isNullOrEmpty(getSettings().getProfile().getProfileID())) {
 			createProfile();
 		} else {
 			updateProfile();
 		}
-
 
 	}
 
@@ -103,8 +116,8 @@ public class PreHomeActivity extends BaseActivity {
 			alertDialog.show();
 		}
 	}
-	
-	private void continueCicle(){
+
+	private void continueCicle() {
 		preHomeFragment = new PreHomeFragment();
 		startFragment(preHomeFragment, false);
 	}

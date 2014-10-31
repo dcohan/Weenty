@@ -56,7 +56,7 @@ public class LocationServices implements LocationListener {
 	}
 
 	@Override
-	public void onLocationChanged(Location location) {
+	public void onLocationChanged(final Location location) {
 		this.setLocation(location);
 		Log.d("location", location.toString());
 		UpdateProfileRequest request = new UpdateProfileRequest(context) {
@@ -64,7 +64,8 @@ public class LocationServices implements LocationListener {
 			@Override
 			public void onServiceReturned(ProfileResponse result) {
 				if (result != null) {
-
+					Settings.getInstance(context).setLongitude(location.getLongitude());
+					Settings.getInstance(context).setLatitude(location.getLatitude());
 				}
 			}
 
@@ -73,8 +74,7 @@ public class LocationServices implements LocationListener {
 			}
 
 		};
-		request.setLongitude(location.getLongitude());
-		request.setLatitude(location.getLatitude());
+
 		request.execute();
 	}
 
@@ -100,7 +100,7 @@ public class LocationServices implements LocationListener {
 	}
 
 	public boolean isLocationEnabled() {
-		return Settings.getInstance(context).getProfile().isGeolocation() && (isAccurateLocationEnabled() || isNetworkLocationEnabled());
+		return isAccurateLocationEnabled() || isNetworkLocationEnabled();
 	}
 
 	public boolean isAccurateLocationEnabled() {

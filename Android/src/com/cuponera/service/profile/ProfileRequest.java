@@ -45,7 +45,8 @@ public abstract class ProfileRequest extends AsyncPoolRequest<ProfileResponse> {
 	@Override
 	public Map<String, Object> getUriParams() {
 		Map<String, Object> params = new HashMap<String, Object>();
-
+		params.put("Latitude", Settings.getInstance(context).getLatitude());
+		params.put("Longitude", Settings.getInstance(context).getLongitude());
 		if (!ValidationUtils.isNullOrEmpty(getIdProfile())) {
 			params.put("IdProfile", getIdProfile());
 		}
@@ -66,7 +67,6 @@ public abstract class ProfileRequest extends AsyncPoolRequest<ProfileResponse> {
 	public void showLoading() {
 	}
 
-
 	public String getIdProfile() {
 		return idProfile;
 	}
@@ -77,9 +77,7 @@ public abstract class ProfileRequest extends AsyncPoolRequest<ProfileResponse> {
 
 	@Override
 	public void onServiceReturned(ProfileResponse result) {
-		if (result.succes()) {
 			Settings.getInstance(context).setProfile(result.getProfile());
-		}
 	}
 
 }

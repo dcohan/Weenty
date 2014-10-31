@@ -44,20 +44,23 @@ public abstract class BaseAsyncPoolRequest<ResponseClass extends BaseResponse> i
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US));
-		if (getResponseClass().getName().contains("Profile"))
-			httpResponse = "{\"Data\": " + httpResponse + "}";
-		// Base Response
+
 		BaseResponse baseResponse = new BaseResponse();
 		baseResponse = (BaseResponse) mapper.readValue(httpResponse, BaseResponse.class);
-
-		// Real response
+		
 		ResponseClass responseClass = (ResponseClass) getResponseClass().newInstance();
-
-		JSONObject responseJson = new JSONObject(new JSONTokener(httpResponse));
-
-		responseClass = (ResponseClass) mapper.readValue(responseJson.toString(), getResponseClass());
-
-		responseClass.setData(responseJson);
+	
+		if (getResponseClass().getName().contains("Profile")) {
+			httpResponse = "{\"Data\":{ \"Profile\":" + httpResponse + "}}";
+			JSONObject responseJson = new JSONObject(new JSONTokener(httpResponse));
+			JSONObject data = responseJson.getJSONObject("Data");
+			responseClass = (ResponseClass) mapper.readValue(data.toString(), getResponseClass());
+			responseClass.setData(data);
+		} else {
+			JSONObject responseJson = new JSONObject(new JSONTokener(httpResponse));
+			responseClass = (ResponseClass) mapper.readValue(responseJson.toString(), getResponseClass());
+			responseClass.setData(responseJson);
+		}
 		responseClass.setResult(baseResponse.getResult());
 		responseClass.setErrors(baseResponse.getErrors());
 

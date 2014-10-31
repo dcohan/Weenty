@@ -7,7 +7,8 @@
     <LinearLayout
         android:id="@+id/weather_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
         android:background="@color/gray_lighter"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
@@ -28,5 +29,31 @@
             android:layout_marginRight="10dp"
             android:scaleType="centerInside" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:scaleType="fitXY"
+        android:src="@drawable/ofertatest" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:scaleType="fitXY"
+        android:src="@drawable/oferta2test" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:scaleType="fitXY"
+        android:src="@drawable/oferta3test" />
 
 </LinearLayout>

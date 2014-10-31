@@ -26,6 +26,8 @@ public class Settings {
 	private static final String COUPONS = "coupons";
 	private static final String LOOK_BOOK_FILTERS = "look_book_filters";
 	private static final String PROFILE = "profile";
+	private static final String LATITUDE = "latitud";
+	private static final String LONGITUDE = "longitud";
 
 	public Settings(Context context) {
 		mContext = context;
@@ -50,6 +52,22 @@ public class Settings {
 
 	public String getAccountId() {
 		return mSharedPreferences.getString(ACCOUNT_ID, null);
+	}
+
+	public void setLongitude(double longitud) {
+		getEditor().putLong(LONGITUDE, Double.doubleToLongBits(longitud)).commit();
+	}
+
+	public double getLongitude() {
+		return Double.longBitsToDouble(mSharedPreferences.getLong(LONGITUDE, 0));
+	}
+
+	public void setLatitude(double latitude) {
+		getEditor().putLong(LATITUDE, Double.doubleToLongBits(latitude)).commit();
+	}
+
+	public double getLatitude() {
+		return Double.longBitsToDouble(mSharedPreferences.getLong(LATITUDE, 0));
 	}
 
 	public void setDeviceId(String deviceId) {
@@ -106,7 +124,7 @@ public class Settings {
 
 	public void setProfile(Profile profile) {
 		String profileString = "";
-		if(profile != null){
+		if (profile != null) {
 			profileString = profile.serialize();
 		}
 		getEditor().putString(PROFILE, profileString).commit();
