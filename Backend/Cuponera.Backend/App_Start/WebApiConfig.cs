@@ -10,6 +10,12 @@ namespace Cuponera.Backend
         public static void Register(HttpConfiguration config)
         {
             config.Routes.MapHttpRoute(
+                name: "ApiWithAction",
+                routeTemplate: "api/{controller}/Reactivate/{id}",
+                defaults: new { action = "Reactivate", id = RouteParameter.Optional}
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }

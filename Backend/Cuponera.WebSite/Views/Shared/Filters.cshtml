@@ -5,8 +5,8 @@
 <script type="text/javascript">
     $(function () {
         $('.group-control-box').click(function () {
-            /*$input = $(this).find('input');
-            $input.click();*/
+            $input = $(this).find('input');
+            $input.prop('checked', !$input.prop('checked'));
         });
     });
 </script>

@@ -322,6 +322,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Cuponera.Backend\Cuponera.Backend.csproj">
+      <Project>{c6c78fb7-5d14-447f-a79b-5d31e4c31068}</Project>
+      <Name>Cuponera.Backend</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Cuponera.Entities\Cuponera.Entities.csproj">
       <Project>{c178ccfb-2211-48a3-8c33-732ac31ecdf1}</Project>
       <Name>Cuponera.Entities</Name>

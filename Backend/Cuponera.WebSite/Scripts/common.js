@@ -1,16 +1,36 @@
-﻿function deleteElement(args) {
+﻿function callServer(args) {
+    if (args.includeAntiForgeryToken) {
+        if (!args.data) { args.data = {}; }
+
+        args.data['__RequestVerificationToken'] = getAntiForgeryToken();
+    }
+
+    $.ajax({
+        url: '/' + args.controller + '/' + args.action + '/' + args.id,
+        type: args.method,
+        data: args.data
+    })
+   .success(function () {
+        if(args.success) {
+            args.success();
+        }
+   });
+}
+
+
+
+
+
+function deleteElement(args) {
     if (!args.id || !args.controller) {
         return false;
     }
 
-    $.ajax({
-        url: '/' + args.controller + '/Delete/' + args.id,
-        type: "POST",
-        data: { '__RequestVerificationToken': getAntiForgeryToken() }
-    })
-    .success(function () {
-        location.href = args.controller;
-    });
+    args.action = 'Delete';
+    args.includeAntiForgeryToken = true;
+    args.method = 'DELETE';
+    args.success = function () { location.href = args.controller };
+    callServer(args);
 }
 
 function activateElement(args) {
@@ -18,14 +38,11 @@ function activateElement(args) {
         return false;
     }
 
-    $.ajax({
-        url: '/' + args.controller + '/Activate/' + args.id,
-        type: "POST",
-        data: { '__RequestVerificationToken': getAntiForgeryToken() }
-    })
-    .success(function () {
-        location.href = args.controller;
-    });
+    args.action = 'Activate';
+    args.includeAntiForgeryToken = true;
+    args.method = 'POST';
+    args.success = function () { location.href = args.controller };
+    callServer(args);
 }
 
 function getAntiForgeryToken() {

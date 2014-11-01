@@ -5,12 +5,16 @@
 }
 
 <script type="text/javascript">
+    var globals = {
+        controller: 'company'
+    };
+
     function confirmDelete(id) {
-        deleteElement({ controller: 'company', id: id });
+        deleteElement({ controller: globals.controller, id: id });
     }
 
     function confirmActivate(id) {
-        activateElement({ controller: 'company', id: id });
+        activateElement({ controller: globals.controller, id: id });
     }
 </script>
 

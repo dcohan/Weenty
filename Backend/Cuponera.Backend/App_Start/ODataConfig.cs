@@ -33,11 +33,17 @@ namespace Cuponera.Backend
             builder.EntitySet<user>("user");
             builder.EntitySet<userCompany>("userCompany");
 
+
+            /* Custom rules */
+            builder.Entity<category>().Action("Activate");
+            builder.Entity<company>().Action("Activate");
             return builder.GetEdmModel();
         }
 
         public static void Register(HttpConfiguration config)
         {
+            
+
             config.Routes.MapODataServiceRoute("data", "", GetModel());
             config.EnsureInitialized();
         }

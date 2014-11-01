@@ -40,6 +40,18 @@ namespace Cuponera.Backend.Controllers
             return db.company.Where(c => !c.DeletionDatetime.HasValue);
         }
 
+        public IQueryable<company> GetCompanies(bool? all)
+        {
+            if (all.HasValue && all.Value)
+            {
+                return db.company;
+            }
+            else
+            {
+                return Getcompany();
+            }
+        }
+
         // GET: odata/company(5)
         [EnableQuery]
         public SingleResult<company> Getcompany([FromODataUri] int key)
@@ -145,7 +157,23 @@ namespace Cuponera.Backend.Controllers
                 return NotFound();
             }
 
-            company.ModificationDatetime = DateTime.UtcNow;
+            company.DeletionDatetime = DateTime.UtcNow;
+            await db.SaveChangesAsync();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: odata/company(5)/Activate
+        [HttpPost]
+        public async Task<IHttpActionResult> Activate([FromODataUri] int key)
+        {
+            company company = await db.company.FindAsync(key);
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            company.DeletionDatetime = null;
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);

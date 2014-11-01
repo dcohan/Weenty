@@ -142,7 +142,22 @@ namespace Cuponera.Backend.Controllers
                 return NotFound();
             }
 
-            category.ModificationDatetime = DateTime.UtcNow;
+            category.DeletionDatetime = DateTime.UtcNow;
+            await db.SaveChangesAsync();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPost]
+        public async Task<IHttpActionResult> Activate([FromODataUri] int key)
+        {
+            category category = await db.category.FindAsync(key);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            category.DeletionDatetime = null;
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);

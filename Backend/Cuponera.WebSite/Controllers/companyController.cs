@@ -18,7 +18,9 @@ namespace Cuponera.WebSite.Controllers
         // GET: company
         public async Task<ActionResult> Index()
         {
-            return View(await db.company.ToListAsync());
+            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
+            var companies = cb.GetCompanies(true);
+            return View(companies);
         }
 
         // GET: company/Details/5
@@ -91,20 +93,23 @@ namespace Cuponera.WebSite.Controllers
         }
 
         // GET: company/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            company company = await db.company.FindAsync(id);
-            if (company == null)
-            {
-                return HttpNotFound();
-            }
+            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
+            await cb.Delete(id);
 
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
 
-            return View(company);
+        // GET: company/Activate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Activate(int id)
+        {
+            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
+            await cb.Activate(id);
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         // POST: company/Delete/5
@@ -120,23 +125,6 @@ namespace Cuponera.WebSite.Controllers
 
 
             company.DeletionDatetime = DateTime.UtcNow;
-            await db.SaveChangesAsync();
-
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Activate(int id)
-        {
-            company company = await db.company.FindAsync(id);
-            if (company == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-
-            company.DeletionDatetime = null;
             await db.SaveChangesAsync();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
