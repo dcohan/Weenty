@@ -117,11 +117,11 @@ public class MenuFragment extends BaseFragment {
 			}
 		});
 
-		mViewProxy.findButton(R.id.menuButtonShop).setOnClickListener(new OnClickListener() {
+		mViewProxy.findButton(R.id.menuButtonAdmin).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				getDelegate().onShopButton();
+				getDelegate().onAdminButton();
 			}
 		});
 
@@ -181,7 +181,7 @@ public class MenuFragment extends BaseFragment {
 
 		public void onHomeButton();
 
-		public void onShopButton();
+		public void onAdminButton();
 
 		public void onSpecialOffers();
 

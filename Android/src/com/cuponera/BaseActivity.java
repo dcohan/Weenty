@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 
+import com.cuponera.admin.AdminFragment;
 import com.cuponera.coupons.MyOffersFragment;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
@@ -21,7 +22,6 @@ import com.cuponera.more.MoreFragment;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.navigation.NavBarFragment;
 import com.cuponera.settings.Settings;
-import com.cuponera.shop.ShopFragment;
 import com.cuponera.social.SocialFragment;
 import com.cuponera.stores.StoreFinderFragment;
 import com.cuponera.utils.LocationServices;
@@ -110,9 +110,9 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	}
 
 	@Override
-	public void onShopButton() {
+	public void onAdminButton() {
 		AnalyticsHelper.logEvent(AnalyticsHelper.SHOP_SCREEN);
-		startFragment(new ShopFragment());
+		startFragment(new AdminFragment());
 
 	}
 
@@ -177,10 +177,8 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	public void showLoading() {
 		if (loadingDialog == null || !loadingDialog.isShowing()) {
-
 			loadingDialog = new ProgressDialog(this);
 			loadingDialog.setCancelable(false);
-			loadingDialog.setMessage(getString(R.string.loading));
 			loadingDialog.show();
 
 		}

@@ -20,13 +20,13 @@
             android:text="@string/menu_home" />
 
         <Button
-            android:id="@+id/menuButtonShop"
+            android:id="@+id/menuButtonAdmin"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1dp"
             android:drawableLeft="@drawable/shop_drop"
-            android:text="@string/menu_shop" />
+            android:text="@string/menu_admin" />
 
         <Button
             android:id="@+id/menuOfertas"

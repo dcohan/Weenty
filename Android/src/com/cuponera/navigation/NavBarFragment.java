@@ -114,8 +114,8 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 	}
 
 	@Override
-	public void onShopButton() {
-		getBaseActivity().onShopButton();
+	public void onAdminButton() {
+		getBaseActivity().onAdminButton();
 	}
 
 	@Override

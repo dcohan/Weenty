@@ -29,7 +29,7 @@
 
     <!-- Menu -->
     <string name="menu_home">Inicio</string>
-    <string name="menu_shop">Shop</string>
+    <string name="menu_admin">Administración</string>
     <string name="menu_ofertas">Ofertas Especiales</string>
     <string name="menu_social">Social</string>
     <string name="menu_stores">Stores</string>
@@ -38,7 +38,7 @@
     
 
     <!-- Shop -->
-    <string name="shop_title">Shop @ cuponera</string>
+    <string name="admin_title">Administración</string>
 
     <!-- Stores -->
     <string name="stores_title">Store Finder</string>
