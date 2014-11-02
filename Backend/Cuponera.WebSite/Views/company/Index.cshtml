@@ -7,7 +7,15 @@
 <script type="text/javascript">
     var globals = {
         controller: 'company',
-        data: []
+        data: [],
+        filters: {
+            include: ['all'],
+            custom: [{
+                controlType: 'text',
+                controlId: 'Name',
+                label: 'Nombre'
+            }]
+        }
     };
 
     function confirmDelete(id) {
@@ -31,10 +39,10 @@
         $tbody.empty();
 
         $(globals.data).each(function (key, item) {
-            console.debug(item);
             var $tr = $('<tr></tr>').data('item-id', item.IdCompany);
             var $item_name = $('<span></span>').addClass('item-name')
                                               .html(item.Name);
+
             var $first_td = $('<td></td>').append($item_name);
             var $second_td = generateStatusImage({ deletionDatetime: item.DeletionDatetime });
             var $third_td = generateControlButtons({ id: item.IdCompany, deletionDatetime: item.DeletionDatetime });

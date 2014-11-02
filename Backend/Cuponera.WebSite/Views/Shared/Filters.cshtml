@@ -1,14 +1,92 @@
-﻿<div class="group-control-box">
-    @Html.CheckBox("viewAll", true, new { id = "viewAll" }) Ver todos
-</div>
+﻿<fieldset class="filters">
+    <legend>Filtros</legend>
+</fieldset>
 
 <script type="text/javascript">
+    var _reqFilters = [];
+    function getFilters() {
+        _reqFilters = [];
+        $('.filters input').each(function (key, input) {
+            var $input = $(input);
+            if ($input.prop('type') === 'button') { return false; }
+            _reqFilters.push({
+                id: $input.prop('id'),
+                value: ['checkbox', 'radio'].indexOf($input.prop('type')) > -1 ? $input.is(':checked') : $input.val()
+            });
+        });
+
+        return _reqFilters;
+    }
+
     $(function () {
         $('.group-control-box').click(function (e) {
             e.preventDefault();
             $input = $(this).find('input');
             $input.prop('checked', !$input.prop('checked'));
-            reloadData($input.prop('checked'));
         });
     });
+
+    var _common_filters = [{
+        controlType: 'checkbox',
+        controlId: 'all',
+        label: 'Ver todos'
+    }];
+
+    var _filters = [];
+    if (globals.filters && globals.filters.include && globals.filters.include.length > 0) {
+        var includes = globals.filters.include;
+        $(_common_filters).each(function (key, filter) {
+            if (includes.indexOf(filter.controlId) > -1) {
+                _filters.push(filter);
+            }
+        });
+    }
+    
+    if (globals.filters.custom) {
+        _filters = _filters.concat(globals.filters.custom);
+    }
+
+    $(_filters).each(function (key, elem) {
+        $container = $('<div></div>').addClass('filter');
+        if (elem.controlType === 'text') {
+            // label: input
+            if (elem.label) {
+                $container.append(
+                    $('<span></span>')
+                        .html(elem.label + ':')
+                        .addClass('filter-label-pre')
+                );
+            }
+            $input = $('<input>').prop('type', elem.controlType)
+                                .prop('id', elem.controlId);
+            $container.append($input);
+        } else {
+            // input label
+            $input = $('<input>').prop('type', elem.controlType)
+                                .prop('id', elem.controlId)
+                                .prop('checked', elem.controlDefaultValue);
+            $container.append($input);
+            if (elem.label) {
+                $container.append(
+                    $('<span></span>')
+                        .addClass('filter-label-post')
+                        .html(elem.label)
+                );
+            }
+            $container.addClass('group-control-box');
+        }
+
+        $('.filters').append($container);
+    });
+
+    if (_filters.length > 0) {
+        var $button = $('<input>')
+                        .prop('type', 'button')
+                        .prop('value', 'Buscar');
+        $('.filters').append($button);
+        $button.click(function () {
+            var filters = getFilters();
+        })
+    }
+
 </script>
