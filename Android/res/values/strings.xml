@@ -64,48 +64,10 @@
     <string name="social">Social</string>
 
     <!-- Profile -->
-    <string name="submit">Submit</string>
-    <string name="my_profile">My Profile</string>
-    <string name="details">Details</string>
-    <string name="first_name_label">First Name*:</string>
-    <string name="first_name_placeholder">Enter First Name</string>
-    <string name="last_name_label">Last Name*:</string>
-    <string name="last_name_placeholder">Enter Last Name</string>
-    <string name="birth_date_label">Birth Date*:</string>
-    <string name="birth_date_button">Select Date</string>
-    <string name="gender_label">Gender:</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="phone_mail">Phone/Email</string>
-    <string name="cell_phone_label">Cell Phone:</string>
-    <string name="cell_phone_placeholder">Enter Cell Phone</string>
-    <string name="email_label">Email*:</string>
-    <string name="email_placeholder">Enter Email</string>
-    <string name="address">Address</string>
-    <string name="address_line_1_label">Address Line 1:</string>
-    <string name="address_line_2_label">Address Line 2:</string>
-    <string name="address_placeholder">Enter Address</string>
-    <string name="city_label">City:</string>
-    <string name="city_placeholder">Enter City</string>
-    <string name="state_label">State:</string>
-    <string name="state_placeholder">Select State</string>
-    <string name="zipcode_label">Zip Code:</string>
-    <string name="zipcode_placeholder">Enter Zip Code</string>
-    <string name="marketing_channels_description">By giving cuponera ShoeSource your information and checking any of the boxes below, you are giving us permission to send future marketing messages from cuponera ShoeSource via the selected marketing channels.</string>
-    <string name="push_notifications">Push Notifications</string>
-    <string name="text_message">Text Message</string>
-    <string name="email">E-mail</string>
-    <string name="direct_mail">Direct Mail</string>
-    <string name="location_services">Location Services</string>
-    <string name="profile_thanks">Thank you for editing your profile!</string>
-    <string name="invalid_email">Please, enter a valid email</string>
-    <string name="mandatory_fields">* This fields are mandatory</string>
-
+    <string name="location_services">Usar Localización</string>
+    <string name="admin_allowed">Adminsitración</string>
     <!-- Settings -->
     <string name="settings_title">Settings</string>
-    <string name="settings_thanks">Thank you for editing your settings!</string>
-    <string name="settings_phone_disclaimer">Please complete cell phone number.</string>
-    <string name="settings_address_disclaimer">Please complete Address fields.</string>
     
     <string name="map">Map</string>
 

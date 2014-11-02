@@ -22,6 +22,7 @@ import com.cuponera.more.MoreFragment;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.navigation.NavBarFragment;
 import com.cuponera.settings.Settings;
+import com.cuponera.settings.SettingsFragment;
 import com.cuponera.social.SocialFragment;
 import com.cuponera.stores.StoreFinderFragment;
 import com.cuponera.utils.LocationServices;
@@ -111,35 +112,36 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	@Override
 	public void onAdminButton() {
-		AnalyticsHelper.logEvent(AnalyticsHelper.SHOP_SCREEN);
 		startFragment(new AdminFragment());
 
 	}
 
 	@Override
 	public void onSpecialOffers() {
-		AnalyticsHelper.logEvent(AnalyticsHelper.COUPONS_SCREEN);
 		startFragment(new MyOffersFragment());
 
 	}
 
 	@Override
 	public void onSocialButton() {
-		AnalyticsHelper.logEvent(AnalyticsHelper.SOCIAL_SCREEN);
 		startFragment(new SocialFragment());
 	}
 
 	@Override
 	public void onStoresButton() {
-		AnalyticsHelper.logEvent(AnalyticsHelper.STORES_SCREEN);
 		startFragment(new StoreFinderFragment());
 
 	}
 	
 	@Override
 	public void onMoreButton() {
-		AnalyticsHelper.logEvent(AnalyticsHelper.STORES_SCREEN);
 		startFragment(new MoreFragment());
+
+	}
+	
+	@Override
+	public void onPreferenceButton() {
+		startFragment(new SettingsFragment());
 
 	}
 

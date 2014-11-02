@@ -11,8 +11,6 @@ import com.cuponera.utils.ValidationUtils;
 
 public abstract class ProfileRequest extends AsyncPoolRequest<ProfileResponse> {
 
-	private String idProfile;
-
 	public ProfileRequest(Context context) {
 		super(context);
 	}
@@ -47,8 +45,9 @@ public abstract class ProfileRequest extends AsyncPoolRequest<ProfileResponse> {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("Latitude", Settings.getInstance(context).getLatitude());
 		params.put("Longitude", Settings.getInstance(context).getLongitude());
-		if (!ValidationUtils.isNullOrEmpty(getIdProfile())) {
-			params.put("IdProfile", getIdProfile());
+		params.put("Geolocation", Settings.getInstance(context).isLocationEnable() ? 1 : 0);
+		if (!ValidationUtils.isNullOrEmpty(Settings.getInstance(context).getProfileId())) {
+			params.put("IdProfile", Settings.getInstance(context).getProfileId());
 		}
 
 		return params;
@@ -67,17 +66,10 @@ public abstract class ProfileRequest extends AsyncPoolRequest<ProfileResponse> {
 	public void showLoading() {
 	}
 
-	public String getIdProfile() {
-		return idProfile;
-	}
-
-	public void setIdProfile(String idProfile) {
-		this.idProfile = idProfile;
-	}
-
 	@Override
 	public void onServiceReturned(ProfileResponse result) {
-			Settings.getInstance(context).setProfile(result.getProfile());
+		Settings.getInstance(context).setProfileId(result.getProfileID());
+		Settings.getInstance(context).setLocationEnable(result.isGeolocation() == 1 ? true : false);
 	}
 
 }

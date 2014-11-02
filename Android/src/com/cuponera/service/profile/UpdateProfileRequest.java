@@ -13,7 +13,7 @@ public abstract class UpdateProfileRequest extends ProfileRequest {
 
 	@Override
 	public String getPath() {
-		return "/profile(" + Settings.getInstance(context).getProfile().getProfileID() + ")";
+		return "/profile(" + Settings.getInstance(context).getProfileId() + ")";
 	}
 	
 	@Override

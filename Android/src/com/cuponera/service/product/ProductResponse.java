@@ -1,4 +1,4 @@
-package com.service.category;
+package com.cuponera.service.product;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import com.cuponera.model.Category;
 import com.cuponera.service.BaseResponse;
 
-public class CategoryResponse extends BaseResponse {
+public class ProductResponse extends BaseResponse {
 
 	private static final long serialVersionUID = -4029237294641698732L;
 

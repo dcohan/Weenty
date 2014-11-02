@@ -154,7 +154,7 @@ public class AsyncPoolManager {
 	private Map<String, Object> getDefaultParams(Context context) {
 		Map<String, Object> defaultParams = new HashMap<String, Object>();
 
-		defaultParams.put("DeviceId", "221122");
+		defaultParams.put("DeviceId", "gsppt22112200");
 		defaultParams.put("IdDeviceOs", 5);
 		defaultParams.put("IdDeviceType",4);
 		defaultParams.put("AppVersion", Utils.getAppVersion(context));

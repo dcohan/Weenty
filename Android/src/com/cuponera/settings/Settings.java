@@ -7,7 +7,6 @@ import com.cuponera.model.Coupons;
 import com.cuponera.model.HomeOffers;
 import com.cuponera.model.LookBookFilters;
 import com.cuponera.model.PreHome;
-import com.cuponera.model.Profile;
 import com.cuponera.utils.Const;
 import com.cuponera.utils.Utils;
 
@@ -20,14 +19,15 @@ public class Settings {
 
 	private static final String ACCOUNT_ID = "account_id";
 	private static final String PREF_DEVICE_ID = "device_id";
-	private static final String START_APP_DIGEST = "start_app_digest";
 	private static final String PREHOME_INFO = "prehome_info";
 	private static final String HOME_OFFERS = "home_offers";
 	private static final String COUPONS = "coupons";
 	private static final String LOOK_BOOK_FILTERS = "look_book_filters";
-	private static final String PROFILE = "profile";
 	private static final String LATITUDE = "latitud";
 	private static final String LONGITUDE = "longitud";
+	private static final String ALLOW_ADMIN = "allow_admin";
+	private static final String PROFILE_ID = "profile_id";
+	private static final String GEOLOCATION = "geolocation";
 
 	public Settings(Context context) {
 		mContext = context;
@@ -54,6 +54,14 @@ public class Settings {
 		return mSharedPreferences.getString(ACCOUNT_ID, null);
 	}
 
+	public void setProfileId(String profileId) {
+		getEditor().putString(PROFILE_ID, profileId).commit();
+	}
+
+	public String getProfileId() {
+		return mSharedPreferences.getString(PROFILE_ID, null);
+	}
+
 	public void setLongitude(double longitud) {
 		getEditor().putLong(LONGITUDE, Double.doubleToLongBits(longitud)).commit();
 	}
@@ -76,14 +84,6 @@ public class Settings {
 
 	public String getDeviceId() {
 		return mSharedPreferences.getString(PREF_DEVICE_ID, "");
-	}
-
-	public void setStartAppDigest(String digest) {
-		getEditor().putString(START_APP_DIGEST, digest).commit();
-	}
-
-	public String getStartAppDigest() {
-		return mSharedPreferences.getString(START_APP_DIGEST, "");
 	}
 
 	public void setPrehomeInfo(PreHome preHome) {
@@ -122,20 +122,19 @@ public class Settings {
 		return Utils.deserialize(string, LookBookFilters.class);
 	}
 
-	public void setProfile(Profile profile) {
-		String profileString = "";
-		if (profile != null) {
-			profileString = profile.serialize();
-		}
-		getEditor().putString(PROFILE, profileString).commit();
+	public boolean AdminAllowed() {
+		return mSharedPreferences.getBoolean(ALLOW_ADMIN, false);
 	}
 
-	public Profile getProfile() {
-		String string = mSharedPreferences.getString(PROFILE, "");
-		Profile profile = Utils.deserialize(string, Profile.class);
-		if (profile == null) {
-			profile = new Profile();
-		}
-		return profile;
+	public void setAdminAllowed(boolean adminAllowed) {
+		getEditor().putBoolean(ALLOW_ADMIN, adminAllowed).commit();
+	}
+
+	public boolean isLocationEnable() {
+		return mSharedPreferences.getBoolean(GEOLOCATION, false);
+	}
+
+	public void setLocationEnable(boolean locationEnable) {
+		getEditor().putBoolean(GEOLOCATION, locationEnable).commit();
 	}
 }

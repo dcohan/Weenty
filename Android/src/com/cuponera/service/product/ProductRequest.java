@@ -1,4 +1,4 @@
-package com.service.category;
+package com.cuponera.service.product;
 
 import java.util.Map;
 
@@ -9,9 +9,9 @@ import android.os.Parcelable;
 import com.cuponera.pool.AsyncPoolLoader.HTTPMethod;
 import com.cuponera.pool.AsyncPoolRequest;
 
-public class CategoryRequest extends AsyncPoolRequest<CategoryResponse> implements Parcelable {
+public class ProductRequest extends AsyncPoolRequest<ProductResponse> implements Parcelable {
 
-	public CategoryRequest(Context context) {
+	public ProductRequest(Context context) {
 		super(context);
 	}
 
@@ -72,11 +72,11 @@ public class CategoryRequest extends AsyncPoolRequest<CategoryResponse> implemen
 
 	@Override
 	protected Class<?> getResponseClass() {
-		return CategoryResponse.class;
+		return ProductResponse.class;
 	}
 
 	@Override
-	public void onServiceReturned(CategoryResponse result) {
+	public void onServiceReturned(ProductResponse result) {
 		// TODO Auto-generated method stub
 		
 	}

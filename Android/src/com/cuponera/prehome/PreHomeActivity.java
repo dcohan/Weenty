@@ -8,14 +8,14 @@ import android.os.Bundle;
 import com.cuponera.BaseActivity;
 import com.cuponera.R;
 import com.cuponera.event.EventBus;
-import com.cuponera.model.Profile;
 import com.cuponera.service.profile.CreateProfileRequest;
 import com.cuponera.service.profile.ProfileResponse;
 import com.cuponera.service.profile.UpdateProfileRequest;
+import com.cuponera.settings.Settings;
 import com.cuponera.utils.ErrorHandler;
 import com.cuponera.utils.LocationServices;
-import com.cuponera.utils.ValidationUtils;
 import com.cuponera.utils.LocationServices.RequestLocationListener;
+import com.cuponera.utils.ValidationUtils;
 
 public class PreHomeActivity extends BaseActivity {
 
@@ -39,6 +39,7 @@ public class PreHomeActivity extends BaseActivity {
 	}
 
 	private void createProfile() {
+		Settings.getInstance(this).setLocationEnable(true);
 		CreateProfileRequest request = new CreateProfileRequest(PreHomeActivity.this) {
 
 			@Override
@@ -74,7 +75,6 @@ public class PreHomeActivity extends BaseActivity {
 			}
 
 		};
-		request.setIdProfile(getSettings().getProfile().getProfileID());
 		request.execute();
 
 	}
@@ -92,9 +92,7 @@ public class PreHomeActivity extends BaseActivity {
 			}
 
 		});
-		Profile p = getSettings().getProfile();
-		getSettings().setProfile(p);
-		if (ValidationUtils.isNullOrEmpty(getSettings().getProfile().getProfileID())) {
+		if (ValidationUtils.isNullOrEmpty(getSettings().getProfileId())) {
 			createProfile();
 		} else {
 			updateProfile();

@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
+import com.cuponera.settings.Settings;
 
 public class MenuFragment extends BaseFragment {
 
@@ -25,11 +26,13 @@ public class MenuFragment extends BaseFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		mViewProxy.setVisibility(R.id.menuButtonAdmin, Settings.getInstance(getActivity()).AdminAllowed());
 		setActions();
 		hide();
 	}
 
 	public void toggle() {
+		mViewProxy.setVisibility(R.id.menuButtonAdmin, Settings.getInstance(getActivity()).AdminAllowed());
 		if (enabled && !animating) {
 			if (isOpen()) {
 				delegate.onChangeState(false);
@@ -157,6 +160,14 @@ public class MenuFragment extends BaseFragment {
 			}
 		});
 
+		mViewProxy.findButton(R.id.menuButtonSettings).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				getDelegate().onPreferenceButton();
+			}
+		});
+
 	}
 
 	public MenuInterface getDelegate() {
@@ -190,6 +201,8 @@ public class MenuFragment extends BaseFragment {
 		public void onStoresButton();
 
 		public void onMoreButton();
+
+		public void onPreferenceButton();
 
 	}
 

@@ -48,6 +48,7 @@ public class HttpService {
 	private final static int MAX_CONNECTIONS = 1;
 	private final static int RESPONSE_200 = 200;
 	private final static int RESPONSE_201 = 201;
+	private final static int RESPONSE_204 = 204;
 	private final static int RESPONSE_400 = 400;
 	private final static int RESPONSE_403 = 403;
 	private final static int RESPONSE_500 = 500;
@@ -63,30 +64,23 @@ public class HttpService {
 	private HttpClient getClient(HttpClient client) {
 
 		HttpParams params = client.getParams();
-		params.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-				CONNECTION_TIME_OUT);
+		params.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, CONNECTION_TIME_OUT);
 
-		params.setIntParameter(CoreConnectionPNames.SO_TIMEOUT,
-				CONNECTION_TIME_OUT);
+		params.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, CONNECTION_TIME_OUT);
 		params.setLongParameter(ConnManagerPNames.TIMEOUT, CONNECTION_TIME_OUT);
-		params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS,
-				MAX_CONNECTIONS);
-		params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE,
-				new ConnPerRouteBean(MAX_CONNECTIONS));
+		params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, MAX_CONNECTIONS);
+		params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(MAX_CONNECTIONS));
 
 		return new DefaultHttpClient(params);
 
 	}
 
-	public void readResponseBody(StringBuffer sb, HttpResponse httpResponse)
-			throws IOException {
+	public void readResponseBody(StringBuffer sb, HttpResponse httpResponse) throws IOException {
 		BufferedReader in;
 		InputStream inputStream = httpResponse.getEntity().getContent();
-		Header contentEncoding = httpResponse
-				.getFirstHeader("Content-Encoding");
+		Header contentEncoding = httpResponse.getFirstHeader("Content-Encoding");
 
-		if (contentEncoding != null
-				&& contentEncoding.getValue().equalsIgnoreCase("gzip")) {
+		if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
 			inputStream = new GZIPInputStream(inputStream);
 		}
 
@@ -106,34 +100,31 @@ public class HttpService {
 		try {
 
 			HttpClient client = getClient(new DefaultHttpClient());
-			client.getParams().setIntParameter(
-					CoreConnectionPNames.CONNECTION_TIMEOUT,
-					CONNECTION_TIME_OUT);
-			client.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT,
-					CONNECTION_TIME_OUT);
-			client.getParams().setLongParameter(ConnManagerPNames.TIMEOUT,
-					CONNECTION_TIME_OUT);
+			client.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, CONNECTION_TIME_OUT);
+			client.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, CONNECTION_TIME_OUT);
+			client.getParams().setLongParameter(ConnManagerPNames.TIMEOUT, CONNECTION_TIME_OUT);
 
 			HttpResponse httpResponse = client.execute(request);
 
 			if (httpResponse.getStatusLine().getStatusCode() == RESPONSE_200 || httpResponse.getStatusLine().getStatusCode() == RESPONSE_201
 					|| httpResponse.getStatusLine().getStatusCode() == RESPONSE_400) {
 				readResponseBody(sb, httpResponse);
-			} else {
-				if (httpResponse.getStatusLine().getStatusCode() == RESPONSE_500
-						|| httpResponse.getStatusLine().getStatusCode() == RESPONSE_403) {
+				
+			} else {				if (httpResponse.getStatusLine().getStatusCode() == RESPONSE_204) {
+				sb = new StringBuffer("\"Result\": \"True\"");
+			}
+
+				if (httpResponse.getStatusLine().getStatusCode() == RESPONSE_500 || httpResponse.getStatusLine().getStatusCode() == RESPONSE_403) {
 					readResponseBody(sb, httpResponse);
 				}
-				Log.e(ServiceConfig.LOG_TAG, "Server response error: "
-						+ httpResponse.getStatusLine().getStatusCode() + ", "
+				Log.e(ServiceConfig.LOG_TAG, "Server response error: " + httpResponse.getStatusLine().getStatusCode() + ", "
 						+ httpResponse.getStatusLine().getReasonPhrase());
 			}
 
 		} catch (SocketTimeoutException socketTimeoutException) {
 
 			try {
-				Log.e(ServiceConfig.LOG_TAG, "Timeout on request: "
-						+ request.getURI().toURL());
+				Log.e(ServiceConfig.LOG_TAG, "Timeout on request: " + request.getURI().toURL());
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
@@ -142,8 +133,7 @@ public class HttpService {
 		} catch (UnknownHostException e) {
 
 			try {
-				Log.e(ServiceConfig.LOG_TAG, "Internet Lost on request: "
-						+ request.getURI().toURL());
+				Log.e(ServiceConfig.LOG_TAG, "Internet Lost on request: " + request.getURI().toURL());
 			} catch (MalformedURLException e1) {
 				e1.printStackTrace();
 			}
@@ -151,14 +141,10 @@ public class HttpService {
 			sb = new StringBuffer(NO_INTERNET);
 
 		} catch (SSLException e) {
-			Log.e(ServiceConfig.LOG_TAG,
-					"error SSL: " + request.getURI().getPath() + ", message: "
-							+ e.getMessage(), e);
+			Log.e(ServiceConfig.LOG_TAG, "error SSL: " + request.getURI().getPath() + ", message: " + e.getMessage(), e);
 			sb = new StringBuffer(SSLEXEPTION);
 		} catch (Exception e) {
-			Log.e(ServiceConfig.LOG_TAG,
-					"error executing request: " + request.getURI().getPath()
-							+ ", message: " + e.getMessage(), e);
+			Log.e(ServiceConfig.LOG_TAG, "error executing request: " + request.getURI().getPath() + ", message: " + e.getMessage(), e);
 		} finally {
 			if (in != null) {
 				try {
@@ -172,12 +158,10 @@ public class HttpService {
 		return sb.toString();
 	}
 
-	public String poolGet(String protocol, String host, String path,
-			Map<String, Object> uriParams) {
+	public String poolGet(String protocol, String host, String path, Map<String, Object> uriParams) {
 		String response = null;
 		try {
-			HttpGet request = new HttpGet(getUri(protocol, host, path,
-					uriParams));
+			HttpGet request = new HttpGet(getUri(protocol, host, path, uriParams));
 			request.addHeader("Accept-Encoding", "gzip");
 			response = basePool(request);
 
@@ -187,29 +171,26 @@ public class HttpService {
 		return response;
 	}
 
-	public String poolPost(String protocol, String host, String path,
-			Map<String, Object> uriParams) {
+	public String poolPost(String protocol, String host, String path, Map<String, Object> uriParams) {
 		return poolParamsInBody(protocol, host, path, uriParams, paramsInBodyMethod.Post);
 	}
 
-	public String poolPut(String protocol, String host, String path,
-			Map<String, Object> uriParams) {
+	public String poolPut(String protocol, String host, String path, Map<String, Object> uriParams) {
 		return poolParamsInBody(protocol, host, path, uriParams, paramsInBodyMethod.Put);
 	}
 
-	private String poolParamsInBody(String protocol, String host, String path,
-			Map<String, Object> uriParams, paramsInBodyMethod method) {
+	private String poolParamsInBody(String protocol, String host, String path, Map<String, Object> uriParams, paramsInBodyMethod method) {
 		String response = null;
 		try {
 
 			HttpEntityEnclosingRequestBase request = null;
 			switch (method) {
-				case Post:
-					request = new HttpPost(getUri(protocol, host, path, null));
-					break;
-				case Put:
-					request = new HttpPut(getUri(protocol, host, path, null));
-					break;
+			case Post:
+				request = new HttpPost(getUri(protocol, host, path, null));
+				break;
+			case Put:
+				request = new HttpPut(getUri(protocol, host, path, null));
+				break;
 			}
 
 			if (uriParams != null) {
@@ -236,19 +217,16 @@ public class HttpService {
 		return response;
 	}
 
-	private URI getUri(String protocol, String host, String path,
-			Map<String, Object> uriParams) throws URISyntaxException {
+	private URI getUri(String protocol, String host, String path, Map<String, Object> uriParams) throws URISyntaxException {
 		String queryString = null;
 		if (uriParams != null && uriParams.size() > 0) {
 			List<NameValuePair> listParams = new ArrayList<NameValuePair>();
 			for (Map.Entry<String, Object> entry : uriParams.entrySet()) {
-				listParams.add(new BasicNameValuePair(entry.getKey(), entry
-						.getValue().toString()));
+				listParams.add(new BasicNameValuePair(entry.getKey(), entry.getValue().toString()));
 			}
 			queryString = URLEncodedUtils.format(listParams, "UTF-8");
 		}
-		URI uri = URIUtils.createURI(protocol, host, -1, path, queryString,
-				null);
+		URI uri = URIUtils.createURI(protocol, host, -1, path, queryString, null);
 		return uri;
 	}
 

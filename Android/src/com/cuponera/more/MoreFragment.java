@@ -10,8 +10,8 @@ import com.cuponera.R;
 import com.cuponera.model.Category;
 import com.cuponera.navigation.HeaderImageInterface;
 import com.cuponera.navigation.HeaderInterface;
-import com.service.category.CategoryRequest;
-import com.service.category.CategoryResponse;
+import com.cuponera.service.category.CategoryRequest;
+import com.cuponera.service.category.CategoryResponse;
 
 public class MoreFragment extends BaseFragment implements HeaderInterface {
 

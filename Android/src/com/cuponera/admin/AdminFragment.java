@@ -8,7 +8,7 @@ public class AdminFragment extends WebViewWithHeaderFragment {
 
 	@Override
 	protected String getUrl() {
-		return "http://192.168.1.40:2537";
+		return "http://192.168.1.103:2537";
 	}
 
 	@Override

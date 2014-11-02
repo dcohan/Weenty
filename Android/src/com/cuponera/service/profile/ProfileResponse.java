@@ -2,22 +2,34 @@ package com.cuponera.service.profile;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import com.cuponera.model.Profile;
 import com.cuponera.service.BaseResponse;
 
 public class ProfileResponse extends BaseResponse {
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("Profile")
-	private Profile profile;
+	@JsonProperty("IdProfile")
+	private String profileID;
 
-	public Profile getProfile() {
-		return profile;
+	@JsonProperty("Geolocation")
+	private int geolocation;
+
+
+	public String getProfileID() {
+		return profileID;
 	}
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
+	public void setProfileID(String profileID) {
+		this.profileID = profileID;
 	}
+
+	public int isGeolocation() {
+		return geolocation;
+	}
+
+	public void setGeolocation(int geolocation) {
+		this.geolocation = geolocation;
+	}
+	
 
 }

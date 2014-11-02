@@ -2,11 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="15dp"
     android:layout_margin="10dp"
-    android:background="@color/white" >
+    android:background="@color/white"
+    android:paddingTop="15dp" >
 
     <RelativeLayout
+        android:id="@+id/location_relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -33,17 +34,33 @@
             android:checked="false" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/submitButton"
+    <RelativeLayout
+        android:layout_below="@+id/location_relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/selector_button_orange"
-        android:enabled="false"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/submit"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="3dp"
+        android:paddingRight="0dp" >
+
+        <TextView
+            android:id="@+id/allow_admin_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="@string/admin_allowed"
+            android:textColor="@color/gray_dark"
+            android:textSize="18sp" />
+
+        <ToggleButton
+            android:id="@+id/allow_admin"
+            style="@style/ToggleButtonSettings"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:checked="false" />
+    </RelativeLayout>
 
 </RelativeLayout>
