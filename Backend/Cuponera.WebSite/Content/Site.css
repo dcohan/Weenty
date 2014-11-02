@@ -780,6 +780,22 @@ tr.pager td {
     vertical-align: middle;
 }
 
+.list-content .filters {
+    float:right;
+}
+
+.list-content .table-all{
+    float: left;
+}
+
+.list-content .table-all td {
+    min-width: 60px;
+}
+
+.list-content .filter{
+    margin-bottom: 10px;
+}
+
 .filter-label-pre{
     margin-right: 10px;
 }

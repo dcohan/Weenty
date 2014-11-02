@@ -5,31 +5,29 @@
 <script type="text/javascript">
     var _reqFilters = [];
     function getFilters() {
-        _reqFilters = [];
+        _reqFilters = {};
         $('.filters input').each(function (key, input) {
             var $input = $(input);
             if ($input.prop('type') === 'button') { return false; }
-            _reqFilters.push({
-                id: $input.prop('id'),
-                value: ['checkbox', 'radio'].indexOf($input.prop('type')) > -1 ? $input.is(':checked') : $input.val()
-            });
+            _reqFilters[$input.prop('id')] = ['checkbox', 'radio'].indexOf($input.prop('type')) > -1 ? $input.is(':checked') : $input.val();
         });
 
         return _reqFilters;
     }
 
-    $(function () {
-        $('.group-control-box').click(function (e) {
-            e.preventDefault();
-            $input = $(this).find('input');
-            $input.prop('checked', !$input.prop('checked'));
+    function reloadData(filters) {
+        getElements({
+            controller: globals.controller,
+            qs: filters,
+            action: globals.actions.reloadData
         });
-    });
+    }
 
     var _common_filters = [{
         controlType: 'checkbox',
         controlId: 'all',
-        label: 'Ver todos'
+        label: 'Ver todos',
+        controlDefaultValue: true
     }];
 
     var _filters = [];
@@ -64,7 +62,7 @@
             // input label
             $input = $('<input>').prop('type', elem.controlType)
                                 .prop('id', elem.controlId)
-                                .prop('checked', elem.controlDefaultValue);
+                                .prop('checked', elem.controlDefaultValue ? elem.controlDefaultValue : false);
             $container.append($input);
             if (elem.label) {
                 $container.append(
@@ -86,7 +84,18 @@
         $('.filters').append($button);
         $button.click(function () {
             var filters = getFilters();
+            reloadData(filters);
         })
     }
 
+
+
+    $(function () {
+        $('.group-control-box').click(function (e) {
+            e.preventDefault();
+            $input = $(this).find('input');
+            $input.prop('checked', !$input.prop('checked'));
+
+        });
+    });
 </script>
