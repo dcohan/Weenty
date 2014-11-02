@@ -13,8 +13,7 @@
         @Scripts.Render("~/bundles/common")
 
         <script type="text/javascript">
-        $(function(){
-            $("[data-popup-to-open]").click(function () {
+            var popup_open_function = function () {
                 var popup_to_open = $(this).data('popup-to-open');
                 var $tr = $(this).closest('tr');
                 var id = $tr.data('item-id');
@@ -25,7 +24,10 @@
                 if ($popup.dialog) {
                     $popup.dialog('open');
                 }
-            });
+            };
+            
+        $(function(){
+            $("[data-popup-to-open]").click(popup_open_function);
         });
         </script>
     </head>

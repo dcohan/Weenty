@@ -14,7 +14,7 @@
     })
    .success(function (data, textStatus, jqXHR) {
         if (args.success) {
-            data = JSON.parse(data);
+            if (data) data = JSON.parse(data);
             args.success(data, textStatus, jqXHR);
         }
    });

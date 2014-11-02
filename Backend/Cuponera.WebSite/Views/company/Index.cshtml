@@ -52,26 +52,32 @@
             $tr.append($second_td);
 
             var $third_td = $('<tr></tr>');
-            var $buttons = $('<td></td>').append(
-                                                $('<a></a>').prop('href', '/company/Edit/' + item.IdCompany)
-                                                            .html('Editar')
-                                            ).append(
-                                                $('<a></a>').prop('href', '/company/Details/' + item.IdCompany)
-                                                            .html('Detalle')
-                                            );
+            var $buttons = $('<td></td>')
+                .append(
+                    $('<a></a>').prop('href', '/company/Edit/' + item.IdCompany)
+                                .html('Editar')
+                )
+                .append('|')
+                .append(
+                    $('<a></a>').prop('href', '/company/Details/' + item.IdCompany)
+                                .html('Detalle')
+                )
+                .append('|');
             if (!item.DeletionDatetime) {
                 $buttons.append(
                     $('<a></a>').prop('href', '#')
                                 .html('Eliminar')
-                                .data('popup-to-open', 'dialog-confirm-deactivate')
+                                .attr('popup-to-open', 'dialog-confirm-deactivate')
                                 .addClass('deactivate')
+                                .on('click', 'popup_open_function();')
                 );
             } else {
                 $buttons.append(
                     $('<a></a>').prop('href', '#')
                                 .html('Activar')
-                                .data('popup-to-open', 'dialog-confirm-activate')
+                                .attr('data-popup-to-open', 'dialog-confirm-activate')
                                 .addClass('activate')
+                                .on('click', 'popup_open_function();')
                 );
             }
             
