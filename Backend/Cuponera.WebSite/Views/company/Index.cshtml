@@ -6,7 +6,8 @@
 
 <script type="text/javascript">
     var globals = {
-        controller: 'company'
+        controller: 'company',
+        data: []
     };
 
     function confirmDelete(id) {
@@ -16,7 +17,74 @@
     function confirmActivate(id) {
         activateElement({ controller: globals.controller, id: id });
     }
+
+    function reloadData(all) {
+        getElements({
+            controller: globals.controller,
+            qs: { all: all },
+            action: 'GetCompanies'
+        });
+    }
+
+    function refreshTable() {
+        $tbody = $('table tbody');
+        $tbody.empty();
+
+        $(globals.data).each(function (key, item) {
+            console.debug(item);
+            var $tr = $('<tr></tr>').data('item-id', item.IdCompany);
+            var $item_name = $('<span></span>').addClass('item-name')
+                                              .html(item.Name);
+            var $first_td = $('<td></td>').append($item_name);
+            var $status_image = $('<img></img>');
+            if (!item.DeletionDatetime) {
+                $status_image.prop('src', 'Images/tick.ico')
+                             .prop('alt', 'active')
+                             .addClass('active');
+            } else {
+                $status_image.prop('src', 'Images/x.ico')
+                             .prop('alt', 'inactive')
+                             .addClass('inactive');
+            }
+
+            var $second_td = $('<td></td>').addClass('current-status')
+                                           .append($status_image);
+            $tr.append($second_td);
+
+            var $third_td = $('<tr></tr>');
+            var $buttons = $('<td></td>').append(
+                                                $('<a></a>').prop('href', '/company/Edit/' + item.IdCompany)
+                                                            .html('Editar')
+                                            ).append(
+                                                $('<a></a>').prop('href', '/company/Details/' + item.IdCompany)
+                                                            .html('Detalle')
+                                            );
+            if (!item.DeletionDatetime) {
+                $buttons.append(
+                    $('<a></a>').prop('href', '#')
+                                .html('Eliminar')
+                                .data('popup-to-open', 'dialog-confirm-deactivate')
+                                .addClass('deactivate')
+                );
+            } else {
+                $buttons.append(
+                    $('<a></a>').prop('href', '#')
+                                .html('Activar')
+                                .data('popup-to-open', 'dialog-confirm-activate')
+                                .addClass('activate')
+                );
+            }
+            
+            $third_td.append($buttons);
+
+            $tr.append($first_td)
+                .append($second_td)
+                .append($third_td);
+            $tbody.append($tr);
+        });
+    }
 </script>
+
 
 <h2>Empresas</h2>
 
@@ -53,16 +121,16 @@
                     }
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.IdCompany }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.IdCompany }) |
+                    @Html.ActionLink("Editar", "Edit", new { id = item.IdCompany }) |
+                    @Html.ActionLink("Detalle", "Details", new { id = item.IdCompany }) |
                     
                     @if (item.DeletionDatetime == null)
                     {
-                    <a href="#" class="delete" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                        <a href="#" class="deactivate" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
                     }
                     else
                     {
-                        <a href="#" class="delete" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                        <a href="#" class="activate" data-popup-to-open="dialog-confirm-activate">Activar</a>
                     }
                 </td>
             </tr>

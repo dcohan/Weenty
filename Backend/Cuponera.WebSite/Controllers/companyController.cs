@@ -15,13 +15,33 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
+        private IEnumerable<company> get(bool all)
+        {
+            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
+            
+            return cb.Getcompany(all);
+        }
+
+
+
         // GET: company
         public async Task<ActionResult> Index()
         {
-            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
-            var companies = cb.GetCompanies(true);
+            var companies = get(true);
             return View(companies);
         }
+
+
+        [HttpGet]
+        public string GetCompanies(bool all = false)
+        {
+            var companies = get(all);
+
+            var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
+            var json = jsonSerialiser.Serialize(companies.ToList());
+            return json;
+        }
+       
 
         // GET: company/Details/5
         public async Task<ActionResult> Details(int? id)

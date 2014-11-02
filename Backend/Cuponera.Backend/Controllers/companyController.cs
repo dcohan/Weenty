@@ -35,20 +35,14 @@ namespace Cuponera.Backend.Controllers
 
         // GET: odata/company
         [EnableQuery]
-        public IQueryable<company> Getcompany()
+        public IQueryable<company> Getcompany(bool all = false)
         {
-            return db.company.Where(c => !c.DeletionDatetime.HasValue);
-        }
-
-        public IQueryable<company> GetCompanies(bool? all)
-        {
-            if (all.HasValue && all.Value)
+            if (all)
             {
                 return db.company;
             }
-            else
-            {
-                return Getcompany();
+            else {
+                return db.company.Where(c => !c.DeletionDatetime.HasValue);
             }
         }
 

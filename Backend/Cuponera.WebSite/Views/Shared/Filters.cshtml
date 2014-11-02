@@ -4,9 +4,11 @@
 
 <script type="text/javascript">
     $(function () {
-        $('.group-control-box').click(function () {
+        $('.group-control-box').click(function (e) {
+            e.preventDefault();
             $input = $(this).find('input');
             $input.prop('checked', !$input.prop('checked'));
+            reloadData($input.prop('checked'));
         });
     });
 </script>
