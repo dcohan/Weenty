@@ -64,7 +64,7 @@
     <string name="social">Social</string>
 
     <!-- Profile -->
-    <string name="location_services">Usar Localización</string>
+    <string name="location_services">Localización</string>
     <string name="admin_allowed">Adminsitración</string>
     <!-- Settings -->
     <string name="settings_title">Settings</string>

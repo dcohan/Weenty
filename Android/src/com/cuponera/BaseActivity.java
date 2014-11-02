@@ -38,10 +38,10 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	@Override
 	protected void onStart() {
 		super.onStart();
-//		GoogleAnalyticsTracker analytics = new GoogleAnalyticsTracker();
-//		analytics.startTracking(this);
-//		AnalyticsHelper.addTracker(analytics);
-//		AnalyticsHelper.startTracking(this);
+		// GoogleAnalyticsTracker analytics = new GoogleAnalyticsTracker();
+		// analytics.startTracking(this);
+		// AnalyticsHelper.addTracker(analytics);
+		// AnalyticsHelper.startTracking(this);
 	}
 
 	@Override
@@ -49,8 +49,7 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_base);
 
-		navBarFragment = (NavBarFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.navBar);
+		navBarFragment = (NavBarFragment) getSupportFragmentManager().findFragmentById(R.id.navBar);
 
 		navBarFragment.toString();
 
@@ -73,8 +72,8 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	@Override
 	public void onStop() {
 		super.onStop();
-//		GoogleAnalyticsTracker analytics = new GoogleAnalyticsTracker();
-//		analytics.stopTracking(this);
+		// GoogleAnalyticsTracker analytics = new GoogleAnalyticsTracker();
+		// analytics.stopTracking(this);
 	}
 
 	public Settings getSettings() {
@@ -132,13 +131,13 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 		startFragment(new StoreFinderFragment());
 
 	}
-	
+
 	@Override
 	public void onMoreButton() {
 		startFragment(new MoreFragment());
 
 	}
-	
+
 	@Override
 	public void onPreferenceButton() {
 		startFragment(new SettingsFragment());
@@ -150,12 +149,10 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	}
 
 	protected void startFragment(Fragment fragment, boolean animated) {
-		FragmentTransaction transaction = getSupportFragmentManager()
-				.beginTransaction();
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.replace(R.id.container, fragment);
 		if (animated) {
-			transaction
-					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		}
 		transaction.commit();
 		navBarFragment.getMenu().close();
@@ -165,10 +162,8 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 		replaceFragment(fragment, R.id.container, addToBackStack);
 	}
 
-	public void replaceFragment(Fragment fragment, int containerId,
-			boolean addToBackStack) {
-		FragmentTransaction transaction = getSupportFragmentManager()
-				.beginTransaction();
+	public void replaceFragment(Fragment fragment, int containerId, boolean addToBackStack) {
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.replace(containerId, fragment);
 		if (addToBackStack) {
 			transaction.addToBackStack(fragment.getClass().getName());
@@ -269,13 +264,11 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(message);
-			builder.setPositiveButton(R.string.ok,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							errorDialogPresent = false;
-						}
-					});
+			builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					errorDialogPresent = false;
+				}
+			});
 			try {
 				alertDialog = builder.create();
 				if (!isFinishing()) {
