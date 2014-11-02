@@ -196,6 +196,7 @@
     <Compile Include="Controllers\companyController.cs" />
     <Compile Include="Controllers\companyStoreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\productController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -313,6 +314,11 @@
     <Content Include="Views\Shared\Popups.cshtml" />
     <Content Include="Views\Shared\AntiForgeryTokenForm.cshtml" />
     <Content Include="Views\Shared\Filters.cshtml" />
+    <Content Include="Views\product\Create.cshtml" />
+    <Content Include="Views\product\Delete.cshtml" />
+    <Content Include="Views\product\Details.cshtml" />
+    <Content Include="Views\product\Edit.cshtml" />
+    <Content Include="Views\product\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
