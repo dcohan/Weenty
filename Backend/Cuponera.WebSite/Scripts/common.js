@@ -78,3 +78,53 @@ function activateElement(args) {
 function getAntiForgeryToken() {
     return $('#__AjaxAntiForgeryForm input[name=__RequestVerificationToken]').val();
 };
+
+function generateStatusImage(item) {
+    var $td = $('<td></td>').addClass('current-status');
+
+    var $status_image = $('<img></img>');
+    if (!item.deletionDatetime) {
+        $status_image.prop('src', 'Images/tick.ico')
+                     .prop('alt', 'active')
+                     .addClass('active');
+    } else {
+        $status_image.prop('src', 'Images/x.ico')
+                     .prop('alt', 'inactive')
+                     .addClass('inactive');
+    }
+
+    $td.append($status_image);
+    return $td;
+}
+
+function generateControlButtons(item, controller) {
+    var $third_td = $('<td></td>');
+    $third_td.append(
+        $('<a></a>').prop('href', '/' + controller + '/Edit/' + item.id)
+            .html('Editar')
+    )
+    .append(' | ')
+    .append(
+        $('<a></a>').prop('href', '/' + controller + '/Details/' + item.id)
+            .html('Detalle')
+    )
+    .append(' | ');
+
+    if (!item.deletionDatetime) {
+        $third_td.append(
+            $('<a></a>').prop('href', '#')
+                        .html('Eliminar')
+                        .attr('data-popup-to-open', 'dialog-confirm-deactivate')
+                        .addClass('deactivate')
+        );
+    } else {
+        $third_td.append(
+            $('<a></a>').prop('href', '#')
+                        .html('Activar')
+                        .attr('data-popup-to-open', 'dialog-confirm-activate')
+                        .addClass('activate')
+        );
+    }
+
+    return $third_td;
+}
