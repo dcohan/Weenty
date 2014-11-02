@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Cuponera.WebSite.Helpers;
 using Cuponera.Entities;
 
 namespace Cuponera.WebSite.Controllers
@@ -15,36 +16,31 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        private IEnumerable<company> get(bool all)
+        private IEnumerable<company> get(bool all, string name)
         {
             Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
-            return cb.Getcompany(all);
+            IEnumerable<company> companies = cb.Getcompany(all, name);
+
+
+            return companies;
         }
 
 
 
         // GET: company
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(bool all = false, string name = null, int pageNumber = 1)
         {
-            var companies = get(true);
+            var companies = get(all, name);
             return View(companies);
         }
 
-
-        public static string SerializeJSON(object unserializedData)
-        {
-            var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
-            var json = jsonSerialiser.Serialize(unserializedData);
-            return json;
-        }
-
         [HttpGet]
-        public string GetCompanies(bool all = false)
+        public string GetCompanies(bool all = false, string name = null)
         {
-            var companies = get(all);
+            var companies = get(all, name);
             var dataToSerialize = companies.Select(c => new { IdCompany = c.IdCompany, Name = c.Name, DeletionDatetime = c.DeletionDatetime });
 
-            return companyController.SerializeJSON(dataToSerialize);
+            return JSONHelper.SerializeJSON(dataToSerialize);
         }
        
 

@@ -16,6 +16,7 @@
             custom: [{
                 controlType: 'text',
                 controlId: 'name',
+                controlDefaultValue: '@(Request.Params["name"] != null ? @Request.Params["name"] : "")',
                 label: 'Nombre'
             }]
         }
@@ -41,7 +42,7 @@
             var $first_td = $('<td></td>').append($item_name);
             var $second_td = generateStatusImage({ deletionDatetime: item.DeletionDatetime });
             var $third_td = generateControlButtons({ id: item.IdCompany, deletionDatetime: item.DeletionDatetime });
-            
+
             $tr.append($first_td)
                 .append($second_td)
                 .append($third_td);

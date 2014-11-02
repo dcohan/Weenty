@@ -201,6 +201,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\JSONHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -302,7 +303,6 @@
     <Content Include="Views\category\Edit.cshtml" />
     <Content Include="Views\category\Index.cshtml" />
     <Content Include="Views\company\Create.cshtml" />
-    <Content Include="Views\company\Delete.cshtml" />
     <Content Include="Views\company\Details.cshtml" />
     <Content Include="Views\company\Edit.cshtml" />
     <Content Include="Views\company\Index.cshtml" />

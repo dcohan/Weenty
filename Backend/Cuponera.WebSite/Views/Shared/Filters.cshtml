@@ -23,11 +23,13 @@
         });
     }
 
+
     var _common_filters = [{
         controlType: 'checkbox',
         controlId: 'all',
         label: 'Ver todos',
-        controlDefaultValue: true
+        controlDefaultValue: @((Request.Params["all"] != null && Convert.ToBoolean(@Request.Params["all"])).ToString().ToLower())
+
     }];
 
     var _filters = [];
@@ -39,11 +41,13 @@
             }
         });
     }
-    
+
     if (globals.filters.custom) {
         _filters = _filters.concat(globals.filters.custom);
     }
 
+
+    // Render filters
     $(_filters).each(function (key, elem) {
         $container = $('<div></div>').addClass('filter');
         if (elem.controlType === 'text') {
@@ -57,6 +61,8 @@
             }
             $input = $('<input>').prop('type', elem.controlType)
                                 .prop('id', elem.controlId);
+
+            if (elem.controlDefaultValue) { $input.val(elem.controlDefaultValue); }
             $container.append($input);
         } else {
             // input label
@@ -80,7 +86,7 @@
     if (_filters.length > 0) {
         var $button = $('<input>')
                         .prop('type', 'button')
-                        .prop('value', 'Buscar');
+                        .prop('value', 'Aplicar filtros');
         $('.filters').append($button);
         $button.click(function () {
             var filters = getFilters();

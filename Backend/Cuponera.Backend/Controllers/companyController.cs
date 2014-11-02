@@ -35,15 +35,23 @@ namespace Cuponera.Backend.Controllers
 
         // GET: odata/company
         [EnableQuery]
-        public IQueryable<company> Getcompany(bool all = false)
+        public IQueryable<company> Getcompany(bool all = false, string name = null)
         {
+            IQueryable<company> companies;
             if (all)
             {
-                return db.company;
+                companies = db.company;
             }
             else {
-                return db.company.Where(c => !c.DeletionDatetime.HasValue);
+                companies = db.company.Where(c => !c.DeletionDatetime.HasValue);
             }
+
+
+            if (name != null)
+            {
+                companies = companies.Where(c => c.Name.Contains(name));
+            }
+            return companies;
         }
 
         // GET: odata/company(5)

@@ -803,3 +803,11 @@ tr.pager td {
 .filter-label-post{
     margin-left: 10px;
 }
+
+.item-description {
+    margin-bottom: 10px;
+}
+
+.item-description img {
+    vertical-align: middle;
+}
