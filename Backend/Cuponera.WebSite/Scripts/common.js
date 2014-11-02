@@ -7,17 +7,22 @@
     var qs = args.qs ? '?' + buildQS(args.qs) : '';
     var id = args.id ? '/' + args.id : '';
 
+    $.blockUI({ message: '<img class="loading-image" src="Images/loading.gif" style="width: 50px; height: 50px;"/> Por favor espere mientras se recargan los datos...' });
+
     $.ajax({
         url: '/' + args.controller + '/' + args.action + id + qs,
         type: args.method,
         data: args.data
     })
    .success(function (data, textStatus, jqXHR) {
-        if (args.success) {
-            if (data) data = JSON.parse(data);
-            args.success(data, textStatus, jqXHR);
-        }
-   });
+       if (args.success) {
+           if (data) data = JSON.parse(data);
+           args.success(data, textStatus, jqXHR);
+       }
+   })
+    .complete(function () {
+        $.unblockUI();
+    });
 }
 
 function buildQS(qs) {

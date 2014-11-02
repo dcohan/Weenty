@@ -51,43 +51,41 @@
                                            .append($status_image);
             $tr.append($second_td);
 
-            var $third_td = $('<tr></tr>');
-            var $buttons = $('<td></td>')
+            var $third_td = $('<td></td>')
                 .append(
                     $('<a></a>').prop('href', '/company/Edit/' + item.IdCompany)
                                 .html('Editar')
                 )
-                .append('|')
+                .append(' | ')
                 .append(
                     $('<a></a>').prop('href', '/company/Details/' + item.IdCompany)
                                 .html('Detalle')
                 )
-                .append('|');
+                .append(' | ');
             if (!item.DeletionDatetime) {
-                $buttons.append(
+                $third_td.append(
                     $('<a></a>').prop('href', '#')
                                 .html('Eliminar')
-                                .attr('popup-to-open', 'dialog-confirm-deactivate')
+                                .attr('data-popup-to-open', 'dialog-confirm-deactivate')
                                 .addClass('deactivate')
-                                .on('click', 'popup_open_function();')
                 );
             } else {
-                $buttons.append(
+                $third_td.append(
                     $('<a></a>').prop('href', '#')
                                 .html('Activar')
                                 .attr('data-popup-to-open', 'dialog-confirm-activate')
                                 .addClass('activate')
-                                .on('click', 'popup_open_function();')
                 );
             }
             
-            $third_td.append($buttons);
-
             $tr.append($first_td)
                 .append($second_td)
                 .append($third_td);
             $tbody.append($tr);
         });
+
+        $("[data-popup-to-open]").click(popup_open_function);
+
     }
 </script>
 

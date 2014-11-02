@@ -18,7 +18,6 @@ namespace Cuponera.WebSite.Controllers
         private IEnumerable<company> get(bool all)
         {
             Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
-            
             return cb.Getcompany(all);
         }
 
@@ -32,14 +31,20 @@ namespace Cuponera.WebSite.Controllers
         }
 
 
+        public static string SerializeJSON(object unserializedData)
+        {
+            var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
+            var json = jsonSerialiser.Serialize(unserializedData);
+            return json;
+        }
+
         [HttpGet]
         public string GetCompanies(bool all = false)
         {
             var companies = get(all);
+            var dataToSerialize = companies.Select(c => new { IdCompany = c.IdCompany, Name = c.Name, DeletionDatetime = c.DeletionDatetime });
 
-            var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
-            var json = jsonSerialiser.Serialize(companies.ToList());
-            return json;
+            return companyController.SerializeJSON(dataToSerialize);
         }
        
 
