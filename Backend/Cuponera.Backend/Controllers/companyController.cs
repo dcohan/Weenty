@@ -51,7 +51,7 @@ namespace Cuponera.Backend.Controllers
             {
                 companies = companies.Where(c => c.Name.Contains(name));
             }
-            return companies;
+            return companies.OrderBy(c => c.Name);
         }
 
         // GET: odata/company(5)
