@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -16,28 +17,31 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        private IEnumerable<company> get(bool all, string name)
+        private IEnumerable<company> get(bool all, string name, int pageNumber)
         {
             Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
             IEnumerable<company> companies = cb.Getcompany(all, name);
 
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)companies.Count() / pageSize));
 
-            return companies;
+            int elemsToSkip = pageSize * (pageNumber - 1);
+            return companies.Skip(elemsToSkip).Take(pageSize);
         }
 
 
 
         // GET: company
-        public async Task<ActionResult> Index(bool all = false, string name = null, int pageNumber = 1)
+        public async Task<ActionResult> Index(bool all = false, string name = null, int page = 1)
         {
-            var companies = get(all, name);
+            var companies = get(all, name, page);
             return View(companies);
         }
 
         [HttpGet]
-        public string GetCompanies(bool all = false, string name = null)
+        public string GetCompanies(bool all = false, string name = null, int page = 1)
         {
-            var companies = get(all, name);
+            var companies = get(all, name, page);
             var dataToSerialize = companies.Select(c => new { IdCompany = c.IdCompany, Name = c.Name, DeletionDatetime = c.DeletionDatetime });
 
             return JSONHelper.SerializeJSON(dataToSerialize);

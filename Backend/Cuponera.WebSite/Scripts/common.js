@@ -1,4 +1,18 @@
-﻿function callServer(args) {
+﻿function confirmDelete(id) {
+    deleteElement({ controller: globals.controller, id: id });
+}
+
+function confirmActivate(id) {
+    activateElement({ controller: globals.controller, id: id });
+}
+
+function getAntiForgeryToken() {
+    return $('#__AjaxAntiForgeryForm input[name=__RequestVerificationToken]').val();
+};
+
+
+
+function callServer(args) {
     if (args.includeAntiForgeryToken) {
         if (!args.data) { args.data = {}; }
 
@@ -74,7 +88,3 @@ function activateElement(args) {
     args.success = function () { location.href = args.controller };
     callServer(args);
 }
-
-function getAntiForgeryToken() {
-    return $('#__AjaxAntiForgeryForm input[name=__RequestVerificationToken]').val();
-};

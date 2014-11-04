@@ -2,15 +2,12 @@
 
 @{
     ViewBag.Title = "Index";
+    
 }
 
 <script type="text/javascript">
     var globals = {
         controller: 'company',
-        data: [],
-        actions: {
-            reloadData: 'GetCompanies'
-        },
         filters: {
             include: ['all'],
             custom: [{
@@ -21,14 +18,6 @@
             }]
         }
     };
-
-    function confirmDelete(id) {
-        deleteElement({ controller: globals.controller, id: id });
-    }
-
-    function confirmActivate(id) {
-        activateElement({ controller: globals.controller, id: id });
-    }
 </script>
 
 
@@ -84,6 +73,8 @@
                 }
             </tbody>
         </table>
+        @Html.Partial("Paginator")
+
         <div style="clear:both;"></div>
         <p>
             @Html.ActionLink("Nuevo", "Create")

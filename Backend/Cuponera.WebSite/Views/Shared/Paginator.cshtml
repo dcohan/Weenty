@@ -1,0 +1,17 @@
+﻿
+<script type="text/javascript">
+    var total_pages = @ViewBag.Pages;
+    if (current_state) {
+        current_state['page'] = @(Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1);
+
+        if (current_state.page > total_pages) {
+            current_state.page = total_pages;
+            redirect();
+        }
+    }
+
+
+    function calculateLimits(total_pages) {
+
+    }
+</script>

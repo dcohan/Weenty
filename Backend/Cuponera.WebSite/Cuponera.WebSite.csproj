@@ -324,6 +324,7 @@
     <Content Include="Views\product\Details.cshtml" />
     <Content Include="Views\product\Edit.cshtml" />
     <Content Include="Views\product\Index.cshtml" />
+    <Content Include="Views\Shared\Paginator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
