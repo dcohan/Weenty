@@ -1,26 +1,30 @@
-﻿<fieldset class="filters">
+﻿<fieldset class="filters col-sm-12">
     <legend>Filtros</legend>
 </fieldset>
 
 <script type="text/javascript">
-    var _reqFilters = [];
-    function getFilters() {
-        _reqFilters = {};
+    function updateCurrentState() {
         $('.filters input').each(function (key, input) {
             var $input = $(input);
             if ($input.prop('type') === 'button') { return false; }
-            _reqFilters[$input.prop('id')] = ['checkbox', 'radio'].indexOf($input.prop('type')) > -1 ? $input.is(':checked') : $input.val();
+           
+            current_state[$input.prop('id')] = ['checkbox', 'radio'].indexOf($input.prop('type')) > -1 ? $input.is(':checked') : $input.val();
         });
-
-        return _reqFilters;
     }
 
-    function reloadData(filters) {
-        getElements({
-            controller: globals.controller,
-            qs: filters,
-            action: globals.actions.reloadData
-        });
+    function buildCurrentStateQS() {
+        var qs = '';
+        for (var key in current_state) {
+            if (current_state[key].toString().length > 0) {
+                qs += key + '=' + current_state[key] + '&';
+           }
+        }
+
+        return qs.length > 0 ? qs.substr(0, qs.lastIndexOf('&')) : qs;
+    }
+
+    function redirect(filters) {
+        document.location.href = globals.controller + '?' + buildCurrentStateQS();
     }
 
 
@@ -29,7 +33,6 @@
         controlId: 'all',
         label: 'Ver todos',
         controlDefaultValue: @((Request.Params["all"] != null && Convert.ToBoolean(@Request.Params["all"])).ToString().ToLower())
-
     }];
 
     var _filters = [];
@@ -47,7 +50,7 @@
     }
 
 
-    // Render filters
+    /* Render filters */
     $(_filters).each(function (key, elem) {
         $container = $('<div></div>').addClass('filter');
         if (elem.controlType === 'text') {
@@ -89,19 +92,31 @@
                         .prop('value', 'Aplicar filtros');
         $('.filters').append($button);
         $button.click(function () {
-            var filters = getFilters();
-            reloadData(filters);
+            updateCurrentState();
+            redirect();
         })
     }
 
 
+    /* Defines Current state object */
+    if (!current_state) {
+        var current_state = {};
+    }
+    var cp;
+    var qs = location.search.split('?')[1];
+    qs = qs.split('&');
+    $(qs).each(function(key, param){
+        cp = param.split('=');
+        current_state[cp[0]] = cp[1];
+    });
 
+
+    /* Bindings */
     $(function () {
         $('.group-control-box').click(function (e) {
             e.preventDefault();
             $input = $(this).find('input');
             $input.prop('checked', !$input.prop('checked'));
-
         });
     });
 </script>
