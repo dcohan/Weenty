@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="IdCategory" />
@@ -115,8 +115,6 @@
           </Key>
           <Property Name="IdProduct" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" />
-          <Property Name="PromoCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="TargetURL" Type="nvarchar" MaxLength="255" />
           <Property Name="Active" Type="int" />
           <Property Name="StartDatetime" Type="datetime2" Precision="0" />
           <Property Name="ExpirationDatetime" Type="datetime2" Precision="0" />
@@ -127,6 +125,7 @@
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
           <Property Name="ImagePath" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="IdCategory" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="profile">
           <Key>
@@ -583,8 +582,7 @@
             <End Role="store" EntitySet="store" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CuponeraModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -712,8 +710,6 @@
           </Key>
           <Property Name="IdProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PromoCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TargetURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Int32" />
           <Property Name="StartDatetime" Type="DateTime" Precision="0" />
           <Property Name="ExpirationDatetime" Type="DateTime" Precision="0" />
@@ -728,6 +724,7 @@
           <NavigationProperty Name="company" Relationship="Self.FK_product_company" FromRole="product" ToRole="company" />
           <NavigationProperty Name="images" Relationship="Self.FK_images_product" FromRole="product" ToRole="images" />
           <NavigationProperty Name="offer" Relationship="Self.FK_offer_product" FromRole="product" ToRole="offer" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="profile">
           <Key>
@@ -1290,10 +1287,9 @@
           <EntitySetMapping Name="product">
             <EntityTypeMapping TypeName="CuponeraModel.product">
               <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
-                <ScalarProperty Name="TargetURL" ColumnName="TargetURL" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
                 <ScalarProperty Name="ExpirationDatetime" ColumnName="ExpirationDatetime" />

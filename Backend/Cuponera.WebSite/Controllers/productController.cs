@@ -11,18 +11,18 @@ using Cuponera.Entities;
 
 namespace Cuponera.WebSite.Controllers
 {
-    public class productController : Controller
+    public class ProductController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: /product/
+        // GET: /Product/
         public async Task<ActionResult> Index()
         {
             var product = db.product.Include(p => p.category).Include(p => p.company);
             return View(await product.ToListAsync());
         }
 
-        // GET: /product/Details/5
+        // GET: /Product/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,7 +37,7 @@ namespace Cuponera.WebSite.Controllers
             return View(product);
         }
 
-        // GET: /product/Create
+        // GET: /Product/Create
         public ActionResult Create()
         {
             ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name");
@@ -45,12 +45,12 @@ namespace Cuponera.WebSite.Controllers
             return View();
         }
 
-        // POST: /product/Create
+        // POST: /Product/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="IdProduct,Title,PromoCode,TargetURL,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdCompany,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory")] product product)
+        public async Task<ActionResult> Create([Bind(Include="IdProduct,Title,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdCompany,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description")] product product)
         {
             if (ModelState.IsValid)
             {
@@ -59,12 +59,12 @@ namespace Cuponera.WebSite.Controllers
                 return RedirectToAction("Index");
             }
 
-           ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
-           ViewBag.IdCompany = new SelectList(db.company, "IdCompany", "Name", product.IdCompany);
+            ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
+            ViewBag.IdCompany = new SelectList(db.company, "IdCompany", "Name", product.IdCompany);
             return View(product);
         }
 
-        // GET: /product/Edit/5
+        // GET: /Product/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,12 +81,12 @@ namespace Cuponera.WebSite.Controllers
             return View(product);
         }
 
-        // POST: /product/Edit/5
+        // POST: /Product/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="IdProduct,Title,PromoCode,TargetURL,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdCompany,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory")] product product)
+        public async Task<ActionResult> Edit([Bind(Include="IdProduct,Title,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdCompany,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description")] product product)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace Cuponera.WebSite.Controllers
             return View(product);
         }
 
-        // GET: /product/Delete/5
+        // GET: /Product/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -114,7 +114,7 @@ namespace Cuponera.WebSite.Controllers
             return View(product);
         }
 
-        // POST: /product/Delete/5
+        // POST: /Product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

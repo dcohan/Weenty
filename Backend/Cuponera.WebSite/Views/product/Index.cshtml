@@ -15,12 +15,6 @@
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PromoCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TargetURL)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Active)
         </th>
         <th>
@@ -45,6 +39,9 @@
             @Html.DisplayNameFor(model => model.ImagePath)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.category.Name)
         </th>
         <th>
@@ -57,12 +54,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PromoCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TargetURL)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Active)
@@ -87,6 +78,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ImagePath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.category.Name)
