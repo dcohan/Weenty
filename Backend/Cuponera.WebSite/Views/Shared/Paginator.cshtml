@@ -1,9 +1,12 @@
 ﻿
-<script type="text/javascript">
+<script type="text/javascript" id="4">
     var total_pages = @ViewBag.Pages;
     if (current_state) {
         current_state['page'] = @(Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1);
 
+        if (current_state.page == 0) {
+            current_state.page = 1;
+        }
         if (current_state.page > total_pages) {
             current_state.page = total_pages;
             redirect();
@@ -11,7 +14,26 @@
     }
 
 
-    function calculateLimits(total_pages) {
-
-    }
+    $(function(){
+        $('.pagination').jqPagination({
+            current_page: current_state.page,
+            max_page: total_pages,
+            paged: function(page) {
+                // do something with the page variable
+                current_state.page = page;
+                redirect();
+            }
+        });
+    });
 </script>
+
+
+<div class="pagination-container">
+    <div class="pagination">
+        <a href="#" class="first" data-action="first">&laquo;</a>
+        <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+        <input type="text" readonly="readonly" data-max-page="40" />
+        <a href="#" class="next" data-action="next">&rsaquo;</a>
+        <a href="#" class="last" data-action="last">&raquo;</a>
+    </div>
+</div>

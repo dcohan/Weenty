@@ -14,6 +14,9 @@ namespace Cuponera.WebSite
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryPagination").Include(
+                        "~/Scripts/jquery.jqpagination.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryBlock").Include(
             "~/Scripts/jquery.blockUI.js"));
 
@@ -30,6 +33,8 @@ namespace Cuponera.WebSite
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/jqueryPagination").Include("~/Content/jqpagination.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/core.css",

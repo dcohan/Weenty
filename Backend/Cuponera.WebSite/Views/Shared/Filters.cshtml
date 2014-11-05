@@ -104,18 +104,20 @@
     }
     var cp;
     var qs = location.search.split('?')[1];
-    qs = qs.split('&');
-    $(qs).each(function(key, param){
-        cp = param.split('=');
+    if (qs) {
+        qs = qs.split('&');
+        $(qs).each(function(key, param){
+            cp = param.split('=');
 
-        /* Only set params in filters */
-        $(_filters).each(function(key, filter){
-            if (filter.controlId == cp[0]) {
-                current_state[cp[0]] = cp[1];
-            }
+            /* Only set params in filters */
+            $(_filters).each(function(key, filter){
+                if (filter.controlId == cp[0]) {
+                    current_state[cp[0]] = cp[1];
+                }
+            });
+
         });
-
-    });
+    }
 
 
     /* Bindings */
