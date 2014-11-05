@@ -7,7 +7,7 @@
         if (current_state.page == 0) {
             current_state.page = 1;
         }
-        if (current_state.page > total_pages) {
+        if (current_state.page > total_pages && total_pages > 0) {
             current_state.page = total_pages;
             redirect();
         }

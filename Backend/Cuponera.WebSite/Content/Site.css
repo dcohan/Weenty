@@ -801,6 +801,7 @@ tr.pager td {
 }
 
 .filter-label-post{
+    display: inline;
     margin-left: 10px;
 }
 

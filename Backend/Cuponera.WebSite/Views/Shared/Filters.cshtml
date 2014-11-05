@@ -7,7 +7,7 @@
         $('.filters input').each(function (key, input) {
             var $input = $(input);
             if ($input.prop('type') === 'button') { return false; }
-           
+
             current_state[$input.prop('id')] = ['checkbox', 'radio'].indexOf($input.prop('type')) > -1 ? $input.is(':checked') : $input.val();
         });
     }
@@ -75,9 +75,10 @@
             $container.append($input);
             if (elem.label) {
                 $container.append(
-                    $('<span></span>')
+                    $('<label></label>')
                         .addClass('filter-label-post')
                         .html(elem.label)
+                        .prop('for', elem.controlId)
                 );
             }
             $container.addClass('group-control-box');
@@ -122,10 +123,6 @@
 
     /* Bindings */
     $(function () {
-        $('.group-control-box').click(function (e) {
-            e.preventDefault();
-            $input = $(this).find('input');
-            $input.prop('checked', !$input.prop('checked'));
-        });
+      
     });
 </script>
