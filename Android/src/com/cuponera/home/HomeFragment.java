@@ -71,13 +71,11 @@ public class HomeFragment extends BaseFragment implements HeaderInterface, Yahoo
 
 	@Override
 	public void onFailFindLocation(Exception e) {
-		getBaseActivity().hideLoading();
 		mViewProxy.findLinearLayout(R.id.weather_layout).setVisibility(View.GONE);
 	}
 
 	@Override
 	public void gotWeatherInfo(WeatherInfo weatherInfo) {
-		getBaseActivity().hideLoading();
 		if (weatherInfo != null) {
 			mViewProxy.findTextView(R.id.textview_forecast_info).setText(weatherInfo.getWOEIDCounty() + ", " + weatherInfo.getCurrentTempC() + " grados");
 			if (weatherInfo.getCurrentConditionIcon() != null) {

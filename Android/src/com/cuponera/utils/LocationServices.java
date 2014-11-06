@@ -100,7 +100,7 @@ public class LocationServices implements LocationListener {
 	}
 
 	public boolean isLocationEnabled() {
-		return isAccurateLocationEnabled() || isNetworkLocationEnabled();
+		return Settings.getInstance(context).isLocationEnable() && (isAccurateLocationEnabled() || isNetworkLocationEnabled());
 	}
 
 	public boolean isAccurateLocationEnabled() {
@@ -124,7 +124,7 @@ public class LocationServices implements LocationListener {
 			if (location != null && currentDate.getTime() - location.getTime() <= TimeInterval && location.getProvider().equals(bestProvider)) {
 				listener.onLocationReceived(location);
 			} else {
-				
+
 				final LocationListener singleLocationListener = new LocationListener() {
 					@Override
 					public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -147,19 +147,19 @@ public class LocationServices implements LocationListener {
 						LocationServices.this.location = location;
 					}
 				};
-				
+
 				locationRequestTimeOutHandler = new Handler();
 				locationRequestTimeOutHandler.postDelayed(new Runnable() {
-					
+
 					@Override
 					public void run() {
-						if(location != null) { 
+						if (location != null) {
 							listener.onLocationReceived(location);
 							locationManager.removeUpdates(singleLocationListener);
 						}
 					}
 				}, MaxTimeWaitingGPSLocation);
-				
+
 				locationManager.requestSingleUpdate(bestProvider, singleLocationListener, null);
 			}
 		}
