@@ -21,9 +21,9 @@ import com.cuponera.home.HomeFragment;
 import com.cuponera.more.MoreFragment;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.navigation.NavBarFragment;
+import com.cuponera.product.ProductFragment;
 import com.cuponera.settings.Settings;
 import com.cuponera.settings.SettingsFragment;
-import com.cuponera.social.SocialFragment;
 import com.cuponera.stores.StoreFinderFragment;
 import com.cuponera.utils.LocationServices;
 import com.cuponera.utils.WebViewWithHeaderFragment;
@@ -122,8 +122,8 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	}
 
 	@Override
-	public void onSocialButton() {
-		startFragment(new SocialFragment());
+	public void onGastronomic() {
+		startFragment(new ProductFragment());
 	}
 
 	@Override

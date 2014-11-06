@@ -56,7 +56,7 @@ public class ProductRequest extends AsyncPoolRequest<ProductResponse> implements
 
 	@Override
 	public String getPath() {
-		return "/category";
+		return "/product";
 	}
 
 	@Override
@@ -77,7 +77,6 @@ public class ProductRequest extends AsyncPoolRequest<ProductResponse> implements
 
 	@Override
 	public void onServiceReturned(ProductResponse result) {
-		// TODO Auto-generated method stub
 		
 	}
 

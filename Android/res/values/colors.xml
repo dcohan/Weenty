@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="white">#FFFFFF</color>
+
+    <color name="white">#FFFFFF</color>
     <color name="gray_dark">#222222</color>
-	<color name="red">#e31837</color>
-	<color name="light_blue">#15B4E8</color>
+    <color name="red">#e31837</color>
+    <color name="light_blue">#15B4E8</color>
     <color name="black">#000000</color>
-	<color name="green">#348706</color>
-	<color name="green_light">#40b93c</color>
-	<color name="green_darker">#3fb83b</color>
+    <color name="green">#348706</color>
+    <color name="green_light">#40b93c</color>
+    <color name="green_darker">#3fb83b</color>
     <color name="gray_lighter">#EEEEEE</color>
     <color name="gray_light">#dedee0</color>
     <color name="gray_medium">#6e6e70</color>
@@ -17,42 +18,38 @@
     <color name="background_modal_not_so_dark">#90000000</color>
     <color name="background_modal_loading">#AA000000</color>
     <color name="background_modal_loading_light">#AAFFFFFF</color>
-	<color name="red_light">#e59ea8</color>
-	<color name="red_transparent">#88ff0000</color>
+    <color name="red_light">#e59ea8</color>
+    <color name="red_transparent">#88ff0000</color>
     <color name="gray_button_dark">#404041</color>
     <color name="gray_button_light">#818284</color>
     <color name="header_dark_color">#231f20</color>
     <color name="blue_occupied">#2AAAD5</color>
     <color name="gray_occupied">#888888</color>
-    			
-	<color name="widget_buttonbar_background">#aeaaab</color>    
-	<color name="widget_buttonbar_deselected">#6b6768</color>
-	<color name="widget_buttonbar_selected">#e61131</color>
+    <color name="widget_buttonbar_background">#aeaaab</color>
+    <color name="widget_buttonbar_deselected">#6b6768</color>
+    <color name="widget_buttonbar_selected">#e61131</color>
     <color name="widget_ligh_red_button">@color/red</color>
     <color name="widget_ligh_red_button_selected">@color/red_light</color>
-	<color name="selector_label">#FFFFFF</color>
-	<color name="selector_label_option">#DFDFDF</color>
+    <color name="selector_label">#FFFFFF</color>
+    <color name="selector_label_option">#DFDFDF</color>
     <color name="background_tutorial_dark">#BF000000</color>
-	
     <color name="background_modal_soft_dark">#AA000000</color>
     <color name="red_dialog_title">#FF2222</color>
-	<color name="widget_ligh_blue_button">#14B4E8</color>
-	<color name="widget_ligh_blue_button_selected">#5BD6D6</color>
-	<color name="light_blue_light">#35B7E0</color>
+    <color name="widget_ligh_blue_button">#14B4E8</color>
+    <color name="widget_ligh_blue_button_selected">#5BD6D6</color>
+    <color name="light_blue_light">#35B7E0</color>
     <color name="stubs_divider">#906b70</color>
     <color name="stubs_green">#199a19</color>
     <color name="stubs_grey">#CECECE</color>
-    
     <color name="red_giftcard">#E5102E</color>
     <color name="gray_giftcard">#999999</color>
     <color name="gray_text_giftcard">#6B6666</color>
     <color name="gray_hints">#CCCCCC</color>
-    
     <color name="blue_facebook">#3B5997</color>
     <color name="blue_twitter">#0084B4</color>
-    
     <color name="text_disabled">#CCCCCC</color>
-    
     <color name="orange_light">#cfcf00</color>
     <color name="orange_dark">#e6e600</color>
+    <color name="pink">#CC0965</color>
+    <color name="gray_cuponera">#A5A5A5</color>
 </resources>
