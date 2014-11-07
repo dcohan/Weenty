@@ -4,6 +4,18 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class Category extends BaseModel {
 
+	@JsonProperty("IdCategory")
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setName(int id) {
+		this.id = id;
+	}
+
+	
 	@JsonProperty("Name")
 	private String name;
 

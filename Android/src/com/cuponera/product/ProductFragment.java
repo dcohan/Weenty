@@ -10,11 +10,25 @@ import com.cuponera.R;
 import com.cuponera.service.product.ProductRequest;
 
 public class ProductFragment extends BaseFragment {
+	
+	 private static final String ARGS_ID_CATEGORY = "args_id_category";
 
 	@Override
 	protected int getLayout() {
 		return R.layout.fragment_product;
 	}
+	
+	public static ProductFragment newInstance(int idCategory) {
+	
+		  ProductFragment fragment = new ProductFragment();
+		  Bundle b = fragment.getArguments();
+		  if (b == null)
+		   b = new Bundle();
+		  b.putInt("idCategory", idCategory);
+	
+		  fragment.setArguments(b);
+		  return fragment;	
+	 }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
