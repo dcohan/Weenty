@@ -16,7 +16,7 @@ public class ProductRequest extends AsyncPoolRequest<ProductResponse> implements
 
 	@Override
 	public String getPath() {
-		return "/product?$filter=IdCategory%20eq%20" + getIdCategory();
+		return "/product?$expand=company&$filter=IdCategory%20eq%20" + getIdCategory();
 	}
 
 	public ProductRequest(Context context) {

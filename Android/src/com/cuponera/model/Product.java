@@ -7,6 +7,9 @@ public class Product extends BaseModel {
 	@JsonProperty("Title")
 	private String title;
 	
+	@JsonProperty("company")
+	private Company company;
+	
 	@JsonProperty("Description")
 	private String description;
 	
@@ -48,4 +51,12 @@ public class Product extends BaseModel {
 		this.imagePath = imagePath;
 	}
 
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+	
 }

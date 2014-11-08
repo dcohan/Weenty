@@ -32,8 +32,8 @@ public class ProductAdapter extends BaseListAdapter {
 		ViewProxy mViewProxy = new ViewProxy(activity, R.layout.adapter_product);
 		Product p = product.get(position);
 		Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.product_image), p.getImagePath());
-		mViewProxy.findTextView(R.id.product_name).setText(p.getTitle());
-		mViewProxy.findTextView(R.id.product_description).setText(p.getDescription());
+		mViewProxy.findTextView(R.id.product_company).setText(p.getCompany().getName());
+		mViewProxy.findTextView(R.id.product_name).setText(p.getDescription());
 
 		return mViewProxy.getView();
 	}

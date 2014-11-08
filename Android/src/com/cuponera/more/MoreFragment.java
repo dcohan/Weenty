@@ -16,6 +16,8 @@ import com.cuponera.service.category.CategoryResponse;
 public class MoreFragment extends BaseFragment implements HeaderInterface {
 
 	private ArrayList<Category> category;
+	private MoreAdapter adapter;
+	private ListView moreList;
 
 	@Override
 	protected int getLayout() {
@@ -41,15 +43,26 @@ public class MoreFragment extends BaseFragment implements HeaderInterface {
 			@Override
 			public void onServiceReturned(CategoryResponse result) {
 				category.addAll(result.getCategory());
-				ListView moreList = mViewProxy.findListView(R.id.more_listview);
-				MoreAdapter adapter = new MoreAdapter(getActivity(), category);
-				moreList.setAdapter(adapter);
+				fillAdapter();
 			}
-
 		};
 
 		request.execute();
 
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (adapter != null)
+			fillAdapter();
+	}
+	
+	private void fillAdapter(){
+		moreList = mViewProxy.findListView(R.id.more_listview);
+		adapter = new MoreAdapter(getActivity(), category);
+		adapter.notifyDataSetChanged();
+		moreList.setAdapter(adapter);
 	}
 
 }

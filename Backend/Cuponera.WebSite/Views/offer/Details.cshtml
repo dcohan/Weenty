@@ -1,0 +1,114 @@
+﻿@model Cuponera.Entities.offer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>offer</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PromoCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PromoCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TargetURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TargetURL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpirationDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpirationDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModificationDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModificationDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeletionDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeletionDatetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImagePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.Title)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdOffer }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
