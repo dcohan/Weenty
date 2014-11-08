@@ -24,7 +24,7 @@ public class ProductFragment extends BaseFragment {
 		  Bundle b = fragment.getArguments();
 		  if (b == null)
 		   b = new Bundle();
-		  b.putInt("idCategory", idCategory);
+		  b.putInt(ARGS_ID_CATEGORY, idCategory);
 	
 		  fragment.setArguments(b);
 		  return fragment;	
@@ -43,7 +43,8 @@ public class ProductFragment extends BaseFragment {
 			}
 		};
 
-		request.execute();
+		request.setIdCategory(getArguments().getInt(ARGS_ID_CATEGORY));
+		request.execute(false);
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 }

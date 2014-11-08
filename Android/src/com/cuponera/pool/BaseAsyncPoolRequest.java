@@ -75,8 +75,12 @@ public abstract class BaseAsyncPoolRequest<ResponseClass extends BaseResponse> i
 		this.loadingView = loadingView;
 	}
 
+	public void execute(boolean withUriParams) {
+		AsyncPoolManager.getInstance(getContext()).executeLoaderWith(this, withUriParams);
+	}
+	
 	public void execute() {
-		AsyncPoolManager.getInstance(getContext()).executeLoaderWith(this);
+		AsyncPoolManager.getInstance(getContext()).executeLoaderWith(this, true);
 	}
 
 	protected abstract Class<?> getResponseClass();

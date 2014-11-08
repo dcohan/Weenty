@@ -7,17 +7,16 @@ public class Category extends BaseModel {
 	@JsonProperty("IdCategory")
 	private int id;
 
+	@JsonProperty("Name")
+	private String name;
+
 	public int getId() {
 		return id;
 	}
 
-	public void setName(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
-
-	
-	@JsonProperty("Name")
-	private String name;
 
 	public String getName() {
 		return name;
@@ -26,5 +25,5 @@ public class Category extends BaseModel {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }

@@ -123,7 +123,8 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	@Override
 	public void onGastronomic() {
-		startFragment(new ProductFragment());
+		Fragment product = ProductFragment.newInstance(1);
+		startFragment(product);
 	}
 
 	@Override

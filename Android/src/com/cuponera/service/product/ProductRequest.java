@@ -1,5 +1,6 @@
 package com.cuponera.service.product;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
@@ -10,6 +11,13 @@ import com.cuponera.pool.AsyncPoolLoader.HTTPMethod;
 import com.cuponera.pool.AsyncPoolRequest;
 
 public class ProductRequest extends AsyncPoolRequest<ProductResponse> implements Parcelable {
+
+	private int idCategory;
+
+	@Override
+	public String getPath() {
+		return "/product?$filter=IdCategory%20eq%20" + getIdCategory();
+	}
 
 	public ProductRequest(Context context) {
 		super(context);
@@ -55,20 +63,15 @@ public class ProductRequest extends AsyncPoolRequest<ProductResponse> implements
 	}
 
 	@Override
-	public String getPath() {
-		return "/product";
-	}
-
-	@Override
 	public HTTPMethod getHttpMethod() {
 		return HTTPMethod.HTTPGet;
 	}
 
 	@Override
 	public Map<String, Object> getUriParams() {
-		return null;
+		Map<String, Object> defaultParams = new HashMap<String, Object>();
+		return defaultParams;
 	}
-
 
 	@Override
 	protected Class<?> getResponseClass() {
@@ -77,7 +80,15 @@ public class ProductRequest extends AsyncPoolRequest<ProductResponse> implements
 
 	@Override
 	public void onServiceReturned(ProductResponse result) {
-		
+
+	}
+
+	public int getIdCategory() {
+		return idCategory;
+	}
+
+	public void setIdCategory(int idCategory) {
+		this.idCategory = idCategory;
 	}
 
 }

@@ -44,9 +44,9 @@ public class AsyncPoolManager {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void executeLoaderWith(BaseAsyncPoolRequest request) {
+	public void executeLoaderWith(BaseAsyncPoolRequest request, boolean withUriParams) {
 
-		Map<String, Object> uriParams = getDefaultParamsAppendingList(request.getUriParams(), request.getContext());
+		Map<String, Object> uriParams = getDefaultParamsAppendingList(request.getUriParams(), request.getContext(), withUriParams);
 
 		AsyncPoolLoader loader = new AsyncPoolLoader(getContext(), request.getHttpMethod(), uriParams, request.getProtocol(), request.getHost(),
 				request.getPath());
@@ -156,7 +156,7 @@ public class AsyncPoolManager {
 
 		defaultParams.put("DeviceId", "gsppt22112200");
 		defaultParams.put("IdDeviceOs", 5);
-		defaultParams.put("IdDeviceType",4);
+		defaultParams.put("IdDeviceType", 4);
 		defaultParams.put("AppVersion", Utils.getAppVersion(context));
 		defaultParams.put("ResolutionWidth", Utils.getScreen(context).x);
 		defaultParams.put("ResolutionHeight", Utils.getScreen(context).y);
@@ -164,9 +164,13 @@ public class AsyncPoolManager {
 		return defaultParams;
 	}
 
-	private Map<String, Object> getDefaultParamsAppendingList(Map<String, Object> params, Context context) {
+	private Map<String, Object> getDefaultParamsAppendingList(Map<String, Object> params, Context context, boolean withParams) {
+		Map<String, Object> requestParams =  new HashMap<String, Object>();
 
-		Map<String, Object> requestParams = getDefaultParams(context);
+		if(!withParams){
+			return requestParams;
+		}
+		requestParams = getDefaultParams(context);
 
 		if (params != null) {
 			requestParams.putAll(params);
