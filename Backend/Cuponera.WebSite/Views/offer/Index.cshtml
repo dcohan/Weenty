@@ -1,99 +1,92 @@
 ﻿@model IEnumerable<Cuponera.Entities.offer>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Ofertas";
 }
 
-<h2>Index</h2>
+<script type="text/javascript">
+    var globals = {
+        controller: 'offer',
+        filters: {
+            include: ['all'],
+            custom: [{
+                controlType: 'text',
+                controlId: 'name',
+                controlDefaultValue: '@(Request.Params["name"] != null ? @Request.Params["name"] : "")',
+                label: 'Nombre'
+            }]
+        }
+    };
+</script>
+<h2>Ofertas</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PromoCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TargetURL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Active)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDatetime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExpirationDatetime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemOrder)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreationDatetime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModificationDatetime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeletionDatetime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.product.Title)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PromoCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TargetURL)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Active)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExpirationDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemOrder)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModificationDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeletionDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImagePath)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.product.Title)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdOffer }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdOffer }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdOffer })
-        </td>
-    </tr>
-}
+<div class="list-content">
+    @Html.Partial("AntiForgeryTokenForm")
+    @Html.Partial("Filters")
 
-</table>
+
+
+    @if (Model.Count() == 0)
+    {
+        <div class="no-data">No hay datos.</div>
+    }
+    else
+    {
+        <div class="table-all">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr data-item-id="@item.IdOffer">
+                            <td>
+                                <span class="item-name">@Html.DisplayFor(modelItem => item.Title)</span>
+                            </td>
+                            <td class="current-status">
+                                @if (item.DeletionDatetime == null)
+                                {
+                                    <img src="Images/tick.ico" alt="active" class="active" />
+                                }
+                                else
+                                {
+                                    <img src="Images/x.ico" alt="inactive" class="inactive" />
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.IdOffer }) |
+                                @Html.ActionLink("Detalle", "Details", new { id = item.IdOffer }) |
+
+                                @if (item.DeletionDatetime == null)
+                                {
+                                    <a href="#" class="deactivate" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="activate" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.Partial("Paginator")
+        </div>
+
+        <div style="clear:both;"></div>
+    }
+    <p>
+        @Html.ActionLink("Nuevo", "Create")
+    </p>
+
+</div>

@@ -1,50 +1,32 @@
 ﻿@model Cuponera.Entities.category
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalles";
 }
 
-<h2>Details</h2>
+<h2>Datalles @Html.DisplayFor(model => model.Name)</h2>
 
 <div>
-    <h4>category</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <br />
+    <div class="item-description">
+        <b>Nombre:</b> @Html.DisplayFor(model => model.Name)
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDatetime)
-        </dt>
+    <div class="item-description">
+        <b>Estado:</b>
+        @if (Model.DeletionDatetime == null)
+        {
+            <img src="../../Images/tick.ico" alt="active" class="active" />
 
-        <dd>
-            @Html.DisplayFor(model => model.CreationDatetime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModificationDatetime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModificationDatetime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeletionDatetime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeletionDatetime)
-        </dd>
-
-    </dl>
+        }
+        else
+        {
+            <img src="../../Images/x.ico" alt="inactive" class="inactive" />
+        }
+    </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdCategory }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdCategory }) |
+    @Html.ActionLink("Volver", "Index")
 </p>

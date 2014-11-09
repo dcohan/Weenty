@@ -1,56 +1,92 @@
 ﻿@model IEnumerable<Cuponera.Entities.category>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Categorías";
 }
+
 <script type="text/javascript">
-    var global = {
-        controller: 'category'
-    }
+    var globals = {
+        controller: 'category',
+        filters: {
+            include: ['all'],
+            custom: [{
+                controlType: 'text',
+                controlId: 'name',
+                controlDefaultValue: '@(Request.Params["name"] != null ? @Request.Params["name"] : "")',
+                label: 'Nombre'
+            }]
+        }
+    };
 </script>
 
-<h2>Index</h2>
+<h2>Categorías</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreationDatetime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModificationDatetime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeletionDatetime)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModificationDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeletionDatetime)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdCategory }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdCategory }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdCategory })
-        </td>
-    </tr>
-}
+<div class="list-content">
+    @Html.Partial("AntiForgeryTokenForm")
+    @Html.Partial("Filters")
 
-</table>
+
+
+    @if (Model.Count() == 0)
+    {
+        <div class="no-data">No hay datos.</div>
+    }
+    else
+    {
+        <div class="table-all">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr data-item-id="@item.IdCategory">
+                            <td>
+                                <span class="item-name">@Html.DisplayFor(modelItem => item.Name)</span>
+                            </td>
+                            <td class="current-status">
+                                @if (item.DeletionDatetime == null)
+                                {
+                                    <img src="Images/tick.ico" alt="active" class="active" />
+                                }
+                                else
+                                {
+                                    <img src="Images/x.ico" alt="inactive" class="inactive" />
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.IdCategory }) |
+                                @Html.ActionLink("Detalle", "Details", new { id = item.IdCategory }) |
+
+                                @if (item.DeletionDatetime == null)
+                                {
+                                    <a href="#" class="deactivate" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="activate" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.Partial("Paginator")
+        </div>
+
+        <div style="clear:both;"></div>
+    }
+    <p>
+        @Html.ActionLink("Nuevo", "Create")
+    </p>
+</div>
