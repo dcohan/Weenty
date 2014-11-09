@@ -21,6 +21,7 @@ import com.cuponera.home.HomeFragment;
 import com.cuponera.more.MoreFragment;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.navigation.NavBarFragment;
+import com.cuponera.product.OfferFragment;
 import com.cuponera.product.ProductFragment;
 import com.cuponera.settings.Settings;
 import com.cuponera.settings.SettingsFragment;
@@ -117,7 +118,7 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	@Override
 	public void onSpecialOffers() {
-		startFragment(new MyOffersFragment());
+		startFragment(new OfferFragment());
 
 	}
 

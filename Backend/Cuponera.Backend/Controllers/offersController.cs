@@ -34,14 +34,14 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<offer> Getoffers()
         {
-            return db.offer;
+            return db.offer.Where( o => !o.DeletionDatetime.HasValue && o.ExpirationDatetime > DateTime.UtcNow) ;
         }
 
         // GET: odata/offers(5)
         [EnableQuery]
         public SingleResult<offer> Getoffer([FromODataUri] int key)
         {
-            return SingleResult.Create(db.offer.Where(offer => offer.IdOffer == key));
+            return SingleResult.Create(db.offer.Where(offer => offer.IdOffer == key && !offer.DeletionDatetime.HasValue && offer.ExpirationDatetime > DateTime.UtcNow));
         }
 
         // PUT: odata/offers(5)

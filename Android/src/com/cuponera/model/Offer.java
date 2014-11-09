@@ -2,13 +2,13 @@ package com.cuponera.model;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class Product extends BaseModel implements IProduct {
+public class Offer extends BaseModel implements IProduct {
 
 	@JsonProperty("Title")
 	private String title;
 	
-	@JsonProperty("company")
-	private Company company;
+	@JsonProperty("product")
+	private Product product;
 	
 	@JsonProperty("Description")
 	private String description;
@@ -52,11 +52,15 @@ public class Product extends BaseModel implements IProduct {
 	}
 
 	public Company getCompany() {
-		return company;
+		return product.getCompany();
 	}
 
-	public void setCompany(Company company) {
-		this.company = company;
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	
 }
