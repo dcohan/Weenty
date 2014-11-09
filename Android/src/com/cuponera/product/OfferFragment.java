@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
-import com.cuponera.service.product.ProductRequest;
 import com.cuponera.service.offer.OfferRequest;
 
 public class OfferFragment extends BaseFragment {
@@ -16,17 +15,6 @@ public class OfferFragment extends BaseFragment {
 	protected int getLayout() {
 		return R.layout.fragment_product;
 	}
-	
-	public static OfferFragment newInstance(int idCategory) {
-	
-		  OfferFragment fragment = new OfferFragment();
-		  Bundle b = fragment.getArguments();
-		  if (b == null)
-		   b = new Bundle();
-	
-		  fragment.setArguments(b);
-		  return fragment;	
-	 }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
