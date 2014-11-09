@@ -73,11 +73,11 @@
                         </td>
 
                         <td>
-                            <span class="item-name">@Html.DisplayFor(modelItem => item.IdCategory)</span>
+                            <span class="item-name">@Html.DisplayFor(modelItem => item.category.Name)</span>
                         </td>
 
                         <td>
-                            <span class="item-name">@Html.DisplayFor(modelItem => item.IdCompany)</span>
+                            <span class="item-name">@Html.DisplayFor(modelItem => item.company.Name)</span>
                         </td>
                         <td>
                             @Html.ActionLink("Editar", "Edit", new { id = item.IdProduct }) |
