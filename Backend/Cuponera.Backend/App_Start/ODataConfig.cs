@@ -22,15 +22,12 @@ namespace Cuponera.Backend
             builder.EntitySet<devicetypes>("devicetypes");
             builder.EntitySet<images>("images");
             builder.EntitySet<offer>("offer");
-            builder.EntitySet<permissions>("permissions");
             builder.EntitySet<prehomeimages>("prehomeimages");
             builder.EntitySet<product>("product");
             builder.EntitySet<profile>("profile");
-            builder.EntitySet<role>("role");
             builder.EntitySet<state>("state");
             builder.EntitySet<store>("store");
             builder.EntitySet<subscription>("subscription");
-            builder.EntitySet<user>("user");
             builder.EntitySet<userCompany>("userCompany");
 
 

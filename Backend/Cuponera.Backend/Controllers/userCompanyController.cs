@@ -158,9 +158,9 @@ namespace Cuponera.Backend.Controllers
 
         // GET: odata/userCompany(5)/user
         [EnableQuery]
-        public SingleResult<user> Getuser([FromODataUri] int key)
+        public SingleResult<UserProfile> Getuser([FromODataUri] int key)
         {
-            return SingleResult.Create(db.userCompany.Where(m => m.IdUserCompany == key).Select(m => m.user));
+            return SingleResult.Create(db.userCompany.Where(m => m.IdUserCompany == key).Select(m => m.UserProfile));
         }
 
         protected override void Dispose(bool disposing)

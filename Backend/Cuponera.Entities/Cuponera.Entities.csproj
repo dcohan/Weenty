@@ -105,9 +105,6 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="role.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="state.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -115,9 +112,6 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="subscription.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="user.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="userCompany.cs">
@@ -130,12 +124,6 @@
     <Compile Include="validations\offer.cs" />
     <Compile Include="validations\category.cs" />
     <Compile Include="validations\company.cs" />
-    <Compile Include="webpages_Membership.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="webpages_OAuthMembership.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="webpages_Roles.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
