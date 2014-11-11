@@ -126,6 +126,9 @@
     <Compile Include="UserProfile.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="validations\product.cs" />
+    <Compile Include="validations\offer.cs" />
+    <Compile Include="validations\category.cs" />
     <Compile Include="validations\company.cs" />
     <Compile Include="webpages_Membership.cs">
       <DependentUpon>Model.tt</DependentUpon>
