@@ -819,3 +819,11 @@ tr.pager td {
 	text-align: right;
 	width: 100%;
 }
+
+.full-width {
+    width: 95%;
+}
+
+.hidden {
+    display: none;
+}

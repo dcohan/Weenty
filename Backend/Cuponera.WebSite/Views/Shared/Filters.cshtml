@@ -27,6 +27,21 @@
         document.location.href = globals.controller + '?' + buildCurrentStateQS();
     }
 
+    function resizeFiltersForm() {
+        var window_width = $(window).width();
+        var brothers = $('.table');
+        var __min_filters_size__ = 376;
+        var others_size = 0;
+        $(brothers).each(function(key, elem) {
+            others_size += $(elem).width();
+        });
+
+        if (window_width - others_size - 30 < __min_filters_size__) {
+            $('.filters').addClass('full-width');
+        } else {
+            $('.filters').removeClass('full-width');
+        }
+    }
 
     var _common_filters = [{
         controlType: 'checkbox',
@@ -123,6 +138,8 @@
 
     /* Bindings */
     $(function () {
-      
+        resizeFiltersForm();
+
+        $(window).resize(resizeFiltersForm);
     });
 </script>
