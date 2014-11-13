@@ -37,12 +37,9 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<company> Getcompany(bool all = false, string name = null)
         {
-            IQueryable<company> companies;
-            if (all)
+            IQueryable<company> companies = db.company;
+            if (!all)
             {
-                companies = db.company;
-            }
-            else {
                 companies = db.company.Where(c => !c.DeletionDatetime.HasValue);
             }
 

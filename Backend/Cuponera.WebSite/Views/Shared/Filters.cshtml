@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
     function updateCurrentState() {
-        $('.filters input').each(function (key, input) {
+        $('.filters input, .filters select').each(function (key, input) {
             var $input = $(input);
             if ($input.prop('type') === 'button') { return false; }
 
@@ -41,6 +41,36 @@
         } else {
             $('.filters').removeClass('full-width');
         }
+    }
+
+    function getSourceData(args) {
+        callServer({
+            method: 'GET',
+            includeAntiForgeryToken: false,
+            controller: args.controller,
+            action: args.action,
+            success: function(data){
+                args.success(data, args.element, args.include_all, args.default);
+            }
+        });
+    }
+
+    function fillSelect(data, $element, include_all, default_value) {
+        if (include_all) {
+            $option = $('<option></option>').prop('value', 0)
+                .html('Todos');
+            $element.append($option);  
+        }
+
+        $(data).each(function(key, elem) {
+            $option = $('<option></option>').prop('value', elem.id)
+                .html(elem.name);
+
+            if (default_value > 0 && elem.id == default_value) {
+                $option.prop('selected', true);
+            }
+            $element.append($option);
+        });
     }
 
     var _common_filters = [{
@@ -82,6 +112,26 @@
 
             if (elem.controlDefaultValue) { $input.val(elem.controlDefaultValue); }
             $container.append($input);
+        } else if (elem.controlType === 'select') {
+            // label: select
+            if (elem.label) {
+                $container.append(
+                    $('<span></span>')
+                        .html(elem.label + ':')
+                        .addClass('filter-label-pre')
+                );
+            }
+
+            $select = $('<select></select>').prop('id', elem.controlId);
+            getSourceData({
+                include_all: elem.source.include_all,
+                default: elem.controlDefaultValue,
+                controller: elem.source.controller,
+                action: elem.source.action,
+                success: fillSelect,
+                element: $select
+            });
+            $container.append($select);
         } else {
             // input label
             $input = $('<input>').prop('type', elem.controlType)

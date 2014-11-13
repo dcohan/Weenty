@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Cuponera.Entities;
+using System.Configuration;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -15,12 +16,29 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: /Product/
-        public async Task<ActionResult> Index()
+
+
+        private IEnumerable<product> get(bool all, string title, int category, int company, int pageNumber)
         {
-            var product = db.product.Include(p => p.category).Include(p => p.company);
-            return View(await product.ToListAsync());
+            Cuponera.Backend.Controllers.productController cb = new Backend.Controllers.productController();
+            IEnumerable<product> companies = cb.Getproduct(all, title, category, company);
+
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)companies.Count() / pageSize));
+
+            int elemsToSkip = pageSize * (pageNumber - 1);
+            return companies.Skip(elemsToSkip).Take(pageSize);
         }
+
+
+        // GET: /Product/
+        public async Task<ActionResult> Index(bool all = false, string title = null, int category = 0, int company = 0, int page = 1)
+        {
+            var categories = get(all, title, category, company, page);
+            return View(categories);
+        }
+
+
 
         // GET: /Product/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -100,19 +118,27 @@ namespace Cuponera.WebSite.Controllers
         }
 
         // GET: /Product/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            product product = await db.product.FindAsync(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
+            Cuponera.Backend.Controllers.productController cb = new Backend.Controllers.productController();
+            await cb.Delete(id);
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+
+
+        // GET: Product/Activate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Activate(int id)
+        {
+            Cuponera.Backend.Controllers.productController cb = new Backend.Controllers.productController();
+            await cb.Activate(id);
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+
 
         // POST: /Product/Delete/5
         [HttpPost, ActionName("Delete")]

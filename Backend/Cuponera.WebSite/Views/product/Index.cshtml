@@ -11,9 +11,29 @@
             include: ['all'],
             custom: [{
                 controlType: 'text',
-                controlId: 'name',
-                controlDefaultValue: '@(Request.Params["name"] != null ? @Request.Params["name"] : "")',
+                controlId: 'title',
+                controlDefaultValue: '@(Request.Params["title"] != null ? @Request.Params["title"] : "")',
                 label: 'Nombre'
+            },{
+                controlType: 'select',
+                controlId: 'category',
+                controlDefaultValue: '@(Request.Params["category"] != null ? @Request.Params["category"] : "")',
+                label: 'Categoría',
+                source: {
+                    include_all: true,
+                    controller: 'category',
+                    action: 'GetAllBasicData'
+                }
+            }, {
+                controlType: 'select',
+                controlId: 'company',
+                controlDefaultValue: '@(Request.Params["company"] != null ? @Request.Params["company"] : "")',
+                label: 'Empresas',
+                source: {
+                    include_all: true,
+                    controller: 'company',
+                    action: 'GetAllBasicData'
+                }
             }]
         }
     };
@@ -41,15 +61,14 @@
                         Nombre
                     </th>
                     <th>
-                        Estado
-                    </th>
-                    <th>
                         Categoria
                     </th>
                     <th>
                         Empresa
                     </th>
-
+                    <th>
+                        Estado
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -61,6 +80,13 @@
                         <td>
                             <span class="item-name">@Html.DisplayFor(modelItem => item.Title)</span>
                         </td>
+                        <td>
+                            <span class="item-name">@Html.DisplayFor(modelItem => item.category.Name)</span>
+                        </td>
+
+                        <td>
+                            <span class="item-name">@Html.DisplayFor(modelItem => item.company.Name)</span>
+                        </td>
                         <td class="current-status">
                             @if (item.DeletionDatetime == null)
                             {
@@ -70,14 +96,6 @@
                             {
                                 <img src="Images/x.ico" alt="inactive" class="inactive" />
                             }
-                        </td>
-
-                        <td>
-                            <span class="item-name">@Html.DisplayFor(modelItem => item.category.Name)</span>
-                        </td>
-
-                        <td>
-                            <span class="item-name">@Html.DisplayFor(modelItem => item.company.Name)</span>
                         </td>
                         <td>
                             @Html.ActionLink("Editar", "Edit", new { id = item.IdProduct }) |
