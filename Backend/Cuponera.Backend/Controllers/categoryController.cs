@@ -32,9 +32,24 @@ namespace Cuponera.Backend.Controllers
 
         // GET: odata/category
         [EnableQuery]
-        public IQueryable<category> Getcategory()
+        public IQueryable<category> Getcategory(bool all = false, string name = null)
         {
-            return db.category.Where(c => !c.DeletionDatetime.HasValue);
+            IQueryable<category> categories;
+            if (all)
+            {
+                categories = db.category;
+            }
+            else
+            {
+                categories = db.category.Where(c => !c.DeletionDatetime.HasValue);
+            }
+
+
+            if (name != null)
+            {
+                categories = categories.Where(c => c.Name.Contains(name));
+            }
+            return categories.OrderBy(c => c.Name);
         }
 
         // GET: odata/category(5)

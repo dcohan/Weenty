@@ -7,11 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 
 import com.cuponera.admin.AdminFragment;
-import com.cuponera.coupons.MyOffersFragment;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.event.EventListener;
@@ -26,6 +26,7 @@ import com.cuponera.product.ProductFragment;
 import com.cuponera.settings.Settings;
 import com.cuponera.settings.SettingsFragment;
 import com.cuponera.stores.StoreFinderFragment;
+import com.cuponera.utils.Const;
 import com.cuponera.utils.LocationServices;
 import com.cuponera.utils.WebViewWithHeaderFragment;
 
@@ -124,8 +125,13 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	@Override
 	public void onGastronomic() {
-		Fragment product = ProductFragment.newInstance(1);
+		Fragment product = ProductFragment.newInstance(Const.GASTRONOMIC);
 		startFragment(product);
+	}
+
+	public void openProduct(int category) {
+		Fragment product = ProductFragment.newInstance(category);
+		replaceFragment(product, R.id.container, true);
 	}
 
 	@Override
@@ -150,7 +156,17 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 		startFragment(fragment, true);
 	}
 
+	public void cleanBackStack() {
+		FragmentManager fm = getSupportFragmentManager();
+		int backStackCount = fm.getBackStackEntryCount();
+		for (int i = 0; i < backStackCount; i++) {
+			int backStackId = fm.getBackStackEntryAt(i).getId();
+			fm.popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+		}
+	}
+
 	protected void startFragment(Fragment fragment, boolean animated) {
+		cleanBackStack();
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.replace(R.id.container, fragment);
 		if (animated) {
@@ -178,6 +194,7 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 		if (loadingDialog == null || !loadingDialog.isShowing()) {
 			loadingDialog = new ProgressDialog(this);
 			loadingDialog.setCancelable(false);
+			loadingDialog.setMessage("Cargando...");
 			loadingDialog.show();
 
 		}

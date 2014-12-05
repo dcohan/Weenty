@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -9,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
-        android:background="@color/gray_lighter"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
@@ -30,29 +30,126 @@
             android:scaleType="centerInside" />
     </LinearLayout>
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.2"
-        android:scaleType="fitXY"
-        android:src="@drawable/ofertatest" />
+        android:layout_weight="0.22"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/hotel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.44"
+            android:background="@drawable/rectangle_corner_round"
+            android:gravity="center"
+            android:text="@string/menu_hotel"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.12" />
+
+        <TextView
+            android:id="@+id/gastronomic"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.44"
+            android:background="@drawable/rectangle_corner_round"
+            android:gravity="center"
+            android:text="@string/menu_grastronomic"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.02" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.22"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:textColor="@color/white" >
+
+        <TextView
+            android:id="@+id/coffee"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.44"
+            android:background="@drawable/rectangle_corner_round"
+            android:gravity="center"
+            android:text="@string/menu_coffee"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.12" />
+
+        <TextView
+            android:id="@+id/beach"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.44"
+            android:background="@drawable/rectangle_corner_round"
+            android:gravity="center"
+            android:text="@string/menu_beach"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.02" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.22"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/shopping"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.44"
+            android:background="@drawable/rectangle_corner_round"
+            android:gravity="center"
+            android:text="@string/menu_shopping"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.12" />
+
+        <TextView
+            android:id="@+id/cinema"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.44"
+            android:background="@drawable/rectangle_corner_round"
+            android:gravity="center"
+            android:text="@string/menu_cinema"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.02" />
 
     <ImageView
+        android:id="@+id/munucipio"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.3" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"
-        android:scaleType="fitXY"
-        android:src="@drawable/oferta2test" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"
+        android:layout_weight="0.16"
         android:scaleType="fitXY"
         android:src="@drawable/oferta3test" />
 

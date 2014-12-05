@@ -38,15 +38,14 @@ namespace Cuponera.WebSite.Controllers
             return View(companies);
         }
 
-        [HttpGet]
-        public string GetCompanies(bool all = false, string name = null, int page = 1)
-        {
-            var companies = get(all, name, page);
-            var dataToSerialize = companies.Select(c => new { IdCompany = c.IdCompany, Name = c.Name, DeletionDatetime = c.DeletionDatetime });
 
-            return JSONHelper.SerializeJSON(dataToSerialize);
+        public string GetAllBasicData()
+        {
+            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
+            IEnumerable<company> companies = cb.Getcompany(false);
+
+            return Helpers.JSONHelper.SerializeJSON(companies.ToList().Select(company => new { id = company.IdCompany, name = company.Name }));
         }
-       
 
         // GET: company/Details/5
         public async Task<ActionResult> Details(int? id)

@@ -34,9 +34,30 @@ namespace Cuponera.Backend.Controllers
 
         // GET: odata/product
         [EnableQuery]
-        public IQueryable<product> Getproduct()
+        public IQueryable<product> Getproduct(bool all = false, string title = null, int category = 0, int company = 0)
         {
-            return db.product.Where(p => !p.DeletionDatetime.HasValue);
+            IQueryable<product> products = db.product;
+            if (!all)
+            {
+                products = db.product.Where(p => !p.DeletionDatetime.HasValue);
+            }
+
+            if (title != null)
+            {
+                products = products.Where(p => p.Title.Contains(title));
+            }
+
+            if (category > 0)
+            {
+                products = products.Where(p => p.category.IdCategory == category);
+            }
+
+            if (company > 0)
+            {
+                products = products.Where(p => p.company.IdCompany == company);
+            }
+            return products.OrderBy(c => c.Title);
+
         }
 
         // GET: odata/product(5)
@@ -144,7 +165,23 @@ namespace Cuponera.Backend.Controllers
                 return NotFound();
             }
 
-            product.ModificationDatetime = DateTime.UtcNow;
+            product.DeletionDatetime = DateTime.UtcNow;
+            await db.SaveChangesAsync();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: odata/product(5)/Activate
+        [HttpPost]
+        public async Task<IHttpActionResult> Activate([FromODataUri] int key)
+        {
+            product product = await db.product.FindAsync(key);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            product.DeletionDatetime = null;
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);

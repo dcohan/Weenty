@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Cuponera.Entities;
+using System.Configuration;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -15,10 +16,33 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: category
-        public async Task<ActionResult> Index()
+
+        private IEnumerable<category> get(bool all, string name, int pageNumber)
         {
-            return View(await db.category.ToListAsync());
+            Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
+            IEnumerable<category> companies = cb.Getcategory(all, name);
+
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)companies.Count() / pageSize));
+
+            int elemsToSkip = pageSize * (pageNumber - 1);
+            return companies.Skip(elemsToSkip).Take(pageSize);
+        }
+
+        public string GetAllBasicData()
+        {
+            Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
+            IEnumerable<category> categories = cb.Getcategory(false);
+
+            return Helpers.JSONHelper.SerializeJSON(categories.ToList().Select(category => new { id = category.IdCategory, name = category.Name }));
+        }
+        
+
+        // GET: category
+        public async Task<ActionResult> Index(bool all = false, string name = null, int page = 1)
+        {
+            var categories = get(all, name, page);
+            return View(categories);
         }
 
         // GET: category/Details/5
@@ -91,18 +115,24 @@ namespace Cuponera.WebSite.Controllers
         }
 
         // GET: category/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            category category = await db.category.FindAsync(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
+            Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
+            await cb.Delete(id);
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+
+        // GET: category/Activate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Activate(int id)
+        {
+            Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
+            await cb.Activate(id);
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         // POST: category/Delete/5
