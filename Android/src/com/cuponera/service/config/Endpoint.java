@@ -3,7 +3,7 @@ package com.cuponera.service.config;
 public enum Endpoint {
 	production("https", ""),
 
-	dev("http", ""),
+	dev("http", "e-nordelta.com.ar"),
 	
 	local("http","192.168.1.103:6569");
 
