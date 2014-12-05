@@ -124,6 +124,12 @@
     <Compile Include="validations\offer.cs" />
     <Compile Include="validations\category.cs" />
     <Compile Include="validations\company.cs" />
+    <Compile Include="webpages_Membership.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="webpages_OAuthMembership.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="webpages_Roles.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

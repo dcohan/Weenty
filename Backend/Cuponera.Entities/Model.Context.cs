@@ -42,6 +42,8 @@ namespace Cuponera.Entities
         public virtual DbSet<subscription> subscription { get; set; }
         public virtual DbSet<userCompany> userCompany { get; set; }
         public virtual DbSet<UserProfile> UserProfile { get; set; }
+        public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
+        public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
     }
 }

@@ -5,24 +5,26 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="469dd5574e874b678ab69f758416789a" Name="Diagram1">
-        <EntityTypeShape EntityType="CuponeraModel.category" Width="1.5" PointX="0.75" PointY="5" />
-        <EntityTypeShape EntityType="CuponeraModel.company" Width="1.5" PointX="0.75" PointY="9.75" />
-        <EntityTypeShape EntityType="CuponeraModel.companyStore" Width="1.5" PointX="3" PointY="9.875" />
-        <EntityTypeShape EntityType="CuponeraModel.companySubscription" Width="1.5" PointX="3" PointY="13.875" />
-        <EntityTypeShape EntityType="CuponeraModel.deviceos" Width="1.5" PointX="1.5" PointY="26.125" />
-        <EntityTypeShape EntityType="CuponeraModel.devicetypes" Width="1.5" PointX="1.5" PointY="28.5" />
-        <EntityTypeShape EntityType="CuponeraModel.images" Width="1.5" PointX="5.25" PointY="13.5" />
-        <EntityTypeShape EntityType="CuponeraModel.offer" Width="1.5" PointX="5.25" PointY="3" />
-        <EntityTypeShape EntityType="CuponeraModel.permissions" Width="1.5" PointX="3.75" PointY="25.875" />
-        <EntityTypeShape EntityType="CuponeraModel.prehomeimages" Width="1.5" PointX="7.75" PointY="2.25" />
-        <EntityTypeShape EntityType="CuponeraModel.product" Width="1.5" PointX="3" PointY="4" />
-        <EntityTypeShape EntityType="CuponeraModel.profile" Width="1.5" PointX="3.75" PointY="17.875" />
-        <EntityTypeShape EntityType="CuponeraModel.state" Width="1.5" PointX="1.5" PointY="19.875" />
-        <EntityTypeShape EntityType="CuponeraModel.store" Width="1.5" PointX="0.75" PointY="14" />
-        <EntityTypeShape EntityType="CuponeraModel.subscription" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="CuponeraModel.userCompany" Width="1.5" PointX="6" PointY="10" />
-        <EntityTypeShape EntityType="CuponeraModel.UserProfile" Width="1.5" PointX="3.75" PointY="23.25" />
-        <EntityTypeShape EntityType="CuponeraModel.webpages_Roles" Width="1.5" PointX="1.5" PointY="23.25" />
+        <EntityTypeShape EntityType="CuponeraModel.category" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="CuponeraModel.company" Width="1.5" PointX="0.75" PointY="9.5" />
+        <EntityTypeShape EntityType="CuponeraModel.companyStore" Width="1.5" PointX="6" PointY="9.625" />
+        <EntityTypeShape EntityType="CuponeraModel.companySubscription" Width="1.5" PointX="6" PointY="13.625" />
+        <EntityTypeShape EntityType="CuponeraModel.deviceos" Width="1.5" PointX="4.5" PointY="30.875" />
+        <EntityTypeShape EntityType="CuponeraModel.devicetypes" Width="1.5" PointX="4.5" PointY="33.25" />
+        <EntityTypeShape EntityType="CuponeraModel.images" Width="1.5" PointX="5.25" PointY="17.25" />
+        <EntityTypeShape EntityType="CuponeraModel.offer" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="CuponeraModel.permissions" Width="1.5" PointX="3.75" PointY="35.625" />
+        <EntityTypeShape EntityType="CuponeraModel.prehomeimages" Width="1.5" PointX="0.75" PointY="2" />
+        <EntityTypeShape EntityType="CuponeraModel.product" Width="1.5" PointX="3" PointY="8.75" />
+        <EntityTypeShape EntityType="CuponeraModel.profile" Width="1.5" PointX="6.75" PointY="20.625" />
+        <EntityTypeShape EntityType="CuponeraModel.state" Width="1.5" PointX="1.5" PointY="21.625" />
+        <EntityTypeShape EntityType="CuponeraModel.store" Width="1.5" PointX="3.75" PointY="20.75" />
+        <EntityTypeShape EntityType="CuponeraModel.subscription" Width="1.5" PointX="3.75" PointY="26.5" />
+        <EntityTypeShape EntityType="CuponeraModel.userCompany" Width="1.5" PointX="6" PointY="5.75" />
+        <EntityTypeShape EntityType="CuponeraModel.UserProfile" Width="1.5" PointX="3.75" PointY="6" />
+        <EntityTypeShape EntityType="CuponeraModel.webpages_Membership" Width="1.5" PointX="8.75" PointY="2" />
+        <EntityTypeShape EntityType="CuponeraModel.webpages_OAuthMembership" Width="1.5" PointX="8.75" PointY="6" />
+        <EntityTypeShape EntityType="CuponeraModel.webpages_Roles" Width="1.5" PointX="1.5" PointY="6" />
         <AssociationConnector Association="CuponeraModel.FK_product_category" />
         <AssociationConnector Association="CuponeraModel.FK_companyStore_company" />
         <AssociationConnector Association="CuponeraModel.FK_companySubscription_company" />
