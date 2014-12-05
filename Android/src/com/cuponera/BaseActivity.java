@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 
 import com.cuponera.admin.AdminFragment;
-import com.cuponera.coupons.MyOffersFragment;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.event.EventListener;
@@ -178,6 +177,7 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 		if (loadingDialog == null || !loadingDialog.isShowing()) {
 			loadingDialog = new ProgressDialog(this);
 			loadingDialog.setCancelable(false);
+			loadingDialog.setMessage("Cargando...");
 			loadingDialog.show();
 
 		}

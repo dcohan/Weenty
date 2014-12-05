@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <!-- Maps Key -->
     <string name="maps_api_key">AIzaSyC-IALoh0jrU1YLfuL9Xp6nClAdtono21M</string>
     <string name="app_name">Cuponera</string>
@@ -30,14 +29,16 @@
     <!-- Menu -->
     <string name="menu_home">Inicio</string>
     <string name="menu_admin">Administración</string>
+    <string name="menu_hotel">Hoteles</string>
+    <string name="menu_coffee">Cafetería</string>
+    <string name="menu_beach">Playas</string>
+    <string name="menu_cinema">Cines Teatros</string>
+    <string name="menu_shopping">Shopping</string>
     <string name="menu_ofertas">Ofertas Especiales</string>
-    <string name="menu_grastronomic">Gastronomía</string>
+    <string name="menu_grastronomic">Restaurantes</string>
     <string name="menu_stores">Stores</string>
     <string name="menu_more">Más</string>
     <string name="menu_settings">Preferencias</string>
-    
-
-    <!-- Shop -->
     <string name="admin_title">Administración</string>
 
     <!-- Stores -->
@@ -49,17 +50,6 @@
     <string name="store_hours">STORE HOURS</string>
     <string name="searching_location">Searching location...</string>
 
-    <!-- LookBook -->
-    <string name="look_book_title">Search Look Book</string>
-    <string name="all">All</string>
-    <string name="look_book_results_title">Results</string>
-
-    <!-- MyCoupons -->
-    <string name="my_coupons_instructions">Instructions: Please choose an offer from the list below!</string>
-    <string name="my_coupons_expires">Expires on: %1$s</string>
-    <string name="my_coupons_promo_code">Promo Code: %1$s</string>
-    <string name="special_deal">Special Deal</string>
-
     <!-- Social -->
     <string name="social">Social</string>
 
@@ -68,7 +58,6 @@
     <string name="admin_allowed">Adminsitración</string>
     <!-- Settings -->
     <string name="settings_title">Settings</string>
-    
     <string name="map">Map</string>
 
 </resources>
