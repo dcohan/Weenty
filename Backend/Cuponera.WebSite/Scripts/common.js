@@ -73,7 +73,7 @@ function deleteElement(args) {
     args.action = 'Delete';
     args.includeAntiForgeryToken = true;
     args.method = 'DELETE';
-    args.success = function () { location.href = args.controller };
+    args.success = function () { if (refresh && typeof refresh === 'function') { refresh(); } };
     callServer(args);
 }
 
@@ -85,6 +85,6 @@ function activateElement(args) {
     args.action = 'Activate';
     args.includeAntiForgeryToken = true;
     args.method = 'POST';
-    args.success = function () { location.href = args.controller };
+    args.success = function () { if (refresh && typeof refresh === 'function') { refresh(); } };
     callServer(args);
 }

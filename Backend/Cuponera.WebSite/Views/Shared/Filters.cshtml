@@ -23,7 +23,7 @@
         return qs.length > 0 ? qs.substr(0, qs.lastIndexOf('&')) : qs;
     }
 
-    function redirect(filters) {
+    function refresh(filters) {
         document.location.href = globals.controller + '?' + buildCurrentStateQS();
     }
 
@@ -184,8 +184,8 @@
         $('.filters').append($button);
         $button.click(function () {
             updateCurrentState();
-            redirect();
-        })
+            refresh();
+        });
     }
 
 
