@@ -39,7 +39,7 @@ namespace Cuponera.Backend.Controllers
             IQueryable<product> products = db.product;
             if (!all)
             {
-                products = db.product.Where(p => !p.DeletionDatetime.HasValue);
+                products = products.Where(p => !p.DeletionDatetime.HasValue);
             }
 
             if (title != null)

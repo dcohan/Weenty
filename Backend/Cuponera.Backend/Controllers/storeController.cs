@@ -40,9 +40,34 @@ namespace Cuponera.Backend.Controllers
 
         // GET: odata/store(5)
         [EnableQuery]
-        public SingleResult<store> Getstore([FromODataUri] int key)
+        public IQueryable<store> Getstore(bool all, int idCompany, string name, string zipCode, string city, int idState)
         {
-            return SingleResult.Create(db.store.Where(store => store.IdStore == key && !store.DeletionDatetime.HasValue));
+            IQueryable<store> stores = db.store;
+            if (!all)
+            {
+                stores = stores.Where(p => !p.DeletionDatetime.HasValue);
+            }
+
+            if (idCompany > 0)
+            {
+                stores = stores.Where(p => p.company.IdCompany == idCompany);
+            }
+
+            if (name != null)
+            {
+                stores = stores.Where(p => p.Name.Contains(name));
+            }
+
+            if (zipCode != null)
+            {
+                stores = stores.Where(p => p.ZipCode == zipCode);
+            }
+
+            if (city != null)
+            {
+                stores = stores.Where(p => p.City.Contains(city));
+            }
+            return stores.OrderBy(c => c.Name);
         }
 
         // PUT: odata/store(5)
