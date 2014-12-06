@@ -195,6 +195,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\storeController.cs" />
     <Compile Include="Controllers\categoryController.cs" />
     <Compile Include="Controllers\companyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -311,11 +312,11 @@
     <Content Include="Views\company\Details.cshtml" />
     <Content Include="Views\company\Edit.cshtml" />
     <Content Include="Views\company\Index.cshtml" />
-    <Content Include="Views\companyStore\Create.cshtml" />
-    <Content Include="Views\companyStore\Delete.cshtml" />
-    <Content Include="Views\companyStore\Details.cshtml" />
-    <Content Include="Views\companyStore\Edit.cshtml" />
-    <Content Include="Views\companyStore\Index.cshtml" />
+    <Content Include="Views\store\Create.cshtml" />
+    <Content Include="Views\store\Delete.cshtml" />
+    <Content Include="Views\store\Details.cshtml" />
+    <Content Include="Views\store\Edit.cshtml" />
+    <Content Include="Views\store\Index.cshtml" />
     <Content Include="Views\Shared\Popups.cshtml" />
     <Content Include="Views\Shared\AntiForgeryTokenForm.cshtml" />
     <Content Include="Views\Shared\Filters.cshtml" />

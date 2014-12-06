@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -8,148 +7,142 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Cuponera.WebSite.Helpers;
 using Cuponera.Entities;
+using System.Configuration;
 
 namespace Cuponera.WebSite.Controllers
 {
-    public class companyController : Controller
+    public class storeController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        private IEnumerable<company> get(bool all, string name, int pageNumber)
+        private IEnumerable<store> get(bool all, int idCompany, string name, string zipCode, string city, int idState, int pageNumber)
         {
-            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
-            IEnumerable<company> companies = cb.Getcompany(all, name);
+            Cuponera.Backend.Controllers.storeController sc = new Backend.Controllers.storeController();
+            IEnumerable<store> stores = sc.Getstore(all, idCompany, name, zipCode, city, idState);
 
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
-            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)companies.Count() / pageSize));
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)stores.Count() / pageSize));
 
             int elemsToSkip = pageSize * (pageNumber - 1);
-            return companies.Skip(elemsToSkip).Take(pageSize);
+            return stores.Skip(elemsToSkip).Take(pageSize);
         }
-
-        // GET: company
-        public async Task<ActionResult> Index(bool all = false, string name = null, int page = 1)
-        {
-            var companies = get(all, name, page);
-            return View(companies);
-        }
-
 
         public string GetAllBasicData()
         {
-            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
-            IEnumerable<company> companies = cb.Getcompany(false);
+            Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
+            IEnumerable<category> categories = cb.Getcategory(false);
 
-            return Helpers.JSONHelper.SerializeJSON(companies.ToList().Select(company => new { id = company.IdCompany, name = company.Name }));
+            return Helpers.JSONHelper.SerializeJSON(categories.ToList().Select(category => new { id = category.IdCategory, name = category.Name }));
+        }
+        
+
+        // GET: store
+        public async Task<ActionResult> Index(bool all = false, int idCompany = 0, string name = null, string zipCode = null, string city = null, int idState = 0, int page = 1)
+        {
+            var stores = get(all, idCompany, name, zipCode, city, idState, page);
+            return View(stores);
         }
 
-        // GET: company/Details/5
+        // GET: store/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            company company = await db.company.FindAsync(id);
-            if (company == null)
+            category category = await db.category.FindAsync(id);
+            if (category == null)
             {
                 return HttpNotFound();
             }
-            return View(company);
+            return View(category);
         }
 
-        // GET: company/Create
+        // GET: store/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: company/Create
+        // POST: store/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdCompany,Name,CreationDatetime,ModificationDatetime,DeletionDatetime")] company company)
+        public async Task<ActionResult> Create([Bind(Include = "IdCategory,Name,CreationDatetime,ModificationDatetime,DeletionDatetime")] category category)
         {
             if (ModelState.IsValid)
             {
-                db.company.Add(company);
+                db.category.Add(category);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(company);
+            return View(category);
         }
 
-        // GET: company/Edit/5
+        // GET: store/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            company company = await db.company.FindAsync(id);
-            if (company == null)
+            category category = await db.category.FindAsync(id);
+            if (category == null)
             {
                 return HttpNotFound();
             }
-            return View(company);
+            return View(category);
         }
 
-        // POST: company/Edit/5
+        // POST: store/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdCompany,Name,CreationDatetime,ModificationDatetime,DeletionDatetime")] company company)
+        public async Task<ActionResult> Edit([Bind(Include = "IdCategory,Name,CreationDatetime,ModificationDatetime,DeletionDatetime")] category category)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(company).State = EntityState.Modified;
+                db.Entry(category).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(company);
+            return View(category);
         }
 
-        // GET: company/Delete/5
+        // GET: store/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
+            Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
             await cb.Delete(id);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        // GET: company/Activate/5
+
+        // GET: store/Activate/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Activate(int id)
         {
-            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
+            Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
             await cb.Activate(id);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        // POST: company/Delete/5
+        // POST: store/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            company company = await db.company.FindAsync(id);
-            if (company == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-
-            company.DeletionDatetime = DateTime.UtcNow;
+            category category = await db.category.FindAsync(id);
+            db.category.Remove(category);
             await db.SaveChangesAsync();
-
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
