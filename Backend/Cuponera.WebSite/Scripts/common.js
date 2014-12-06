@@ -6,11 +6,13 @@ function confirmActivate(id) {
     activateElement({ controller: globals.controller, id: id });
 }
 
+function redirect(url) {
+    document.location.href = url;
+}
+
 function getAntiForgeryToken() {
     return $('#__AjaxAntiForgeryForm input[name=__RequestVerificationToken]').val();
 };
-
-
 
 function callServer(args) {
     if (args.includeAntiForgeryToken) {
@@ -73,7 +75,7 @@ function deleteElement(args) {
     args.action = 'Delete';
     args.includeAntiForgeryToken = true;
     args.method = 'DELETE';
-    args.success = function () { location.href = args.controller };
+    args.success = function () { if (reload && typeof reload === 'function') { reload(); } };
     callServer(args);
 }
 
@@ -85,6 +87,6 @@ function activateElement(args) {
     args.action = 'Activate';
     args.includeAntiForgeryToken = true;
     args.method = 'POST';
-    args.success = function () { location.href = args.controller };
+    args.success = function () { if (reload && typeof reload === 'function') { reload(); } };
     callServer(args);
 }
