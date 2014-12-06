@@ -73,6 +73,79 @@
         });
     }
 
+
+
+
+
+    /* Better than if */
+    var render = {
+        text: function(filter) {
+            // label: input
+            var $filter_group = $('<div></div>');
+            $filter_group.append(
+                $('<span></span>')
+                    .html(filter.label + ':')
+                    .addClass('filter-label-pre')
+            );
+            
+            $input = $('<input>').prop('type', filter.controlType)
+                                .prop('id', filter.controlId);
+
+            if (filter.controlDefaultValue) { 
+                $input.val(filter.controlDefaultValue); 
+            }
+            $filter_group.append($input);
+
+            return $filter_group;
+        },
+        select: function(filter) {
+            // label: select
+            var $filter_group = $('<div></div>');
+            $filter_group.append(
+                $('<span></span>')
+                    .html(filter.label + ':')
+                    .addClass('filter-label-pre')
+            );
+
+            $select = $('<select></select>').prop('id', filter.controlId);
+            getSourceData({
+                include_all: filter.source.include_all,
+                default: filter.controlDefaultValue,
+                controller: filter.source.controller,
+                action: filter.source.action,
+                success: fillSelect,
+                element: $select
+            });
+
+            $filter_group.append($select);
+            return $filter_group;
+        },
+
+        other: function(filter) {
+            // input label
+            var $filter_group = $('<div></div>');
+
+            $label = $('<label></label>')
+                        .addClass('filter-label-post')
+                        .html(filter.label)
+                        .prop('for', filter.controlId);
+
+            $input = $('<input>').prop('type', filter.controlType)
+                                .prop('id', filter.controlId)
+                                .prop('checked', filter.controlDefaultValue ? filter.controlDefaultValue : false);
+            
+            $filter_group.append($input)
+                         .append($label);
+           
+            return $filter_group;
+        }
+    };
+
+
+
+
+
+
     var _common_filters = [{
         controlType: 'checkbox',
         controlId: 'all',
@@ -97,60 +170,12 @@
 
     /* Render filters */
     $(_filters).each(function (key, elem) {
-        $container = $('<div></div>').addClass('filter');
-        if (elem.controlType === 'text') {
-            // label: input
-            if (elem.label) {
-                $container.append(
-                    $('<span></span>')
-                        .html(elem.label + ':')
-                        .addClass('filter-label-pre')
-                );
-            }
-            $input = $('<input>').prop('type', elem.controlType)
-                                .prop('id', elem.controlId);
-
-            if (elem.controlDefaultValue) { $input.val(elem.controlDefaultValue); }
-            $container.append($input);
-        } else if (elem.controlType === 'select') {
-            // label: select
-            if (elem.label) {
-                $container.append(
-                    $('<span></span>')
-                        .html(elem.label + ':')
-                        .addClass('filter-label-pre')
-                );
-            }
-
-            $select = $('<select></select>').prop('id', elem.controlId);
-            getSourceData({
-                include_all: elem.source.include_all,
-                default: elem.controlDefaultValue,
-                controller: elem.source.controller,
-                action: elem.source.action,
-                success: fillSelect,
-                element: $select
-            });
-            $container.append($select);
-        } else {
-            // input label
-            $input = $('<input>').prop('type', elem.controlType)
-                                .prop('id', elem.controlId)
-                                .prop('checked', elem.controlDefaultValue ? elem.controlDefaultValue : false);
-            $container.append($input);
-            if (elem.label) {
-                $container.append(
-                    $('<label></label>')
-                        .addClass('filter-label-post')
-                        .html(elem.label)
-                        .prop('for', elem.controlId)
-                );
-            }
-            $container.addClass('group-control-box');
-        }
-
+        var $container = (render[elem.controlType] && render[elem.controlType](elem)) || render['other'](elem);
+        $container.addClass('filter')
+                  .addClass('group-control-box');
         $('.filters').append($container);
     });
+
 
     if (_filters.length > 0) {
         var $button = $('<input>')
