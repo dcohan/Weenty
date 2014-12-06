@@ -23,7 +23,7 @@ namespace Cuponera.WebSite.Helpers
 
             using (var usersContext = new CuponeraEntities())
             {
-                return usersContext.companyStore.Where(cs => cs.IdStore.Equals(idStore))
+                return usersContext.store.Where(cs => cs.IdStore.Equals(idStore))
                             .Join(usersContext.company, cs => cs.IdCompany, c => c.IdCompany, (cs, c) => new { IdCompany = c.IdCompany })
                             .Join(usersContext.userCompany, c => c.IdCompany, uc => uc.IdCompany, (c, uc) => new { IdUser = uc.IdUser })
                             .Join(usersContext.UserProfile, uc => uc.IdUser, up => up.UserId, (uc, up) => new { UserName = up.UserName })

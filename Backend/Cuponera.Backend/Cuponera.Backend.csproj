@@ -113,7 +113,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\categoryController.cs" />
     <Compile Include="Controllers\companyController.cs" />
-    <Compile Include="Controllers\companyStoreController.cs" />
     <Compile Include="Controllers\companySubscriptionController.cs" />
     <Compile Include="Controllers\deviceosController.cs" />
     <Compile Include="Controllers\devicetypesController.cs" />

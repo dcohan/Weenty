@@ -16,7 +16,6 @@ namespace Cuponera.Backend
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<category>("category");
             builder.EntitySet<company>("company");
-            builder.EntitySet<companyStore>("companyStore");
             builder.EntitySet<companySubscription>("companySubscription");
             builder.EntitySet<deviceos>("deviceos");
             builder.EntitySet<devicetypes>("devicetypes");

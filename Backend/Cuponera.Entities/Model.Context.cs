@@ -27,7 +27,6 @@ namespace Cuponera.Entities
     
         public virtual DbSet<category> category { get; set; }
         public virtual DbSet<company> company { get; set; }
-        public virtual DbSet<companyStore> companyStore { get; set; }
         public virtual DbSet<companySubscription> companySubscription { get; set; }
         public virtual DbSet<deviceos> deviceos { get; set; }
         public virtual DbSet<devicetypes> devicetypes { get; set; }

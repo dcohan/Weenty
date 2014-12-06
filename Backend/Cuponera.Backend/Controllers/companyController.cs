@@ -178,13 +178,6 @@ namespace Cuponera.Backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/company(5)/companyStore
-        [EnableQuery]
-        public IQueryable<companyStore> GetcompanyStore([FromODataUri] int key)
-        {
-            return db.company.Where(m => m.IdCompany == key).SelectMany(m => m.companyStore);
-        }
-
         // GET: odata/company(5)/companySubscription
         [EnableQuery]
         public IQueryable<companySubscription> GetcompanySubscription([FromODataUri] int key)

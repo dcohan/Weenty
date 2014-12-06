@@ -164,13 +164,6 @@ namespace Cuponera.Backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/store(5)/companyStore
-        [EnableQuery]
-        public IQueryable<companyStore> GetcompanyStore([FromODataUri] int key)
-        {
-            return db.store.Where(m => m.IdStore == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.companyStore);
-        }
-
         // GET: odata/store(5)/state
         [EnableQuery]
         public SingleResult<state> Getstate([FromODataUri] int key)

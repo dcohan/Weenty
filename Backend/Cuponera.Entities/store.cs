@@ -14,12 +14,8 @@ namespace Cuponera.Entities
     
     public partial class store
     {
-        public store()
-        {
-            this.companyStore = new HashSet<companyStore>();
-        }
-    
         public int IdStore { get; set; }
+        public int IdCompany { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string ContactNumber { get; set; }
@@ -29,13 +25,11 @@ namespace Cuponera.Entities
         public string City { get; set; }
         public string IdState { get; set; }
         public string StoreHours { get; set; }
-        public Nullable<System.DateTime> GeolocationProcessingDatetime { get; set; }
-        public int GeolocationTries { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
-        public virtual ICollection<companyStore> companyStore { get; set; }
+        public virtual company company { get; set; }
         public virtual state state { get; set; }
     }
 }
