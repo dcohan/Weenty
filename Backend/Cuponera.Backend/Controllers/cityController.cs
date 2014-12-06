@@ -22,31 +22,30 @@ namespace Cuponera.Backend.Controllers
     using System.Web.Http.OData.Extensions;
     using Cuponera.Entities;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<state>("state");
-    builder.EntitySet<profile>("profile"); 
+    builder.EntitySet<city>("city");
     builder.EntitySet<store>("store"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class stateController : ODataController
+    public class cityController : ODataController
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: odata/state
+        // GET: odata/city
         [EnableQuery]
-        public IQueryable<state> Getstate()
+        public IQueryable<city> Getcity()
         {
-            return db.state.Where(s => !s.DeletionDatetime.HasValue);
+            return db.city;
         }
 
-        // GET: odata/state(5)
+        // GET: odata/city(5)
         [EnableQuery]
-        public SingleResult<state> Getstate([FromODataUri] string key)
+        public SingleResult<city> Getcity([FromODataUri] int key)
         {
-            return SingleResult.Create(db.state.Where(state => state.IdState == key && !state.DeletionDatetime.HasValue));
+            return SingleResult.Create(db.city.Where(city => city.IdCity == key));
         }
 
-        // PUT: odata/state(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] string key, Delta<state> patch)
+        // PUT: odata/city(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<city> patch)
         {
             Validate(patch.GetEntity());
 
@@ -55,13 +54,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            state state = await db.state.FindAsync(key);
-            if (state == null)
+            city city = await db.city.FindAsync(key);
+            if (city == null)
             {
                 return NotFound();
             }
 
-            patch.Put(state);
+            patch.Put(city);
 
             try
             {
@@ -69,7 +68,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!stateExists(key))
+                if (!cityExists(key))
                 {
                     return NotFound();
                 }
@@ -79,18 +78,18 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(state);
+            return Updated(city);
         }
 
-        // POST: odata/state
-        public async Task<IHttpActionResult> Post(state state)
+        // POST: odata/city
+        public async Task<IHttpActionResult> Post(city city)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.state.Add(state);
+            db.city.Add(city);
 
             try
             {
@@ -98,7 +97,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateException)
             {
-                if (stateExists(state.IdState))
+                if (cityExists(city.IdCity))
                 {
                     return Conflict();
                 }
@@ -108,12 +107,12 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Created(state);
+            return Created(city);
         }
 
-        // PATCH: odata/state(5)
+        // PATCH: odata/city(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] string key, Delta<state> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<city> patch)
         {
             Validate(patch.GetEntity());
 
@@ -122,13 +121,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            state state = await db.state.FindAsync(key);
-            if (state == null)
+            city city = await db.city.FindAsync(key);
+            if (city == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(state);
+            patch.Patch(city);
 
             try
             {
@@ -136,7 +135,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!stateExists(key))
+                if (!cityExists(key))
                 {
                     return NotFound();
                 }
@@ -146,36 +145,29 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(state);
+            return Updated(city);
         }
 
-        // DELETE: odata/state(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] string key)
+        // DELETE: odata/city(5)
+        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            state state = await db.state.FindAsync(key);
-            if (state == null)
+            city city = await db.city.FindAsync(key);
+            if (city == null)
             {
                 return NotFound();
             }
 
-            state.ModificationDatetime = DateTime.UtcNow;
+            db.city.Remove(city);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/state(5)/profile
+        // GET: odata/city(5)/store
         [EnableQuery]
-        public IQueryable<profile> Getprofile([FromODataUri] string key)
+        public IQueryable<store> Getstore([FromODataUri] int key)
         {
-            return db.state.Where(m => m.IdState == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.profile);
-        }
-
-        // GET: odata/state(5)/store
-        [EnableQuery]
-        public IQueryable<store> Getstore([FromODataUri] string key)
-        {
-            return db.state.Where(m => m.IdState == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.store);
+            return db.city.Where(m => m.IdCity == key).SelectMany(m => m.store);
         }
 
         protected override void Dispose(bool disposing)
@@ -187,9 +179,9 @@ namespace Cuponera.Backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool stateExists(string key)
+        private bool cityExists(int key)
         {
-            return db.state.Count(e => e.IdState == key) > 0;
+            return db.city.Count(e => e.IdCity == key) > 0;
         }
     }
 }

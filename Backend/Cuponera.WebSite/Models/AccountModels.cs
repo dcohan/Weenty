@@ -1,13 +1,80 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Transactions;
+using System.Web;
+using WebMatrix.WebData;
+using Cuponera.WebSite.Filters;
+using Cuponera.WebSite.Models;
+using System.Security.Principal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
+using Cuponera.Entities;
 
 namespace Cuponera.WebSite.Models
 {
+    public class CuponeraIdentity : IIdentity
+    {
+        public CuponeraIdentity(IIdentity baseIdentity)
+        {
+            IsAuthenticated = baseIdentity.IsAuthenticated;
+            AuthenticationType = baseIdentity.AuthenticationType;
+            Name = baseIdentity.Name;
+
+            using (CuponeraEntities db = new CuponeraEntities())
+            {
+                Cuponera.Entities.UserProfile user = db.UserProfile.FirstOrDefault(u => u.UserName.ToLower() == Name.ToLower());
+                
+            }
+        }
+
+        public string AuthenticationType
+        {
+            get;
+            set;
+        }
+
+        public bool IsAuthenticated
+        {
+            get;
+            set;
+        }
+
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public List<store> Stores { get; set; }
+    }
+
+    public class CuponeraPrincipal : IPrincipal
+    {
+        public CuponeraPrincipal(CuponeraIdentity identity)
+        {
+            Identity = identity;
+        }
+
+        public IIdentity Identity
+        {
+            get;
+            set;
+        }
+
+        public bool IsInRole(string role)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CanAdminStore(int storeId)
+        {
+            return true;
+        }
+    }
     public class UsersContext : DbContext
     {
         public UsersContext()

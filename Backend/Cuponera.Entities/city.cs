@@ -12,20 +12,19 @@ namespace Cuponera.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class state
+    public partial class city
     {
-        public state()
+        public city()
         {
-            this.profile = new HashSet<profile>();
+            this.store = new HashSet<store>();
         }
     
-        public string IdState { get; set; }
+        public int IdCity { get; set; }
         public string Name { get; set; }
-        public string Link { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
-        public virtual ICollection<profile> profile { get; set; }
+        public virtual ICollection<store> store { get; set; }
     }
 }

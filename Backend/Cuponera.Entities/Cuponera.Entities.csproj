@@ -56,6 +56,9 @@
     <Compile Include="category.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="city.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="company.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

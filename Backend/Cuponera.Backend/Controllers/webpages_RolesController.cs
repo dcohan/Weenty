@@ -22,31 +22,31 @@ namespace Cuponera.Backend.Controllers
     using System.Web.Http.OData.Extensions;
     using Cuponera.Entities;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<store>("store");
-    builder.EntitySet<city>("city"); 
-    builder.EntitySet<company>("company"); 
+    builder.EntitySet<webpages_Roles>("webpages_Roles");
+    builder.EntitySet<permissions>("permissions"); 
+    builder.EntitySet<UserProfile>("UserProfile"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class storeController : ODataController
+    public class webpages_RolesController : ODataController
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: odata/store
+        // GET: odata/webpages_Roles
         [EnableQuery]
-        public IQueryable<store> Getstore()
+        public IQueryable<webpages_Roles> Getwebpages_Roles()
         {
-            return db.store.Where(s => !s.DeletionDatetime.HasValue);
+            return db.webpages_Roles;
         }
 
-        // GET: odata/store(5)
+        // GET: odata/webpages_Roles(5)
         [EnableQuery]
-        public SingleResult<store> Getstore([FromODataUri] int key)
+        public SingleResult<webpages_Roles> Getwebpages_Roles([FromODataUri] int key)
         {
-            return SingleResult.Create(db.store.Where(store => store.IdStore == key && !store.DeletionDatetime.HasValue));
+            return SingleResult.Create(db.webpages_Roles.Where(webpages_Roles => webpages_Roles.RoleId == key));
         }
 
-        // PUT: odata/store(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<store> patch)
+        // PUT: odata/webpages_Roles(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<webpages_Roles> patch)
         {
             Validate(patch.GetEntity());
 
@@ -55,13 +55,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            store store = await db.store.FindAsync(key);
-            if (store == null)
+            webpages_Roles webpages_Roles = await db.webpages_Roles.FindAsync(key);
+            if (webpages_Roles == null)
             {
                 return NotFound();
             }
 
-            patch.Put(store);
+            patch.Put(webpages_Roles);
 
             try
             {
@@ -69,7 +69,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!storeExists(key))
+                if (!webpages_RolesExists(key))
                 {
                     return NotFound();
                 }
@@ -79,41 +79,26 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(store);
+            return Updated(webpages_Roles);
         }
 
-        // POST: odata/store
-        public async Task<IHttpActionResult> Post(store store)
+        // POST: odata/webpages_Roles
+        public async Task<IHttpActionResult> Post(webpages_Roles webpages_Roles)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.store.Add(store);
+            db.webpages_Roles.Add(webpages_Roles);
+            await db.SaveChangesAsync();
 
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (storeExists(store.IdStore))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Created(store);
+            return Created(webpages_Roles);
         }
 
-        // PATCH: odata/store(5)
+        // PATCH: odata/webpages_Roles(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<store> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<webpages_Roles> patch)
         {
             Validate(patch.GetEntity());
 
@@ -122,13 +107,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            store store = await db.store.FindAsync(key);
-            if (store == null)
+            webpages_Roles webpages_Roles = await db.webpages_Roles.FindAsync(key);
+            if (webpages_Roles == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(store);
+            patch.Patch(webpages_Roles);
 
             try
             {
@@ -136,7 +121,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!storeExists(key))
+                if (!webpages_RolesExists(key))
                 {
                     return NotFound();
                 }
@@ -146,36 +131,36 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(store);
+            return Updated(webpages_Roles);
         }
 
-        // DELETE: odata/store(5)
+        // DELETE: odata/webpages_Roles(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            store store = await db.store.FindAsync(key);
-            if (store == null)
+            webpages_Roles webpages_Roles = await db.webpages_Roles.FindAsync(key);
+            if (webpages_Roles == null)
             {
                 return NotFound();
             }
 
-            store.ModificationDatetime = DateTime.UtcNow;
+            db.webpages_Roles.Remove(webpages_Roles);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/store(5)/city
+        // GET: odata/webpages_Roles(5)/permissions
         [EnableQuery]
-        public SingleResult<city> Getcity([FromODataUri] int key)
+        public IQueryable<permissions> Getpermissions([FromODataUri] int key)
         {
-            return SingleResult.Create(db.store.Where(m => m.IdStore == key).Select(m => m.city));
+            return db.webpages_Roles.Where(m => m.RoleId == key).SelectMany(m => m.permissions);
         }
 
-        // GET: odata/store(5)/company
+        // GET: odata/webpages_Roles(5)/UserProfile
         [EnableQuery]
-        public SingleResult<company> Getcompany([FromODataUri] int key)
+        public IQueryable<UserProfile> GetUserProfile([FromODataUri] int key)
         {
-            return SingleResult.Create(db.store.Where(m => m.IdStore == key).Select(m => m.company));
+            return db.webpages_Roles.Where(m => m.RoleId == key).SelectMany(m => m.UserProfile);
         }
 
         protected override void Dispose(bool disposing)
@@ -187,9 +172,9 @@ namespace Cuponera.Backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool storeExists(int key)
+        private bool webpages_RolesExists(int key)
         {
-            return db.store.Count(e => e.IdStore == key) > 0;
+            return db.webpages_Roles.Count(e => e.RoleId == key) > 0;
         }
     }
 }

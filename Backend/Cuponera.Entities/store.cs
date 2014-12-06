@@ -22,14 +22,13 @@ namespace Cuponera.Entities
         public Nullable<double> Latitude { get; set; }
         public Nullable<double> Longitude { get; set; }
         public string ZipCode { get; set; }
-        public string City { get; set; }
-        public string IdState { get; set; }
+        public Nullable<int> IdCity { get; set; }
         public string StoreHours { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
+        public virtual city city { get; set; }
         public virtual company company { get; set; }
-        public virtual state state { get; set; }
     }
 }
