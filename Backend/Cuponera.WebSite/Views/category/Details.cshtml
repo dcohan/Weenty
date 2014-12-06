@@ -4,7 +4,7 @@
     ViewBag.Title = "Detalles";
 }
 
-<h2>Datalles @Html.DisplayFor(model => model.Name)</h2>
+<h2>@Html.DisplayFor(model => model.Name)</h2>
 
 <div>
     <br />
@@ -17,12 +17,12 @@
         <b>Estado:</b>
         @if (Model.DeletionDatetime == null)
         {
-            <img src="../../Images/tick.ico" alt="active" class="active" />
+            <img src="../../Images/tick.ico" alt="active" title="active" class="active" />
 
         }
         else
         {
-            <img src="../../Images/x.ico" alt="inactive" class="inactive" />
+            <img src="../../Images/x.ico" alt="inactive" title="inactive" class="inactive" />
         }
     </div>
 </div>
