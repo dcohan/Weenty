@@ -65,7 +65,7 @@ namespace Cuponera.Backend.Controllers
 
             if (city != null)
             {
-                stores = stores.Where(p => p.City.Contains(city));
+                stores = stores.Where(p => p.city.Name.Contains(city));
             }
             return stores.OrderBy(c => c.Name);
         }

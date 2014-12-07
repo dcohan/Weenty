@@ -32,7 +32,6 @@ namespace Cuponera.Backend
             builder.EntitySet<webpages_Roles>("webpages_Roles");
             builder.EntitySet<UserProfile>("userprofile");
             builder.EntitySet<userCompany>("userCompany");
-            builder.EntitySet<UserProfile>("UserProfile");
             builder.EntitySet<webpages_Roles>("webpages_Roles");
             builder.EntitySet<webpages_OAuthMembership>("webpages_OAuthMembership");
             builder.EntitySet<webpages_Membership>("webpages_Membership");

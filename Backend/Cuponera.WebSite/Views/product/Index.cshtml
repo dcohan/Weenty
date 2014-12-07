@@ -9,38 +9,17 @@
         controller: 'product',
         filters: {
             include: ['all'],
-            custom: [{
+            custom: [ {
                 controlType: 'text',
                 controlId: 'title',
                 controlDefaultValue: '@(Request.Params["title"] != null ? @Request.Params["title"] : "")',
-                label: 'Nombre'
-            },{
-                controlType: 'select',
-                controlId: 'category',
-                controlDefaultValue: '@(Request.Params["category"] != null ? @Request.Params["category"] : "")',
-                label: 'Categoría',
-                source: {
-                    include_all: true,
-                    controller: 'category',
-                    action: 'GetAllBasicData'
-                }
-            }, {
-                controlType: 'select',
-                controlId: 'company',
-                controlDefaultValue: '@(Request.Params["company"] != null ? @Request.Params["company"] : "")',
-                label: 'Empresas',
-                source: {
-                    include_all: true,
-                    controller: 'company',
-                    action: 'GetAllBasicData'
-                }
+                label: 'Titulo'
             }]
         }
     };
 </script>
 
 <h2>Productos</h2>
-
 
 <div class="list-content">
     @Html.Partial("AntiForgeryTokenForm")
@@ -53,42 +32,33 @@
         <div class="no-data">No hay datos.</div>
     }
     else
-    { <div class="table-all">
-        <table class="table">
-            <thead>
+    {
+        <div class="table-all">
+            <table class="table">
                 <tr>
                     <th>
-                        Nombre
-                    </th>
-                    <th>
-                        Categoria
-                    </th>
-                    <th>
-                        Empresa
+                        Titulo
                     </th>
                     <th>
                         Estado
                     </th>
+                    <th>
+                        Imagen
+                    </th>
+                    <th>
+                        Categoria
+                    </th>
                     <th></th>
                 </tr>
-            </thead>
-            <tbody>
 
                 @foreach (var item in Model)
                 {
-                    <tr data-item-id="@item.IdProduct">
+                    <tr>
                         <td>
-                            <span class="item-name">@Html.DisplayFor(modelItem => item.Title)</span>
+                            @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
-                            <span class="item-name">@Html.DisplayFor(modelItem => item.category.Name)</span>
-                        </td>
-
-                        <td>
-                            <span class="item-name">@Html.DisplayFor(modelItem => item.company.Name)</span>
-                        </td>
-                        <td class="current-status">
-                            @if (item.DeletionDatetime == null)
+                            @if (item.DeletionDatetime == null && item.Active == 1 && item.StartDatetime < DateTime.Now && item.ExpirationDatetime > DateTime.Now)
                             {
                                 <img src="Images/tick.ico" alt="active" class="active" />
                             }
@@ -98,30 +68,28 @@
                             }
                         </td>
                         <td>
+                            <img src="@Html.DisplayFor(modelItem => item.ImagePath)" style="width:50px; height:50px" alt="inactive" class="inactive" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.category.Name)
+                        </td>
+                        <td>
                             @Html.ActionLink("Editar", "Edit", new { id = item.IdProduct }) |
                             @Html.ActionLink("Detalle", "Details", new { id = item.IdProduct }) |
-
-                            @if (item.DeletionDatetime == null)
-                            {
-                                <a href="#" class="deactivate" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
-                            }
-                            else
-                            {
-                                <a href="#" class="activate" data-popup-to-open="dialog-confirm-activate">Activar</a>
-                            }
+                            @Html.ActionLink("Borrar", "Delete", new { id = item.IdProduct }) |
+                            @Html.ActionLink("Ofertar", "Create", "offer", new { IdProduct = item.IdProduct }, null)
                         </td>
                     </tr>
                 }
-            </tbody>
-        </table>
-        @Html.Partial("Paginator")
-    </div>
-            
 
-    <div style="clear:both;"></div>
+            </table>
+            @Html.Partial("Paginator")
+        </div>
+
+        <div style="clear:both;"></div>
     }
+
     <p>
         @Html.ActionLink("Nuevo", "Create")
     </p>
-
 </div>

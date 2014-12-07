@@ -12,35 +12,25 @@ using System.Configuration;
 
 namespace Cuponera.WebSite.Controllers
 {
-    public class ProductController : Controller
+    public class productController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-
-
-        private IEnumerable<product> get(bool all, string title, int category, int company, int pageNumber)
+        // GET: product
+        public async Task<ActionResult> Index(bool all=false, string title=null, int pageNumber=1)
         {
-            Cuponera.Backend.Controllers.productController cb = new Backend.Controllers.productController();
-            IEnumerable<product> companies = cb.Getproduct(all, title, category, company);
+            var products = db.product.Where(p => title == null || p.Title.ToLower().Contains(title.ToLower())).ToList();
 
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
-            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)companies.Count() / pageSize));
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)products.Count() / pageSize));
 
             int elemsToSkip = pageSize * (pageNumber - 1);
-            return companies.Skip(elemsToSkip).Take(pageSize);
+            products.Skip(elemsToSkip).Take(pageSize);
+
+            return View(products);
         }
 
-
-        // GET: /Product/
-        public async Task<ActionResult> Index(bool all = false, string title = null, int category = 0, int company = 0, int page = 1)
-        {
-            var categories = get(all, title, category, company, page);
-            return View(categories);
-        }
-
-
-
-        // GET: /Product/Details/5
+        // GET: product/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -55,7 +45,7 @@ namespace Cuponera.WebSite.Controllers
             return View(product);
         }
 
-        // GET: /Product/Create
+        // GET: product/Create
         public ActionResult Create()
         {
             ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name");
@@ -63,12 +53,12 @@ namespace Cuponera.WebSite.Controllers
             return View();
         }
 
-        // POST: /Product/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: product/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="IdProduct,Title,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdCompany,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description")] product product)
+        public async Task<ActionResult> Create([Bind(Include = "IdProduct,Title,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdCompany,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description")] product product)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +72,7 @@ namespace Cuponera.WebSite.Controllers
             return View(product);
         }
 
-        // GET: /Product/Edit/5
+        // GET: product/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -99,12 +89,12 @@ namespace Cuponera.WebSite.Controllers
             return View(product);
         }
 
-        // POST: /Product/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: product/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="IdProduct,Title,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdCompany,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description")] product product)
+        public async Task<ActionResult> Edit([Bind(Include = "IdProduct,Title,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdCompany,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description")] product product)
         {
             if (ModelState.IsValid)
             {
@@ -117,30 +107,22 @@ namespace Cuponera.WebSite.Controllers
             return View(product);
         }
 
-        // GET: /Product/Delete/5
-        public async Task<ActionResult> Delete(int id)
+        // GET: product/Delete/5
+        public async Task<ActionResult> Delete(int? id)
         {
-            Cuponera.Backend.Controllers.productController cb = new Backend.Controllers.productController();
-            await cb.Delete(id);
-
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            product product = await db.product.FindAsync(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
         }
 
-
-        // GET: Product/Activate/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Activate(int id)
-        {
-            Cuponera.Backend.Controllers.productController cb = new Backend.Controllers.productController();
-            await cb.Activate(id);
-
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
-        }
-
-
-
-        // POST: /Product/Delete/5
+        // POST: product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -15,21 +15,22 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: /offer/
-        public async Task<ActionResult> Index()
+
+        // GET: offer
+        public ActionResult Index()
         {
             var offer = db.offer.Include(o => o.product);
-            return View(await offer.ToListAsync());
+            return View(offer.ToList());
         }
 
-        // GET: /offer/Details/5
-        public async Task<ActionResult> Details(int? id)
+        // GET: offer/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            offer offer = await db.offer.FindAsync(id);
+            offer offer = db.offer.Find(id);
             if (offer == null)
             {
                 return HttpNotFound();
@@ -37,24 +38,33 @@ namespace Cuponera.WebSite.Controllers
             return View(offer);
         }
 
-        // GET: /offer/Create
-        public ActionResult Create()
+        // GET: offer/Create
+        public ActionResult Create(int? IdProduct)
         {
-            ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title");
+            ViewBag.Title = "David";
+
+            if (IdProduct != null)
+            {
+                ViewBag.IdProduct = new SelectList(db.product.Where(p => p.IdProduct.Equals((int)IdProduct)).ToList(), "IdProduct", "Title", "Description");  
+            }
+            else
+            {
+                ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", "Description");
+            }
             return View();
         }
 
-        // POST: /offer/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: offer/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="IdOffer,Title,PromoCode,TargetURL,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath")] offer offer)
+        public ActionResult Create([Bind(Include = "IdOffer,Title,PromoCode,TargetURL,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath")] offer offer)
         {
             if (ModelState.IsValid)
             {
                 db.offer.Add(offer);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -62,14 +72,14 @@ namespace Cuponera.WebSite.Controllers
             return View(offer);
         }
 
-        // GET: /offer/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        // GET: offer/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            offer offer = await db.offer.FindAsync(id);
+            offer offer = db.offer.Find(id);
             if (offer == null)
             {
                 return HttpNotFound();
@@ -78,31 +88,31 @@ namespace Cuponera.WebSite.Controllers
             return View(offer);
         }
 
-        // POST: /offer/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: offer/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="IdOffer,Title,PromoCode,TargetURL,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath")] offer offer)
+        public ActionResult Edit([Bind(Include = "IdOffer,Title,PromoCode,TargetURL,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath")] offer offer)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(offer).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", offer.IdProduct);
             return View(offer);
         }
 
-        // GET: /offer/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        // GET: offer/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            offer offer = await db.offer.FindAsync(id);
+            offer offer = db.offer.Find(id);
             if (offer == null)
             {
                 return HttpNotFound();
@@ -110,14 +120,14 @@ namespace Cuponera.WebSite.Controllers
             return View(offer);
         }
 
-        // POST: /offer/Delete/5
+        // POST: offer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            offer offer = await db.offer.FindAsync(id);
+            offer offer = db.offer.Find(id);
             db.offer.Remove(offer);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
