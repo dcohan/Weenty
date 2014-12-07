@@ -41,17 +41,27 @@ namespace Cuponera.WebSite.Controllers
         // GET: offer/Create
         public ActionResult Create(int? IdProduct)
         {
-            ViewBag.Title = "David";
-
             if (IdProduct != null)
             {
+                offer o = new offer();
+                o.IdProduct = IdProduct != null ? (int)IdProduct : 0;
+                o.StartDatetime = DateTime.Now;
+                o.ExpirationDatetime = DateTime.Now.AddDays(30);
+
+                var product = db.product.First(p => p.IdProduct == (int)IdProduct);
+                o.Title = product.Title;
+                o.ImagePath = product.ImagePath;
+                o.ItemOrder = 0;
+
                 ViewBag.IdProduct = new SelectList(db.product.Where(p => p.IdProduct.Equals((int)IdProduct)).ToList(), "IdProduct", "Title", "Description");  
+                return View(o);
             }
             else
             {
                 ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", "Description");
+                return View();
             }
-            return View();
+
         }
 
         // POST: offer/Create
@@ -63,6 +73,7 @@ namespace Cuponera.WebSite.Controllers
         {
             if (ModelState.IsValid)
             {
+                offer.CreationDatetime = DateTime.Now;
                 db.offer.Add(offer);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -126,7 +137,7 @@ namespace Cuponera.WebSite.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             offer offer = db.offer.Find(id);
-            db.offer.Remove(offer);
+            offer.DeletionDatetime = DateTime.Now;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

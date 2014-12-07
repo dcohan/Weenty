@@ -80,7 +80,7 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.geoRequest' does not have a
           <Property Name="Title" Type="nvarchar" MaxLength="100" />
           <Property Name="PromoCode" Type="nvarchar" MaxLength="50" />
           <Property Name="TargetURL" Type="nvarchar" MaxLength="255" />
-          <Property Name="Active" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="StartDatetime" Type="datetime2" Precision="0" />
           <Property Name="ExpirationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ItemOrder" Type="int" />
@@ -119,7 +119,7 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.geoRequest' does not have a
           </Key>
           <Property Name="IdProduct" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" />
-          <Property Name="Active" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="StartDatetime" Type="datetime2" Precision="0" />
           <Property Name="ExpirationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ItemOrder" Type="int" />
@@ -713,7 +713,7 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.geoRequest' does not have a
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="PromoCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TargetURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Int32" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="StartDatetime" Type="DateTime" Precision="0" />
           <Property Name="ExpirationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ItemOrder" Type="Int32" />
@@ -754,7 +754,7 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.geoRequest' does not have a
           </Key>
           <Property Name="IdProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Int32" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="StartDatetime" Type="DateTime" Precision="0" />
           <Property Name="ExpirationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ItemOrder" Type="Int32" />

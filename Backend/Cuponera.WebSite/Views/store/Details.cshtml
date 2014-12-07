@@ -1,7 +1,7 @@
 ﻿@model Cuponera.Entities.companyStore
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle";
 }
 
 <h2>@Html.DisplayFor(model => model.store)</h2>
@@ -54,5 +54,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.IdCompanyStore }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver", "Index")
 </p>

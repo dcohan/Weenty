@@ -1,13 +1,13 @@
 ﻿@model Cuponera.Entities.offer
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <div>
-    <h4>offer</h4>
+    <h4>Oferta</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -35,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Active)
+           @Html.DisplayNameFor(model => model.Active)
         </dt>
 
         <dd>
@@ -83,32 +83,16 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DeletionDatetime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeletionDatetime)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.ImagePath)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.product.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.product.Title)
+            <img src="@Html.DisplayFor(modelItem => modelItem.ImagePath)" alt="inactive" class="inactive" />
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdOffer }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdOffer }) |
+    @Html.ActionLink("Volver", "Index")
 </p>

@@ -4,12 +4,6 @@
     ViewBag.Title = "Alta";
 }
 
-<script type="text/javascript">
-    $(function () {
-        $(".datefield").datepicker();
-    });
-</script>
-
 <h2>Alta</h2>
 
 
@@ -48,23 +42,24 @@
         <div class="form-group">
             Activo
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Active, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.CheckBoxFor(model => model.Active)
                 @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             Fecha Inicio
-            <div class="col-md-10 datefield" >
-                @Html.ValidationMessageFor(model => model.StartDatetime, "", new { @class = "text-danger" })
+            <div class="col-md-10" >
+                @Html.EditorFor(model => model.StartDatetime)
+                @Html.ValidationMessageFor(model => model.StartDatetime)
             </div>
         </div>
 
         <div class="form-group">
             Fecha Fin
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ExpirationDatetime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ExpirationDatetime, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ExpirationDatetime)
+                @Html.ValidationMessageFor(model => model.ExpirationDatetime)
             </div>
         </div>
 
@@ -94,7 +89,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Crear" class="btn btn-default" />
             </div>
         </div>
     </div>

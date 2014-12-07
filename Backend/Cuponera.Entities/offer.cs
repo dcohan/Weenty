@@ -18,7 +18,7 @@ namespace Cuponera.Entities
         public string Title { get; set; }
         public string PromoCode { get; set; }
         public string TargetURL { get; set; }
-        public Nullable<int> Active { get; set; }
+        public bool Active { get; set; }
         public Nullable<System.DateTime> StartDatetime { get; set; }
         public Nullable<System.DateTime> ExpirationDatetime { get; set; }
         public Nullable<int> ItemOrder { get; set; }
