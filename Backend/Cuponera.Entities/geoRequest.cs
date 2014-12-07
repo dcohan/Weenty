@@ -12,19 +12,13 @@ namespace Cuponera.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class city
+    public partial class geoRequest
     {
-        public city()
-        {
-            this.store = new HashSet<store>();
-        }
+        public int IdGeoRequest { get; set; }
+        public int IdUser { get; set; }
+        public int TimesDone { get; set; }
+        public System.DateTime RequestDatetime { get; set; }
     
-        public int IdCity { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.DateTime> CreationDatetime { get; set; }
-        public Nullable<System.DateTime> ModificationDatetime { get; set; }
-        public Nullable<System.DateTime> DeletionDatetime { get; set; }
-    
-        public virtual ICollection<store> store { get; set; }
+        public virtual UserProfile UserProfile { get; set; }
     }
 }

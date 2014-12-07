@@ -17,6 +17,7 @@ namespace Cuponera.Entities
         public UserProfile()
         {
             this.userCompany = new HashSet<userCompany>();
+            this.geoRequest = new HashSet<geoRequest>();
             this.webpages_Roles = new HashSet<webpages_Roles>();
         }
     
@@ -24,6 +25,7 @@ namespace Cuponera.Entities
         public string UserName { get; set; }
     
         public virtual ICollection<userCompany> userCompany { get; set; }
+        public virtual ICollection<geoRequest> geoRequest { get; set; }
         public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
     }
 }

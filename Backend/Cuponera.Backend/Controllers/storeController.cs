@@ -23,8 +23,8 @@ namespace Cuponera.Backend.Controllers
     using Cuponera.Entities;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<store>("store");
-    builder.EntitySet<city>("city"); 
     builder.EntitySet<company>("company"); 
+    builder.EntitySet<state>("state"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class storeController : ODataController
@@ -65,7 +65,7 @@ namespace Cuponera.Backend.Controllers
 
             if (city != null)
             {
-                stores = stores.Where(p => p.city.Name.Contains(city));
+                stores = stores.Where(p => p.state.Name.Contains(city));
             }
             return stores.OrderBy(c => c.Name);
         }
@@ -189,18 +189,18 @@ namespace Cuponera.Backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/store(5)/city
-        [EnableQuery]
-        public SingleResult<city> Getcity([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.store.Where(m => m.IdStore == key).Select(m => m.city));
-        }
-
         // GET: odata/store(5)/company
         [EnableQuery]
         public SingleResult<company> Getcompany([FromODataUri] int key)
         {
             return SingleResult.Create(db.store.Where(m => m.IdStore == key).Select(m => m.company));
+        }
+
+        // GET: odata/store(5)/state
+        [EnableQuery]
+        public SingleResult<state> Getstate([FromODataUri] int key)
+        {
+            return SingleResult.Create(db.store.Where(m => m.IdStore == key).Select(m => m.state));
         }
 
         protected override void Dispose(bool disposing)

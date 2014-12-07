@@ -26,7 +26,6 @@ namespace Cuponera.Entities
         }
     
         public virtual DbSet<category> category { get; set; }
-        public virtual DbSet<city> city { get; set; }
         public virtual DbSet<company> company { get; set; }
         public virtual DbSet<companySubscription> companySubscription { get; set; }
         public virtual DbSet<deviceos> deviceos { get; set; }
@@ -45,5 +44,6 @@ namespace Cuponera.Entities
         public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
         public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
+        public virtual DbSet<geoRequest> geoRequest { get; set; }
     }
 }

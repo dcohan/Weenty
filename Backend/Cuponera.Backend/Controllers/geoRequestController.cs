@@ -22,30 +22,30 @@ namespace Cuponera.Backend.Controllers
     using System.Web.Http.OData.Extensions;
     using Cuponera.Entities;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<city>("city");
-    builder.EntitySet<store>("store"); 
+    builder.EntitySet<geoRequest>("geoRequest");
+    builder.EntitySet<UserProfile>("UserProfile"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class cityController : ODataController
+    public class geoRequestController : ODataController
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: odata/city
+        // GET: odata/geoRequest
         [EnableQuery]
-        public IQueryable<city> Getcity()
+        public IQueryable<geoRequest> GetgeoRequest()
         {
-            return db.city;
+            return db.geoRequest;
         }
 
-        // GET: odata/city(5)
+        // GET: odata/geoRequest(5)
         [EnableQuery]
-        public SingleResult<city> Getcity([FromODataUri] int key)
+        public SingleResult<geoRequest> GetgeoRequest([FromODataUri] int key)
         {
-            return SingleResult.Create(db.city.Where(city => city.IdCity == key));
+            return SingleResult.Create(db.geoRequest.Where(geoRequest => geoRequest.IdGeoRequest == key));
         }
 
-        // PUT: odata/city(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<city> patch)
+        // PUT: odata/geoRequest(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<geoRequest> patch)
         {
             Validate(patch.GetEntity());
 
@@ -54,13 +54,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            city city = await db.city.FindAsync(key);
-            if (city == null)
+            geoRequest geoRequest = await db.geoRequest.FindAsync(key);
+            if (geoRequest == null)
             {
                 return NotFound();
             }
 
-            patch.Put(city);
+            patch.Put(geoRequest);
 
             try
             {
@@ -68,7 +68,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!cityExists(key))
+                if (!geoRequestExists(key))
                 {
                     return NotFound();
                 }
@@ -78,18 +78,18 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(city);
+            return Updated(geoRequest);
         }
 
-        // POST: odata/city
-        public async Task<IHttpActionResult> Post(city city)
+        // POST: odata/geoRequest
+        public async Task<IHttpActionResult> Post(geoRequest geoRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.city.Add(city);
+            db.geoRequest.Add(geoRequest);
 
             try
             {
@@ -97,7 +97,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateException)
             {
-                if (cityExists(city.IdCity))
+                if (geoRequestExists(geoRequest.IdGeoRequest))
                 {
                     return Conflict();
                 }
@@ -107,12 +107,12 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Created(city);
+            return Created(geoRequest);
         }
 
-        // PATCH: odata/city(5)
+        // PATCH: odata/geoRequest(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<city> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<geoRequest> patch)
         {
             Validate(patch.GetEntity());
 
@@ -121,13 +121,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            city city = await db.city.FindAsync(key);
-            if (city == null)
+            geoRequest geoRequest = await db.geoRequest.FindAsync(key);
+            if (geoRequest == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(city);
+            patch.Patch(geoRequest);
 
             try
             {
@@ -135,7 +135,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!cityExists(key))
+                if (!geoRequestExists(key))
                 {
                     return NotFound();
                 }
@@ -145,29 +145,29 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(city);
+            return Updated(geoRequest);
         }
 
-        // DELETE: odata/city(5)
+        // DELETE: odata/geoRequest(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            city city = await db.city.FindAsync(key);
-            if (city == null)
+            geoRequest geoRequest = await db.geoRequest.FindAsync(key);
+            if (geoRequest == null)
             {
                 return NotFound();
             }
 
-            db.city.Remove(city);
+            db.geoRequest.Remove(geoRequest);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/city(5)/store
+        // GET: odata/geoRequest(5)/UserProfile
         [EnableQuery]
-        public IQueryable<store> Getstore([FromODataUri] int key)
+        public SingleResult<UserProfile> GetUserProfile([FromODataUri] int key)
         {
-            return db.city.Where(m => m.IdCity == key).SelectMany(m => m.store);
+            return SingleResult.Create(db.geoRequest.Where(m => m.IdGeoRequest == key).Select(m => m.UserProfile));
         }
 
         protected override void Dispose(bool disposing)
@@ -179,9 +179,9 @@ namespace Cuponera.Backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool cityExists(int key)
+        private bool geoRequestExists(int key)
         {
-            return db.city.Count(e => e.IdCity == key) > 0;
+            return db.geoRequest.Count(e => e.IdGeoRequest == key) > 0;
         }
     }
 }

@@ -15,16 +15,6 @@
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
         </EntityType>
-        <EntityType Name="city">
-          <Key>
-            <PropertyRef Name="IdCity" />
-          </Key>
-          <Property Name="IdCity" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="CreationDatetime" Type="datetime2" Precision="7" />
-          <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
-          <Property Name="DeletionDatetime" Type="datetime2" Precision="7" />
-        </EntityType>
         <EntityType Name="company">
           <Key>
             <PropertyRef Name="IdCompany" />
@@ -59,6 +49,20 @@
           </Key>
           <Property Name="IdDeviceType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_9AC588_cuponera.dbo.geoRequest' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="geoRequest">
+          <Key>
+            <PropertyRef Name="IdGeoRequest" />
+            <PropertyRef Name="IdUser" />
+            <PropertyRef Name="TimesDone" />
+            <PropertyRef Name="RequestDatetime" />
+          </Key>
+          <Property Name="IdGeoRequest" Type="int" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="TimesDone" Type="int" Nullable="false" />
+          <Property Name="RequestDatetime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="images">
           <Key>
@@ -170,7 +174,7 @@
           <Property Name="Latitude" Type="float" />
           <Property Name="Longitude" Type="float" />
           <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
-          <Property Name="IdCity" Type="int" />
+          <Property Name="IdState" Type="nchar" MaxLength="2" />
           <Property Name="StoreHours" Type="nvarchar(max)" />
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
@@ -270,6 +274,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_geoRequest_UserProfile">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="geoRequest" Type="Self.geoRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="geoRequest">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_images_product">
           <End Role="product" Type="Self.product" Multiplicity="1" />
           <End Role="images" Type="Self.images" Multiplicity="*" />
@@ -342,18 +358,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_store_city">
-          <End Role="city" Type="Self.city" Multiplicity="0..1" />
-          <End Role="store" Type="Self.store" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="city">
-              <PropertyRef Name="IdCity" />
-            </Principal>
-            <Dependent Role="store">
-              <PropertyRef Name="IdCity" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_store_company">
           <End Role="company" Type="Self.company" Multiplicity="1" />
           <End Role="store" Type="Self.store" Multiplicity="*" />
@@ -363,6 +367,18 @@
             </Principal>
             <Dependent Role="store">
               <PropertyRef Name="IdCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_store_store">
+          <End Role="state" Type="Self.state" Multiplicity="0..1" />
+          <End Role="store" Type="Self.store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="IdState" />
+            </Principal>
+            <Dependent Role="store">
+              <PropertyRef Name="IdState" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -440,7 +456,6 @@
         </Association>
         <EntityContainer Name="CuponeraModelStoreContainer">
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="city" EntityType="Self.city" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="company" EntityType="Self.company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="companySubscription" EntityType="Self.companySubscription" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="deviceos" EntityType="Self.deviceos" Schema="dbo" store:Type="Tables" />
@@ -460,6 +475,14 @@
           <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="geoRequest" EntityType="Self.geoRequest" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [geoRequest].[IdGeoRequest] AS [IdGeoRequest], 
+    [geoRequest].[IdUser] AS [IdUser], 
+    [geoRequest].[TimesDone] AS [TimesDone], 
+    [geoRequest].[RequestDatetime] AS [RequestDatetime]
+    FROM [dbo].[geoRequest] AS [geoRequest]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_companySubscription_company" Association="Self.FK_companySubscription_company">
             <End Role="company" EntitySet="company" />
             <End Role="companySubscription" EntitySet="companySubscription" />
@@ -467,6 +490,10 @@
           <AssociationSet Name="FK_companySubscription_subscription" Association="Self.FK_companySubscription_subscription">
             <End Role="subscription" EntitySet="subscription" />
             <End Role="companySubscription" EntitySet="companySubscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK_geoRequest_UserProfile" Association="Self.FK_geoRequest_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="geoRequest" EntitySet="geoRequest" />
           </AssociationSet>
           <AssociationSet Name="FK_images_product" Association="Self.FK_images_product">
             <End Role="product" EntitySet="product" />
@@ -492,12 +519,12 @@
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
             <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_store_city" Association="Self.FK_store_city">
-            <End Role="city" EntitySet="city" />
-            <End Role="store" EntitySet="store" />
-          </AssociationSet>
           <AssociationSet Name="FK_store_company" Association="Self.FK_store_company">
             <End Role="company" EntitySet="company" />
+            <End Role="store" EntitySet="store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_store_store" Association="Self.FK_store_store">
+            <End Role="state" EntitySet="state" />
             <End Role="store" EntitySet="store" />
           </AssociationSet>
           <AssociationSet Name="FK_userCompany_company" Association="Self.FK_userCompany_company">
@@ -531,7 +558,6 @@
       <Schema Namespace="CuponeraModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CuponeraEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="category" EntityType="CuponeraModel.category" />
-          <EntitySet Name="city" EntityType="CuponeraModel.city" />
           <EntitySet Name="company" EntityType="CuponeraModel.company" />
           <EntitySet Name="companySubscription" EntityType="CuponeraModel.companySubscription" />
           <EntitySet Name="deviceos" EntityType="CuponeraModel.deviceos" />
@@ -550,13 +576,10 @@
           <EntitySet Name="webpages_Membership" EntityType="CuponeraModel.webpages_Membership" />
           <EntitySet Name="webpages_OAuthMembership" EntityType="CuponeraModel.webpages_OAuthMembership" />
           <EntitySet Name="webpages_Roles" EntityType="CuponeraModel.webpages_Roles" />
+          <EntitySet Name="geoRequest" EntityType="CuponeraModel.geoRequest" />
           <AssociationSet Name="FK_product_category" Association="CuponeraModel.FK_product_category">
             <End Role="category" EntitySet="category" />
             <End Role="product" EntitySet="product" />
-          </AssociationSet>
-          <AssociationSet Name="FK_store_city" Association="CuponeraModel.FK_store_city">
-            <End Role="city" EntitySet="city" />
-            <End Role="store" EntitySet="store" />
           </AssociationSet>
           <AssociationSet Name="FK_companySubscription_company" Association="CuponeraModel.FK_companySubscription_company">
             <End Role="company" EntitySet="company" />
@@ -602,9 +625,17 @@
             <End Role="state" EntitySet="state" />
             <End Role="profile" EntitySet="profile" />
           </AssociationSet>
+          <AssociationSet Name="FK_store_store" Association="CuponeraModel.FK_store_store">
+            <End Role="state" EntitySet="state" />
+            <End Role="store" EntitySet="store" />
+          </AssociationSet>
           <AssociationSet Name="FK_userCompany_UserProfile" Association="CuponeraModel.FK_userCompany_UserProfile">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="userCompany" EntitySet="userCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_geoRequest_UserProfile" Association="CuponeraModel.FK_geoRequest_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="geoRequest" EntitySet="geoRequest" />
           </AssociationSet>
           <AssociationSet Name="webpages_UsersInRoles" Association="CuponeraModel.webpages_UsersInRoles">
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
@@ -621,17 +652,6 @@
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
           <NavigationProperty Name="product" Relationship="CuponeraModel.FK_product_category" FromRole="category" ToRole="product" />
-        </EntityType>
-        <EntityType Name="city">
-          <Key>
-            <PropertyRef Name="IdCity" />
-          </Key>
-          <Property Name="IdCity" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreationDatetime" Type="DateTime" Precision="7" />
-          <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
-          <Property Name="DeletionDatetime" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_store_city" FromRole="city" ToRole="store" />
         </EntityType>
         <EntityType Name="company">
           <Key>
@@ -784,6 +804,7 @@
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
           <NavigationProperty Name="profile" Relationship="CuponeraModel.profiles_fk_idstate" FromRole="state" ToRole="profile" />
+          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_store_store" FromRole="state" ToRole="store" />
         </EntityType>
         <EntityType Name="store">
           <Key>
@@ -797,13 +818,13 @@
           <Property Name="Latitude" Type="Double" />
           <Property Name="Longitude" Type="Double" />
           <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="IdCity" Type="Int32" />
+          <Property Name="IdState" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
           <Property Name="StoreHours" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="city" Relationship="CuponeraModel.FK_store_city" FromRole="store" ToRole="city" />
           <NavigationProperty Name="company" Relationship="CuponeraModel.FK_store_company" FromRole="store" ToRole="company" />
+          <NavigationProperty Name="state" Relationship="CuponeraModel.FK_store_store" FromRole="store" ToRole="state" />
         </EntityType>
         <EntityType Name="subscription">
           <Key>
@@ -838,6 +859,7 @@
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="56" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="userCompany" Relationship="CuponeraModel.FK_userCompany_UserProfile" FromRole="UserProfile" ToRole="userCompany" />
+          <NavigationProperty Name="geoRequest" Relationship="CuponeraModel.FK_geoRequest_UserProfile" FromRole="UserProfile" ToRole="geoRequest" />
           <NavigationProperty Name="webpages_Roles" Relationship="CuponeraModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
         </EntityType>
         <EntityType Name="webpages_Membership">
@@ -874,6 +896,19 @@
           <NavigationProperty Name="permissions" Relationship="CuponeraModel.FK_permissions_webpages_Roles" FromRole="webpages_Roles" ToRole="permissions" />
           <NavigationProperty Name="UserProfile" Relationship="CuponeraModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
         </EntityType>
+        <EntityType Name="geoRequest">
+          <Key>
+            <PropertyRef Name="IdGeoRequest" />
+            <PropertyRef Name="IdUser" />
+            <PropertyRef Name="TimesDone" />
+            <PropertyRef Name="RequestDatetime" />
+          </Key>
+          <Property Name="IdGeoRequest" Type="Int32" Nullable="false" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="TimesDone" Type="Int32" Nullable="false" />
+          <Property Name="RequestDatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UserProfile" Relationship="CuponeraModel.FK_geoRequest_UserProfile" FromRole="geoRequest" ToRole="UserProfile" />
+        </EntityType>
         <Association Name="FK_product_category">
           <End Type="CuponeraModel.category" Role="category" Multiplicity="1" />
           <End Type="CuponeraModel.product" Role="product" Multiplicity="*" />
@@ -883,18 +918,6 @@
             </Principal>
             <Dependent Role="product">
               <PropertyRef Name="IdCategory" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_store_city">
-          <End Type="CuponeraModel.city" Role="city" Multiplicity="0..1" />
-          <End Type="CuponeraModel.store" Role="store" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="city">
-              <PropertyRef Name="IdCity" />
-            </Principal>
-            <Dependent Role="store">
-              <PropertyRef Name="IdCity" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1030,6 +1053,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_store_store">
+          <End Type="CuponeraModel.state" Role="state" Multiplicity="0..1" />
+          <End Type="CuponeraModel.store" Role="store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="IdState" />
+            </Principal>
+            <Dependent Role="store">
+              <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_userCompany_UserProfile">
           <End Type="CuponeraModel.UserProfile" Role="UserProfile" Multiplicity="1" />
           <End Type="CuponeraModel.userCompany" Role="userCompany" Multiplicity="*" />
@@ -1038,6 +1073,18 @@
               <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="userCompany">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_geoRequest_UserProfile">
+          <End Type="CuponeraModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="CuponeraModel.geoRequest" Role="geoRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="geoRequest">
               <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
@@ -1060,17 +1107,6 @@
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="city">
-            <EntityTypeMapping TypeName="CuponeraModel.city">
-              <MappingFragment StoreEntitySet="city">
-                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
-                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
-                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdCity" ColumnName="IdCity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1225,7 +1261,7 @@
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
                 <ScalarProperty Name="StoreHours" ColumnName="StoreHours" />
-                <ScalarProperty Name="IdCity" ColumnName="IdCity" />
+                <ScalarProperty Name="IdState" ColumnName="IdState" />
                 <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
@@ -1301,6 +1337,16 @@
               <MappingFragment StoreEntitySet="webpages_Roles">
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="geoRequest">
+            <EntityTypeMapping TypeName="CuponeraModel.geoRequest">
+              <MappingFragment StoreEntitySet="geoRequest">
+                <ScalarProperty Name="RequestDatetime" ColumnName="RequestDatetime" />
+                <ScalarProperty Name="TimesDone" ColumnName="TimesDone" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdGeoRequest" ColumnName="IdGeoRequest" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

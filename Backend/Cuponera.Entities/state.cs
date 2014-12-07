@@ -17,6 +17,7 @@ namespace Cuponera.Entities
         public state()
         {
             this.profile = new HashSet<profile>();
+            this.store = new HashSet<store>();
         }
     
         public string IdState { get; set; }
@@ -27,5 +28,6 @@ namespace Cuponera.Entities
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
         public virtual ICollection<profile> profile { get; set; }
+        public virtual ICollection<store> store { get; set; }
     }
 }
