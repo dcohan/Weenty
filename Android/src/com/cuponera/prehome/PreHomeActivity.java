@@ -8,6 +8,8 @@ import android.os.Bundle;
 import com.cuponera.BaseActivity;
 import com.cuponera.R;
 import com.cuponera.event.EventBus;
+import com.cuponera.service.prehome.PrehomeRequest;
+import com.cuponera.service.prehome.PrehomeResponse;
 import com.cuponera.service.profile.CreateProfileRequest;
 import com.cuponera.service.profile.ProfileResponse;
 import com.cuponera.service.profile.UpdateProfileRequest;
@@ -34,6 +36,16 @@ public class PreHomeActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		navBarFragment.hide();
 		navBarFragment.getMenu().disable();
+
+		PrehomeRequest prehomeRequest = new PrehomeRequest(this) {
+
+			@Override
+			public void onServiceReturned(PrehomeResponse result) {
+				getSettings().setPrehomeImage(result.getPrehomeImage());
+			}
+
+		};
+		prehomeRequest.execute();
 
 		getLatitudeAndRun();
 	}
@@ -80,24 +92,32 @@ public class PreHomeActivity extends BaseActivity {
 	}
 
 	private void getLatitudeAndRun() {
-		LocationServices.getInstance(this).requestAccurateLocation(new RequestLocationListener() {
+		if (LocationServices.getInstance(this).isLocationEnabled()) {
+			LocationServices.getInstance(this).requestAccurateLocation(new RequestLocationListener() {
 
-			@Override
-			public void onLocationReceived(Location location) {
+				@Override
+				public void onLocationReceived(Location location) {
 
-				if (location != null) {
-					getSettings().setLatitude(location.getLatitude());
-					getSettings().setLongitude(location.getLongitude());
+					if (location != null) {
+						getSettings().setLatitude(location.getLatitude());
+						getSettings().setLongitude(location.getLongitude());
+					}
+					makeProfile();
 				}
-			}
 
-		});
+			});
+		} else {
+			makeProfile();
+		}
+
+	}
+
+	private void makeProfile() {
 		if (ValidationUtils.isNullOrEmpty(getSettings().getProfileId())) {
 			createProfile();
 		} else {
 			updateProfile();
 		}
-
 	}
 
 	protected void showNoInternetConnectionMessage() {

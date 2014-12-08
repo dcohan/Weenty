@@ -155,8 +155,6 @@ public class AsyncPoolManager {
 		Map<String, Object> defaultParams = new HashMap<String, Object>();
 
 		defaultParams.put("DeviceId", "gs12200");
-		defaultParams.put("IdDeviceOs", 5);
-		defaultParams.put("IdDeviceType", 4);
 		defaultParams.put("AppVersion", Utils.getAppVersion(context));
 		defaultParams.put("ResolutionWidth", Utils.getScreen(context).x);
 		defaultParams.put("ResolutionHeight", Utils.getScreen(context).y);
