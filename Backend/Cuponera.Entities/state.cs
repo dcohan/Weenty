@@ -16,18 +16,18 @@ namespace Cuponera.Entities
     {
         public state()
         {
-            this.profile = new HashSet<profile>();
             this.store = new HashSet<store>();
         }
     
-        public string IdState { get; set; }
+        public int IdState { get; set; }
         public string Name { get; set; }
         public string Link { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
     
-        public virtual ICollection<profile> profile { get; set; }
         public virtual ICollection<store> store { get; set; }
     }
 }

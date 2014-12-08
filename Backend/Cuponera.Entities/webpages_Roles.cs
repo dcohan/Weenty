@@ -16,14 +16,12 @@ namespace Cuponera.Entities
     {
         public webpages_Roles()
         {
-            this.permissions = new HashSet<permissions>();
             this.UserProfile = new HashSet<UserProfile>();
         }
     
         public int RoleId { get; set; }
         public string RoleName { get; set; }
     
-        public virtual ICollection<permissions> permissions { get; set; }
         public virtual ICollection<UserProfile> UserProfile { get; set; }
     }
 }

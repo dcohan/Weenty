@@ -23,6 +23,7 @@ namespace Cuponera.Backend.Controllers
     using Cuponera.Entities;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<offer>("offer");
+    builder.EntitySet<images>("images"); 
     builder.EntitySet<product>("product"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
@@ -146,6 +147,13 @@ namespace Cuponera.Backend.Controllers
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // GET: odata/offer(5)/images
+        [EnableQuery]
+        public IQueryable<images> Getimages([FromODataUri] int key)
+        {
+            return db.offer.Where(m => m.IdOffer == key).SelectMany(m => m.images);
         }
 
         // GET: odata/offer(5)/product

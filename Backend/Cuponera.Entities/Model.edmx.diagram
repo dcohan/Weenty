@@ -5,39 +5,33 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="469dd5574e874b678ab69f758416789a" Name="Diagram1">
-        <EntityTypeShape EntityType="CuponeraModel.category" Width="1.5" PointX="3.75" PointY="5.75" />
-        <EntityTypeShape EntityType="CuponeraModel.company" Width="1.5" PointX="0.75" PointY="9.5" />
-        <EntityTypeShape EntityType="CuponeraModel.companySubscription" Width="1.5" PointX="6" PointY="9.625" />
-        <EntityTypeShape EntityType="CuponeraModel.deviceos" Width="1.5" PointX="0.75" PointY="13" />
-        <EntityTypeShape EntityType="CuponeraModel.devicetypes" Width="1.5" PointX="0.75" PointY="2.875" />
-        <EntityTypeShape EntityType="CuponeraModel.images" Width="1.5" PointX="8.25" PointY="3.875" />
-        <EntityTypeShape EntityType="CuponeraModel.offer" Width="1.5" PointX="8.25" PointY="6.25" />
-        <EntityTypeShape EntityType="CuponeraModel.permissions" Width="1.5" PointX="3.75" PointY="20.375" />
-        <EntityTypeShape EntityType="CuponeraModel.prehomeimages" Width="1.5" PointX="8.75" PointY="11" />
-        <EntityTypeShape EntityType="CuponeraModel.product" Width="1.5" PointX="6" PointY="4.875" />
-        <EntityTypeShape EntityType="CuponeraModel.profile" Width="1.5" PointX="3" PointY="0.75" />
-        <EntityTypeShape EntityType="CuponeraModel.state" Width="1.5" PointX="0.75" PointY="5.625" />
-        <EntityTypeShape EntityType="CuponeraModel.store" Width="1.5" PointX="3" PointY="9" />
-        <EntityTypeShape EntityType="CuponeraModel.subscription" Width="1.5" PointX="3.75" PointY="13.5" />
-        <EntityTypeShape EntityType="CuponeraModel.userCompany" Width="1.5" PointX="6" PointY="12.625" />
-        <EntityTypeShape EntityType="CuponeraModel.UserProfile" Width="1.5" PointX="3.75" PointY="16.875" />
-        <EntityTypeShape EntityType="CuponeraModel.webpages_Membership" Width="1.5" PointX="10.75" PointY="2" />
-        <EntityTypeShape EntityType="CuponeraModel.webpages_OAuthMembership" Width="1.5" PointX="10.75" PointY="6" />
-        <EntityTypeShape EntityType="CuponeraModel.webpages_Roles" Width="1.5" PointX="1.5" PointY="16.875" />
-        <EntityTypeShape EntityType="CuponeraModel.geoRequest" Width="1.5" PointX="6" PointY="16.875" />
+        <EntityTypeShape EntityType="CuponeraModel.category" Width="1.5" PointX="3.75" PointY="2.75" />
+        <EntityTypeShape EntityType="CuponeraModel.company" Width="1.5" PointX="0.75" PointY="8.25" />
+        <EntityTypeShape EntityType="CuponeraModel.companySubscription" Width="1.5" PointX="3" PointY="8.5" />
+        <EntityTypeShape EntityType="CuponeraModel.images" Width="1.5" PointX="10.5" PointY="10" />
+        <EntityTypeShape EntityType="CuponeraModel.offer" Width="1.5" PointX="8.25" PointY="11" />
+        <EntityTypeShape EntityType="CuponeraModel.preHomeImages" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="CuponeraModel.product" Width="1.5" PointX="6" PointY="8" />
+        <EntityTypeShape EntityType="CuponeraModel.profile" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CuponeraModel.state" Width="1.5" PointX="0.75" PointY="16.5" />
+        <EntityTypeShape EntityType="CuponeraModel.store" Width="1.5" PointX="3" PointY="11.75" />
+        <EntityTypeShape EntityType="CuponeraModel.subscription" Width="1.5" PointX="0.75" PointY="12.5" />
+        <EntityTypeShape EntityType="CuponeraModel.userCompany" Width="1.5" PointX="3" PointY="5.75" />
+        <EntityTypeShape EntityType="CuponeraModel.UserProfile" Width="1.5" PointX="0.75" PointY="4.875" />
+        <EntityTypeShape EntityType="CuponeraModel.webpages_Membership" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CuponeraModel.webpages_OAuthMembership" Width="1.5" PointX="8.75" PointY="7.75" />
+        <EntityTypeShape EntityType="CuponeraModel.webpages_Roles" Width="1.5" PointX="1.5" PointY="2" />
+        <EntityTypeShape EntityType="CuponeraModel.geoRequest" Width="1.5" PointX="3" PointY="16.875" />
         <AssociationConnector Association="CuponeraModel.FK_product_category" />
         <AssociationConnector Association="CuponeraModel.FK_companySubscription_company" />
         <AssociationConnector Association="CuponeraModel.FK_product_company" />
         <AssociationConnector Association="CuponeraModel.FK_store_company" />
         <AssociationConnector Association="CuponeraModel.FK_userCompany_company" />
         <AssociationConnector Association="CuponeraModel.FK_companySubscription_subscription" />
-        <AssociationConnector Association="CuponeraModel.profiles_fk_Profiles_DeviceOs1" />
-        <AssociationConnector Association="CuponeraModel.profiles_fk_Profiles_DeviceTypes1" />
+        <AssociationConnector Association="CuponeraModel.FK_images_offer" />
         <AssociationConnector Association="CuponeraModel.FK_images_product" />
         <AssociationConnector Association="CuponeraModel.FK_offer_product" />
-        <AssociationConnector Association="CuponeraModel.FK_permissions_webpages_Roles" />
-        <AssociationConnector Association="CuponeraModel.profiles_fk_idstate" />
-        <AssociationConnector Association="CuponeraModel.FK_store_store" />
+        <AssociationConnector Association="CuponeraModel.FK_store_state" />
         <AssociationConnector Association="CuponeraModel.FK_userCompany_UserProfile" />
         <AssociationConnector Association="CuponeraModel.FK_geoRequest_UserProfile" />
         <AssociationConnector Association="CuponeraModel.webpages_UsersInRoles" />

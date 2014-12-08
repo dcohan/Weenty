@@ -62,12 +62,6 @@
     <Compile Include="companySubscription.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="deviceos.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="devicetypes.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="geoRequest.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -92,10 +86,7 @@
     <Compile Include="offer.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="permissions.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="prehomeimages.cs">
+    <Compile Include="preHomeImages.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="product.cs">

@@ -19,14 +19,14 @@ namespace Cuponera.Entities
             this.companySubscription = new HashSet<companySubscription>();
         }
     
+        public int IdSubscription { get; set; }
         public string Name { get; set; }
         public decimal Pricing { get; set; }
         public int SortFactor { get; set; }
-        public int Idsubscription { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
-        public System.DateTime EndDate { get; set; }
+        public int duration { get; set; }
     
         public virtual ICollection<companySubscription> companySubscription { get; set; }
     }

@@ -12,7 +12,7 @@ namespace Cuponera.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class prehomeimages
+    public partial class preHomeImages
     {
         public int IdPreHomeImage { get; set; }
         public Nullable<int> Active { get; set; }
@@ -20,5 +20,7 @@ namespace Cuponera.Entities
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
         public string ImagePath { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
 }

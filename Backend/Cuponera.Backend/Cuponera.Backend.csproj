@@ -114,20 +114,16 @@
     <Compile Include="Controllers\categoryController.cs" />
     <Compile Include="Controllers\companyController.cs" />
     <Compile Include="Controllers\companySubscriptionController.cs" />
-    <Compile Include="Controllers\deviceosController.cs" />
-    <Compile Include="Controllers\devicetypesController.cs" />
     <Compile Include="Controllers\geoRequestController.cs" />
     <Compile Include="Controllers\imagesController.cs" />
     <Compile Include="Controllers\offerController.cs" />
-    <Compile Include="Controllers\offersController.cs" />
-    <Compile Include="Controllers\prehomeimagesController.cs" />
+    <Compile Include="Controllers\preHomeImagesController.cs" />
     <Compile Include="Controllers\productController.cs" />
     <Compile Include="Controllers\profileController.cs" />
     <Compile Include="Controllers\storeController.cs" />
     <Compile Include="Controllers\subscriptionController.cs" />
     <Compile Include="Controllers\userCompanyController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Controllers\webpages_RolesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -17,6 +17,7 @@ namespace Cuponera.Entities
         public int IdCompanySubscription { get; set; }
         public int IdCompany { get; set; }
         public int IdSubscription { get; set; }
+        public System.DateTime EndDate { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }

@@ -28,12 +28,9 @@ namespace Cuponera.Entities
         public virtual DbSet<category> category { get; set; }
         public virtual DbSet<company> company { get; set; }
         public virtual DbSet<companySubscription> companySubscription { get; set; }
-        public virtual DbSet<deviceos> deviceos { get; set; }
-        public virtual DbSet<devicetypes> devicetypes { get; set; }
         public virtual DbSet<images> images { get; set; }
         public virtual DbSet<offer> offer { get; set; }
-        public virtual DbSet<permissions> permissions { get; set; }
-        public virtual DbSet<prehomeimages> prehomeimages { get; set; }
+        public virtual DbSet<preHomeImages> preHomeImages { get; set; }
         public virtual DbSet<product> product { get; set; }
         public virtual DbSet<profile> profile { get; set; }
         public virtual DbSet<state> state { get; set; }

@@ -22,8 +22,11 @@ namespace Cuponera.Entities
         public Nullable<double> Latitude { get; set; }
         public Nullable<double> Longitude { get; set; }
         public string ZipCode { get; set; }
-        public string IdState { get; set; }
+        public Nullable<int> IdState { get; set; }
         public string StoreHours { get; set; }
+        public string Email { get; set; }
+        public string FacebookUrl { get; set; }
+        public string WhatsApp { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }

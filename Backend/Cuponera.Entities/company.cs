@@ -24,6 +24,9 @@ namespace Cuponera.Entities
     
         public int IdCompany { get; set; }
         public string Name { get; set; }
+        public string Contact { get; set; }
+        public string Telephone { get; set; }
+        public string Email { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }

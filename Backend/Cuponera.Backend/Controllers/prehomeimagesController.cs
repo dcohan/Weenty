@@ -22,29 +22,29 @@ namespace Cuponera.Backend.Controllers
     using System.Web.Http.OData.Extensions;
     using Cuponera.Entities;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<prehomeimages>("prehomeimages");
+    builder.EntitySet<preHomeImages>("preHomeImages");
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class prehomeimagesController : ODataController
+    public class preHomeImagesController : ODataController
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: odata/prehomeimages
+        // GET: odata/preHomeImages
         [EnableQuery]
-        public IQueryable<prehomeimages> Getprehomeimages()
+        public IQueryable<preHomeImages> GetpreHomeImages()
         {
-            return db.prehomeimages;
+            return db.preHomeImages;
         }
 
-        // GET: odata/prehomeimages(5)
+        // GET: odata/preHomeImages(5)
         [EnableQuery]
-        public SingleResult<prehomeimages> Getprehomeimages([FromODataUri] int key)
+        public SingleResult<preHomeImages> GetpreHomeImages([FromODataUri] int key)
         {
-            return SingleResult.Create(db.prehomeimages.Where(prehomeimages => prehomeimages.IdPreHomeImage == key));
+            return SingleResult.Create(db.preHomeImages.Where(preHomeImages => preHomeImages.IdPreHomeImage == key));
         }
 
-        // PUT: odata/prehomeimages(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<prehomeimages> patch)
+        // PUT: odata/preHomeImages(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<preHomeImages> patch)
         {
             Validate(patch.GetEntity());
 
@@ -53,13 +53,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            prehomeimages prehomeimages = await db.prehomeimages.FindAsync(key);
-            if (prehomeimages == null)
+            preHomeImages preHomeImages = await db.preHomeImages.FindAsync(key);
+            if (preHomeImages == null)
             {
                 return NotFound();
             }
 
-            patch.Put(prehomeimages);
+            patch.Put(preHomeImages);
 
             try
             {
@@ -67,7 +67,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!prehomeimagesExists(key))
+                if (!preHomeImagesExists(key))
                 {
                     return NotFound();
                 }
@@ -77,26 +77,26 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(prehomeimages);
+            return Updated(preHomeImages);
         }
 
-        // POST: odata/prehomeimages
-        public async Task<IHttpActionResult> Post(prehomeimages prehomeimages)
+        // POST: odata/preHomeImages
+        public async Task<IHttpActionResult> Post(preHomeImages preHomeImages)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.prehomeimages.Add(prehomeimages);
+            db.preHomeImages.Add(preHomeImages);
             await db.SaveChangesAsync();
 
-            return Created(prehomeimages);
+            return Created(preHomeImages);
         }
 
-        // PATCH: odata/prehomeimages(5)
+        // PATCH: odata/preHomeImages(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<prehomeimages> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<preHomeImages> patch)
         {
             Validate(patch.GetEntity());
 
@@ -105,13 +105,13 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            prehomeimages prehomeimages = await db.prehomeimages.FindAsync(key);
-            if (prehomeimages == null)
+            preHomeImages preHomeImages = await db.preHomeImages.FindAsync(key);
+            if (preHomeImages == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(prehomeimages);
+            patch.Patch(preHomeImages);
 
             try
             {
@@ -119,7 +119,7 @@ namespace Cuponera.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!prehomeimagesExists(key))
+                if (!preHomeImagesExists(key))
                 {
                     return NotFound();
                 }
@@ -129,19 +129,19 @@ namespace Cuponera.Backend.Controllers
                 }
             }
 
-            return Updated(prehomeimages);
+            return Updated(preHomeImages);
         }
 
-        // DELETE: odata/prehomeimages(5)
+        // DELETE: odata/preHomeImages(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            prehomeimages prehomeimages = await db.prehomeimages.FindAsync(key);
-            if (prehomeimages == null)
+            preHomeImages preHomeImages = await db.preHomeImages.FindAsync(key);
+            if (preHomeImages == null)
             {
                 return NotFound();
             }
 
-            db.prehomeimages.Remove(prehomeimages);
+            db.preHomeImages.Remove(preHomeImages);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -156,9 +156,9 @@ namespace Cuponera.Backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool prehomeimagesExists(int key)
+        private bool preHomeImagesExists(int key)
         {
-            return db.prehomeimages.Count(e => e.IdPreHomeImage == key) > 0;
+            return db.preHomeImages.Count(e => e.IdPreHomeImage == key) > 0;
         }
     }
 }

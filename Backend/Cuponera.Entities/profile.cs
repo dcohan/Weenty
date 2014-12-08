@@ -16,22 +16,15 @@ namespace Cuponera.Entities
     {
         public int IdProfile { get; set; }
         public string DeviceId { get; set; }
-        public int IdDeviceType { get; set; }
-        public int IdDeviceOs { get; set; }
         public string AppVersion { get; set; }
         public Nullable<int> ResolutionWidth { get; set; }
         public Nullable<int> ResolutionHeight { get; set; }
         public Nullable<double> Latitude { get; set; }
         public Nullable<double> Longitude { get; set; }
-        public Nullable<int> Geolocation { get; set; }
-        public string IdState { get; set; }
+        public Nullable<bool> Geolocation { get; set; }
         public Nullable<System.DateTime> LastAppUseDatetime { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
-    
-        public virtual deviceos deviceos { get; set; }
-        public virtual devicetypes devicetypes { get; set; }
-        public virtual state state { get; set; }
     }
 }

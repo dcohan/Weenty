@@ -23,6 +23,7 @@ namespace Cuponera.Backend.Controllers
     using Cuponera.Entities;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<product>("product");
+    builder.EntitySet<category>("category"); 
     builder.EntitySet<company>("company"); 
     builder.EntitySet<images>("images"); 
     builder.EntitySet<offer>("offer"); 
@@ -64,7 +65,7 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public SingleResult<product> Getproduct([FromODataUri] int key)
         {
-            return SingleResult.Create(db.product.Where(product => product.IdProduct == key && !product.DeletionDatetime.HasValue));
+            return SingleResult.Create(db.product.Where(product => product.IdProduct == key));
         }
 
         // PUT: odata/product(5)
@@ -185,6 +186,14 @@ namespace Cuponera.Backend.Controllers
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
+        // GET: odata/product(5)/category
+        [EnableQuery]
+        public SingleResult<category> Getcategory([FromODataUri] int key)
+        {
+            return SingleResult.Create(db.product.Where(m => m.IdProduct == key).Select(m => m.category));
         }
 
         // GET: odata/product(5)/company

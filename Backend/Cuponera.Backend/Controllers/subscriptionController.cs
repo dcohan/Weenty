@@ -41,7 +41,7 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public SingleResult<subscription> Getsubscription([FromODataUri] int key)
         {
-            return SingleResult.Create(db.subscription.Where(subscription => subscription.Idsubscription == key && !subscription.DeletionDatetime.HasValue));
+            return SingleResult.Create(db.subscription.Where(subscription => subscription.IdSubscription == key && !subscription.DeletionDatetime.HasValue));
         }
 
         // PUT: odata/subscription(5)
@@ -152,7 +152,7 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<companySubscription> GetcompanySubscription([FromODataUri] int key)
         {
-            return db.subscription.Where(m => m.Idsubscription == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.companySubscription);
+            return db.subscription.Where(m => m.IdSubscription == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.companySubscription);
         }
 
         protected override void Dispose(bool disposing)
@@ -166,7 +166,7 @@ namespace Cuponera.Backend.Controllers
 
         private bool subscriptionExists(int key)
         {
-            return db.subscription.Count(e => e.Idsubscription == key) > 0;
+            return db.subscription.Count(e => e.IdSubscription == key) > 0;
         }
     }
 }

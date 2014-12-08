@@ -51,7 +51,6 @@ namespace Cuponera.WebSite.Controllers
                 var product = db.product.First(p => p.IdProduct == (int)IdProduct);
                 o.Title = product.Title;
                 o.ImagePath = product.ImagePath;
-                o.ItemOrder = 0;
 
                 ViewBag.IdProduct = new SelectList(db.product.Where(p => p.IdProduct.Equals((int)IdProduct)).ToList(), "IdProduct", "Title", "Description");  
                 return View(o);

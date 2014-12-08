@@ -40,9 +40,6 @@ namespace Cuponera.Entities
         [DataType(DataType.Date)]
         public Nullable<DateTime> StartDatetime {get;set;}
 
-        [Display(Name = "Link a oferta")]
-        public string TargetURL { get; set; }
-
         [Display(Name = "Fecha creacion")]
         [DataType(DataType.Date)]
         public Nullable<DateTime> CreationDatetime { get; set; }

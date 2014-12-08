@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -24,9 +23,6 @@ namespace Cuponera.Backend.Controllers
     using Cuponera.Entities;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<profile>("profile");
-    builder.EntitySet<deviceos>("deviceos"); 
-    builder.EntitySet<devicetypes>("devicetypes"); 
-    builder.EntitySet<state>("state"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class profileController : ODataController
@@ -149,27 +145,6 @@ namespace Cuponera.Backend.Controllers
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET: odata/profile(5)/deviceos
-        [EnableQuery]
-        public SingleResult<deviceos> Getdeviceos([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.profile.Where(m => m.IdProfile == key).Select(m => m.deviceos));
-        }
-
-        // GET: odata/profile(5)/devicetypes
-        [EnableQuery]
-        public SingleResult<devicetypes> Getdevicetypes([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.profile.Where(m => m.IdProfile == key).Select(m => m.devicetypes));
-        }
-
-        // GET: odata/profile(5)/state
-        [EnableQuery]
-        public SingleResult<state> Getstate([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.profile.Where(m => m.IdProfile == key).Select(m => m.state));
         }
 
         protected override void Dispose(bool disposing)

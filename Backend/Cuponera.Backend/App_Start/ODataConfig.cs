@@ -17,25 +17,20 @@ namespace Cuponera.Backend
             builder.EntitySet<category>("category");
             builder.EntitySet<company>("company");
             builder.EntitySet<companySubscription>("companySubscription");
-            builder.EntitySet<deviceos>("deviceos");
-            builder.EntitySet<devicetypes>("devicetypes");
             builder.EntitySet<images>("images");
             builder.EntitySet<offer>("offer");
-            builder.EntitySet<prehomeimages>("prehomeimages");
+            builder.EntitySet<preHomeImages>("prehomeimages");
             builder.EntitySet<product>("product");
             builder.EntitySet<profile>("profile");
             builder.EntitySet<state>("state");
             builder.EntitySet<store>("store");
             builder.EntitySet<subscription>("subscription");
-            builder.EntitySet<permissions>("permissions");
-            builder.EntitySet<webpages_Roles>("webpages_Roles");
             builder.EntitySet<geoRequest>("georequest");
             builder.EntitySet<UserProfile>("userprofile");
             builder.EntitySet<userCompany>("userCompany");
             builder.EntitySet<webpages_Roles>("webpages_Roles");
             builder.EntitySet<webpages_OAuthMembership>("webpages_OAuthMembership");
             builder.EntitySet<webpages_Membership>("webpages_Membership");
-            builder.EntitySet<permissions>("permissions");
 
             /* Custom rules */
             builder.Entity<category>().Action("Activate");
