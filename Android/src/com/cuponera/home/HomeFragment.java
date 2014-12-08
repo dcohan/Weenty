@@ -1,5 +1,11 @@
 package com.cuponera.home;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -8,17 +14,10 @@ import com.cuponera.BaseFragment;
 import com.cuponera.R;
 import com.cuponera.navigation.HeaderImageInterface;
 import com.cuponera.navigation.HeaderInterface;
+import com.cuponera.settings.Settings;
 import com.cuponera.utils.Const;
-import com.cuponera.utils.LocationServices;
-import com.cuponera.yahoo.WeatherInfo;
-import com.cuponera.yahoo.YahooWeather;
-import com.cuponera.yahoo.YahooWeather.SEARCH_MODE;
-import com.cuponera.yahoo.YahooWeatherExceptionListener;
-import com.cuponera.yahoo.YahooWeatherInfoListener;
 
-public class HomeFragment extends BaseFragment implements HeaderInterface, YahooWeatherInfoListener, YahooWeatherExceptionListener {
-
-	private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, 5000, true);
+public class HomeFragment extends BaseFragment implements HeaderInterface {
 
 	@Override
 	protected int getLayout() {
@@ -28,13 +27,13 @@ public class HomeFragment extends BaseFragment implements HeaderInterface, Yahoo
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		getWeather();
 		mViewProxy.findTextView(R.id.hotel).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.gastronomic).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.coffee).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.beach).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.shopping).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.cinema).setOnClickListener(dashboardListener);
+		getMuni();
 	}
 
 	private OnClickListener dashboardListener = new OnClickListener() {
@@ -81,44 +80,37 @@ public class HomeFragment extends BaseFragment implements HeaderInterface, Yahoo
 		return false;
 	}
 
-	private void getWeather() {
-		if (LocationServices.getInstance(getActivity()).isLocationEnabled()) {
-			mYahooWeather.setExceptionListener(this);
-			mYahooWeather.setNeedDownloadIcons(true);
-			mYahooWeather.setSearchMode(SEARCH_MODE.GPS);
-			mYahooWeather.queryYahooWeatherByGPS(getBaseActivity().getApplicationContext(), this);
-		} else {
-			mViewProxy.findLinearLayout(R.id.weather_layout).setVisibility(View.GONE);
-		}
-	}
+	private void getMuni() {
+		double latitude = Settings.getInstance(getActivity()).getLatitude();
+		double longitude = Settings.getInstance(getActivity()).getLongitude();
 
-	@Override
-	public void onFailConnection(Exception e) {
-		getBaseActivity().hideLoading();
-		mViewProxy.findLinearLayout(R.id.weather_layout).setVisibility(View.GONE);
+		if (latitude != 0 && longitude != 0) {
+			Geocoder geoCoder = new Geocoder(getActivity(), Locale.getDefault());
+			try {
+				List<Address> addresses = geoCoder.getFromLocation(latitude, longitude, 1);
+				if (showMuni(addresses)) {
+					mViewProxy.findImageView(R.id.munucipio).setVisibility(View.VISIBLE);
+					mViewProxy.findImageView(R.id.munucipio).setOnClickListener(new OnClickListener() {
 
-	}
+						@Override
+						public void onClick(View v) {
+							getBaseActivity().openURL("http://google.com");
 
-	@Override
-	public void onFailParsing(Exception e) {
-		getBaseActivity().hideLoading();
-		mViewProxy.findLinearLayout(R.id.weather_layout).setVisibility(View.GONE);
-	}
-
-	@Override
-	public void onFailFindLocation(Exception e) {
-		mViewProxy.findLinearLayout(R.id.weather_layout).setVisibility(View.GONE);
-	}
-
-	@Override
-	public void gotWeatherInfo(WeatherInfo weatherInfo) {
-		if (weatherInfo != null) {
-			mViewProxy.findTextView(R.id.textview_forecast_info).setText(weatherInfo.getWOEIDCounty() + ", " + weatherInfo.getCurrentTempC() + " grados");
-			if (weatherInfo.getCurrentConditionIcon() != null) {
-				mViewProxy.findImageView(R.id.imageview_forecast_info).setImageBitmap(weatherInfo.getCurrentConditionIcon());
+						}
+					});
+				}
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
-
 		}
 	}
 
+	private boolean showMuni(List<Address> addresses) {
+		if (addresses.size() > 0) {
+			if (addresses.get(0).getLocality() != null) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
