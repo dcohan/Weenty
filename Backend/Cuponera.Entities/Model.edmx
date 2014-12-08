@@ -445,6 +445,7 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        
         <EntityContainer Name="CuponeraModelStoreContainer">
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="company" EntityType="Self.company" Schema="dbo" store:Type="Tables" />
@@ -1345,7 +1346,7 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
