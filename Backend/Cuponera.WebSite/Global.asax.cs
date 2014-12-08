@@ -27,13 +27,13 @@ namespace Cuponera.WebSite
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
         }
-
+        /*
         protected void Application_AuthenticateRequest(Object sender, EventArgs e)
         {
             if (User.Identity.IsAuthenticated)
             {
                 Thread.CurrentPrincipal = new CuponeraPrincipal(new CuponeraIdentity(User.Identity));
             }
-        }
+        */
     }
 }
