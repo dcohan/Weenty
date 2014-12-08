@@ -23,7 +23,9 @@ namespace Cuponera.Backend.Controllers
     using Cuponera.Entities;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<images>("images");
+    builder.EntitySet<offer>("offer"); 
     builder.EntitySet<product>("product"); 
+    builder.EntitySet<store>("store"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class imagesController : ODataController
@@ -148,11 +150,25 @@ namespace Cuponera.Backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        // GET: odata/images(5)/offer
+        [EnableQuery]
+        public SingleResult<offer> Getoffer([FromODataUri] int key)
+        {
+            return SingleResult.Create(db.images.Where(m => m.IdImage == key).Select(m => m.offer));
+        }
+
         // GET: odata/images(5)/product
         [EnableQuery]
         public SingleResult<product> Getproduct([FromODataUri] int key)
         {
             return SingleResult.Create(db.images.Where(m => m.IdImage == key).Select(m => m.product));
+        }
+
+        // GET: odata/images(5)/store
+        [EnableQuery]
+        public SingleResult<store> Getstore([FromODataUri] int key)
+        {
+            return SingleResult.Create(db.images.Where(m => m.IdImage == key).Select(m => m.store));
         }
 
         protected override void Dispose(bool disposing)

@@ -14,6 +14,12 @@ namespace Cuponera.Entities
     
     public partial class store
     {
+        public store()
+        {
+            this.product = new HashSet<product>();
+            this.occasion = new HashSet<occasion>();
+        }
+    
         public int IdStore { get; set; }
         public int IdCompany { get; set; }
         public string Name { get; set; }
@@ -32,6 +38,9 @@ namespace Cuponera.Entities
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
         public virtual company company { get; set; }
+        public virtual images images { get; set; }
+        public virtual ICollection<product> product { get; set; }
         public virtual state state { get; set; }
+        public virtual ICollection<occasion> occasion { get; set; }
     }
 }

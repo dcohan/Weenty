@@ -24,42 +24,14 @@ namespace Cuponera.Backend.Controllers
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<product>("product");
     builder.EntitySet<category>("category"); 
-    builder.EntitySet<company>("company"); 
     builder.EntitySet<images>("images"); 
     builder.EntitySet<offer>("offer"); 
+    builder.EntitySet<store>("store"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class productController : ODataController
     {
         private CuponeraEntities db = new CuponeraEntities();
-
-        // GET: odata/product
-        [EnableQuery]
-        public IQueryable<product> Getproduct(bool all = false, string title = null, int category = 0, int company = 0)
-        {
-            IQueryable<product> products = db.product;
-            if (!all)
-            {
-                products = products.Where(p => !p.DeletionDatetime.HasValue);
-            }
-
-            if (title != null)
-            {
-                products = products.Where(p => p.Title.Contains(title));
-            }
-
-            if (category > 0)
-            {
-                products = products.Where(p => p.category.IdCategory == category);
-            }
-
-            if (company > 0)
-            {
-                products = products.Where(p => p.company.IdCompany == company);
-            }
-            return products.OrderBy(c => c.Title);
-
-        }
 
         // GET: odata/product(5)
         [EnableQuery]
@@ -196,13 +168,6 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.product.Where(m => m.IdProduct == key).Select(m => m.category));
         }
 
-        // GET: odata/product(5)/company
-        [EnableQuery]
-        public SingleResult<company> Getcompany([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.product.Where(m => m.IdProduct == key && !m.DeletionDatetime.HasValue).Select(m => m.company));
-        }
-
         // GET: odata/product(5)/images
         [EnableQuery]
         public IQueryable<images> Getimages([FromODataUri] int key)
@@ -215,6 +180,28 @@ namespace Cuponera.Backend.Controllers
         public IQueryable<offer> Getoffer([FromODataUri] int key)
         {
             return db.product.Where(m => m.IdProduct == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.offer);
+        }
+
+        // GET: odata/product(5)/store
+        [EnableQuery]
+        public SingleResult<store> Getstore([FromODataUri] int key)
+        {
+            return SingleResult.Create(db.product.Where(m => m.IdProduct == key).Select(m => m.store));
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> GetProductAndOffers([FromODataUri] int idStore, [FromODataUri] int idCategory)
+        {
+            /*category category = await db.category.FindAsync(key);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            category.DeletionDatetime = null;
+            await db.SaveChangesAsync();*/
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         protected override void Dispose(bool disposing)

@@ -21,6 +21,7 @@ namespace Cuponera.Backend
             builder.EntitySet<offer>("offer");
             builder.EntitySet<preHomeImages>("prehomeimages");
             builder.EntitySet<product>("product");
+            builder.EntitySet<occasion>("occasion");
             builder.EntitySet<profile>("profile");
             builder.EntitySet<state>("state");
             builder.EntitySet<store>("store");
@@ -33,6 +34,7 @@ namespace Cuponera.Backend
             builder.EntitySet<webpages_Membership>("webpages_Membership");
 
             /* Custom rules */
+            builder.Entity<product>().Action("GetProductAndOffers");
             builder.Entity<category>().Action("Activate");
             builder.Entity<company>().Action("Activate");
             return builder.GetEdmModel();

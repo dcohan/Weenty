@@ -18,8 +18,10 @@ namespace Cuponera.Entities
         public string ImagePath { get; set; }
         public Nullable<int> IdProduct { get; set; }
         public Nullable<int> IdOffer { get; set; }
+        public Nullable<int> IdStore { get; set; }
     
         public virtual offer offer { get; set; }
         public virtual product product { get; set; }
+        public virtual store store { get; set; }
     }
 }

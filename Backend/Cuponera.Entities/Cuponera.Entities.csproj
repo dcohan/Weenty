@@ -83,6 +83,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="occasion.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="offer.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

@@ -23,9 +23,8 @@ namespace Cuponera.Backend.Controllers
     using Cuponera.Entities;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<company>("company");
-    builder.EntitySet<companyStore>("companyStore"); 
     builder.EntitySet<companySubscription>("companySubscription"); 
-    builder.EntitySet<product>("product"); 
+    builder.EntitySet<store>("store"); 
     builder.EntitySet<userCompany>("userCompany"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
@@ -104,7 +103,22 @@ namespace Cuponera.Backend.Controllers
             }
 
             db.company.Add(company);
-            await db.SaveChangesAsync();
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (companyExists(company.IdCompany))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return Created(company);
         }
@@ -182,14 +196,14 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<companySubscription> GetcompanySubscription([FromODataUri] int key)
         {
-            return db.company.Where(m => m.IdCompany == key).SelectMany(m => m.companySubscription);
+            return db.company.Where(m => m.IdCompany == key && !m.DeletionDatetime.HasValue).SelectMany(m => m.companySubscription);
         }
 
-        // GET: odata/company(5)/product
+        // GET: odata/company(5)/store
         [EnableQuery]
-        public IQueryable<product> Getproduct([FromODataUri] int key)
+        public IQueryable<store> Getstore([FromODataUri] int key)
         {
-            return db.company.Where(m => m.IdCompany == key).SelectMany(m => m.product);
+            return db.company.Where(m => m.IdCompany == key).SelectMany(m => m.store);
         }
 
         // GET: odata/company(5)/userCompany

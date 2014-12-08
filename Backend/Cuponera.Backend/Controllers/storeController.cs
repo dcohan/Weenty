@@ -24,7 +24,10 @@ namespace Cuponera.Backend.Controllers
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
     builder.EntitySet<store>("store");
     builder.EntitySet<company>("company"); 
+    builder.EntitySet<images>("images"); 
+    builder.EntitySet<product>("product"); 
     builder.EntitySet<state>("state"); 
+    builder.EntitySet<occasion>("occasion"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class storeController : ODataController
@@ -196,11 +199,32 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.store.Where(m => m.IdStore == key).Select(m => m.company));
         }
 
+        // GET: odata/store(5)/images
+        [EnableQuery]
+        public SingleResult<images> Getimages([FromODataUri] int key)
+        {
+            return SingleResult.Create(db.store.Where(m => m.IdStore == key).Select(m => m.images));
+        }
+
+        // GET: odata/store(5)/product
+        [EnableQuery]
+        public IQueryable<product> Getproduct([FromODataUri] int key)
+        {
+            return db.store.Where(m => m.IdStore == key).SelectMany(m => m.product);
+        }
+
         // GET: odata/store(5)/state
         [EnableQuery]
         public SingleResult<state> Getstate([FromODataUri] int key)
         {
             return SingleResult.Create(db.store.Where(m => m.IdStore == key).Select(m => m.state));
+        }
+
+        // GET: odata/store(5)/occasion
+        [EnableQuery]
+        public IQueryable<occasion> Getoccasion([FromODataUri] int key)
+        {
+            return db.store.Where(m => m.IdStore == key).SelectMany(m => m.occasion);
         }
 
         protected override void Dispose(bool disposing)

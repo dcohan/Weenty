@@ -17,7 +17,6 @@ namespace Cuponera.Entities
         public company()
         {
             this.companySubscription = new HashSet<companySubscription>();
-            this.product = new HashSet<product>();
             this.store = new HashSet<store>();
             this.userCompany = new HashSet<userCompany>();
         }
@@ -32,7 +31,6 @@ namespace Cuponera.Entities
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
         public virtual ICollection<companySubscription> companySubscription { get; set; }
-        public virtual ICollection<product> product { get; set; }
         public virtual ICollection<store> store { get; set; }
         public virtual ICollection<userCompany> userCompany { get; set; }
     }

@@ -25,17 +25,17 @@ namespace Cuponera.Entities
         public bool Active { get; set; }
         public Nullable<System.DateTime> StartDatetime { get; set; }
         public Nullable<System.DateTime> ExpirationDatetime { get; set; }
-        public int IdCompany { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
         public string ImagePath { get; set; }
         public int IdCategory { get; set; }
         public string Description { get; set; }
+        public int IdStore { get; set; }
     
         public virtual category category { get; set; }
-        public virtual company company { get; set; }
         public virtual ICollection<images> images { get; set; }
         public virtual ICollection<offer> offer { get; set; }
+        public virtual store store { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<companySubscription> GetcompanySubscription()
         {
-            return db.companySubscription.Where(c => !!c.DeletionDatetime.HasValue);
+            return db.companySubscription.Where(c => !c.DeletionDatetime.HasValue);
         }
 
         // GET: odata/companySubscription(5)

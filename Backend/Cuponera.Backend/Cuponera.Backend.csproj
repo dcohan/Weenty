@@ -116,10 +116,12 @@
     <Compile Include="Controllers\companySubscriptionController.cs" />
     <Compile Include="Controllers\geoRequestController.cs" />
     <Compile Include="Controllers\imagesController.cs" />
+    <Compile Include="Controllers\occasionController.cs" />
     <Compile Include="Controllers\offerController.cs" />
     <Compile Include="Controllers\preHomeImagesController.cs" />
     <Compile Include="Controllers\productController.cs" />
     <Compile Include="Controllers\profileController.cs" />
+    <Compile Include="Controllers\stateController.cs" />
     <Compile Include="Controllers\storeController.cs" />
     <Compile Include="Controllers\subscriptionController.cs" />
     <Compile Include="Controllers\userCompanyController.cs" />

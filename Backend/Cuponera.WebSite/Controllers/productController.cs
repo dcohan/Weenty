@@ -68,7 +68,6 @@ namespace Cuponera.WebSite.Controllers
             }
 
             ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
-            ViewBag.IdCompany = new SelectList(db.company, "IdCompany", "Name", product.IdCompany);
             return View(product);
         }
 
@@ -85,7 +84,6 @@ namespace Cuponera.WebSite.Controllers
                 return HttpNotFound();
             }
             ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
-            ViewBag.IdCompany = new SelectList(db.company, "IdCompany", "Name", product.IdCompany);
             return View(product);
         }
 
@@ -103,7 +101,6 @@ namespace Cuponera.WebSite.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
-            ViewBag.IdCompany = new SelectList(db.company, "IdCompany", "Name", product.IdCompany);
             return View(product);
         }
 

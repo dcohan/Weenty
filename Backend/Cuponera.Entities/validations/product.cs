@@ -32,9 +32,6 @@ namespace Cuponera.Entities
         [DataType(System.ComponentModel.DataAnnotations.DataType.DateTime)]
         public DateTime ExpirationDatetime { get; set; }
 
-        [Required(ErrorMessage = "Debe asociar el producto a una compañia.")]
-        public int IdCompany { get; set; }
-
         [Required(ErrorMessage = "Debe asociar el producto a una categoria.")]
         public int IdCategory { get; set; }
 
