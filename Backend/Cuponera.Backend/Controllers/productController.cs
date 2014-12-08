@@ -189,21 +189,6 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.product.Where(m => m.IdProduct == key).Select(m => m.store));
         }
 
-        [HttpGet]
-        public async Task<IHttpActionResult> GetProductAndOffers([FromODataUri] int idStore, [FromODataUri] int idCategory)
-        {
-            /*category category = await db.category.FindAsync(key);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            category.DeletionDatetime = null;
-            await db.SaveChangesAsync();*/
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -227,6 +227,8 @@ namespace Cuponera.Backend.Controllers
             return db.store.Where(m => m.IdStore == key).SelectMany(m => m.occasion);
         }
 
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

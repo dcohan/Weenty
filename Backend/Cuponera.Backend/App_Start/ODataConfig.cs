@@ -34,7 +34,6 @@ namespace Cuponera.Backend
             builder.EntitySet<webpages_Membership>("webpages_Membership");
 
             /* Custom rules */
-            builder.Entity<product>().Action("GetProductAndOffers");
             builder.Entity<category>().Action("Activate");
             builder.Entity<company>().Action("Activate");
             return builder.GetEdmModel();
@@ -42,6 +41,8 @@ namespace Cuponera.Backend
 
         public static void Register(HttpConfiguration config)
         {
+
+
             config.Routes.MapODataServiceRoute("data", "", GetModel());
             config.EnsureInitialized();
         }
