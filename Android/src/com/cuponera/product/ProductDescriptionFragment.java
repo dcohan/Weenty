@@ -35,7 +35,20 @@ public class ProductDescriptionFragment extends BaseFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		iProduct = getArguments().getParcelable(ARGS_PRODUCT);
+		mViewProxy.findTextView(R.id.product_company).setText(iProduct.getCompany().getName());
+		mViewProxy.findTextView(R.id.product_name).setText(iProduct.getTitle());
+		mViewProxy.findTextView(R.id.product_description).setText(iProduct.getDescription());
 		Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.product_image), iProduct.getImagePath());
+		
+//		mViewProxy.findImageView(R.id.product_map).setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				if (iProduct.getLocation() != null) {
+//					getBaseActivity().pushFragment(GoogleMapFragment.newInstance(iProduct), true);
+//				}
+//			}
+//		});
+		
 	}
 
 }
