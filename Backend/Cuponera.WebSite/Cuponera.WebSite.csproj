@@ -196,6 +196,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\offerController.cs" />
+    <Compile Include="Controllers\preHomeController.cs" />
     <Compile Include="Controllers\productController.cs" />
     <Compile Include="Controllers\storeController.cs" />
     <Compile Include="Controllers\categoryController.cs" />
@@ -330,6 +331,10 @@
     <Content Include="Views\product\Edit.cshtml" />
     <Content Include="Views\product\Index.cshtml" />
     <Content Include="Views\offer\Delete.cshtml" />
+    <Content Include="Views\preHome\Create.cshtml" />
+    <Content Include="Views\preHome\Details.cshtml" />
+    <Content Include="Views\preHome\Edit.cshtml" />
+    <Content Include="Views\preHome\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
