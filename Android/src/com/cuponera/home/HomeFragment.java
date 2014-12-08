@@ -94,7 +94,7 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 
 						@Override
 						public void onClick(View v) {
-							getBaseActivity().openURL("http://google.com");
+							getBaseActivity().openURL("http://www.lacosta.gov.ar/");
 
 						}
 					});
@@ -106,11 +106,6 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 	}
 
 	private boolean showMuni(List<Address> addresses) {
-		if (addresses.size() > 0) {
-			if (addresses.get(0).getLocality() != null) {
-				return true;
-			}
-		}
-		return false;
+		return addresses.size() > 0 && addresses.get(0).getLocality() != null;
 	}
 }

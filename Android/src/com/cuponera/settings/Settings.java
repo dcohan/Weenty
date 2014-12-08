@@ -3,12 +3,7 @@ package com.cuponera.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.cuponera.model.Coupons;
-import com.cuponera.model.HomeOffers;
-import com.cuponera.model.LookBookFilters;
-import com.cuponera.model.PreHome;
 import com.cuponera.utils.Const;
-import com.cuponera.utils.Utils;
 
 public class Settings {
 
@@ -19,15 +14,12 @@ public class Settings {
 
 	private static final String ACCOUNT_ID = "account_id";
 	private static final String PREF_DEVICE_ID = "device_id";
-	private static final String PREHOME_INFO = "prehome_info";
-	private static final String HOME_OFFERS = "home_offers";
-	private static final String COUPONS = "coupons";
-	private static final String LOOK_BOOK_FILTERS = "look_book_filters";
 	private static final String LATITUDE = "latitud";
 	private static final String LONGITUDE = "longitud";
 	private static final String ALLOW_ADMIN = "allow_admin";
 	private static final String PROFILE_ID = "profile_id";
 	private static final String GEOLOCATION = "geolocation";
+	private static final String PREHOMEIMAGE = "prehomeimage";
 
 	public Settings(Context context) {
 		mContext = context;
@@ -52,6 +44,14 @@ public class Settings {
 
 	public String getAccountId() {
 		return mSharedPreferences.getString(ACCOUNT_ID, null);
+	}
+
+	public void setPrehomeImage(String prehomeImage) {
+		getEditor().putString(PREHOMEIMAGE, prehomeImage).commit();
+	}
+
+	public String getPreHomeImage() {
+		return mSharedPreferences.getString(PREHOMEIMAGE, null);
 	}
 
 	public void setProfileId(String profileId) {
@@ -84,42 +84,6 @@ public class Settings {
 
 	public String getDeviceId() {
 		return mSharedPreferences.getString(PREF_DEVICE_ID, "");
-	}
-
-	public void setPrehomeInfo(PreHome preHome) {
-		getEditor().putString(PREHOME_INFO, preHome.serialize()).commit();
-	}
-
-	public PreHome getPreHomeInfo() {
-		String string = mSharedPreferences.getString(PREHOME_INFO, "");
-		return Utils.deserialize(string, PreHome.class);
-	}
-
-	public void setHomeOffers(HomeOffers homeOffers) {
-		getEditor().putString(HOME_OFFERS, homeOffers.serialize()).commit();
-	}
-
-	public HomeOffers getHomeOffers() {
-		String string = mSharedPreferences.getString(HOME_OFFERS, "");
-		return Utils.deserialize(string, HomeOffers.class);
-	}
-
-	public void setCoupons(Coupons coupons) {
-		getEditor().putString(COUPONS, coupons.serialize()).commit();
-	}
-
-	public Coupons getCoupons() {
-		String string = mSharedPreferences.getString(COUPONS, "");
-		return Utils.deserialize(string, Coupons.class);
-	}
-
-	public void setLookBookFilters(LookBookFilters filters) {
-		getEditor().putString(LOOK_BOOK_FILTERS, filters.serialize()).commit();
-	}
-
-	public LookBookFilters getLookBookFilters() {
-		String string = mSharedPreferences.getString(LOOK_BOOK_FILTERS, "");
-		return Utils.deserialize(string, LookBookFilters.class);
 	}
 
 	public boolean AdminAllowed() {
