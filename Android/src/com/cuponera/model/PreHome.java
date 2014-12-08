@@ -4,18 +4,16 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class PreHome extends BaseModel {
 	
-	@JsonProperty("IdPreHomeImage")
-	private int idPreHomeImage;
-	
-	@JsonProperty("ImageURL")
-	private String imageURL;
+	@JsonProperty("ImagePath")
+	private String prehomeImage;
 
-	public String getImageURL() {
-		return imageURL;
+	public String getPrehomeImage() {
+		return prehomeImage;
 	}
 
-	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
+	public void setPrehomeImage(String prehomeImage) {
+		this.prehomeImage = prehomeImage;
 	}
+
 
 }
