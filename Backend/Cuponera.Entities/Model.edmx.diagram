@@ -8,7 +8,9 @@
         <EntityTypeShape EntityType="CuponeraModel.category" Width="1.5" PointX="9" PointY="6.625" />
         <EntityTypeShape EntityType="CuponeraModel.company" Width="1.5" PointX="0.75" PointY="9.25" />
         <EntityTypeShape EntityType="CuponeraModel.companySubscription" Width="1.5" PointX="3" PointY="9.375" />
+        <EntityTypeShape EntityType="CuponeraModel.geoRequest" Width="1.5" PointX="3" PointY="0.75" />
         <EntityTypeShape EntityType="CuponeraModel.images" Width="1.5" PointX="8.25" PointY="9.5" />
+        <EntityTypeShape EntityType="CuponeraModel.occasion" Width="1.5" PointX="8.25" PointY="16.625" />
         <EntityTypeShape EntityType="CuponeraModel.offer" Width="1.5" PointX="13.5" PointY="9.125" />
         <EntityTypeShape EntityType="CuponeraModel.preHomeImages" Width="1.5" PointX="5.75" PointY="1.75" />
         <EntityTypeShape EntityType="CuponeraModel.product" Width="1.5" PointX="11.25" PointY="8.875" />
@@ -21,23 +23,21 @@
         <EntityTypeShape EntityType="CuponeraModel.webpages_Membership" Width="1.5" PointX="7.75" PointY="1.75" />
         <EntityTypeShape EntityType="CuponeraModel.webpages_OAuthMembership" Width="1.5" PointX="9.75" PointY="1.75" />
         <EntityTypeShape EntityType="CuponeraModel.webpages_Roles" Width="1.5" PointX="1.5" PointY="3.875" />
-        <EntityTypeShape EntityType="CuponeraModel.geoRequest" Width="1.5" PointX="3" PointY="0.75" />
         <AssociationConnector Association="CuponeraModel.FK_product_category" />
         <AssociationConnector Association="CuponeraModel.FK_companySubscription_company" />
         <AssociationConnector Association="CuponeraModel.FK_store_company" />
         <AssociationConnector Association="CuponeraModel.FK_userCompany_company" />
         <AssociationConnector Association="CuponeraModel.FK_companySubscription_subscription" />
+        <AssociationConnector Association="CuponeraModel.FK_geoRequest_UserProfile" />
         <AssociationConnector Association="CuponeraModel.FK_images_offer" />
         <AssociationConnector Association="CuponeraModel.FK_images_product" />
         <AssociationConnector Association="CuponeraModel.FK_images_store" />
+        <AssociationConnector Association="CuponeraModel.FK_event_store" />
         <AssociationConnector Association="CuponeraModel.FK_offer_product" />
         <AssociationConnector Association="CuponeraModel.FK_product_store" />
         <AssociationConnector Association="CuponeraModel.FK_store_state" />
         <AssociationConnector Association="CuponeraModel.FK_userCompany_UserProfile" />
-        <AssociationConnector Association="CuponeraModel.FK_geoRequest_UserProfile" />
         <AssociationConnector Association="CuponeraModel.webpages_UsersInRoles" />
-        <EntityTypeShape EntityType="CuponeraModel.occasion" Width="1.5" PointX="8.25" PointY="13.25" />
-        <AssociationConnector Association="CuponeraModel.FK_event_store" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -16,8 +16,8 @@ namespace Cuponera.Entities
     {
         public store()
         {
-            this.product = new HashSet<product>();
             this.occasion = new HashSet<occasion>();
+            this.product = new HashSet<product>();
         }
     
         public int IdStore { get; set; }
@@ -39,8 +39,8 @@ namespace Cuponera.Entities
     
         public virtual company company { get; set; }
         public virtual images images { get; set; }
+        public virtual ICollection<occasion> occasion { get; set; }
         public virtual ICollection<product> product { get; set; }
         public virtual state state { get; set; }
-        public virtual ICollection<occasion> occasion { get; set; }
     }
 }

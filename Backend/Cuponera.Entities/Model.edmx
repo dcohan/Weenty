@@ -40,14 +40,9 @@
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_9AC588_cuponera.dbo.geoRequest' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="geoRequest">
           <Key>
             <PropertyRef Name="IdGeoRequest" />
-            <PropertyRef Name="IdUser" />
-            <PropertyRef Name="TimesDone" />
-            <PropertyRef Name="RequestDatetime" />
           </Key>
           <Property Name="IdGeoRequest" Type="int" Nullable="false" />
           <Property Name="IdUser" Type="int" Nullable="false" />
@@ -64,17 +59,9 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.geoRequest' does not have a
           <Property Name="IdOffer" Type="int" />
           <Property Name="IdStore" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="occasion">
           <Key>
             <PropertyRef Name="IdEvent" />
-            <PropertyRef Name="IdStore" />
-            <PropertyRef Name="Title" />
-            <PropertyRef Name="Description" />
-            <PropertyRef Name="CreationDatetime" />
-            <PropertyRef Name="StartDatetime" />
-            <PropertyRef Name="EndDatetime" />
           </Key>
           <Property Name="IdEvent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdStore" Type="int" Nullable="false" />
@@ -450,7 +437,9 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="company" EntityType="Self.company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="companySubscription" EntityType="Self.companySubscription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="geoRequest" EntityType="Self.geoRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="images" EntityType="Self.images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="occasion" EntityType="Self.occasion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="offer" EntityType="Self.offer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="preHomeImages" EntityType="Self.preHomeImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
@@ -464,28 +453,6 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
           <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="geoRequest" EntityType="Self.geoRequest" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [geoRequest].[IdGeoRequest] AS [IdGeoRequest], 
-    [geoRequest].[IdUser] AS [IdUser], 
-    [geoRequest].[TimesDone] AS [TimesDone], 
-    [geoRequest].[RequestDatetime] AS [RequestDatetime]
-    FROM [dbo].[geoRequest] AS [geoRequest]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="occasion" EntityType="Self.occasion" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [occasion].[IdEvent] AS [IdEvent], 
-    [occasion].[IdStore] AS [IdStore], 
-    [occasion].[Title] AS [Title], 
-    [occasion].[Description] AS [Description], 
-    [occasion].[CreationDatetime] AS [CreationDatetime], 
-    [occasion].[ModificationDatetime] AS [ModificationDatetime], 
-    [occasion].[DeletionDateTime] AS [DeletionDateTime], 
-    [occasion].[ImagePath] AS [ImagePath], 
-    [occasion].[StartDatetime] AS [StartDatetime], 
-    [occasion].[EndDatetime] AS [EndDatetime]
-    FROM [dbo].[occasion] AS [occasion]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_companySubscription_company" Association="Self.FK_companySubscription_company">
             <End Role="company" EntitySet="company" />
             <End Role="companySubscription" EntitySet="companySubscription" />
@@ -559,7 +526,9 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
           <EntitySet Name="category" EntityType="CuponeraModel.category" />
           <EntitySet Name="company" EntityType="CuponeraModel.company" />
           <EntitySet Name="companySubscription" EntityType="CuponeraModel.companySubscription" />
+          <EntitySet Name="geoRequest" EntityType="CuponeraModel.geoRequest" />
           <EntitySet Name="images" EntityType="CuponeraModel.images" />
+          <EntitySet Name="occasion" EntityType="CuponeraModel.occasion" />
           <EntitySet Name="offer" EntityType="CuponeraModel.offer" />
           <EntitySet Name="preHomeImages" EntityType="CuponeraModel.preHomeImages" />
           <EntitySet Name="product" EntityType="CuponeraModel.product" />
@@ -572,7 +541,6 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
           <EntitySet Name="webpages_Membership" EntityType="CuponeraModel.webpages_Membership" />
           <EntitySet Name="webpages_OAuthMembership" EntityType="CuponeraModel.webpages_OAuthMembership" />
           <EntitySet Name="webpages_Roles" EntityType="CuponeraModel.webpages_Roles" />
-          <EntitySet Name="geoRequest" EntityType="CuponeraModel.geoRequest" />
           <AssociationSet Name="FK_product_category" Association="CuponeraModel.FK_product_category">
             <End Role="category" EntitySet="category" />
             <End Role="product" EntitySet="product" />
@@ -593,6 +561,10 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
             <End Role="subscription" EntitySet="subscription" />
             <End Role="companySubscription" EntitySet="companySubscription" />
           </AssociationSet>
+          <AssociationSet Name="FK_geoRequest_UserProfile" Association="CuponeraModel.FK_geoRequest_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="geoRequest" EntitySet="geoRequest" />
+          </AssociationSet>
           <AssociationSet Name="FK_images_offer" Association="CuponeraModel.FK_images_offer">
             <End Role="offer" EntitySet="offer" />
             <End Role="images" EntitySet="images" />
@@ -604,6 +576,10 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
           <AssociationSet Name="FK_images_store" Association="CuponeraModel.FK_images_store">
             <End Role="store" EntitySet="store" />
             <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_event_store" Association="CuponeraModel.FK_event_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="occasion" EntitySet="occasion" />
           </AssociationSet>
           <AssociationSet Name="FK_offer_product" Association="CuponeraModel.FK_offer_product">
             <End Role="product" EntitySet="product" />
@@ -621,18 +597,9 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="userCompany" EntitySet="userCompany" />
           </AssociationSet>
-          <AssociationSet Name="FK_geoRequest_UserProfile" Association="CuponeraModel.FK_geoRequest_UserProfile">
-            <End Role="UserProfile" EntitySet="UserProfile" />
-            <End Role="geoRequest" EntitySet="geoRequest" />
-          </AssociationSet>
           <AssociationSet Name="webpages_UsersInRoles" Association="CuponeraModel.webpages_UsersInRoles">
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
             <End Role="UserProfile" EntitySet="UserProfile" />
-          </AssociationSet>
-          <EntitySet Name="occasion" EntityType="CuponeraModel.occasion" />
-          <AssociationSet Name="FK_event_store" Association="CuponeraModel.FK_event_store">
-            <End Role="store" EntitySet="store" />
-            <End Role="occasion" EntitySet="occasion" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="category">
@@ -676,6 +643,16 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
           <NavigationProperty Name="company" Relationship="CuponeraModel.FK_companySubscription_company" FromRole="companySubscription" ToRole="company" />
           <NavigationProperty Name="subscription" Relationship="CuponeraModel.FK_companySubscription_subscription" FromRole="companySubscription" ToRole="subscription" />
         </EntityType>
+        <EntityType Name="geoRequest">
+          <Key>
+            <PropertyRef Name="IdGeoRequest" />
+          </Key>
+          <Property Name="IdGeoRequest" Type="Int32" Nullable="false" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="TimesDone" Type="Int32" Nullable="false" />
+          <Property Name="RequestDatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UserProfile" Relationship="CuponeraModel.FK_geoRequest_UserProfile" FromRole="geoRequest" ToRole="UserProfile" />
+        </EntityType>
         <EntityType Name="images">
           <Key>
             <PropertyRef Name="IdImage" />
@@ -688,6 +665,22 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
           <NavigationProperty Name="offer" Relationship="CuponeraModel.FK_images_offer" FromRole="images" ToRole="offer" />
           <NavigationProperty Name="product" Relationship="CuponeraModel.FK_images_product" FromRole="images" ToRole="product" />
           <NavigationProperty Name="store" Relationship="CuponeraModel.FK_images_store" FromRole="images" ToRole="store" />
+        </EntityType>
+        <EntityType Name="occasion">
+          <Key>
+            <PropertyRef Name="IdEvent" />
+          </Key>
+          <Property Name="IdEvent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdStore" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="1500" FixedLength="false" Unicode="false" />
+          <Property Name="CreationDatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModificationDatetime" Type="DateTime" Precision="3" />
+          <Property Name="DeletionDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ImagePath" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="StartDatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_event_store" FromRole="occasion" ToRole="store" />
         </EntityType>
         <EntityType Name="offer">
           <Key>
@@ -793,9 +786,9 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
           <NavigationProperty Name="company" Relationship="CuponeraModel.FK_store_company" FromRole="store" ToRole="company" />
           <NavigationProperty Name="images" Relationship="CuponeraModel.FK_images_store" FromRole="store" ToRole="images" />
+          <NavigationProperty Name="occasion" Relationship="CuponeraModel.FK_event_store" FromRole="store" ToRole="occasion" />
           <NavigationProperty Name="product" Relationship="CuponeraModel.FK_product_store" FromRole="store" ToRole="product" />
           <NavigationProperty Name="state" Relationship="CuponeraModel.FK_store_state" FromRole="store" ToRole="state" />
-          <NavigationProperty Name="occasion" Relationship="CuponeraModel.FK_event_store" FromRole="store" ToRole="occasion" />
         </EntityType>
         <EntityType Name="subscription">
           <Key>
@@ -829,8 +822,8 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="56" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="userCompany" Relationship="CuponeraModel.FK_userCompany_UserProfile" FromRole="UserProfile" ToRole="userCompany" />
           <NavigationProperty Name="geoRequest" Relationship="CuponeraModel.FK_geoRequest_UserProfile" FromRole="UserProfile" ToRole="geoRequest" />
+          <NavigationProperty Name="userCompany" Relationship="CuponeraModel.FK_userCompany_UserProfile" FromRole="UserProfile" ToRole="userCompany" />
           <NavigationProperty Name="webpages_Roles" Relationship="CuponeraModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
         </EntityType>
         <EntityType Name="webpages_Membership">
@@ -865,19 +858,6 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
           <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserProfile" Relationship="CuponeraModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
-        </EntityType>
-        <EntityType Name="geoRequest">
-          <Key>
-            <PropertyRef Name="IdGeoRequest" />
-            <PropertyRef Name="IdUser" />
-            <PropertyRef Name="TimesDone" />
-            <PropertyRef Name="RequestDatetime" />
-          </Key>
-          <Property Name="IdGeoRequest" Type="Int32" Nullable="false" />
-          <Property Name="IdUser" Type="Int32" Nullable="false" />
-          <Property Name="TimesDone" Type="Int32" Nullable="false" />
-          <Property Name="RequestDatetime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="UserProfile" Relationship="CuponeraModel.FK_geoRequest_UserProfile" FromRole="geoRequest" ToRole="UserProfile" />
         </EntityType>
         <Association Name="FK_product_category">
           <End Type="CuponeraModel.category" Role="category" Multiplicity="1" />
@@ -939,6 +919,18 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_geoRequest_UserProfile">
+          <End Type="CuponeraModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="CuponeraModel.geoRequest" Role="geoRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="geoRequest">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_images_offer">
           <End Type="CuponeraModel.offer" Role="offer" Multiplicity="0..1" />
           <End Type="CuponeraModel.images" Role="images" Multiplicity="*" />
@@ -972,6 +964,18 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
             </Principal>
             <Dependent Role="images">
               <PropertyRef Name="IdImage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_event_store">
+          <End Type="CuponeraModel.store" Role="store" Multiplicity="1" />
+          <End Type="CuponeraModel.occasion" Role="occasion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="IdStore" />
+            </Principal>
+            <Dependent Role="occasion">
+              <PropertyRef Name="IdStore" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1023,55 +1027,9 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_geoRequest_UserProfile">
-          <End Type="CuponeraModel.UserProfile" Role="UserProfile" Multiplicity="1" />
-          <End Type="CuponeraModel.geoRequest" Role="geoRequest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfile">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="geoRequest">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="webpages_UsersInRoles">
           <End Type="CuponeraModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
           <End Type="CuponeraModel.UserProfile" Role="UserProfile" Multiplicity="*" />
-        </Association>
-        <EntityType Name="occasion">
-          <Key>
-            <PropertyRef Name="IdEvent" />
-            <PropertyRef Name="IdStore" />
-            <PropertyRef Name="Title" />
-            <PropertyRef Name="Description" />
-            <PropertyRef Name="CreationDatetime" />
-            <PropertyRef Name="StartDatetime" />
-            <PropertyRef Name="EndDatetime" />
-          </Key>
-          <Property Name="IdEvent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdStore" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="1500" FixedLength="false" Unicode="false" />
-          <Property Name="CreationDatetime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModificationDatetime" Type="DateTime" Precision="3" />
-          <Property Name="DeletionDateTime" Type="DateTime" Precision="3" />
-          <Property Name="ImagePath" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="StartDatetime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndDatetime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_event_store" FromRole="occasion" ToRole="store" />
-        </EntityType>
-        <Association Name="FK_event_store">
-          <End Type="CuponeraModel.store" Role="store" Multiplicity="1" />
-          <End Type="CuponeraModel.occasion" Role="occasion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="store">
-              <PropertyRef Name="IdStore" />
-            </Principal>
-            <Dependent Role="occasion">
-              <PropertyRef Name="IdStore" />
-            </Dependent>
-          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1117,6 +1075,16 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="geoRequest">
+            <EntityTypeMapping TypeName="CuponeraModel.geoRequest">
+              <MappingFragment StoreEntitySet="geoRequest">
+                <ScalarProperty Name="RequestDatetime" ColumnName="RequestDatetime" />
+                <ScalarProperty Name="TimesDone" ColumnName="TimesDone" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdGeoRequest" ColumnName="IdGeoRequest" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="images">
             <EntityTypeMapping TypeName="CuponeraModel.images">
               <MappingFragment StoreEntitySet="images">
@@ -1125,6 +1093,22 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="IdImage" ColumnName="IdImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="occasion">
+            <EntityTypeMapping TypeName="CuponeraModel.occasion">
+              <MappingFragment StoreEntitySet="occasion">
+                <ScalarProperty Name="EndDatetime" ColumnName="EndDatetime" />
+                <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="DeletionDateTime" ColumnName="DeletionDateTime" />
+                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
+                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="IdStore" ColumnName="IdStore" />
+                <ScalarProperty Name="IdEvent" ColumnName="IdEvent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1297,16 +1281,6 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="geoRequest">
-            <EntityTypeMapping TypeName="CuponeraModel.geoRequest">
-              <MappingFragment StoreEntitySet="geoRequest">
-                <ScalarProperty Name="RequestDatetime" ColumnName="RequestDatetime" />
-                <ScalarProperty Name="TimesDone" ColumnName="TimesDone" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="IdGeoRequest" ColumnName="IdGeoRequest" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="CuponeraModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
             <EndProperty Name="UserProfile">
               <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1315,22 +1289,6 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="occasion">
-            <EntityTypeMapping TypeName="CuponeraModel.occasion">
-              <MappingFragment StoreEntitySet="occasion">
-                <ScalarProperty Name="EndDatetime" ColumnName="EndDatetime" />
-                <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
-                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-                <ScalarProperty Name="DeletionDateTime" ColumnName="DeletionDateTime" />
-                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
-                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="IdStore" ColumnName="IdStore" />
-                <ScalarProperty Name="IdEvent" ColumnName="IdEvent" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1346,7 +1304,7 @@ warning 6002: The table/view 'DB_9AC588_cuponera.dbo.occasion' does not have a p
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
