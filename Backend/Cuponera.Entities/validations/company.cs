@@ -16,7 +16,7 @@ namespace Cuponera.Entities
     {
         [Display(Name = "Nombre")]
         [Required(ErrorMessage = "Debe ingresar un nombre de compañia.")]
-        [MaxLength(100, ErrorMessage = "El nombre de la compañia debe tener como máximo de 100 caracteres."), MinLength(10, ErrorMessage = "El nombre de la compañia debe tener como mínimo 10 caracteres.")]
+        [MaxLength(100, ErrorMessage = "El nombre de la compañia debe tener como máximo de 100 caracteres."), MinLength(3, ErrorMessage = "El nombre de la compañia debe tener como mínimo 3 caracteres.")]
         public string Name { get; set; }
     }
 }
