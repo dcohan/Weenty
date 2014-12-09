@@ -326,7 +326,6 @@
     <Content Include="Views\offer\Details.cshtml" />
     <Content Include="Views\offer\Edit.cshtml" />
     <Content Include="Views\offer\Index.cshtml" />
-    <Content Include="Views\offer\Delete.cshtml" />
     <Content Include="Views\preHome\Create.cshtml" />
     <Content Include="Views\preHome\Details.cshtml" />
     <Content Include="Views\preHome\Edit.cshtml" />
@@ -336,7 +335,6 @@
     <Content Include="Views\state\Edit.cshtml" />
     <Content Include="Views\state\Index.cshtml" />
     <Content Include="Views\product\Create.cshtml" />
-    <Content Include="Views\product\Delete.cshtml" />
     <Content Include="Views\product\Details.cshtml" />
     <Content Include="Views\product\Edit.cshtml" />
     <Content Include="Views\product\Index.cshtml" />
