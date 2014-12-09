@@ -1,13 +1,21 @@
 package com.cuponera.product;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
 import com.cuponera.model.IProduct;
-import com.cuponera.utils.Utils;
+import com.twotoasters.android.horizontalimagescroller.image.ImageToLoad;
+import com.twotoasters.android.horizontalimagescroller.image.ImageToLoadDrawableResource;
+import com.twotoasters.android.horizontalimagescroller.image.ImageToLoadUrl;
+import com.twotoasters.android.horizontalimagescroller.widget.HorizontalImageScroller;
+import com.twotoasters.android.horizontalimagescroller.widget.HorizontalImageScrollerAdapter;
 
 public class ProductDescriptionFragment extends BaseFragment {
 
@@ -38,17 +46,33 @@ public class ProductDescriptionFragment extends BaseFragment {
 		mViewProxy.findTextView(R.id.product_company).setText(iProduct.getCompany().getName());
 		mViewProxy.findTextView(R.id.product_name).setText(iProduct.getTitle());
 		mViewProxy.findTextView(R.id.product_description).setText(iProduct.getDescription());
-		Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.product_image), iProduct.getImagePath());
-		
-//		mViewProxy.findImageView(R.id.product_map).setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				if (iProduct.getLocation() != null) {
-//					getBaseActivity().pushFragment(GoogleMapFragment.newInstance(iProduct), true);
-//				}
-//			}
-//		});
-		
+		ArrayList<ImageToLoad> images = new ArrayList<ImageToLoad>();
+		for (int i = 0; i < 20; i++) {
+			images.add(new ImageToLoadUrl("https://www.google.com.ar/images/google_favicon_128.png"));
+			images.add(new ImageToLoadDrawableResource(R.drawable.oferta3test));
+		}
+
+		HorizontalImageScroller scroller = (HorizontalImageScroller) mViewProxy.findView(R.id.my_horizontal_image_scroller);
+		scroller.setAdapter(new HorizontalImageScrollerAdapter(getActivity(), images));
+		scroller.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+			}
+		});
+
+		// mViewProxy.findImageView(R.id.product_map).setOnClickListener(new
+		// OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// if (iProduct.getLocation() != null) {
+		// getBaseActivity().pushFragment(GoogleMapFragment.newInstance(iProduct),
+		// true);
+		// }
+		// }
+		// });
+
 	}
 
 }

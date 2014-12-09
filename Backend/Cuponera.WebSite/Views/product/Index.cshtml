@@ -9,7 +9,7 @@
         controller: 'product',
         filters: {
             include: ['all'],
-            custom: [ {
+            custom: [{
                 controlType: 'text',
                 controlId: 'title',
                 controlDefaultValue: '@(Request.Params["title"] != null ? @Request.Params["title"] : "")',

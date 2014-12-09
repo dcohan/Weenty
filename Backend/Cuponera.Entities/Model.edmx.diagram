@@ -38,6 +38,8 @@
         <AssociationConnector Association="CuponeraModel.FK_store_state" />
         <AssociationConnector Association="CuponeraModel.FK_userCompany_UserProfile" />
         <AssociationConnector Association="CuponeraModel.webpages_UsersInRoles" />
+        <EntityTypeShape EntityType="CuponeraModel.ELMAH_Error" Width="1.5" PointX="11.375" PointY="4.75" />
+        <EntityTypeShape EntityType="CuponeraModel.sysdiagrams" Width="1.5" PointX="12.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

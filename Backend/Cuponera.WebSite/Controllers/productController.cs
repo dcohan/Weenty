@@ -8,7 +8,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Cuponera.Entities;
-using System.Configuration;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -16,21 +15,14 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: product
-        public async Task<ActionResult> Index(bool all=false, string title=null, int pageNumber=1)
+        // GET: /product/
+        public async Task<ActionResult> Index()
         {
-            var products = db.product.Where(p => title == null || p.Title.ToLower().Contains(title.ToLower())).ToList();
-
-            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
-            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)products.Count() / pageSize));
-
-            int elemsToSkip = pageSize * (pageNumber - 1);
-            products.Skip(elemsToSkip).Take(pageSize);
-
-            return View(products);
+            var product = db.product.Include(p => p.category).Include(p => p.store);
+            return View(await product.ToListAsync());
         }
 
-        // GET: product/Details/5
+        // GET: /product/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,20 +37,20 @@ namespace Cuponera.WebSite.Controllers
             return View(product);
         }
 
-        // GET: product/Create
+        // GET: /product/Create
         public ActionResult Create()
         {
             ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name");
-            ViewBag.IdCompany = new SelectList(db.company, "IdCompany", "Name");
+            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name");
             return View();
         }
 
-        // POST: product/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: /product/Create
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdProduct,Title,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdCompany,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description")] product product)
+        public async Task<ActionResult> Create([Bind(Include="IdProduct,Title,Active,StartDatetime,ExpirationDatetime,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description,IdStore")] product product)
         {
             if (ModelState.IsValid)
             {
@@ -68,10 +60,11 @@ namespace Cuponera.WebSite.Controllers
             }
 
             ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
+            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name", product.IdStore);
             return View(product);
         }
 
-        // GET: product/Edit/5
+        // GET: /product/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,15 +77,16 @@ namespace Cuponera.WebSite.Controllers
                 return HttpNotFound();
             }
             ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
+            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name", product.IdStore);
             return View(product);
         }
 
-        // POST: product/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: /product/Edit/5
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdProduct,Title,Active,StartDatetime,ExpirationDatetime,ItemOrder,IdCompany,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description")] product product)
+        public async Task<ActionResult> Edit([Bind(Include="IdProduct,Title,Active,StartDatetime,ExpirationDatetime,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description,IdStore")] product product)
         {
             if (ModelState.IsValid)
             {
@@ -101,10 +95,11 @@ namespace Cuponera.WebSite.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
+            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name", product.IdStore);
             return View(product);
         }
 
-        // GET: product/Delete/5
+        // GET: /product/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -119,7 +114,7 @@ namespace Cuponera.WebSite.Controllers
             return View(product);
         }
 
-        // POST: product/Delete/5
+        // POST: /product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
