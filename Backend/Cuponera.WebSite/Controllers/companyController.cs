@@ -71,7 +71,7 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdCompany,Name,CreationDatetime,ModificationDatetime,DeletionDatetime")] company company)
+        public async Task<ActionResult> Create([Bind(Include = "IdCompany,Name,Contact,Telephone,Email,CreationDatetime,ModificationDatetime,DeletionDatetime")] company company)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +103,7 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdCompany,Name,CreationDatetime,ModificationDatetime,DeletionDatetime")] company company)
+        public async Task<ActionResult> Edit([Bind(Include = "IdCompany,Name,Contact,Telephone,Email,CreationDatetime,ModificationDatetime,DeletionDatetime")] company company)
         {
             if (ModelState.IsValid)
             {
