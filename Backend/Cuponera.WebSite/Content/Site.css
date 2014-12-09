@@ -827,3 +827,12 @@ tr.pager td {
 .hidden {
     display: none;
 }
+
+.advertising {
+    border: solid 1px;
+    color: rgb(135,178,13);
+    font-size: 20px;
+    font-weight: bold;
+    max-width: 400px;
+    padding: 5px;
+}

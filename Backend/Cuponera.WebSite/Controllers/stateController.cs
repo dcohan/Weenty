@@ -14,6 +14,23 @@ namespace Cuponera.WebSite.Controllers
     public class stateController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
+        public IEnumerable<state> get(bool all = true, string name = null)
+        {
+            IEnumerable<state> states = db.state;
+
+            if (!all)
+            {
+                states = states.Where(s => s.DeletionDatetime == null);
+            }
+
+            if (name != null)
+            {
+                states = states.Where(s => s.Name == name);
+            }
+
+            return states;
+        }
+
 
         // GET: /state/
         public async Task<ActionResult> Index()

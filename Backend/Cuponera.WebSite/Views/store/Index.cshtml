@@ -47,13 +47,13 @@
                 <thead>
                     <tr>
                         <th>
-                            Empresa
+                            @Html.DisplayNameFor(model => model.company.Name)
                         </th>
                         <th>
-                            Nombre
+                            @Html.DisplayNameFor(model => model.Name)
                         </th>
                         <th>
-                            Ciudad
+                            @Html.DisplayNameFor(model => model.state.Name)
                         </th>
                         <th>
                             Estado
@@ -73,7 +73,7 @@
                                 <span class="item-name">@Html.DisplayFor(modelItem => item.Name)</span>
                             </td>
                             <td>
-                                <span class="item-name">@Html.DisplayFor(modelItem => item.City)</span>
+                                <span class="item-name">@Html.DisplayFor(modelItem => item.state.Name)</span>
                             </td>
                             <td class="current-status">
                                 @if (item.DeletionDatetime == null)
