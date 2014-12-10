@@ -16,7 +16,7 @@ namespace Cuponera.Entities
     {
         [Display(Name = "Nombre")]
         [Required(ErrorMessage = "Debe ingresar un nombre de categoría.")]
-        [MaxLength(100, ErrorMessage = "El nombre de la categoría debe tener como máximo de 100 caracteres."), MinLength(5, ErrorMessage = "El nombre de la categoría debe tener como mínimo 10 caracteres.")]
+        [MaxLength(100, ErrorMessage = "El nombre de la categoría debe tener como máximo de 100 caracteres."), MinLength(5, ErrorMessage = "El nombre de la categoría debe tener como mínimo 5 caracteres.")]
         public string Name { get; set; }
     }
 }

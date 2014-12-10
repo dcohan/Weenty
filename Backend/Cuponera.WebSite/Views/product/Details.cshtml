@@ -3,112 +3,56 @@
 @{
     ViewBag.Title = "Detalle";
 }
-
-<h2>Detalle</h2>
+<h2>Detalles</h2>
 
 <div>
-    <h4>product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+    <h4>Producto</h4>
+	<hr />
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+    <div class="item-description">
+        <b>Nombre:</b> @Html.DisplayFor(model => model.Title)
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
+    <div class="item-description">
+        <b>Fecha de inicio:</b> @Html.DisplayFor(model => model.StartDatetime)
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
+    <div class="item-description">
+        <b>Fecha de finalización:</b> @Html.DisplayFor(model => model.ExpirationDatetime)
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDatetime)
-        </dt>
+    <div class="item-description">
+        <b>Imagen:</b> @Html.DisplayFor(model => model.ImagePath)
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.StartDatetime)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ExpirationDatetime)
-        </dt>
+    <div class="item-description">
+        <b>Descripción:</b> @Html.DisplayFor(model => model.Description)
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.ExpirationDatetime)
-        </dd>
+    <div class="item-description">
+        <b>Categoria:</b> @Html.DisplayFor(model => model.category.Name)
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemOrder)
-        </dt>
+    <div class="item-description">
+        <b>Sucursal:</b> @Html.DisplayFor(model => model.store.Name)
+    </div>
+    <div class="item-description">
+        <b>Estado:</b>
+        @if (Model.DeletionDatetime == null)
+        {
+            <img src="../../Images/tick.ico" alt="active" class="active" />
 
-        <dd>
-            @Html.DisplayFor(model => model.ItemOrder)
-        </dd>
+        }
+        else
+        {
+            <img src="../../Images/x.ico" alt="inactive" class="inactive" />
+        }
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDatetime)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreationDatetime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModificationDatetime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModificationDatetime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeletionDatetime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeletionDatetime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.category.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.category.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.company.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.company.Name)
-        </dd>
-
-    </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdProduct }) |
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdProduct }) |
     @Html.ActionLink("Volver", "Index")
 </p>

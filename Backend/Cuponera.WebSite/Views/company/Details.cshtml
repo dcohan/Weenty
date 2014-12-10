@@ -15,6 +15,18 @@
     </div>
 
     <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.Contact):</b> @Html.DisplayFor(model => model.Contact)
+    </div>
+
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.Telephone):</b> @Html.DisplayFor(model => model.Telephone)
+    </div>
+
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.Email):</b> @Html.DisplayFor(model => model.Email)
+    </div>
+
+    <div class="item-description">
         <b>Estado:</b>
         @if (Model.DeletionDatetime == null)
         {

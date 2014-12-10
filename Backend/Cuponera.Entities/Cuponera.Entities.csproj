@@ -62,6 +62,9 @@
     <Compile Include="companySubscription.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ELMAH_Error.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="functions\ModelExtensions.cs" />
     <Compile Include="geoRequest.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -109,12 +112,16 @@
     <Compile Include="subscription.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="userCompany.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="UserProfile.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="validations\store.cs" />
     <Compile Include="validations\product.cs" />
     <Compile Include="validations\offer.cs" />
     <Compile Include="validations\category.cs" />

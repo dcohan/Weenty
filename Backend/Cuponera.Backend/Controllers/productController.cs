@@ -33,6 +33,13 @@ namespace Cuponera.Backend.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
+
+        [EnableQuery]
+        public IQueryable<product> Getproduct()
+        {
+            return db.product.Where(s => !s.DeletionDatetime.HasValue);
+        }
+
         // GET: odata/product(5)
         [EnableQuery]
         public SingleResult<product> Getproduct([FromODataUri] int key)

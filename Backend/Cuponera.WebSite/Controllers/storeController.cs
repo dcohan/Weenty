@@ -62,6 +62,13 @@ namespace Cuponera.WebSite.Controllers
         // GET: store/Create
         public ActionResult Create()
         {
+            IEnumerable<state> states = (new stateController()).get(false);
+            ViewBag.States = states.Select(s =>
+                                new SelectListItem()
+                                {
+                                    Value = s.IdState.ToString(),
+                                    Text = s.Name
+                                });
             return View();
         }
 
