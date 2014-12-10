@@ -104,6 +104,7 @@
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
           <Property Name="ImagePath" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Price" Type="float" />
         </EntityType>
         <EntityType Name="preHomeImages">
           <Key>
@@ -134,6 +135,7 @@
           <Property Name="IdCategory" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="1000" />
           <Property Name="IdStore" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" />
         </EntityType>
         <EntityType Name="profile">
           <Key>
@@ -185,6 +187,7 @@
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="subscription">
           <Key>
@@ -727,6 +730,7 @@
           <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="images" Relationship="CuponeraModel.FK_images_offer" FromRole="offer" ToRole="images" />
           <NavigationProperty Name="product" Relationship="CuponeraModel.FK_offer_product" FromRole="offer" ToRole="product" />
+          <Property Name="Price" Type="Double" />
         </EntityType>
         <EntityType Name="preHomeImages">
           <Key>
@@ -761,6 +765,7 @@
           <NavigationProperty Name="images" Relationship="CuponeraModel.FK_images_product" FromRole="product" ToRole="images" />
           <NavigationProperty Name="offer" Relationship="CuponeraModel.FK_offer_product" FromRole="product" ToRole="offer" />
           <NavigationProperty Name="store" Relationship="CuponeraModel.FK_product_store" FromRole="product" ToRole="store" />
+          <Property Name="Price" Type="Double" />
         </EntityType>
         <EntityType Name="profile">
           <Key>
@@ -818,6 +823,7 @@
           <NavigationProperty Name="occasion" Relationship="CuponeraModel.FK_event_store" FromRole="store" ToRole="occasion" />
           <NavigationProperty Name="product" Relationship="CuponeraModel.FK_product_store" FromRole="store" ToRole="product" />
           <NavigationProperty Name="state" Relationship="CuponeraModel.FK_store_state" FromRole="store" ToRole="state" />
+          <Property Name="ImagePath" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="subscription">
           <Key>
@@ -1170,6 +1176,7 @@
           <EntitySetMapping Name="offer">
             <EntityTypeMapping TypeName="CuponeraModel.offer">
               <MappingFragment StoreEntitySet="offer">
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
@@ -1200,6 +1207,7 @@
           <EntitySetMapping Name="product">
             <EntityTypeMapping TypeName="CuponeraModel.product">
               <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="IdStore" ColumnName="IdStore" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
@@ -1250,6 +1258,7 @@
           <EntitySetMapping Name="store">
             <EntityTypeMapping TypeName="CuponeraModel.store">
               <MappingFragment StoreEntitySet="store">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />

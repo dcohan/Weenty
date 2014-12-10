@@ -25,6 +25,7 @@ import com.cuponera.product.OfferFragment;
 import com.cuponera.product.ProductFragment;
 import com.cuponera.settings.Settings;
 import com.cuponera.settings.SettingsFragment;
+import com.cuponera.store.StoreFragment;
 import com.cuponera.stores.StoreFinderFragment;
 import com.cuponera.utils.Const;
 import com.cuponera.utils.LocationServices;
@@ -129,8 +130,8 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 		startFragment(product);
 	}
 
-	public void openProduct(int category) {
-		Fragment product = ProductFragment.newInstance(category);
+	public void openStore(int category) {
+		Fragment product = StoreFragment.newInstance(category);
 		replaceFragment(product, R.id.container, true);
 	}
 

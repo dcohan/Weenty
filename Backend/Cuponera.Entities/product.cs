@@ -32,6 +32,7 @@ namespace Cuponera.Entities
         public int IdCategory { get; set; }
         public string Description { get; set; }
         public int IdStore { get; set; }
+        public Nullable<double> Price { get; set; }
     
         public virtual category category { get; set; }
         public virtual ICollection<images> images { get; set; }

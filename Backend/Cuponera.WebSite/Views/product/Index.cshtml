@@ -40,6 +40,9 @@
                         Titulo
                     </th>
                     <th>
+                        Precio
+                    </th>
+                    <th>
                         Estado
                     </th>
                     <th>
@@ -56,6 +59,9 @@
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
                         </td>
                         <td>
                             @if (item.DeletionDatetime == null && item.Active && item.StartDatetime < DateTime.Now && item.ExpirationDatetime > DateTime.Now)

@@ -65,22 +65,22 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 
 			switch (v.getId()) {
 			case R.id.hotel:
-				getBaseActivity().openProduct(Const.HOTEL);
+				getBaseActivity().openStore(Const.HOTEL);
 				break;
 			case R.id.gastronomic:
-				getBaseActivity().openProduct(Const.GASTRONOMIC);
+				getBaseActivity().openStore(Const.GASTRONOMIC);
 				break;
 			case R.id.coffee:
-				getBaseActivity().openProduct(Const.COFEE);
+				getBaseActivity().openStore(Const.COFEE);
 				break;
 			case R.id.beach:
-				getBaseActivity().openProduct(Const.BEACH);
+				getBaseActivity().openStore(Const.BEACH);
 				break;
 			case R.id.shopping:
-				getBaseActivity().openProduct(Const.SHOPPING);
+				getBaseActivity().openStore(Const.SHOPPING);
 				break;
 			case R.id.cinema:
-				getBaseActivity().openProduct(Const.CINEMA);
+				getBaseActivity().openStore(Const.CINEMA);
 				break;
 			}
 
