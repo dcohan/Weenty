@@ -19,7 +19,7 @@ namespace Cuponera.Backend.Controllers
             return db.GetProductAndOffers(idStore, idCategory);
         }
 
-        // GET: GetProductAndOffers
+        // GET: GetNearestStores
         [HttpGet]
         public List<GetNearestStores> GetNearestStores([FromUri] int idCategory, [FromUri] double Latittud, [FromUri] double Longitude)
         {
