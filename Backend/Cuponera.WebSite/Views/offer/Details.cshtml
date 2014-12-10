@@ -9,72 +9,35 @@
 <div>
     <h4>Oferta</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+    <div class="item-description">
+        <b>Nombre:</b> @Html.DisplayFor(model => model.Title)
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+    <div class="item-description">
+        <b>Fecha de inicio:</b> @Html.DisplayFor(model => model.StartDatetime)
+    </div>
 
-        <dt>
-           @Html.DisplayNameFor(model => model.Active)
-        </dt>
+    <div class="item-description">
+        <b>Fecha de finalización:</b> @Html.DisplayFor(model => model.ExpirationDatetime)
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
+    <div class="item-description">
+        <b>Imagen:</b> @Html.DisplayFor(model => model.ImagePath)
+    </div>
+        <div class="item-description">
+        <b>Estado:</b>
+        @if (Model.DeletionDatetime == null)
+        {
+            <img src="../../Images/tick.ico" alt="active" class="active" />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDatetime)
-        </dt>
+        }
+        else
+        {
+            <img src="../../Images/x.ico" alt="inactive" class="inactive" />
+        }
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.StartDatetime)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ExpirationDatetime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExpirationDatetime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemOrder)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ItemOrder)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDatetime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreationDatetime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModificationDatetime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModificationDatetime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-
-        <dd>
-            <img src="@Html.DisplayFor(modelItem => modelItem.ImagePath)" alt="inactive" class="inactive" />
-        </dd>
-
-    </dl>
 </div>
 <p>
     @Html.ActionLink("Editar", "Edit", new { id = Model.IdOffer }) |
