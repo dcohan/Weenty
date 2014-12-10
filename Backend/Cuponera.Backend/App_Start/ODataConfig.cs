@@ -32,6 +32,7 @@ namespace Cuponera.Backend
             builder.EntitySet<webpages_Roles>("webpages_Roles");
             builder.EntitySet<webpages_OAuthMembership>("webpages_OAuthMembership");
             builder.EntitySet<webpages_Membership>("webpages_Membership");
+            builder.EntitySet<GetNearestStores>("GetNearestStores");
 
             /* Custom rules */
             builder.Entity<category>().Action("Activate");

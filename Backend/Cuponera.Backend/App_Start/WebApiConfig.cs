@@ -15,7 +15,13 @@ namespace Cuponera.Backend
             config.Routes.MapHttpRoute(
               name: "GetProductAndOffers",
               routeTemplate: "GetProductAndOffers",
-              defaults: new { controller = "GetProductAndOffers", action = "Get", }
+              defaults: new { controller = "GetProductAndOffers", action = "GetProductAndOffers", }
+              );
+
+            config.Routes.MapHttpRoute(
+              name: "GetNearestStores",
+              routeTemplate: "GetNearestStores",
+              defaults: new { controller = "GetProductAndOffers", action = "GetNearestStores", }
               );
 
             // Uncomment the following line of code to enable query support for actions with an IQueryable or IQueryable<T> return type.

@@ -18,21 +18,32 @@ namespace Cuponera.Entities
 
         public string OTitle {get;set;}
         public string OImagePath { get; set; }
+    }
 
+    public class GetNearestStores : store
+    {
         public double Distance { get; set; }
     }
 
     public partial class CuponeraEntities 
     {
-        public List<GetProductAndOffers> GetProductAndOffers(int IdStore, int IdCategoria, double Latittud, double Longitude)
+        public List<GetProductAndOffers> GetProductAndOffers(int IdStore, int IdCategoria)
         {
             return Database.SqlQuery<GetProductAndOffers>(
-                    "dbo.GetProductAndOffers @IdStore, @IdCategoria, @Latittud, @Longitude",
+                    "dbo.GetProductAndOffers @IdStore, @IdCategoria",
                     new SqlParameter("IdStore", IdStore),
+                    new SqlParameter("IdCategoria", IdCategoria)
+                ).ToList<GetProductAndOffers>();
+        }
+
+        public List<GetNearestStores> GetNearestStores(int IdCategoria, double Latittud, double Longitude)
+        {
+            return Database.SqlQuery<GetNearestStores>(
+                    "dbo.GetNearestStores @IdCategoria, @Latittud, @Longitude",
                     new SqlParameter("IdCategoria", IdCategoria),
                     new SqlParameter("Latittud", Latittud),
                     new SqlParameter("Longitude", Longitude)
-                ).ToList<GetProductAndOffers>();
+                ).ToList<GetNearestStores>();
         }
     }
 }
