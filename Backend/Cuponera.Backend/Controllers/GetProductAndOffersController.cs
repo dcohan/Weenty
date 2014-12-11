@@ -20,14 +20,17 @@ namespace Cuponera.Backend.Controllers
             var response = new { value = db.GetProductAndOffers(idStore, idCategory) };
 
             return response;
-        }       
+        }
 
 
         // GET: GetNearestStores
         [HttpGet]
-        public List<GetNearestStores> GetNearestStores([FromUri] int idCategory, [FromUri] double Latittud, [FromUri] double Longitude)
+        public object GetNearestStores([FromUri] int idCategory, [FromUri] double Latittud, [FromUri] double Longitude)
         {
-            return db.GetNearestStores(idCategory, Latittud, Longitude);
+            var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
+            var response = new { value = db.GetNearestStores(idCategory, Latittud, Longitude) };
+
+            return response;
         }
 
     }
