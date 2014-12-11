@@ -9,8 +9,6 @@ public enum Endpoint {
 
 	private String apiHost;
 	private String apiProtocol;
-	private String apiHostDGTP;
-	private String apiProtocolDGTP;
 
 	private Endpoint(String apiProtocol, String apiHost) {
 		this.apiProtocol = apiProtocol;
@@ -25,11 +23,4 @@ public enum Endpoint {
 		return apiProtocol;
 	}
 
-	public String getApiHostDGTP() {
-		return apiHostDGTP;
-	}
-
-	public String getApiProtocolDGTP() {
-		return apiProtocolDGTP;
-	}
 }
