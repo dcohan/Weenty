@@ -5,9 +5,9 @@ public class Const {
 
 	public final static int GASTRONOMIC = 1;
 	public final static int HOTEL = 2;
-	public final static int COFEE = 3;
+	public final static int STORE = 3;
 	public final static int BEACH = 4;
-	public final static int SHOPPING = 5;
+	public final static int HIGHLIGHTED = 5;
 	public final static int CINEMA = 6;
 
 }

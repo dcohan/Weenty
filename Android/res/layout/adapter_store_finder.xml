@@ -23,14 +23,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
-                android:textColor="@color/orange_dark"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/cuponera_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_medium"
                 android:textSize="12sp" />
 
             <TextView
@@ -38,7 +36,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:textColor="@color/gray_medium"
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -74,7 +71,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="15dp"
-                    android:textColor="@color/gray_medium"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -102,7 +98,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAllCaps="true"
-            android:textColor="@color/orange_dark"
             android:textSize="14sp" />
 
         <ListView

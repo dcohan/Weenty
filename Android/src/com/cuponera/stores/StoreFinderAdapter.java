@@ -62,8 +62,8 @@ public class StoreFinderAdapter extends BaseListAdapter {
 				String.format(activity.getResources().getString(R.string.store_distance), i.getDistance()));
 		if (i.getDistance() != -1.0) {
 			SpannableStringBuilder sb = new SpannableStringBuilder(mViewProxy.findTextView(R.id.cuponera_distance).getText() + " miles");
-			ForegroundColorSpan fcs = new ForegroundColorSpan(activity.getResources().getColor(R.color.orange_dark));
-			sb.setSpan(fcs, 0, 9, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+			//ForegroundColorSpan fcs = new ForegroundColorSpan(activity.getResources().getColor(R.color.orange_dark));
+		//	sb.setSpan(fcs, 0, 9, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
 			mViewProxy.findTextView(R.id.cuponera_distance).setText(sb);
 			mViewProxy.findTextView(R.id.cuponera_distance).setVisibility(View.VISIBLE);

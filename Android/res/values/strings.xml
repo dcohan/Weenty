@@ -30,10 +30,10 @@
     <string name="menu_home">Inicio</string>
     <string name="menu_admin">Administración</string>
     <string name="menu_hotel">Hoteles</string>
-    <string name="menu_coffee">Cafetería</string>
-    <string name="menu_beach">Playas</string>
-    <string name="menu_cinema">Cines Teatros</string>
-    <string name="menu_shopping">Shopping</string>
+    <string name="menu_store">Tiendas</string>
+    <string name="menu_beach">Balnearios</string>
+    <string name="menu_cinema">Espectaculos</string>
+    <string name="menu_highlighted">Destacados</string>
     <string name="menu_ofertas">Ofertas Especiales</string>
     <string name="menu_grastronomic">Restaurantes</string>
     <string name="menu_stores">Stores</string>

@@ -23,9 +23,12 @@
             android:layout_height="match_parent"
             android:layout_weight="0.44"
             android:background="@drawable/rectangle_corner_round"
+            android:drawableBottom="@drawable/ic_action_ticket"
             android:gravity="center"
             android:text="@string/menu_hotel"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/home_text_size"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="0dp"
@@ -38,9 +41,12 @@
             android:layout_height="match_parent"
             android:layout_weight="0.44"
             android:background="@drawable/rectangle_corner_round"
+            android:drawableBottom="@drawable/ic_action_restaurant"
             android:gravity="center"
             android:text="@string/menu_grastronomic"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/home_text_size"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <View
@@ -57,14 +63,17 @@
         android:textColor="@color/white" >
 
         <TextView
-            android:id="@+id/coffee"
+            android:id="@+id/store"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.44"
             android:background="@drawable/rectangle_corner_round"
+            android:drawableBottom="@drawable/shopping_bag"
             android:gravity="center"
-            android:text="@string/menu_coffee"
-            android:textColor="@color/white" />
+            android:text="@string/menu_store"
+            android:textColor="@color/white"
+            android:textSize="@dimen/home_text_size"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="0dp"
@@ -77,9 +86,12 @@
             android:layout_height="match_parent"
             android:layout_weight="0.44"
             android:background="@drawable/rectangle_corner_round"
+            android:drawableBottom="@drawable/balnearios"
             android:gravity="center"
             android:text="@string/menu_beach"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/home_text_size"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <View
@@ -95,14 +107,17 @@
         android:padding="10dp" >
 
         <TextView
-            android:id="@+id/shopping"
+            android:id="@+id/cinema"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.44"
             android:background="@drawable/rectangle_corner_round"
+            android:drawableBottom="@drawable/espectaculos_usuarios"
             android:gravity="center"
-            android:text="@string/menu_shopping"
-            android:textColor="@color/white" />
+            android:text="@string/menu_cinema"
+            android:textColor="@color/white"
+            android:textSize="@dimen/home_text_size"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="0dp"
@@ -110,14 +125,17 @@
             android:layout_weight="0.12" />
 
         <TextView
-            android:id="@+id/cinema"
+            android:id="@+id/highlighted"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.44"
-            android:background="@drawable/rectangle_corner_round"
+            android:background="@drawable/rectangle_corner_round_orange"
+            android:drawableBottom="@drawable/destacados"
             android:gravity="center"
-            android:text="@string/menu_cinema"
-            android:textColor="@color/white" />
+            android:text="@string/menu_highlighted"
+            android:textColor="@color/white"
+            android:textSize="@dimen/home_text_size"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <View

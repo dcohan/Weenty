@@ -12,10 +12,10 @@
         <TextView
             android:id="@+id/headerTitle"
             style="@style/HeaderText"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="40dp"
             android:text="" />
 
         <LinearLayout
@@ -47,7 +47,7 @@
                 android:contentDescription="@string/unknown"
                 android:padding="10dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/homeicon"
+                android:src="@drawable/ic_action_cloudy"
                 android:visibility="gone" />
 
             <ImageView
@@ -58,7 +58,7 @@
                 android:contentDescription="@string/unknown"
                 android:padding="10dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/homeicon" />
+                android:src="@drawable/ic_action_cloudy" />
         </LinearLayout>
     </RelativeLayout>
 

@@ -79,7 +79,6 @@
                 android:inputType="number"
                 android:maxLength="5"
                 android:textColor="@color/gray_dark"
-                android:textColorHint="@color/gray_hints"
                 android:textSize="@dimen/forms_text_size" />
         </LinearLayout>
 
@@ -146,7 +145,6 @@
                     android:hint="@string/enter_city"
                     android:singleLine="true"
                     android:textColor="@color/gray_dark"
-                    android:textColorHint="@color/gray_hints"
                     android:textSize="@dimen/forms_text_size" />
 
                 <Spinner

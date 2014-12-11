@@ -144,11 +144,5 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 		getBaseActivity().onPreferenceButton();
 		
 	}
-	
-	public void showHomeButton(boolean show) {
-		mViewProxy.findImageView(R.id.homeButton).setVisibility((show) ? View.VISIBLE : View.GONE);
-	}
-
-
 
 }

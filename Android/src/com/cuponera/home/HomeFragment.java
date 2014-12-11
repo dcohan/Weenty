@@ -52,9 +52,9 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 		}
 		mViewProxy.findTextView(R.id.hotel).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.gastronomic).setOnClickListener(dashboardListener);
-		mViewProxy.findTextView(R.id.coffee).setOnClickListener(dashboardListener);
+		mViewProxy.findTextView(R.id.store).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.beach).setOnClickListener(dashboardListener);
-		mViewProxy.findTextView(R.id.shopping).setOnClickListener(dashboardListener);
+		mViewProxy.findTextView(R.id.highlighted).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.cinema).setOnClickListener(dashboardListener);
 	}
 
@@ -70,14 +70,14 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 			case R.id.gastronomic:
 				getBaseActivity().openStore(Const.GASTRONOMIC);
 				break;
-			case R.id.coffee:
-				getBaseActivity().openStore(Const.COFEE);
+			case R.id.store:
+				getBaseActivity().openStore(Const.STORE);
 				break;
 			case R.id.beach:
 				getBaseActivity().openStore(Const.BEACH);
 				break;
-			case R.id.shopping:
-				getBaseActivity().openStore(Const.SHOPPING);
+			case R.id.highlighted:
+				getBaseActivity().openStore(Const.HIGHLIGHTED);
 				break;
 			case R.id.cinema:
 				getBaseActivity().openStore(Const.CINEMA);

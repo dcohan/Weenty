@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.cuponera.R;
 
 public class Validator {
 
@@ -121,7 +120,7 @@ public class Validator {
 				case SpecialCharacters:
 					if (!ValidationUtils.validateSpecialCharacters(text)) {
 						valid = false;
-						textView.setTextColor(context.getResources().getColor(R.color.red));
+						textView.setTextColor(context.getResources().getColor(Color.RED));
 					}
 				case DistinctToString:
 					if (input.validationString != null && input.validationString.equalsIgnoreCase(text)) {

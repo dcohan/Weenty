@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1dp"
-            android:drawableLeft="@drawable/home_drop"
+            android:drawableLeft="@drawable/ic_action_home"
             android:text="@string/menu_home" />
 
         <Button
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1dp"
-            android:drawableLeft="@drawable/shop_drop"
+            android:drawableLeft="@drawable/ic_action_home"
             android:text="@string/menu_admin" />
 
         <Button
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1dp"
-            android:drawableLeft="@drawable/coupons_drop"
+            android:drawableLeft="@drawable/destacados"
             android:text="@string/menu_ofertas" />
 
         <Button
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1dp"
-            android:drawableLeft="@drawable/social_drop"
+            android:drawableLeft="@drawable/ic_action_restaurant"
             android:text="@string/menu_grastronomic" />
 
         <Button
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1dp"
-            android:drawableLeft="@drawable/stores_drop"
+            android:drawableLeft="@drawable/balnearios"
             android:text="@string/menu_stores" />
 
         <Button
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1dp"
-            android:drawableLeft="@drawable/settings_drop"
+            android:drawableLeft="@drawable/search"
             android:text="@string/menu_more" />
 
         <Button
@@ -69,7 +69,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/settings_drop"
+            android:drawableLeft="@drawable/ic_action_gear"
             android:text="@string/menu_settings" />
     </LinearLayout>
 
