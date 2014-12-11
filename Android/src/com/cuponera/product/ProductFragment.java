@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
-import com.cuponera.model.IProduct;
+import com.cuponera.model.Product;
 import com.cuponera.model.Store;
 import com.cuponera.service.product.ProductRequest;
 
@@ -19,7 +19,7 @@ public class ProductFragment extends BaseFragment {
 	private static final String ARGS_STORE = "args_store";
 	private ProductAdapter adapter;
 	private Store store;
-	private ArrayList<? extends IProduct> products;
+	private ArrayList<Product> products;
 
 	@Override
 	protected int getLayout() {
@@ -66,7 +66,7 @@ public class ProductFragment extends BaseFragment {
 	}
 
 	private void fillAdapter() {
-		adapter = new ProductAdapter(getBaseActivity(), products);
+		adapter = new ProductAdapter(getBaseActivity(), products, store);
 		adapter.notifyDataSetChanged();
 		mViewProxy.findListView(R.id.product_listview).setAdapter(adapter);
 

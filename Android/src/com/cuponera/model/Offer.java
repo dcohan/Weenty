@@ -2,20 +2,20 @@ package com.cuponera.model;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class Offer extends BaseModel implements IProduct {
+public class Offer extends BaseModel {
 
 	@JsonProperty("Title")
 	private String title;
-	
+
 	@JsonProperty("product")
 	private Product product;
-	
+
 	@JsonProperty("Description")
 	private String description;
-	
+
 	@JsonProperty("IdProduct")
 	private Integer idProduct;
-	
+
 	@JsonProperty("ImagePath")
 	private String imagePath;
 
@@ -51,10 +51,6 @@ public class Offer extends BaseModel implements IProduct {
 		this.imagePath = imagePath;
 	}
 
-	public Company getCompany() {
-		return product.getCompany();
-	}
-
 	public Product getProduct() {
 		return product;
 	}
@@ -62,5 +58,5 @@ public class Offer extends BaseModel implements IProduct {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
+
 }

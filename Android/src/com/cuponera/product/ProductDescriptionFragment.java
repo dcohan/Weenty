@@ -10,7 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
-import com.cuponera.model.IProduct;
+import com.cuponera.model.Product;
 import com.twotoasters.android.horizontalimagescroller.image.ImageToLoad;
 import com.twotoasters.android.horizontalimagescroller.image.ImageToLoadDrawableResource;
 import com.twotoasters.android.horizontalimagescroller.image.ImageToLoadUrl;
@@ -20,14 +20,14 @@ import com.twotoasters.android.horizontalimagescroller.widget.HorizontalImageScr
 public class ProductDescriptionFragment extends BaseFragment {
 
 	private static final String ARGS_PRODUCT = "args_id_category";
-	private IProduct iProduct;
+	private Product product;
 
 	@Override
 	protected int getLayout() {
 		return R.layout.fragment_product_description;
 	}
 
-	public static ProductDescriptionFragment newInstance(IProduct p) {
+	public static ProductDescriptionFragment newInstance(Product p) {
 
 		ProductDescriptionFragment fragment = new ProductDescriptionFragment();
 		Bundle b = fragment.getArguments();
@@ -42,10 +42,10 @@ public class ProductDescriptionFragment extends BaseFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		iProduct = getArguments().getParcelable(ARGS_PRODUCT);
-		mViewProxy.findTextView(R.id.product_company).setText(iProduct.getCompany().getName());
-		mViewProxy.findTextView(R.id.product_name).setText(iProduct.getTitle());
-		mViewProxy.findTextView(R.id.product_description).setText(iProduct.getDescription());
+		product = getArguments().getParcelable(ARGS_PRODUCT);
+		// mViewProxy.findTextView(R.id.product_company).setText(iProduct.getCompany().getName());
+		mViewProxy.findTextView(R.id.product_name).setText(product.getpTitle());
+		mViewProxy.findTextView(R.id.product_description).setText(product.getpDescription());
 		ArrayList<ImageToLoad> images = new ArrayList<ImageToLoad>();
 		for (int i = 0; i < 20; i++) {
 			images.add(new ImageToLoadUrl("https://www.google.com.ar/images/google_favicon_128.png"));

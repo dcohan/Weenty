@@ -23,8 +23,8 @@ public class OfferFragment extends BaseFragment {
 			@Override
 			public void onServiceReturned(com.cuponera.service.offer.OfferResponse result) {
 				if (result != null) {
-					ProductAdapter adapter = new ProductAdapter(getBaseActivity(), result.getOffers());
-					mViewProxy.findListView(R.id.product_listview).setAdapter(adapter);
+				//	ProductAdapter adapter = new ProductAdapter(getBaseActivity(), result.getOffers());
+				//	mViewProxy.findListView(R.id.product_listview).setAdapter(adapter);
 				}
 			}
 		};

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import com.cuponera.model.IProduct;
 import com.cuponera.model.Offer;
 import com.cuponera.service.BaseResponse;
 
@@ -15,8 +14,8 @@ public class OfferResponse extends BaseResponse {
 	@JsonProperty("value")
 	private ArrayList<Offer> offer;
 
-	public ArrayList<? extends IProduct> getOffers() {
-		return (ArrayList<? extends IProduct>)offer;
+	public ArrayList<Offer> getOffers() {
+		return offer;
 	}
 
 	public void setOffers(ArrayList<Offer> offer) {

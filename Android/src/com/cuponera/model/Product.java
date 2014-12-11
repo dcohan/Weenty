@@ -2,61 +2,105 @@ package com.cuponera.model;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class Product extends BaseModel implements IProduct {
+public class Product extends BaseModel {
 
-	@JsonProperty("Title")
-	private String title;
-	
-	@JsonProperty("company")
-	private Company company;
-	
-	@JsonProperty("Description")
-	private String description;
-	
+	@JsonProperty("PTitle")
+	private String pTitle;
+
+	@JsonProperty("PImagePath")
+	private String pImagePath;
+
+	@JsonProperty("PDescription")
+	private String pDescription;
+
+	@JsonProperty("OTitle")
+	private String oTitle;
+
+	@JsonProperty("OImagePath")
+	private String oImagePath;
+
+	@JsonProperty("PPrice")
+	private double pPrice;
+
+	@JsonProperty("OPrice")
+	private double oPrice;
+
 	@JsonProperty("IdProduct")
-	private Integer idProduct;
-	
-	@JsonProperty("ImagePath")
-	private String imagePath;
+	private double idProduct;
 
-	public String getTitle() {
-		return title;
+	@JsonProperty("IdOffer")
+	private double idOffer;
+
+	public String getpTitle() {
+		return pTitle;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setpTitle(String pTitle) {
+		this.pTitle = pTitle;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getpImagePath() {
+		return pImagePath;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setpImagePath(String pImagePath) {
+		this.pImagePath = pImagePath;
 	}
 
-	public Integer getIdProduct() {
+	public String getpDescription() {
+		return pDescription;
+	}
+
+	public void setpDescription(String pDescription) {
+		this.pDescription = pDescription;
+	}
+
+	public String getoTitle() {
+		return oTitle;
+	}
+
+	public void setoTitle(String oTitle) {
+		this.oTitle = oTitle;
+	}
+
+	public String getoImagePath() {
+		return oImagePath;
+	}
+
+	public void setoImagePath(String oImagePath) {
+		this.oImagePath = oImagePath;
+	}
+
+	public double getpPrice() {
+		return pPrice;
+	}
+
+	public void setpPrice(double pPrice) {
+		this.pPrice = pPrice;
+	}
+
+	public double getoPrice() {
+		return oPrice;
+	}
+
+	public void setoPrice(double oPrice) {
+		this.oPrice = oPrice;
+	}
+
+	public double getIdProduct() {
 		return idProduct;
 	}
 
-	public void setIdProduct(Integer idProduct) {
+	public void setIdProduct(double idProduct) {
 		this.idProduct = idProduct;
 	}
 
-	public String getImagePath() {
-		return imagePath;
+	public double getIdOffer() {
+		return idOffer;
 	}
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+	public void setIdOffer(double idOffer) {
+		this.idOffer = idOffer;
 	}
 
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-	
 }

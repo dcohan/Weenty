@@ -12,12 +12,17 @@ namespace Cuponera.Entities
 {
     public class GetProductAndOffers
     {
-        public string PTitle {get;set;}
-        public string PImagePath {get;set;}
-        public string PDescription {get;set;}
+        public int IdProduct { get; set; }
+        public string PTitle { get; set; }
+        public string PImagePath { get; set; }
+        public string PDescription { get; set; }
+        public double PPrice { get; set; }
 
-        public string OTitle {get;set;}
+        public int IdOffer { get; set; }
+        public string OTitle { get; set; }
         public string OImagePath { get; set; }
+        public double OPrice { get; set; }
+
     }
 
     public class GetNearestStores : store
@@ -25,7 +30,7 @@ namespace Cuponera.Entities
         public double Distance { get; set; }
     }
 
-    public partial class CuponeraEntities 
+    public partial class CuponeraEntities
     {
         public List<GetProductAndOffers> GetProductAndOffers(int IdStore, int IdCategoria)
         {
