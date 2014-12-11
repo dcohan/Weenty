@@ -14,10 +14,14 @@ namespace Cuponera.Backend.Controllers
 
         // GET: GetProductAndOffers
         [HttpGet]
-        public List<GetProductAndOffers> GetProductAndOffers([FromUri] int idStore, [FromUri] int idCategory)
+        public object GetProductAndOffers([FromUri] int idStore, [FromUri] int idCategory)
         {
-            return db.GetProductAndOffers(idStore, idCategory);
-        }
+            var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
+            var response = new { value = db.GetProductAndOffers(idStore, idCategory) };
+
+            return response;
+        }       
+
 
         // GET: GetNearestStores
         [HttpGet]
