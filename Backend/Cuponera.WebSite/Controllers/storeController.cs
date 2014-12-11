@@ -77,16 +77,16 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdCategory,Name,CreationDatetime,ModificationDatetime,DeletionDatetime")] category category)
+        public async Task<ActionResult> Create([Bind(Include = "IdCategory,Name,Address,ContactNumber,Latitude,Longitude,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,CreationDatetime,ModificationDatetime,DeletionDatetime")] store store)
         {
             if (ModelState.IsValid)
             {
-                db.category.Add(category);
+                db.store.Add(store);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(store);
         }
 
         // GET: store/Edit/5
