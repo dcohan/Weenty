@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.cuponera.BaseActivity;
 import com.cuponera.R;
 import com.cuponera.model.Category;
-import com.cuponera.product.ProductFragment;
+import com.cuponera.store.StoreFragment;
 import com.cuponera.utils.BaseListAdapter;
 import com.cuponera.utils.ViewProxy;
 
@@ -41,7 +41,7 @@ public class MoreAdapter extends BaseListAdapter {
 			@Override
 			public void onClick(View v) {
 				FragmentTransaction transaction = ((BaseActivity) activity).getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container, ProductFragment.newInstance(c.getId()));
+				transaction.replace(R.id.container, StoreFragment.newInstance(c.getId()));
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}

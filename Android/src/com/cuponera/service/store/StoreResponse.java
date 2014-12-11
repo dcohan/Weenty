@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import com.cuponera.model.IProduct;
-import com.cuponera.model.Product;
+import com.cuponera.model.Store;
 import com.cuponera.service.BaseResponse;
 
 public class StoreResponse extends BaseResponse {
@@ -13,15 +12,15 @@ public class StoreResponse extends BaseResponse {
 	private static final long serialVersionUID = -4029237294641698732L;
 
 	@JsonProperty("value")
-	private ArrayList<Product> product;
+	private ArrayList<Store> store;
 
-	public ArrayList<? extends IProduct> getProducts() {
-		return (ArrayList<? extends IProduct>)product;
+	public ArrayList<Store> getStore() {
+		return store;
 	}
 
-	public void setProducts(ArrayList<Product> product) {
-		this.product = product;
+	public void setStore(ArrayList<Store> store) {
+		this.store = store;
 	}
-
+	
 
 }

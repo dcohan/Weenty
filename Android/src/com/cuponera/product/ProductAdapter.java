@@ -29,7 +29,7 @@ public class ProductAdapter extends BaseListAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewProxy mViewProxy = new ViewProxy(activity, R.layout.adapter_product);
+		ViewProxy mViewProxy = new ViewProxy(activity, R.layout.adapter_product, false);
 		final IProduct p = (IProduct) product.get(position);
 		Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.product_image), p.getImagePath());
 		mViewProxy.findTextView(R.id.product_company).setText(p.getCompany().getName());

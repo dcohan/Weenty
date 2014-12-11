@@ -36,13 +36,20 @@ public class ViewProxy {
 	private LayoutInflater mInflater;
 	private View mView;
 
-	public ViewProxy(Context context, int layoutId){
+	public ViewProxy(Context context, int layoutId) {
 		mContext = context;
 		mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mView = mInflater.inflate(layoutId, null);
 	}
 
-	public ViewProxy(Context context, int layoutId, ViewGroup parent){
+	public ViewProxy(Context context, int layoutId, boolean rootNode) {
+		mContext = context;
+		mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+		mView = mInflater.inflate(layoutId, null, rootNode);
+	}
+
+	public ViewProxy(Context context, int layoutId, ViewGroup parent) {
 		mContext = context;
 		mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mView = mInflater.inflate(layoutId, parent);
@@ -50,51 +57,52 @@ public class ViewProxy {
 
 	/**
 	 * Utiliza la vista pasada como parametro, no infla una nueva vista.
+	 * 
 	 * @param context
 	 * @param view
 	 */
-	public ViewProxy(Context context, View view){
+	public ViewProxy(Context context, View view) {
 		mContext = context;
 		mView = view;
 	}
 
-	public Button findButton(int id){
-		return (Button)mView.findViewById(id);
+	public Button findButton(int id) {
+		return (Button) mView.findViewById(id);
 	}
-	
+
 	public CheckBox findCheckBox(int id) {
 		return (CheckBox) mView.findViewById(id);
 	}
 
-	public EditText findEditText(int id){
-		return (EditText)mView.findViewById(id);
+	public EditText findEditText(int id) {
+		return (EditText) mView.findViewById(id);
 	}
 
-	public FrameLayout findFrameLayout(int id){
+	public FrameLayout findFrameLayout(int id) {
 		return (FrameLayout) mView.findViewById(id);
 	}
-	
-	public TableRow findTableRow(int id){
+
+	public TableRow findTableRow(int id) {
 		return (TableRow) mView.findViewById(id);
 	}
 
-	public RelativeLayout findRelativeLayout(int id){
+	public RelativeLayout findRelativeLayout(int id) {
 		return (RelativeLayout) mView.findViewById(id);
 	}
 
 	public GridView findGridView(int id) {
 		return (GridView) mView.findViewById(id);
 	}
-	
-	public ImageButton findImageButton(int id){
-		return (ImageButton)mView.findViewById(id);
+
+	public ImageButton findImageButton(int id) {
+		return (ImageButton) mView.findViewById(id);
 	}
 
 	public ImageView findImageView(int id) {
 		return (ImageView) mView.findViewById(id);
 	}
 
-	public LinearLayout findLinearLayout(int id){
+	public LinearLayout findLinearLayout(int id) {
 		return (LinearLayout) mView.findViewById(id);
 	}
 
@@ -109,16 +117,16 @@ public class ViewProxy {
 	public ProgressBar findProgressBar(int id) {
 		return (ProgressBar) mView.findViewById(id);
 	}
-	
-	public RadioButton findRadioButton(int id){
+
+	public RadioButton findRadioButton(int id) {
 		return (RadioButton) mView.findViewById(id);
 	}
 
-	public RadioGroup findRadioGroup(int id){
+	public RadioGroup findRadioGroup(int id) {
 		return (RadioGroup) mView.findViewById(id);
 	}
 
-	public RatingBar findRatingBar(int id){
+	public RatingBar findRatingBar(int id) {
 		return (RatingBar) mView.findViewById(id);
 	}
 
@@ -126,47 +134,47 @@ public class ViewProxy {
 		return (ScrollView) mView.findViewById(id);
 	}
 
-	public Spinner findSpinner(int id){
-		return (Spinner)mView.findViewById(id);
+	public Spinner findSpinner(int id) {
+		return (Spinner) mView.findViewById(id);
 	}
 
-	public TextView findTextView(int id){
-		return (TextView)mView.findViewById(id);
+	public TextView findTextView(int id) {
+		return (TextView) mView.findViewById(id);
 	}
 
 	public ToggleButton findToggleButton(int id) {
 		return (ToggleButton) mView.findViewById(id);
 	}
 
-	public View findView(int id){
+	public View findView(int id) {
 		return mView.findViewById(id);
 	}
 
-	public ViewGroup findViewGroup(int id){
-		return (ViewGroup)mView.findViewById(id);
+	public ViewGroup findViewGroup(int id) {
+		return (ViewGroup) mView.findViewById(id);
 	}
 
-	public ViewPager findViewPager(int id){
-		return (ViewPager)mView.findViewById(id);
+	public ViewPager findViewPager(int id) {
+		return (ViewPager) mView.findViewById(id);
 	}
 
-	public ViewStub findViewStub(int id){
-		return (ViewStub)mView.findViewById(id);
+	public ViewStub findViewStub(int id) {
+		return (ViewStub) mView.findViewById(id);
 	}
 
-	public ViewSwitcher findViewSwitcher(int id){
-		return (ViewSwitcher)mView.findViewById(id);
+	public ViewSwitcher findViewSwitcher(int id) {
+		return (ViewSwitcher) mView.findViewById(id);
 	}
 
-	public WebView findWebView(int id){
+	public WebView findWebView(int id) {
 		return (WebView) mView.findViewById(id);
 	}
 
-	public View getView(){
+	public View getView() {
 		return mView;
 	}
 
-	public void setOnClickListener(int id, OnClickListener listener){
+	public void setOnClickListener(int id, OnClickListener listener) {
 		findView(id).setOnClickListener(listener);
 	}
 
@@ -174,7 +182,7 @@ public class ViewProxy {
 		findTextView(id).setText(text);
 	}
 
-	public void setText(int id, int resId){
+	public void setText(int id, int resId) {
 		findTextView(id).setText(mContext.getString(resId));
 	}
 
@@ -182,11 +190,11 @@ public class ViewProxy {
 		findTextView(id).setText(text);
 	}
 
-	public void setViewVisibility(int id, boolean visible){
+	public void setViewVisibility(int id, boolean visible) {
 		findView(id).setVisibility(visible ? View.VISIBLE : View.GONE);
 	}
 
-	public void setVisibility(int id, boolean visible){
+	public void setVisibility(int id, boolean visible) {
 		findView(id).setVisibility(visible ? View.VISIBLE : View.GONE);
 	}
 }

@@ -1,15 +1,24 @@
 package com.cuponera.store;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
+import com.cuponera.model.Store;
+import com.cuponera.product.ProductFragment;
 import com.cuponera.service.store.StoreRequest;
 import com.cuponera.service.store.StoreResponse;
 
 public class StoreFragment extends BaseFragment {
 
 	private static final String ARGS_ID_CATEGORY = "args_id_category";
+	private ArrayList<Store> store;
+	private StoreAdapter adapter;
 
 	@Override
 	protected int getLayout() {
@@ -36,11 +45,36 @@ public class StoreFragment extends BaseFragment {
 			@Override
 			public void onServiceReturned(StoreResponse result) {
 				if (result != null) {
+					store = result.getStore();
+					fillAdapter();
 				}
 			}
 		};
 		request.setIdCategory(getArguments().getInt(ARGS_ID_CATEGORY));
 		request.execute(false);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (adapter != null)
+			fillAdapter();
+	}
+
+	private void fillAdapter() {
+		adapter = new StoreAdapter(getBaseActivity(), store);
+		adapter.notifyDataSetChanged();
+		mViewProxy.findListView(R.id.product_listview).setAdapter(adapter);
+
+		mViewProxy.findListView(R.id.product_listview).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
+				transaction.replace(R.id.container, ProductFragment.newInstance(getArguments().getInt(ARGS_ID_CATEGORY), store.get(position)));
+				transaction.addToBackStack(null);
+				transaction.commit();
+			}
+		});
 	}
 
 }

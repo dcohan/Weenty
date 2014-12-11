@@ -22,7 +22,6 @@ import com.cuponera.more.MoreFragment;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.navigation.NavBarFragment;
 import com.cuponera.product.OfferFragment;
-import com.cuponera.product.ProductFragment;
 import com.cuponera.settings.Settings;
 import com.cuponera.settings.SettingsFragment;
 import com.cuponera.store.StoreFragment;
@@ -126,7 +125,7 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	@Override
 	public void onGastronomic() {
-		Fragment product = ProductFragment.newInstance(Const.GASTRONOMIC);
+		Fragment product = StoreFragment.newInstance(Const.GASTRONOMIC);
 		startFragment(product);
 	}
 
