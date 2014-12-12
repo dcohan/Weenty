@@ -14,8 +14,9 @@
             android:id="@+id/menuButtonHome"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginBottom="1dp"
+            android:layout_weight="14"
             android:drawableLeft="@drawable/ic_action_home"
             android:text="@string/menu_home" />
 
@@ -23,17 +24,19 @@
             android:id="@+id/menuButtonAdmin"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginBottom="1dp"
-            android:drawableLeft="@drawable/ic_action_home"
+            android:layout_weight="14"
+            android:drawableLeft="@drawable/ic_action_key"
             android:text="@string/menu_admin" />
 
         <Button
             android:id="@+id/menuOfertas"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginBottom="1dp"
+            android:layout_weight="14"
             android:drawableLeft="@drawable/destacados"
             android:text="@string/menu_ofertas" />
 
@@ -41,26 +44,19 @@
             android:id="@+id/menuButtonGastronomic"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginBottom="1dp"
+            android:layout_weight="14"
             android:drawableLeft="@drawable/ic_action_restaurant"
             android:text="@string/menu_grastronomic" />
-
-        <Button
-            android:id="@+id/menuButtonStores"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
-            android:drawableLeft="@drawable/balnearios"
-            android:text="@string/menu_stores" />
 
         <Button
             android:id="@+id/menuButtonMore"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginBottom="1dp"
+            android:layout_weight="14"
             android:drawableLeft="@drawable/search"
             android:text="@string/menu_more" />
 
@@ -68,7 +64,8 @@
             android:id="@+id/menuButtonSettings"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="14"
             android:drawableLeft="@drawable/ic_action_gear"
             android:text="@string/menu_settings" />
     </LinearLayout>

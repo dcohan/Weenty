@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
-import com.cuponera.helpers.AnalyticsHelper;
-import com.cuponera.model.Item;
+import com.cuponera.model.Store;
 import com.cuponera.navigation.HeaderImageInterface;
 import com.cuponera.navigation.HeaderInterface;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,12 +22,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GoogleMapFragment extends BaseFragment implements HeaderInterface {
 
-	private Item item;
+	private Store item;
 	private static final String ARGS_ITEM = "args_item";
 	private MapView mapView;
 	private GoogleMap map;
 
-	public static GoogleMapFragment newInstance(Item item) {
+	public static GoogleMapFragment newInstance(Store item) {
 
 		GoogleMapFragment fragment = new GoogleMapFragment();
 		Bundle b = fragment.getArguments();
@@ -44,7 +43,6 @@ public class GoogleMapFragment extends BaseFragment implements HeaderInterface {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		AnalyticsHelper.logEvent(AnalyticsHelper.MAP_SCREEN);
 		MapsInitializer.initialize(getActivity());
 	}
 
@@ -59,7 +57,7 @@ public class GoogleMapFragment extends BaseFragment implements HeaderInterface {
 
 		item = getArguments().getParcelable(ARGS_ITEM);
 
-		LatLng mapCenter = new LatLng(item.getLocation().getLatitude(), item.getLocation().getLongitude());
+		LatLng mapCenter = new LatLng(item.getLatitude(), item.getLongitude());
 
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(mapCenter, 13));
 
@@ -67,9 +65,8 @@ public class GoogleMapFragment extends BaseFragment implements HeaderInterface {
 
 		map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 2000, null);
 
-		map.addMarker(new MarkerOptions().position(mapCenter).title(item.getName().toUpperCase())
-				.snippet(item.getAddress() + ", " + item.getCity() + ", " + item.getState().toUpperCase())
-				.icon(BitmapDescriptorFactory.fromResource(R.drawable.pushpin)));
+		map.addMarker(new MarkerOptions().position(mapCenter).title(item.getName().toUpperCase()).snippet(item.getAddress())
+				.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_location)));
 		return v;
 	}
 

@@ -15,7 +15,6 @@ import com.cuponera.admin.AdminFragment;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.event.EventListener;
-import com.cuponera.helpers.AnalyticsHelper;
 import com.cuponera.home.HomeActivity;
 import com.cuponera.home.HomeFragment;
 import com.cuponera.more.MoreFragment;
@@ -25,7 +24,6 @@ import com.cuponera.product.OfferFragment;
 import com.cuponera.settings.Settings;
 import com.cuponera.settings.SettingsFragment;
 import com.cuponera.store.StoreFragment;
-import com.cuponera.stores.StoreFinderFragment;
 import com.cuponera.utils.Const;
 import com.cuponera.utils.LocationServices;
 import com.cuponera.utils.WebViewWithHeaderFragment;
@@ -107,7 +105,6 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	@Override
 	public void onHomeButton() {
-		AnalyticsHelper.logEvent(AnalyticsHelper.HOME_SCREEN);
 		startFragment(new HomeFragment());
 	}
 
@@ -132,12 +129,6 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	public void openStore(int category) {
 		Fragment product = StoreFragment.newInstance(category);
 		replaceFragment(product, R.id.container, true);
-	}
-
-	@Override
-	public void onStoresButton() {
-		startFragment(new StoreFinderFragment());
-
 	}
 
 	@Override

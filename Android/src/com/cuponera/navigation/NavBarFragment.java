@@ -130,11 +130,6 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 	}
 
 	@Override
-	public void onStoresButton() {
-		getBaseActivity().onStoresButton();
-	}
-
-	@Override
 	public void onMoreButton() {
 		getBaseActivity().onMoreButton();
 	}
