@@ -6,15 +6,10 @@
 
 <script type="text/javascript">
     var globals = {
-        controller: 'category',
+        controller: 'store',
         filters: {
             include: ['all'],
             custom: [{
-                controlType: 'text',
-                controlId: 'name',
-                controlDefaultValue: '@(Request.Params["name"] != null ? @Request.Params["name"] : "")',
-                label: 'Nombre'
-            }, {
                 controlType: 'select',
                 controlId: 'company',
                 controlDefaultValue: '@(Request.Params["company"] != null ? @Request.Params["company"] : "")',
@@ -22,6 +17,21 @@
                 source: {
                     include_all: true,
                     controller: 'company',
+                    action: 'GetAllBasicData'
+                }
+            }, {
+                controlType: 'text',
+                controlId: 'name',
+                controlDefaultValue: '@(Request.Params["name"] != null ? @Request.Params["name"] : "")',
+                label: 'Nombre'
+            }, {
+                controlType: 'select',
+                controlId: 'state',
+                controlDefaultValue: '@(Request.Params["state"] != null ? @Request.Params["state"] : "")',
+                label: 'Ciudad',
+                source: {
+                    include_all: true,
+                    controller: 'state',
                     action: 'GetAllBasicData'
                 }
             }]
@@ -47,13 +57,13 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.company.Name)
+                            Empresa
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.Name)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.state.Name)
+                            Ciudad
                         </th>
                         <th>
                             Estado
@@ -104,6 +114,8 @@
             </table>
             @Html.Partial("Paginator")
         </div>
+
+    <div style="clear:both;"></div>
     }
 
     <p>
