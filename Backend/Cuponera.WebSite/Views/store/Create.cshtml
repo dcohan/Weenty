@@ -32,6 +32,7 @@
         });
 
         $('[type=submit]').click(function () {
+            /*
             $('#validation_coordinates').removeClass('field-validation-error')
                        .addClass('field-validation-valid');
 
@@ -40,6 +41,7 @@
                        .addClass('field-validation-error');
                 return false;
             }
+            */
         });
     });
 </script>
@@ -70,19 +72,6 @@
             </div>
         </div>
 
-        <div class="float-left" id="googleMap" style="width:500px;height:380px;"></div>
-
-        <div class="advertising float-right">
-            Importante: Necesitamos que localices el local en el mapa para poder tener una mejor ubicación del mismo y que de esta forma puedas aprovechar al máximo la aplicación.
-            <br />
-            Se podrá realizar una sola búsqueda en base a tu dirección. Una vez hecha deberás seleccionarla en el mapa.
-        </div>
-        @Html.HiddenFor(model => model.Latitude, htmlAttributes: new { @id = "latitude" })
-        @Html.HiddenFor(model => model.Longitude, htmlAttributes: new { @id = "longitude" })
-
-        <div style="clear:both;"></div>
-        <span class="text-danger field-validation-valid" id="validation_coordinates"><span id="location-error" class="">Debe ingresar las coordenadas.</span></span>
-    
 
         <div class="form-group">
             @Html.LabelFor(model => model.Address, "Dirección", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -103,8 +92,24 @@
                    htmlAttributes: new { @id = "states" })
             </div>
         </div>
-        <input type="button" id="search" value="Buscar dirección" />
 
+        <div class="form-group">
+            <input type="button" id="search" value="Ubicar dirección" />
+        </div>
+
+
+        <div class="float-left map" id="googleMap"></div>
+
+        <div class="advertising float-right">
+            Importante: Necesitamos que localices el local en el mapa para poder tener una mejor ubicación del mismo y que de esta forma puedas aprovechar al máximo la aplicación.
+            <br />
+            Se podrá realizar una sola búsqueda en base a tu dirección. Una vez hecha deberás seleccionarla en el mapa.
+        </div>
+        @Html.HiddenFor(model => model.Latitude, htmlAttributes: new { @id = "latitude" })
+        @Html.HiddenFor(model => model.Longitude, htmlAttributes: new { @id = "longitude" })
+
+        <div style="clear:both;"></div>
+        <span class="text-danger field-validation-valid" id="validation_coordinates"><span id="location-error" class="">Debe ingresar las coordenadas.</span></span>
 
         <div class="form-group">
             @Html.LabelFor(model => model.ZipCode, "Código postal", htmlAttributes: new { @class = "control-label col-md-2" })

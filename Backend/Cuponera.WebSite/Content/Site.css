@@ -836,3 +836,14 @@ tr.pager td {
     max-width: 400px;
     padding: 5px;
 }
+
+.map {
+    height:380px;
+    margin-top: 10px;
+    width:500px;
+}
+
+select {
+    min-width: 312px;
+    padding: 5px;
+}
