@@ -22,12 +22,15 @@ namespace Cuponera.Entities
         public string Name { get; set; }
 
         [Display(Name = "Latitud")]
+        [Required(ErrorMessage = "Debe ingresar las coordenadas.")]
         public double Latitude { get; set; }
 
         [Display(Name = "Longitud")]
+        [Required(ErrorMessage = "Debe ingresar las coordenadas.")]
         public double Longitude { get; set; }
 
         [Display(Name = "Dirección")]
+        [Required(ErrorMessage = "Debe ingresar la dirección.")]
         [MaxLength(200, ErrorMessage = "La dirección debe tener como máximo de 200 caracteres."), MinLength(5, ErrorMessage = "La dirección debe tener como mínimo 5 caracteres.")]
         public string Address { get; set; }
 
