@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
 import com.cuponera.model.Store;
-import com.cuponera.navigation.HeaderImageInterface;
-import com.cuponera.navigation.HeaderInterface;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -20,7 +18,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class GoogleMapFragment extends BaseFragment implements HeaderInterface {
+public class GoogleMapFragment extends BaseFragment {
 
 	private Store item;
 	private static final String ARGS_ITEM = "args_item";
@@ -86,16 +84,6 @@ public class GoogleMapFragment extends BaseFragment implements HeaderInterface {
 	public void onLowMemory() {
 		super.onLowMemory();
 		mapView.onLowMemory();
-	}
-
-	@Override
-	public String getTitle() {
-		return getString(R.string.map);
-	}
-
-	@Override
-	public HeaderImageInterface getRightImage() {
-		return null;
 	}
 
 	@Override

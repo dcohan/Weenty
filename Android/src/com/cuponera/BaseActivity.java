@@ -258,9 +258,7 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	protected void showDialog(ErrorEvent event) {
 		Integer messageId = event.getErrorMessages().get(0);
 		String message = "";
-		if (messageId == R.string.server_error) {
-			message = event.getExceptionMessage();
-		} else if (messageId == 0) {
+		if (messageId == 0) {
 			message = event.getExceptionMessage();
 		} else {
 			message = getResources().getString(messageId);
