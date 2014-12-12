@@ -26,19 +26,14 @@ namespace Cuponera.WebSite
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+            
         }
-        /*
         protected void Application_AuthenticateRequest(Object sender, EventArgs e)
         {
-            /*
-            if (User.Identity.IsAuthenticated)
+            if (User != null && User.Identity != null && User.Identity.IsAuthenticated && Thread.CurrentPrincipal.GetType() != typeof(CuponeraPrincipal) )
             {
-                Thread.CurrentPrincipal = new CuponeraPrincipal(new CuponeraIdentity(User.Identity));
+                Thread.CurrentPrincipal = new CuponeraPrincipal(new CuponeraIdentity(User.Identity));   
             }
-
-
         }
-		            */
-
     }
 }

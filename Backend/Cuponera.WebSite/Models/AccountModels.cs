@@ -18,6 +18,8 @@ namespace Cuponera.WebSite.Models
 {
     public class CuponeraIdentity : IIdentity
     {
+        Cuponera.Entities.UserProfile _user;
+
         public CuponeraIdentity(IIdentity baseIdentity)
         {
             IsAuthenticated = baseIdentity.IsAuthenticated;
@@ -26,7 +28,7 @@ namespace Cuponera.WebSite.Models
 
             using (CuponeraEntities db = new CuponeraEntities())
             {
-                Cuponera.Entities.UserProfile user = db.UserProfile.FirstOrDefault(u => u.UserName.ToLower() == Name.ToLower());
+                _user = db.UserProfile.FirstOrDefault(u => u.UserName.ToLower() == Name.ToLower());
                 
             }
         }
@@ -47,6 +49,14 @@ namespace Cuponera.WebSite.Models
         {
             get;
             set;
+        }
+
+        public int UserId
+        {
+            get
+            {
+                return _user.UserId;
+            }
         }
 
         public List<store> Stores { get; set; }
