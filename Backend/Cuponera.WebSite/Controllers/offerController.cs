@@ -11,6 +11,13 @@ using Cuponera.Entities;
 
 namespace Cuponera.WebSite.Controllers
 {
+    public class AnyModel
+    {
+        public int MyProperty { get; set; }
+
+        public string FilesToBeUploaded { get; set; }
+    }
+
     public class offerController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
@@ -49,8 +56,17 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdOffer,Title,Active,StartDatetime,ExpirationDatetime,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath, Price")] offer offer)
+        public async Task<ActionResult> Create([Bind(Include = "IdOffer,Title,Active,StartDatetime,ExpirationDatetime,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath, Price")] offer offer, AnyModel model, List<HttpPostedFileBase> fileUpload)
         {
+            // Handling Attachments - 
+            foreach (HttpPostedFileBase item in fileUpload)
+            {
+                if (item != null && Array.Exists(model.FilesToBeUploaded.Split(','), s => s.Equals(item.FileName)))
+                {
+                    //Save or do your action -  Each Attachment ( HttpPostedFileBase item ) 
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 db.offer.Add(offer);

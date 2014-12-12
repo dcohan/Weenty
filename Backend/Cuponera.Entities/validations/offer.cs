@@ -20,7 +20,6 @@ namespace Cuponera.Entities
         public string Title { get; set; }
 
         [Display(Name = "Activo")]
-        [Range(0,1, ErrorMessage="El campo activo debe indicar con un 0 si la oferta se encuentra inactiva, o con 1 si se encuentra activa.")]
         public int Active { get; set; }
 
         [Display(Name = "Fecha fin")]
