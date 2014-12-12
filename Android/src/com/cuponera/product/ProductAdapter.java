@@ -36,6 +36,7 @@ public class ProductAdapter extends BaseListAdapter {
 		final Product p = product.get(position);
 		Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.product_image), p.getpImagePath());
 		mViewProxy.findTextView(R.id.product_company).setText(store.getName());
+		Utils.setCalibri(activity, mViewProxy.findTextView(R.id.product_company));
 		mViewProxy.findTextView(R.id.product_name).setText(p.getpTitle());
 		return mViewProxy.getView();
 	}
