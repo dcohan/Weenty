@@ -34,10 +34,18 @@ public class ProductAdapter extends BaseListAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewProxy mViewProxy = new ViewProxy(activity, R.layout.adapter_product, false);
 		final Product p = product.get(position);
-		Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.product_image), p.getpImagePath());
 		mViewProxy.findTextView(R.id.product_company).setText(store.getName());
 		Utils.setCalibri(activity, mViewProxy.findTextView(R.id.product_company));
-		mViewProxy.findTextView(R.id.product_name).setText(p.getpTitle());
+		if (p.getIdOffer() > 0) {// IS OFFER
+			Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.product_image), p.getoImagePath());
+			mViewProxy.findTextView(R.id.product_name).setText(p.getoTitle());
+			mViewProxy.findTextView(R.id.product_price).setText("$" + String.valueOf(p.getoPrice()));
+		} else {// IS NORMAL PRODUCT
+			mViewProxy.findView(R.id.offer_circle).setVisibility(View.GONE);
+			Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.product_image), p.getpImagePath());
+			mViewProxy.findTextView(R.id.product_name).setText(p.getpTitle());
+			mViewProxy.findTextView(R.id.product_price).setText("$" + String.valueOf(p.getpPrice()));
+		}
 		return mViewProxy.getView();
 	}
 

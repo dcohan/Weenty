@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/pink"
-            android:textSize="18sp"
+            android:textSize="@dimen/storename_text_size"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
                 android:textColor="@color/gray_cuponera"
-                android:textSize="15sp" />
+                android:textSize="@dimen/storedescription_text_size" />
 
             <TextView
                 android:id="@+id/store_distance"
@@ -62,7 +62,7 @@
                 android:drawableRight="@drawable/right_arrow_list"
                 android:gravity="right"
                 android:textColor="@color/gray_cuponera"
-                android:textSize="15sp" />
+                android:textSize="@dimen/storedescription_text_size" />
         </LinearLayout>
     </LinearLayout>
 
