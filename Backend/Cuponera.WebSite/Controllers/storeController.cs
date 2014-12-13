@@ -53,12 +53,22 @@ namespace Cuponera.WebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            category category = await db.category.FindAsync(id);
-            if (category == null)
+            store store = await db.store.FindAsync(id);
+            if (store == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+
+            var state = db.state.Where(s => s.IdState == store.IdState);
+            if (state != null && state.ToList().Count() > 0) { ViewBag.StateName = state.FirstOrDefault().Name; }
+
+            var company = db.company.Where(s => s.IdCompany == store.IdCompany);
+            if (company != null && company.ToList().Count() > 0) { ViewBag.CompanyName = company.FirstOrDefault().Name; }
+
+            if (store.Latitude != null) { ViewBag.Latitude = store.Latitude.ToString().Replace(",", "."); }
+            if (store.Longitude != null) { ViewBag.Longitude = store.Longitude.ToString().Replace(",", "."); }
+            
+            return View(store);
         }
 
         // GET: store/Create
@@ -83,8 +93,8 @@ namespace Cuponera.WebSite.Controllers
         {
             if (ModelState.IsValid)
             {
-                store.Latitude = Convert.ToDouble(Latitude.Replace(".", ","));
-                store.Longitude = Convert.ToDouble(Longitude.Replace(".", ","));
+                if (Latitude != null) { store.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
+                if (Longitude != null) { store.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
                 //var userId = ((CuponeraIdentity)Thread.CurrentPrincipal.Identity).UserId;
                 int idUser = 1;
 

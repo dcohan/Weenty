@@ -14,23 +14,31 @@ var geo = {
 			},
 
 
-			initialize: function() {
-				var mapProp = {
+			initialize: function(args) {
+			    if (document.getElementById('googleMap') === null) {
+			        return;
+			    }
+
+			    var mapProp = {
 			   		center: new google.maps.LatLng(this.__defCenter.lat, this.__defCenter.lng),
 			    	zoom: this.__defZoom,
 			    	mapTypeId: this.__defMapTypeId
-			  	};
+				};
+
 			  	var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 			  	var wrapperMap = this.wrapper(map);
 
 			  	var internal = this;
-				google.maps.event.addListener(wrapperMap.map, 'click', function(event) {
-					internal.__selectedCoord.lat = event.latLng.k;
-					internal.__selectedCoord.lng = event.latLng.D;
-					var coord = new google.maps.LatLng(internal.__selectedCoord.lat, internal.__selectedCoord.lng);
 
-					wrapperMap.drawMarker(internal.__selectedCoord.lat, internal.__selectedCoord.lng);
-				});
+                if (args && args.editable) {
+				    google.maps.event.addListener(wrapperMap.map, 'click', function(event) {
+					    internal.__selectedCoord.lat = event.latLng.k;
+					    internal.__selectedCoord.lng = event.latLng.D;
+					    var coord = new google.maps.LatLng(internal.__selectedCoord.lat, internal.__selectedCoord.lng);
+
+					    wrapperMap.drawMarker(internal.__selectedCoord.lat, internal.__selectedCoord.lng);
+				    });
+                }
 
 				return wrapperMap;
 			},
@@ -64,7 +72,7 @@ var geo = {
 						this.lat = lat;
 						this.lng = lng;
 
-						if (drawMarkerCallback && typeof drawMarkerCallback === 'function') {
+						if (typeof drawMarkerCallback === 'function') {
 							drawMarkerCallback(lat, lng);
 						}
 					},
@@ -79,8 +87,8 @@ var geo = {
 		},
 
 
-		initialize: function() {
-			return this.internal.initialize();
+		initialize: function(args) {
+			return this.internal.initialize(args);
 		}
 	},
 
@@ -149,8 +157,8 @@ var geo = {
 
 
 var maps = {
-	initialize: function() {
-		return geo.maps.initialize();
+	initialize: function(args) {
+		return geo.maps.initialize(args);
 	}
 };
 

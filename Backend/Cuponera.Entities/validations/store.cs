@@ -22,10 +22,10 @@ namespace Cuponera.Entities
         public string Name { get; set; }
 
         [Display(Name = "Latitud")]
-        public double Latitude { get; set; }
+        public double? Latitude { get; set; }
 
         [Display(Name = "Longitud")]
-        public double Longitude { get; set; }
+        public double? Longitude { get; set; }
 
         [Display(Name = "Dirección")]
         [Required(ErrorMessage = "Debe ingresar la dirección.")]

@@ -839,6 +839,7 @@ tr.pager td {
 
 .map {
     height:380px;
+    margin-bottom: 10px;
     margin-top: 10px;
     width:500px;
 }

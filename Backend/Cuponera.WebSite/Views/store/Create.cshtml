@@ -15,7 +15,9 @@
     }
 
     $(function () {
-        map = maps.initialize();
+        map = maps.initialize({
+            editable: true
+        });
         geocoder = geocoder.initialize(map);
 
         $('#search').click(function () {
@@ -29,19 +31,6 @@
                     geocoder.getCoordinatesByAddress(address, city, province, country);
                 }
             });
-        });
-
-        $('[type=submit]').click(function () {
-            /*
-            $('#validation_coordinates').removeClass('field-validation-error')
-                       .addClass('field-validation-valid');
-
-            if ($('#latitude').val().length === 0 || $('#longitude').val().length === 0) {
-                $('#validation_coordinates').removeClass('field-validation-valid')
-                       .addClass('field-validation-error');
-                return false;
-            }
-            */
         });
     });
 </script>

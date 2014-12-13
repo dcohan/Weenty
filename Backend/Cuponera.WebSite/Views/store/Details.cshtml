@@ -1,58 +1,93 @@
-﻿@model Cuponera.Entities.companyStore
+﻿@model Cuponera.Entities.store
 
 @{
-    ViewBag.Title = "Detalle";
+    ViewBag.Title = "Detalles";
 }
 
-<h2>@Html.DisplayFor(model => model.store)</h2>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
+@Scripts.Render("~/bundles/googlemaps")
+
+<h2>@Html.DisplayFor(model => model.Name)</h2>
+
+
+<script type="text/javascript">
+    $(function () {
+        var map = maps.initialize({
+            editable: false
+        });
+
+        if (map) {
+            map.setCenter(@ViewBag.Latitude, @ViewBag.Longitude);
+            map.drawMarker(@ViewBag.Latitude, @ViewBag.Longitude);
+            map.setZoom(16);
+        }
+    });
+</script>
+
 
 <div>
-    <h4>companyStore</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDatetime)
-        </dt>
+    <br />
+    <div class="item-description">
+        <b>Empresa:</b> @ViewBag.CompanyName
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreationDatetime)
-        </dd>
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.Name):</b> @Html.DisplayFor(model => model.Name)
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ModificationDatetime)
-        </dt>
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.ContactNumber):</b> @Html.DisplayFor(model => model.ContactNumber)
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.ModificationDatetime)
-        </dd>
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.Address):</b> @Html.DisplayFor(model => model.Address)
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DeletionDatetime)
-        </dt>
+    <div class="item-description">
+        <b>Ciudad:</b> @ViewBag.StateName
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.DeletionDatetime)
-        </dd>
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.ZipCode):</b> @Html.DisplayFor(model => model.ZipCode)
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.company.Name)
-        </dt>
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.StoreHours):</b> @Html.DisplayFor(model => model.StoreHours)
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.company.Name)
-        </dd>
+    @if (Model.Latitude != null && Model.Longitude != null) { 
+       <div class="map" id="googleMap"></div>
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.store.Name)
-        </dt>
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.Email):</b> @Html.DisplayFor(model => model.Email)
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.store.Name)
-        </dd>
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.FacebookUrl):</b> @Html.DisplayFor(model => model.FacebookUrl)
+    </div>
 
-    </dl>
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.WhatsApp):</b> @Html.DisplayFor(model => model.WhatsApp)
+    </div>
+
+ 
+
+
+    <div class="item-description">
+        <b>Estado:</b>
+        @if (Model.DeletionDatetime == null)
+        {
+            <img src="../../Images/tick.ico" alt="active" title="active" class="active" />
+
+        }
+        else
+        {
+            <img src="../../Images/x.ico" alt="inactive" title="inactive" class="inactive" />
+        }
+    </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdCompanyStore }) |
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdStore }) |
     @Html.ActionLink("Volver", "Index")
 </p>
