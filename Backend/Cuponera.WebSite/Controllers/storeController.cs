@@ -124,6 +124,19 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
+
+
+            IEnumerable<state> states = (new stateController()).get(false);
+            ViewBag.States = states.Select(s =>
+                                new SelectListItem()
+                                {
+                                    Value = s.IdState.ToString(),
+                                    Text = s.Name
+                                });
+
+            if (store.Latitude != null) { ViewBag.Latitude = store.Latitude.ToString().Replace(",", "."); }
+            if (store.Longitude != null) { ViewBag.Longitude = store.Longitude.ToString().Replace(",", "."); }
+
             return View(store);
         }
 
