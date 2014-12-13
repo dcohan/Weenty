@@ -828,7 +828,7 @@ tr.pager td {
     display: none;
 }
 
-.advertising {
+.advertisment {
     border: solid 1px;
     color: rgb(135,178,13);
     font-size: 20px;
@@ -848,4 +848,12 @@ select {
     font-size: 1.2em;
     min-width: 262px;
     padding: 5px;
+}
+
+.has-error{
+    border: 1px solid red;
+}
+
+.filter input {
+    margin-top: 0px;
 }
