@@ -41,7 +41,7 @@ namespace Cuponera.WebSite.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "El usuario o password son incorrectos.");
             return View(model);
         }
 

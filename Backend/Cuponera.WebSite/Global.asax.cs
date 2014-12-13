@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading;
 using System.Web;
 using System.Web.Http;
@@ -28,12 +29,14 @@ namespace Cuponera.WebSite
             AuthConfig.RegisterAuth();
             
         }
-        protected void Application_AuthenticateRequest(Object sender, EventArgs e)
+
+        protected void Session_Start(Object sender, EventArgs e)
         {
-            
-            if (User != null && User.Identity != null && User.Identity.IsAuthenticated && Thread.CurrentPrincipal.GetType() != typeof(CuponeraPrincipal) )
+            if (User != null && User.Identity != null && User.Identity.IsAuthenticated && Thread.CurrentPrincipal.GetType() != typeof(CuponeraPrincipal))
             {
-                Thread.CurrentPrincipal = new CuponeraPrincipal(new CuponeraIdentity(User.Identity));
+                IPrincipal principal = new CuponeraPrincipal(new CuponeraIdentity(User.Identity));
+                Thread.CurrentPrincipal = principal;
+                HttpContext.Current.User = principal;
             }
         }
     }

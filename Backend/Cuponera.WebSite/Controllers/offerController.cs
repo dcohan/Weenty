@@ -10,6 +10,9 @@ using System.Web.Mvc;
 using Cuponera.Entities;
 using System.Configuration;
 using System.IO;
+using System.Threading;
+using Cuponera.WebSite.Models;
+using Cuponera.WebSite.Helpers;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -25,6 +28,7 @@ namespace Cuponera.WebSite.Controllers
         }
 
         // GET: /offer/Details/5
+        [AuthorizeUserStoreAttribute]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
