@@ -30,9 +30,10 @@ namespace Cuponera.WebSite
         }
         protected void Application_AuthenticateRequest(Object sender, EventArgs e)
         {
+            
             if (User != null && User.Identity != null && User.Identity.IsAuthenticated && Thread.CurrentPrincipal.GetType() != typeof(CuponeraPrincipal) )
             {
-                Thread.CurrentPrincipal = new CuponeraPrincipal(new CuponeraIdentity(User.Identity));   
+                Thread.CurrentPrincipal = new CuponeraPrincipal(new CuponeraIdentity(User.Identity));
             }
         }
     }

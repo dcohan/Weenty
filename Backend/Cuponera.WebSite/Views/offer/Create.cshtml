@@ -97,7 +97,7 @@
 <h2>Alta</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "offer", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmID" }))
 {
     @Html.AntiForgeryToken()
 

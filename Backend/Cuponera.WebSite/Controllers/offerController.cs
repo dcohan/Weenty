@@ -8,16 +8,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Cuponera.Entities;
+using System.Configuration;
+using System.IO;
 
 namespace Cuponera.WebSite.Controllers
 {
-    public class AnyModel
-    {
-        public int MyProperty { get; set; }
-
-        public string FilesToBeUploaded { get; set; }
-    }
-
     public class offerController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
@@ -56,21 +51,57 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdOffer,Title,Active,StartDatetime,ExpirationDatetime,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath, Price")] offer offer, AnyModel model, List<HttpPostedFileBase> fileUpload)
+        public ActionResult Create([Bind(Include = "IdOffer,Title,Active,StartDatetime,ExpirationDatetime,IdProduct,ImagePath, Price")] offer offer, List<HttpPostedFileBase> fileUpload)
         {
-            // Handling Attachments - 
-            foreach (HttpPostedFileBase item in fileUpload)
-            {
-                if (item != null && Array.Exists(model.FilesToBeUploaded.Split(','), s => s.Equals(item.FileName)))
-                {
-                    //Save or do your action -  Each Attachment ( HttpPostedFileBase item ) 
-                }
-            }
+            var relativePath = ConfigurationManager.AppSettings["ImagePath"];
+            var serverPath = ConfigurationManager.AppSettings["ServerPath"];
 
             if (ModelState.IsValid)
             {
                 db.offer.Add(offer);
-                await db.SaveChangesAsync();
+                
+                // Handling Attachments - 
+                bool firstItem = true;
+                foreach (HttpPostedFileBase item in fileUpload)
+                {
+                    if (item != null)
+                    {
+                        var extension = System.IO.Path.GetExtension(item.FileName);
+                        var fileName = Guid.NewGuid().ToString() + extension;
+                        var phisicalPath = System.Web.HttpRuntime.AppDomainAppPath + relativePath + "\\" + fileName;
+                        var virtualPath = serverPath + "/" + relativePath + "/" + fileName;
+                        if (firstItem)
+                        {
+                            offer.ImagePath =  virtualPath;
+                            firstItem = false;
+                            
+                            //Save Offer
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            images i = new images() { IdOffer = offer.IdOffer, ImagePath = virtualPath };
+                            db.images.Add(i);
+                            
+                            //Save Images
+                            db.SaveChanges();
+                        }
+
+                        //Save file
+                        using (var fileStream = System.IO.File.Create(phisicalPath))
+                        {
+                            item.InputStream.CopyTo(fileStream);
+                        }
+
+                    }
+                }
+
+                if (firstItem)
+                {
+                    db.SaveChanges();
+                }
+                 
+                
                 return RedirectToAction("Index");
             }
 
