@@ -38,7 +38,6 @@ namespace Cuponera.Entities
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
         public string ImagePath { get; set; }
-        public int HasOffers { get; set; }
     
         public virtual company company { get; set; }
         public virtual ICollection<images> images { get; set; }
