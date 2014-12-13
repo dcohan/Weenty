@@ -17,7 +17,7 @@ public class StoreRequest extends AsyncPoolRequest<StoreResponse> implements Par
 
 	@Override
 	public String getPath() {
-		return "/GetNearestStores?idCategory=" + getIdCategory() + "&Latittud=" + Settings.getInstance(context).getLatitude() + "&Longitude="
+		return "/GetNearestStores?IdCategory=" + getIdCategory() + "&Latitude=" + Settings.getInstance(context).getLatitude() + "&Longitude="
 				+ Settings.getInstance(context).getLongitude();
 	}
 
