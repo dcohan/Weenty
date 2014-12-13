@@ -48,10 +48,7 @@ namespace Cuponera.WebSite.Controllers
             {
                 stores = stores.Where(s => s.state.IdState == idState);
             }
-
-            return stores.OrderBy(c => c.Name);
-
-
+            stores = stores.OrderBy(s => s.Name);
 
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)stores.Count() / pageSize));
