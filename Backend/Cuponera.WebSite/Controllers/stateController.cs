@@ -8,13 +8,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Cuponera.Entities;
+using System.Configuration;
 
 namespace Cuponera.WebSite.Controllers
 {
     public class stateController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
-        public IEnumerable<state> get(bool all = true, string name = null)
+        public IEnumerable<state> get(bool all = true, string name = null, int pageNumber = 1)
         {
             IEnumerable<state> states = db.state;
 
@@ -25,8 +26,14 @@ namespace Cuponera.WebSite.Controllers
 
             if (name != null)
             {
-                states = states.Where(s => s.Name == name);
+                states = states.Where(s => s.Name.Contains(name));
             }
+
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)states.Count() / pageSize));
+
+            int elemsToSkip = pageSize * (pageNumber - 1);
+            return states.Skip(elemsToSkip).Take(pageSize);
 
             return states;
         }
@@ -38,13 +45,12 @@ namespace Cuponera.WebSite.Controllers
 
             return Helpers.JSONHelper.SerializeJSON(states.ToList().Select(state => new { id = state.IdState, name = state.Name }));
         }
-
-
-
+        
         // GET: /state/
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(bool all = false, string name = null, int page = 1)
         {
-            return View(await db.state.ToListAsync());
+            var states = get(all, name, page);
+            return View(states);
         }
 
         // GET: /state/Details/5
