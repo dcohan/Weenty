@@ -41,16 +41,6 @@
             android:text="@string/menu_highlighted" />
 
         <Button
-            android:id="@+id/menuButtonGastronomic"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="1dp"
-            android:layout_weight="14"
-            android:drawableLeft="@drawable/ic_action_restaurant"
-            android:text="@string/menu_grastronomic" />
-
-        <Button
             android:id="@+id/menuButtonMore"
             style="@style/MenuButtonsStyle"
             android:layout_width="match_parent"

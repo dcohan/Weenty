@@ -46,6 +46,9 @@ public class Store extends BaseModel {
 	@JsonProperty("ImagePath")
 	private String imagePath;
 
+	@JsonProperty("HasOffers")
+	private int hasOffers;
+
 	public double getDistance() {
 		return distance;
 	}
@@ -156,6 +159,14 @@ public class Store extends BaseModel {
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+
+	public boolean hasOffers() {
+		return hasOffers == 1;
+	}
+
+	public void setHasOffers(int hasOffers) {
+		this.hasOffers = hasOffers;
 	}
 
 }

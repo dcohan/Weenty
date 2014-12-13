@@ -136,14 +136,6 @@ public class MenuFragment extends BaseFragment {
 			}
 		});
 
-		mViewProxy.findButton(R.id.menuButtonGastronomic).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				getDelegate().onGastronomic();
-			}
-		});
-
 		mViewProxy.findButton(R.id.menuButtonMore).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -187,8 +179,6 @@ public class MenuFragment extends BaseFragment {
 		public void onAdminButton();
 
 		public void onSpecialOffers();
-
-		public void onGastronomic();
 
 		public void onMoreButton();
 

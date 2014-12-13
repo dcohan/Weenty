@@ -31,7 +31,9 @@ public class StoreAdapter extends BaseListAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewProxy mViewProxy = new ViewProxy(activity, R.layout.adapter_store, false);
 		Store s = store.get(position);
-
+		if (!s.hasOffers()) {
+			mViewProxy.findView(R.id.offer_circle).setVisibility(View.GONE);
+		}
 		Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.store_image), s.getImagePath());
 		mViewProxy.findTextView(R.id.store_name).setText(s.getName());
 		Utils.setCalibri(activity, mViewProxy.findTextView(R.id.store_name));
