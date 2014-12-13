@@ -56,6 +56,8 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 		mViewProxy.findTextView(R.id.beach).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.highlighted).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.cinema).setOnClickListener(dashboardListener);
+		mViewProxy.findImageView(R.id.munucipio).setOnClickListener(dashboardListener);
+		
 	}
 
 	private OnClickListener dashboardListener = new OnClickListener() {
@@ -81,6 +83,9 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 				break;
 			case R.id.cinema:
 				getBaseActivity().openStore(Const.CINEMA);
+				break;
+			case R.id.munucipio:
+				getBaseActivity().openURL("http://www.lacosta.gov.ar/");
 				break;
 			}
 

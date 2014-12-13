@@ -34,6 +34,7 @@ public class StoreAdapter extends BaseListAdapter {
 
 		Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.store_image), s.getImagePath());
 		mViewProxy.findTextView(R.id.store_name).setText(s.getName());
+		Utils.setCalibri(activity, mViewProxy.findTextView(R.id.store_name));
 		mViewProxy.findTextView(R.id.store_address).setText(s.getAddress());
 		mViewProxy.findTextView(R.id.store_distance).setText(s.getDistance() + "km");
 		return mViewProxy.getView();

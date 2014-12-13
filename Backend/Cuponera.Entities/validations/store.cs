@@ -14,11 +14,23 @@ namespace Cuponera.Entities
     }
     public class storeMetadata
     {
+        [Display(Name = "Compañía")]
+        public int IdCompany { get; set; }
+
         [Display(Name = "Nombre")]
         [MaxLength(100, ErrorMessage = "El nombre de la sucursal debe tener como máximo de 100 caracteres."), MinLength(5, ErrorMessage = "El nombre de la sucursal debe tener como mínimo 5 caracteres.")]
         public string Name { get; set; }
 
+        [Display(Name = "Latitud")]
+        [Required(ErrorMessage = "Debe ingresar las coordenadas.")]
+        public double Latitude { get; set; }
+
+        [Display(Name = "Longitud")]
+        [Required(ErrorMessage = "Debe ingresar las coordenadas.")]
+        public double Longitude { get; set; }
+
         [Display(Name = "Dirección")]
+        [Required(ErrorMessage = "Debe ingresar la dirección.")]
         [MaxLength(200, ErrorMessage = "La dirección debe tener como máximo de 200 caracteres."), MinLength(5, ErrorMessage = "La dirección debe tener como mínimo 5 caracteres.")]
         public string Address { get; set; }
 
@@ -36,7 +48,7 @@ namespace Cuponera.Entities
         public string StoreHours { get; set; }
 
         [Display(Name = "Facebook URL")]
-        [RegularExpression(@"^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-zA-Z0-9]{1}[a-zA-Z0-9\-]{0,62}[a-zA-Z0-9]{1})|[a-zA-Z])\.)+[a-zA-Z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$", ErrorMessage = "El formato de e-mail no es válido.")]
+     //   [RegularExpression(@"^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$", ErrorMessage = "El formato de URL no es válido.")]
         public string FacebookUrl { get; set; }
 
         [Display(Name = "Whats App")]

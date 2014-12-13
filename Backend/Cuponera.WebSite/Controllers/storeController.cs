@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using Cuponera.Entities;
 using System.Configuration;
+using Cuponera.WebSite.Models;
+using System.Threading;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -77,10 +79,21 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdCategory,Name,Address,ContactNumber,Latitude,Longitude,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,CreationDatetime,ModificationDatetime,DeletionDatetime")] store store)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,CreationDatetime,ModificationDatetime,DeletionDatetime")] store store, string Latitude, string Longitude)
         {
             if (ModelState.IsValid)
             {
+                store.Latitude = Convert.ToDouble(Latitude.Replace(".", ","));
+                store.Longitude = Convert.ToDouble(Longitude.Replace(".", ","));
+                //var userId = ((CuponeraIdentity)Thread.CurrentPrincipal.Identity).UserId;
+                int idUser = 1;
+
+                var idCompany = db.userCompany.Where(uc => uc.IdUser == idUser);
+                if (idCompany.ToList().Count() > 0)
+                {
+                    store.IdCompany = Convert.ToInt32(idCompany.FirstOrDefault().IdCompany);
+                }
+
                 db.store.Add(store);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -123,8 +136,19 @@ namespace Cuponera.WebSite.Controllers
         // GET: store/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
-            await cb.Delete(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            store store = await db.store.FindAsync(id);
+            if (store == null)
+            {
+                return HttpNotFound();
+            }
+
+            store.DeletionDatetime = DateTime.Now;
+            await db.SaveChangesAsync();
+
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
@@ -135,8 +159,19 @@ namespace Cuponera.WebSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Activate(int id)
         {
-            Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
-            await cb.Activate(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            store store = await db.store.FindAsync(id);
+            if (store == null)
+            {
+                return HttpNotFound();
+            }
+
+            store.DeletionDatetime = null;
+            await db.SaveChangesAsync();
+
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

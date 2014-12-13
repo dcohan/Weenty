@@ -1,10 +1,10 @@
 var geo = {
 	maps: {
 		internal: {
-			__defZoom: 1,
+			__defZoom: 8,
 			__defCenter: { 
-				lat: 51.508742, 
-				lng: -0.120850
+				lat: -37, 
+				lng: -57
 			},
 			__defMapTypeId: google.maps.MapTypeId.ROADMAP,
 

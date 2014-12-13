@@ -32,6 +32,15 @@ namespace Cuponera.WebSite.Controllers
         }
 
 
+        public string GetAllBasicData()
+        {
+            var states = db.state;
+
+            return Helpers.JSONHelper.SerializeJSON(states.ToList().Select(state => new { id = state.IdState, name = state.Name }));
+        }
+
+
+
         // GET: /state/
         public async Task<ActionResult> Index()
         {

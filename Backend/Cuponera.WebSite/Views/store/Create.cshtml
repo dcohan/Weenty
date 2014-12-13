@@ -18,7 +18,6 @@
         map = maps.initialize();
         geocoder = geocoder.initialize(map);
 
-        map.setZoom(8);
         $('#search').click(function () {
             geocoder.checkIfUserCanAskForCoordinates({
                 done: function () {
@@ -30,6 +29,17 @@
                     geocoder.getCoordinatesByAddress(address, city, province, country);
                 }
             });
+        });
+
+        $('[type=submit]').click(function () {
+            $('#validation_coordinates').removeClass('field-validation-error')
+                       .addClass('field-validation-valid');
+
+            if ($('#latitude').val().length === 0 || $('#longitude').val().length === 0) {
+                $('#validation_coordinates').removeClass('field-validation-valid')
+                       .addClass('field-validation-error');
+                return false;
+            }
         });
     });
 </script>
@@ -44,7 +54,6 @@
         <h4>Sucursal</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
         <div class="form-group">
             @Html.LabelFor(model => model.Name, "Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -72,6 +81,8 @@
         @Html.HiddenFor(model => model.Longitude, htmlAttributes: new { @id = "longitude" })
 
         <div style="clear:both;"></div>
+        <span class="text-danger field-validation-valid" id="validation_coordinates"><span id="location-error" class="">Debe ingresar las coordenadas.</span></span>
+    
 
         <div class="form-group">
             @Html.LabelFor(model => model.Address, "Dirección", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -84,13 +95,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.state.Name, "Localidad", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.state.IdState, new SelectList(
+                @Html.DropDownListFor(model => model.IdState, new SelectList(
                   ViewBag.States,
                   "value",
                   "text",
                    0),
                    htmlAttributes: new { @id = "states" })
-                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
             </div>
         </div>
         <input type="button" id="search" value="Buscar dirección" />
@@ -139,7 +149,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Crear" class="btn btn-default" />
             </div>
         </div>
     </div>
