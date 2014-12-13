@@ -119,12 +119,12 @@ namespace Cuponera.WebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            category category = await db.category.FindAsync(id);
-            if (category == null)
+            store store = await db.store.FindAsync(id);
+            if (store == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(store);
         }
 
         // POST: store/Edit/5
