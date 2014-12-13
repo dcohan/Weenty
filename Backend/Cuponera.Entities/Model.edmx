@@ -44,7 +44,7 @@
           <Key>
             <PropertyRef Name="IdGeoRequest" />
           </Key>
-          <Property Name="IdGeoRequest" Type="int" Nullable="false" />
+          <Property Name="IdGeoRequest" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUser" Type="int" Nullable="false" />
           <Property Name="TimesDone" Type="int" Nullable="false" />
           <Property Name="RequestDatetime" Type="datetime" Nullable="false" />
@@ -316,14 +316,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_images_store">
-          <End Role="store" Type="Self.store" Multiplicity="1" />
-          <End Role="images" Type="Self.images" Multiplicity="0..1" />
+          <End Role="store" Type="Self.store" Multiplicity="0..1" />
+          <End Role="images" Type="Self.images" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="store">
               <PropertyRef Name="IdStore" />
             </Principal>
             <Dependent Role="images">
-              <PropertyRef Name="IdImage" />
+              <PropertyRef Name="IdStore" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -649,7 +649,7 @@
           <Key>
             <PropertyRef Name="IdGeoRequest" />
           </Key>
-          <Property Name="IdGeoRequest" Type="Int32" Nullable="false" />
+          <Property Name="IdGeoRequest" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUser" Type="Int32" Nullable="false" />
           <Property Name="TimesDone" Type="Int32" Nullable="false" />
           <Property Name="RequestDatetime" Type="DateTime" Nullable="false" Precision="3" />
@@ -961,14 +961,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_images_store">
-          <End Type="CuponeraModel.store" Role="store" Multiplicity="1" />
-          <End Type="CuponeraModel.images" Role="images" Multiplicity="0..1" />
+          <End Type="CuponeraModel.store" Role="store" Multiplicity="0..1" />
+          <End Type="CuponeraModel.images" Role="images" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="store">
               <PropertyRef Name="IdStore" />
             </Principal>
             <Dependent Role="images">
-              <PropertyRef Name="IdImage" />
+              <PropertyRef Name="IdStore" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

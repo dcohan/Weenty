@@ -201,9 +201,9 @@ namespace Cuponera.Backend.Controllers
 
         // GET: odata/store(5)/images
         [EnableQuery]
-        public SingleResult<images> Getimages([FromODataUri] int key)
+        public IQueryable<images> Getimages([FromODataUri] int key)
         {
-            return SingleResult.Create(db.store.Where(m => m.IdStore == key).Select(m => m.images));
+            return db.store.Where(m => m.IdStore == key).SelectMany(m => m.images);
         }
 
         // GET: odata/store(5)/product
