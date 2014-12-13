@@ -18,10 +18,10 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        private IEnumerable<store> get(bool all, int idCompany, string name, string zipCode, string city, int idState, int pageNumber)
+        private IEnumerable<store> get(bool all, int idCompany, string name, string zipCode, int idState, int pageNumber)
         {
             Cuponera.Backend.Controllers.storeController sc = new Backend.Controllers.storeController();
-            IEnumerable<store> stores = sc.Getstore(all, idCompany, name, zipCode, city, idState);
+            IEnumerable<store> stores = sc.Getstore(all, idCompany, name, zipCode, idState);
 
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)stores.Count() / pageSize));
@@ -40,9 +40,9 @@ namespace Cuponera.WebSite.Controllers
         
 
         // GET: store
-        public async Task<ActionResult> Index(bool all = false, int company = 0, string name = null, string zipCode = null, string state = null, int idState = 0, int page = 1)
+        public async Task<ActionResult> Index(bool all = false, int company = 0, string name = null, string zipCode = null, int state = 0, int page = 1)
         {
-            var stores = get(all, company, name, zipCode, state, idState, page);
+            var stores = get(all, company, name, zipCode, state, page);
             return View(stores);
         }
 

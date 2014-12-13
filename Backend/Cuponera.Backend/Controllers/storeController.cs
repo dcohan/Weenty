@@ -43,7 +43,7 @@ namespace Cuponera.Backend.Controllers
 
         // GET: odata/store(5)
         [EnableQuery]
-        public IQueryable<store> Getstore(bool all, int idCompany, string name, string zipCode, string city, int idState)
+        public IQueryable<store> Getstore(bool all, int idCompany, string name, string zipCode, int idState)
         {
             IQueryable<store> stores = db.store;
             if (!all)
@@ -66,9 +66,9 @@ namespace Cuponera.Backend.Controllers
                 stores = stores.Where(p => p.ZipCode == zipCode);
             }
 
-            if (city != null)
+            if (idState > 0)
             {
-                stores = stores.Where(p => p.state.Name.Contains(city));
+                stores = stores.Where(p => p.state.IdState == idState);
             }
             return stores.OrderBy(c => c.Name);
         }
