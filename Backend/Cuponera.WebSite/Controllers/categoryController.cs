@@ -117,8 +117,15 @@ namespace Cuponera.WebSite.Controllers
         // GET: category/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
-            await cb.Delete(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            category category = await db.category.FindAsync(id);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

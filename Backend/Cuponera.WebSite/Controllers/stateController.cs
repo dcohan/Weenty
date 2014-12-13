@@ -41,7 +41,7 @@ namespace Cuponera.WebSite.Controllers
 
         public string GetAllBasicData()
         {
-            var states = db.state;
+            var states = db.state.Where(s => s.DeletionDatetime == null);
 
             return Helpers.JSONHelper.SerializeJSON(states.ToList().Select(state => new { id = state.IdState, name = state.Name }));
         }
@@ -134,18 +134,32 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
-            return View(state);
+
+
+            state.DeletionDatetime = DateTime.Now;
+            await db.SaveChangesAsync();
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        // POST: /state/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: category/Activate/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> Activate(int id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             state state = await db.state.FindAsync(id);
-            db.state.Remove(state);
+            if (state == null)
+            {
+                return HttpNotFound();
+            }
+
+            state.DeletionDatetime = null;
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         protected override void Dispose(bool disposing)
