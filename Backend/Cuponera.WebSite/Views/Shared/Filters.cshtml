@@ -77,7 +77,6 @@
 
 
 
-    /* Better than if */
     var render = {
         text: function(filter) {
             // label: input
@@ -128,7 +127,9 @@
                         .append(
                             $('<div></div>').css('clear', 'both')
                         )
-
+            if (!filter.visible && filter.visible != undefined) {
+                $filter_group.addClass('hidden');
+            }
             return $filter_group;
         },
 
