@@ -21,6 +21,7 @@ import com.cuponera.more.MoreFragment;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.navigation.NavBarFragment;
 import com.cuponera.product.OfferFragment;
+import com.cuponera.search.SearchFragment;
 import com.cuponera.settings.Settings;
 import com.cuponera.settings.SettingsFragment;
 import com.cuponera.store.StoreFragment;
@@ -127,7 +128,11 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	@Override
 	public void onMoreButton() {
 		startFragment(new MoreFragment());
+	}
 
+	@Override
+	public void onSearchButton() {
+		startFragment(new SearchFragment());
 	}
 
 	@Override
