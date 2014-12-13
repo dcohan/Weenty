@@ -18,15 +18,13 @@ namespace Cuponera.Entities
         public int IdCompany { get; set; }
 
         [Display(Name = "Nombre")]
-        [MaxLength(100, ErrorMessage = "El nombre de la sucursal debe tener como máximo de 100 caracteres."), MinLength(5, ErrorMessage = "El nombre de la sucursal debe tener como mínimo 5 caracteres.")]
+        [MaxLength(100, ErrorMessage = "El nombre de la sucursal debe tener como máximo de 100 caracteres."), MinLength(2, ErrorMessage = "El nombre de la sucursal debe tener como mínimo 2 caracteres.")]
         public string Name { get; set; }
 
         [Display(Name = "Latitud")]
-        [Required(ErrorMessage = "Debe ingresar las coordenadas.")]
         public double Latitude { get; set; }
 
         [Display(Name = "Longitud")]
-        [Required(ErrorMessage = "Debe ingresar las coordenadas.")]
         public double Longitude { get; set; }
 
         [Display(Name = "Dirección")]

@@ -40,9 +40,9 @@ namespace Cuponera.WebSite.Controllers
         
 
         // GET: store
-        public async Task<ActionResult> Index(bool all = false, int idCompany = 0, string name = null, string zipCode = null, string city = null, int idState = 0, int page = 1)
+        public async Task<ActionResult> Index(bool all = false, int company = 0, string name = null, string zipCode = null, string state = null, int idState = 0, int page = 1)
         {
-            var stores = get(all, idCompany, name, zipCode, city, idState, page);
+            var stores = get(all, company, name, zipCode, state, idState, page);
             return View(stores);
         }
 
@@ -79,7 +79,7 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,CreationDatetime,ModificationDatetime,DeletionDatetime")] store store, string Latitude, string Longitude)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp")] store store, string Latitude, string Longitude)
         {
             if (ModelState.IsValid)
             {

@@ -26,7 +26,7 @@ var geo = {
 			  	var internal = this;
 				google.maps.event.addListener(wrapperMap.map, 'click', function(event) {
 					internal.__selectedCoord.lat = event.latLng.k;
-					internal.__selectedCoord.lng = event.latLng.B;
+					internal.__selectedCoord.lng = event.latLng.D;
 					var coord = new google.maps.LatLng(internal.__selectedCoord.lat, internal.__selectedCoord.lng);
 
 					wrapperMap.drawMarker(internal.__selectedCoord.lat, internal.__selectedCoord.lng);

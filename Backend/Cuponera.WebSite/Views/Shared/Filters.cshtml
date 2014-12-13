@@ -30,7 +30,7 @@
     function resizeFiltersForm() {
         var window_width = $(window).width();
         var brothers = $('.table');
-        var __min_filters_size__ = 376;
+        var __min_filters_size__ = globals.min_filters_size || 376;
         var others_size = 0;
         $(brothers).each(function(key, elem) {
             others_size += $(elem).width();
@@ -86,15 +86,20 @@
                 $('<span></span>')
                     .html(filter.label + ':')
                     .addClass('filter-label-pre')
+                    .addClass('float-left')
             );
             
             $input = $('<input>').prop('type', filter.controlType)
-                                .prop('id', filter.controlId);
+                                .prop('id', filter.controlId)
+                                .addClass('float-right');
 
             if (filter.controlDefaultValue) { 
                 $input.val(filter.controlDefaultValue); 
             }
-            $filter_group.append($input);
+            $filter_group.append($input)
+                        .append(
+                            $('<div></div>').css('clear', 'both')
+                        );
 
             return $filter_group;
         },
@@ -105,9 +110,11 @@
                 $('<span></span>')
                     .html(filter.label + ':')
                     .addClass('filter-label-pre')
+                    .addClass('float-left')
             );
 
-            $select = $('<select></select>').prop('id', filter.controlId);
+            $select = $('<select></select>').prop('id', filter.controlId)
+                                            .addClass('float-right');
             getSourceData({
                 include_all: filter.source.include_all,
                 default: filter.controlDefaultValue,
@@ -117,7 +124,11 @@
                 element: $select
             });
 
-            $filter_group.append($select);
+            $filter_group.append($select)
+                        .append(
+                            $('<div></div>').css('clear', 'both')
+                        )
+
             return $filter_group;
         },
 
