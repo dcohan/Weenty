@@ -75,7 +75,7 @@ namespace Cuponera.WebSite.Controllers
             var idUser = 1;
             var stores = get(all, company, name, zipCode, state, idUser, page);
 
-            ViewBag.CanSelectCompany = false;
+            ViewBag.CanSelectCompany = true;
             return View(stores);
         }
 
