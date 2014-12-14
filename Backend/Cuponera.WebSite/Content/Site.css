@@ -858,3 +858,7 @@ select {
 .filter input {
     margin-top: 0px;
 }
+
+.ordered-subscriptions li.current{
+    font-weight: bold;
+}
