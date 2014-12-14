@@ -24,11 +24,9 @@ namespace Cuponera.Entities
         public double Pricing { get; set; }
 
         [Display(Name = "Orden")]
-        [Required(ErrorMessage = "Debe completar el orden de la suscripción.")]
         public int SortFactor { get; set; }
 
         [Display(Name = "Duración")]
-        [Required(ErrorMessage = "Debe completar la duración de la suscripción.")]
         public int duration { get; set; }
     }
 }

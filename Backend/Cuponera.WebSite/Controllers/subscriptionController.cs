@@ -105,16 +105,16 @@ namespace Cuponera.WebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            state state = await db.state.FindAsync(id);
-            if (state == null)
+            subscription subscription = await db.subscription.FindAsync(id);
+            if (subscription == null)
             {
                 return HttpNotFound();
             }
 
-            if (state.Latitude != null) { ViewBag.Latitude = state.Latitude.ToString().Replace(",", "."); }
-            if (state.Longitude != null) { ViewBag.Longitude = state.Longitude.ToString().Replace(",", "."); }
+            var all_subscriptions = get(false);
+            ViewBag.AllSubscriptions = all_subscriptions.OrderBy(s => s.SortFactor);
 
-            return View(state);
+            return View(subscription);
         }
 
         // POST: /state/Edit/5
@@ -122,18 +122,15 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="IdState,Name,Link")] state state, string Latitude, string Longitude)
+        public async Task<ActionResult> Edit([Bind(Include = "Name,SortFactor,duration")] subscription subscription, int SortFactor, int duration, string Price)
         {
             if (ModelState.IsValid)
             {
-                if (Latitude != null) { state.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
-                if (Longitude != null) { state.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
-
-                db.Entry(state).State = EntityState.Modified;
+                if (!String.IsNullOrEmpty(Price)) { subscription.Pricing = Convert.ToDecimal(Price.Replace(",", ".")); }
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(state);
+            return View(subscription);
         }
 
         // GET: /state/Delete/5
