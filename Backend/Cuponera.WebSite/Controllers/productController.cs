@@ -31,8 +31,11 @@ namespace Cuponera.WebSite.Controllers
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             var products = db.product.Where(p => title == null || p.Title.ToLower().Contains(title.ToLower()))
-                                     .OrderBy(p => p.Title)
-                                     .ToPagedList(pageNumber, pageSize);
+                                     .OrderBy(p => p.Title);
+
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)products.Count() / pageSize));
+
+            products.ToPagedList(pageNumber, pageSize);
 
             return View(products);
         }
@@ -125,7 +128,46 @@ namespace Cuponera.WebSite.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             product product = await db.product.FindAsync(id);
-            product.DeletionDatetime = DateTime.Now;            
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            product.DeletionDatetime = DateTime.Now;
+            await db.SaveChangesAsync();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        // GET: store/Activate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Activate(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            product product = await db.product.FindAsync(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            product.DeletionDatetime = null;
+            await db.SaveChangesAsync();
+
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        // POST: /product/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            product product = await db.product.FindAsync(id);
+            db.product.Remove(product);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

@@ -1,56 +1,36 @@
-﻿@model IEnumerable<Cuponera.Entities.store>
+﻿@model IEnumerable<Cuponera.Entities.subscription>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Suscripciones";
 }
 
 <script type="text/javascript">
     var globals = {
-        min_filters_size: 400,
-        controller: 'store',
+        controller: 'subscription',
         filters: {
             include: ['all'],
             custom: [{
-                controlType: 'select',
-                controlId: 'company',
-                controlDefaultValue: '@(Request.Params["company"] != null ? @Request.Params["company"] : "")',
-                label: 'Empresa',
-                visible: @(ViewBag.CanSelectCompany != null && ViewBag.CanSelectCompany ? "true" : "false"),
-                source: {
-                    include_all: true,
-                    controller: 'company',
-                    action: 'GetAllBasicData'
-                }
-            }, {
                 controlType: 'text',
                 controlId: 'name',
                 controlDefaultValue: '@(Request.Params["name"] != null ? @Request.Params["name"] : "")',
                 label: 'Nombre'
-            }, {
-                controlType: 'select',
-                controlId: 'state',
-                controlDefaultValue: '@(Request.Params["state"] != null ? @Request.Params["state"] : "")',
-                label: 'Ciudad',
-                source: {
-                    include_all: true,
-                    controller: 'state',
-                    action: 'GetAllBasicData'
-                }
             }]
         }
     };
 </script>
 
+<h2>Suscripciones</h2>
 
-<h2>Sucursales</h2>
 
 <div class="list-content">
     @Html.Partial("AntiForgeryTokenForm")
     @Html.Partial("Filters")
 
+
+
     @if (Model.Count() == 0)
     {
-    <div class="no-data">No hay datos.</div>
+        <div class="no-data">No hay datos.</div>
     }
     else
     {
@@ -59,13 +39,7 @@
                 <thead>
                     <tr>
                         <th>
-                            Empresa
-                        </th>
-                        <th>
                             @Html.DisplayNameFor(model => model.Name)
-                        </th>
-                        <th>
-                            Ciudad
                         </th>
                         <th>
                             Estado
@@ -73,33 +47,26 @@
                         <th></th>
                     </tr>
                 </thead>
-
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr data-item-id="@item.IdStore">
+                        <tr data-item-id="@item.IdSubscription">
                             <td>
-                                <span class="item-name">@Html.DisplayFor(modelItem => item.company.Name)</span>
-                            </td>
-                            <td>
-                                <span>@Html.DisplayFor(modelItem => item.Name)</span>
-                            </td>
-                            <td>
-                                <span>@Html.DisplayFor(modelItem => item.state.Name)</span>
+                                <span class="item-name">@Html.DisplayFor(modelItem => item.Name)</span>
                             </td>
                             <td class="current-status">
                                 @if (item.DeletionDatetime == null)
                                 {
-                                    <img src="Images/tick.ico" alt="active" title="active" class="active" />
+                                    <img src="Images/tick.ico" alt="active" class="active" />
                                 }
                                 else
                                 {
-                                    <img src="Images/x.ico" alt="inactive" title="inactive" class="inactive" />
+                                    <img src="Images/x.ico" alt="inactive" class="inactive" />
                                 }
                             </td>
                             <td>
-                                @Html.ActionLink("Editar", "Edit", new { id = item.IdStore }) |
-                                @Html.ActionLink("Detalle", "Details", new { id = item.IdStore }) |
+                                @Html.ActionLink("Editar", "Edit", new { id = item.IdSubscription }) |
+                                @Html.ActionLink("Detalle", "Details", new { id = item.IdSubscription }) |
 
                                 @if (item.DeletionDatetime == null)
                                 {
@@ -117,9 +84,8 @@
             @Html.Partial("Paginator")
         </div>
 
-    <div style="clear:both;"></div>
+        <div style="clear:both;"></div>
     }
-
     <p>
         @Html.ActionLink("Nuevo", "Create")
     </p>

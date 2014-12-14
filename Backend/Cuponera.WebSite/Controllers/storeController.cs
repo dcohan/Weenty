@@ -175,15 +175,25 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdCategory,Name,CreationDatetime,ModificationDatetime,DeletionDatetime")] category category)
+        public async Task<ActionResult> Edit([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp")] store store, string Latitude, string Longitude)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                if (Latitude != null) { store.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
+                if (Longitude != null) { store.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
+                //var userId = ((CuponeraIdentity)Thread.CurrentPrincipal.Identity).UserId;
+                int idUser = 1;
+
+                var idCompany = db.userCompany.Where(uc => uc.IdUser == idUser);
+                if (idCompany.ToList().Count() > 0)
+                {
+                    store.IdCompany = Convert.ToInt32(idCompany.FirstOrDefault().IdCompany);
+                }
+
+                db.store.Add(store);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
-            return View(category);
+            return View(store);
         }
 
         // GET: store/Delete/5
