@@ -113,7 +113,7 @@ var geo = {
 
 					getCoordinatesByAddress: function(address, city, province, country) {
 						var wrapper = this;
-						$.get(internal.__mainUrl + 'address=' + this._encodeUrl(address + ',' + city + ',' + province + ',' + country) + '&sensor=false')
+						$.get(internal.__mainUrl + 'address=' + this._encodeUrl((address ? address + ',' : '') + city + ',' + province + ',' + country) + '&sensor=false')
 							.done(function(response){
 								if (response.status != 'OK' || response.results.length === 0) { return; }
 								

@@ -1,95 +1,91 @@
 ﻿@model Cuponera.Entities.state
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Agregar Ciudad";
 }
 
-<h2>Create</h2>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
+@Scripts.Render("~/bundles/googlemaps")
 
 
-@using (Html.BeginForm()) 
+<script type="text/javascript">
+    function drawMarkerCallback(lat, lng) {
+        $('#latitude').val(lat);
+        $('#longitude').val(lng);
+    }
+
+    $(function () {
+        map = maps.initialize({
+            editable: true
+        });
+        geocoder = geocoder.initialize(map);
+
+        $('#search').click(function () {
+            geocoder.checkIfUserCanAskForCoordinates({
+                done: function () {
+                    var city = $('#Name').val();
+                    var province = 'Buenos Aires';
+                    var country = 'Argentina';
+                    geocoder.getCoordinatesByAddress(undefined, city, province, country);
+                }
+            });
+        });
+    });
+</script>
+
+<h2>Agregar Ciudad</h2>
+
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>state</h4>
+        <h4>Ciudad</h4>
         <hr />
-        @Html.ValidationSummary(true)
-
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.IdState, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Name, "Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IdState)
-                @Html.ValidationMessageFor(model => model.IdState)
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Link, "Link", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name)
+                @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Link, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Link)
-                @Html.ValidationMessageFor(model => model.Link)
-            </div>
-        </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CreationDatetime, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreationDatetime)
-                @Html.ValidationMessageFor(model => model.CreationDatetime)
-            </div>
+            <input type="button" id="search" value="Ubicar en mapa" />
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ModificationDatetime, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ModificationDatetime)
-                @Html.ValidationMessageFor(model => model.ModificationDatetime)
-            </div>
+        <div class="float-left map" id="googleMap"></div>
+
+        <div class="advertisment float-right">
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DeletionDatetime, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DeletionDatetime)
-                @Html.ValidationMessageFor(model => model.DeletionDatetime)
-            </div>
-        </div>
+        @Html.HiddenFor(model => model.Latitude, htmlAttributes: new { @id = "latitude" })
+        @Html.HiddenFor(model => model.Longitude, htmlAttributes: new { @id = "longitude" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Longitude, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Longitude)
-                @Html.ValidationMessageFor(model => model.Longitude)
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Latitude, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Latitude)
-                @Html.ValidationMessageFor(model => model.Latitude)
-            </div>
-        </div>
+        <div style="clear:both;"></div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Aceptar" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver", "Index")
 </div>
 
 @section Scripts {

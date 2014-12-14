@@ -65,6 +65,10 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (state.Latitude != null) { ViewBag.Latitude = state.Latitude.ToString().Replace(",", "."); }
+            if (state.Longitude != null) { ViewBag.Longitude = state.Longitude.ToString().Replace(",", "."); }
+
             return View(state);
         }
 
@@ -79,10 +83,13 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="IdState,Name,Link,CreationDatetime,ModificationDatetime,DeletionDatetime,Longitude,Latitude")] state state)
+        public async Task<ActionResult> Create([Bind(Include="Name,Link")] state state, string Latitude, string Longitude)
         {
             if (ModelState.IsValid)
             {
+                if (Latitude != null) { state.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
+                if (Longitude != null) { state.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
+
                 db.state.Add(state);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
