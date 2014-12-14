@@ -117,7 +117,33 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
-            return View(product);
+
+            product.DeletionDatetime = DateTime.Now;
+            await db.SaveChangesAsync();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        // GET: store/Activate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Activate(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            product product = await db.product.FindAsync(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            product.DeletionDatetime = null;
+            await db.SaveChangesAsync();
+
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         // POST: /product/Delete/5
