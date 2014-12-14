@@ -123,8 +123,8 @@ var geo = {
 							});
 					},
 
-					checkIfUserCanAskForCoordinates: function(callbacks) {
-					    $.get('../geoRequest/checkIfUserCanAskForCoordinates')
+					checkIfUserCanAskForCoordinates: function(callbacks, urlPrefix) {
+					    $.get((urlPrefix ? urlPrefix : '') + '../geoRequest/checkIfUserCanAskForCoordinates')
 							.done(function(response){
 								if (callbacks && callbacks.done) { 
 									callbacks.done(response);
