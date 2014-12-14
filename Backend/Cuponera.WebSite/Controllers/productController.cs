@@ -22,8 +22,11 @@ namespace Cuponera.WebSite.Controllers
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             var products = db.product.Where(p => title == null || p.Title.ToLower().Contains(title.ToLower()))
-                                     .OrderBy(p => p.Title)
-                                     .ToPagedList(pageNumber, pageSize);
+                                     .OrderBy(p => p.Title);
+
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)products.Count() / pageSize));
+
+            products.ToPagedList(pageNumber, pageSize);
 
             return View(products);
         }
