@@ -3,18 +3,20 @@
 @{
     ViewBag.Title = "Detalle";
 }
-<h2>Detalles</h2>
+
+<h2>Detalle</h2>
 
 <div>
     <h4>Producto</h4>
     <hr />
-
     <div class="item-description">
         <b>Nombre:</b> @Html.DisplayFor(model => model.Title)
     </div>
+
     <div class="item-description">
         <b>Precio:</b> @Html.DisplayFor(model => model.Price)
     </div>
+
     <div class="item-description">
         <b>Fecha de inicio:</b> @Html.DisplayFor(model => model.StartDatetime)
     </div>
@@ -24,14 +26,11 @@
     </div>
 
     <div class="item-description">
-        <b>Imagen:</b> @Html.DisplayFor(model => model.ImagePath)
+        <b>Portada:</b> <img src="@Html.DisplayFor(model => model.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" /> 
     </div>
-
-
     <div class="item-description">
         <b>Descripción:</b> @Html.DisplayFor(model => model.Description)
     </div>
-
     <div class="item-description">
         <b>Categoria:</b> @Html.DisplayFor(model => model.category.Name)
     </div>
@@ -39,7 +38,7 @@
     <div class="item-description">
         <b>Sucursal:</b> @Html.DisplayFor(model => model.store.Name)
     </div>
-    <div class="item-description">
+        <div class="item-description">
         <b>Estado:</b>
         @if (Model.DeletionDatetime == null)
         {

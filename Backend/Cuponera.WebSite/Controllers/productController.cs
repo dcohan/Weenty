@@ -9,13 +9,22 @@ using System.Web;
 using System.Web.Mvc;
 using Cuponera.Entities;
 using System.Configuration;
+using System.IO;
+using System.Threading;
+using Cuponera.WebSite.Models;
+using Cuponera.WebSite.Helpers;
 using PagedList;
 
 namespace Cuponera.WebSite.Controllers
 {
-    public class productController : Controller
+    public class productController : UploadImagesBaseController
     {
-        private CuponeraEntities db = new CuponeraEntities();
+        
+
+        public productController() : base(UploadImagesEnum.product)
+        {
+
+        }
 
         // GET: product
         public async Task<ActionResult> Index(bool all = false, string title = null, int pageNumber = 1)
@@ -56,12 +65,15 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="IdProduct,Title,Active,StartDatetime,ExpirationDatetime,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description,IdStore, Price")] product product)
+        public ActionResult Create([Bind(Include="IdProduct,Title,Active,StartDatetime,ExpirationDatetime,ImagePath,IdCategory,Description,IdStore, Price")] product product, List<HttpPostedFileBase> fileUpload)
         {
             if (ModelState.IsValid)
             {
+                if (fileUpload.Count > 0) product.ImagePath = GeneratePhisicalFile(fileUpload[0]);
                 db.product.Add(product);
-                await db.SaveChangesAsync();
+                db.SaveChangesAsync();
+    			//Save aditional images
+                UploadImages(fileUpload, product.IdProduct);
                 return RedirectToAction("Index");
             }
 
@@ -113,20 +125,7 @@ namespace Cuponera.WebSite.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             product product = await db.product.FindAsync(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
-        }
-
-        // POST: /product/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            product product = await db.product.FindAsync(id);
-            db.product.Remove(product);
+            product.DeletionDatetime = DateTime.Now;            
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

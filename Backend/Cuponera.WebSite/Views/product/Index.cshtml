@@ -40,13 +40,10 @@
                         Titulo
                     </th>
                     <th>
-                        Precio
-                    </th>
-                    <th>
                         Estado
                     </th>
                     <th>
-                        Imagen
+                        Precio
                     </th>
                     <th>
                         Categoria
@@ -61,9 +58,6 @@
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        <td>
                             @if (item.DeletionDatetime == null && item.Active && item.StartDatetime < DateTime.Now && item.ExpirationDatetime > DateTime.Now)
                             {
                                 <img src="Images/tick.ico" alt="active" class="active" />
@@ -74,8 +68,9 @@
                             }
                         </td>
                         <td>
-                            <img src="@Html.DisplayFor(modelItem => item.ImagePath)" style="width:50px; height:50px" alt="inactive" class="inactive" />
+                            @Html.DisplayFor(modelItem => item.Price)
                         </td>
+
                         <td>
                             @Html.DisplayFor(modelItem => item.category.Name)
                         </td>
