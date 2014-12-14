@@ -316,7 +316,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\category\Create.cshtml" />
-    <Content Include="Views\category\Delete.cshtml" />
     <Content Include="Views\category\Details.cshtml" />
     <Content Include="Views\category\Edit.cshtml" />
     <Content Include="Views\category\Index.cshtml" />
@@ -325,7 +324,6 @@
     <Content Include="Views\company\Edit.cshtml" />
     <Content Include="Views\company\Index.cshtml" />
     <Content Include="Views\store\Create.cshtml" />
-    <Content Include="Views\store\Delete.cshtml" />
     <Content Include="Views\store\Details.cshtml" />
     <Content Include="Views\store\Edit.cshtml" />
     <Content Include="Views\store\Index.cshtml" />

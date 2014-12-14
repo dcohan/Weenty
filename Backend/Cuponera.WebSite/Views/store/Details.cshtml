@@ -44,7 +44,7 @@
     </div>
 
     <div class="item-description">
-        <b>Ciudad:</b> @ViewBag.StateName
+        <b>@Html.DisplayNameFor(model => model.state.Name)</b> @Html.DisplayFor(model => model.state.Name)
     </div>
 
     <div class="item-description">

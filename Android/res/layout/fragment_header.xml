@@ -52,12 +52,11 @@
 
             <ImageView
                 android:id="@+id/homeButton"
-                android:layout_width="40dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/unknown"
-                android:padding="10dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerInside"
                 android:src="@drawable/ic_action_cloudy" />
         </LinearLayout>
     </RelativeLayout>

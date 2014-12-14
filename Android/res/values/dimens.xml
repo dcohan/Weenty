@@ -10,8 +10,10 @@
     <dimen name="forms_text_size">14sp</dimen>
     <dimen name="stores_info_text_size">12sp</dimen>
     <dimen name="adapter_height">100dp</dimen>
-
-    
     <dimen name="temp_text_size">17sp</dimen>
     <dimen name="home_text_size">16sp</dimen>
+    <dimen name="storename_text_size">20sp</dimen>
+    <dimen name="storedescription_text_size">15sp</dimen>
+    <dimen name="offer_circle">17dp</dimen>
+
 </resources>

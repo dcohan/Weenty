@@ -15,6 +15,7 @@
                 controlId: 'company',
                 controlDefaultValue: '@(Request.Params["company"] != null ? @Request.Params["company"] : "")',
                 label: 'Empresa',
+                visible: @(ViewBag.CanSelectCompany != null && ViewBag.CanSelectCompany ? "true" : "false"),
                 source: {
                     include_all: true,
                     controller: 'company',

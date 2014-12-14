@@ -8,13 +8,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Cuponera.Entities;
+using System.Configuration;
 
 namespace Cuponera.WebSite.Controllers
 {
     public class stateController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
-        public IEnumerable<state> get(bool all = true, string name = null)
+        public IEnumerable<state> get(bool all = true, string name = null, int pageNumber = 1)
         {
             IEnumerable<state> states = db.state;
 
@@ -25,8 +26,14 @@ namespace Cuponera.WebSite.Controllers
 
             if (name != null)
             {
-                states = states.Where(s => s.Name == name);
+                states = states.Where(s => s.Name.Contains(name));
             }
+
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)states.Count() / pageSize));
+
+            int elemsToSkip = pageSize * (pageNumber - 1);
+            return states.Skip(elemsToSkip).Take(pageSize);
 
             return states;
         }
@@ -34,17 +41,16 @@ namespace Cuponera.WebSite.Controllers
 
         public string GetAllBasicData()
         {
-            var states = db.state;
+            var states = db.state.Where(s => s.DeletionDatetime == null);
 
             return Helpers.JSONHelper.SerializeJSON(states.ToList().Select(state => new { id = state.IdState, name = state.Name }));
         }
-
-
-
+        
         // GET: /state/
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(bool all = false, string name = null, int page = 1)
         {
-            return View(await db.state.ToListAsync());
+            var states = get(all, name, page);
+            return View(states);
         }
 
         // GET: /state/Details/5
@@ -59,6 +65,10 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (state.Latitude != null) { ViewBag.Latitude = state.Latitude.ToString().Replace(",", "."); }
+            if (state.Longitude != null) { ViewBag.Longitude = state.Longitude.ToString().Replace(",", "."); }
+
             return View(state);
         }
 
@@ -73,10 +83,13 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="IdState,Name,Link,CreationDatetime,ModificationDatetime,DeletionDatetime,Longitude,Latitude")] state state)
+        public async Task<ActionResult> Create([Bind(Include="Name,Link")] state state, string Latitude, string Longitude)
         {
             if (ModelState.IsValid)
             {
+                if (Latitude != null) { state.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
+                if (Longitude != null) { state.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
+
                 db.state.Add(state);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -97,6 +110,10 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (state.Latitude != null) { ViewBag.Latitude = state.Latitude.ToString().Replace(",", "."); }
+            if (state.Longitude != null) { ViewBag.Longitude = state.Longitude.ToString().Replace(",", "."); }
+
             return View(state);
         }
 
@@ -105,10 +122,13 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="IdState,Name,Link,CreationDatetime,ModificationDatetime,DeletionDatetime,Longitude,Latitude")] state state)
+        public async Task<ActionResult> Edit([Bind(Include="IdState,Name,Link")] state state, string Latitude, string Longitude)
         {
             if (ModelState.IsValid)
             {
+                if (Latitude != null) { state.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
+                if (Longitude != null) { state.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
+
                 db.Entry(state).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -128,18 +148,32 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
-            return View(state);
+
+
+            state.DeletionDatetime = DateTime.Now;
+            await db.SaveChangesAsync();
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        // POST: /state/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: category/Activate/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> Activate(int id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             state state = await db.state.FindAsync(id);
-            db.state.Remove(state);
+            if (state == null)
+            {
+                return HttpNotFound();
+            }
+
+            state.DeletionDatetime = null;
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         protected override void Dispose(bool disposing)

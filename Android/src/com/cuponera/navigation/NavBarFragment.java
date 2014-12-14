@@ -125,11 +125,6 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 	}
 
 	@Override
-	public void onGastronomic() {
-		getBaseActivity().onGastronomic();
-	}
-
-	@Override
 	public void onMoreButton() {
 		getBaseActivity().onMoreButton();
 	}
@@ -137,7 +132,13 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 	@Override
 	public void onPreferenceButton() {
 		getBaseActivity().onPreferenceButton();
-		
+
+	}
+
+	@Override
+	public void onSearchButton() {
+		getBaseActivity().onSearchButton();
+
 	}
 
 }

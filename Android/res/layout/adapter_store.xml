@@ -31,13 +31,27 @@
         android:layout_weight="0.6"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/store_name"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/pink"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:paddingRight="10dp" >
+
+            <TextView
+                android:id="@+id/store_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pink"
+                android:textSize="@dimen/storename_text_size"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/offer_circle"
+                android:layout_width="@dimen/offer_circle"
+                android:layout_height="@dimen/offer_circle"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/offer_circle" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
                 android:textColor="@color/gray_cuponera"
-                android:textSize="15sp" />
+                android:textSize="@dimen/storedescription_text_size" />
 
             <TextView
                 android:id="@+id/store_distance"
@@ -62,7 +76,7 @@
                 android:drawableRight="@drawable/right_arrow_list"
                 android:gravity="right"
                 android:textColor="@color/gray_cuponera"
-                android:textSize="15sp" />
+                android:textSize="@dimen/storedescription_text_size" />
         </LinearLayout>
     </LinearLayout>
 

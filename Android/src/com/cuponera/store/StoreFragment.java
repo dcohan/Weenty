@@ -9,10 +9,13 @@ import android.widget.AdapterView;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
+import com.cuponera.event.ErrorEvent;
+import com.cuponera.event.EventBus;
 import com.cuponera.model.Store;
 import com.cuponera.product.ProductFragment;
 import com.cuponera.service.store.StoreRequest;
 import com.cuponera.service.store.StoreResponse;
+import com.cuponera.utils.ErrorHandler;
 
 public class StoreFragment extends BaseFragment {
 
@@ -44,9 +47,12 @@ public class StoreFragment extends BaseFragment {
 
 			@Override
 			public void onServiceReturned(StoreResponse result) {
-				if (result != null) {
+				if (result != null && result.getStore() != null && result.getStore().size() > 0) {
 					store = result.getStore();
 					fillAdapter();
+				} else {
+					EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.NO_RESULTS_FOUND));
+					getBaseActivity().onHomeButton();
 				}
 			}
 		};

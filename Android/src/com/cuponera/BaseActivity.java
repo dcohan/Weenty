@@ -21,10 +21,10 @@ import com.cuponera.more.MoreFragment;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.navigation.NavBarFragment;
 import com.cuponera.product.OfferFragment;
+import com.cuponera.search.SearchFragment;
 import com.cuponera.settings.Settings;
 import com.cuponera.settings.SettingsFragment;
 import com.cuponera.store.StoreFragment;
-import com.cuponera.utils.Const;
 import com.cuponera.utils.LocationServices;
 import com.cuponera.utils.WebViewWithHeaderFragment;
 
@@ -120,12 +120,6 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	}
 
-	@Override
-	public void onGastronomic() {
-		Fragment product = StoreFragment.newInstance(Const.GASTRONOMIC);
-		startFragment(product);
-	}
-
 	public void openStore(int category) {
 		Fragment product = StoreFragment.newInstance(category);
 		replaceFragment(product, R.id.container, true);
@@ -134,7 +128,11 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	@Override
 	public void onMoreButton() {
 		startFragment(new MoreFragment());
+	}
 
+	@Override
+	public void onSearchButton() {
+		startFragment(new SearchFragment());
 	}
 
 	@Override

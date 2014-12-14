@@ -18,10 +18,37 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        private IEnumerable<store> get(bool all, int idCompany, string name, string zipCode, int idState, int pageNumber)
+
+
+
+        private IEnumerable<store> get(bool all, int idCompany, string name, string zipCode, int idState, int idUser, int pageNumber)
         {
-            Cuponera.Backend.Controllers.storeController sc = new Backend.Controllers.storeController();
-            IEnumerable<store> stores = sc.Getstore(all, idCompany, name, zipCode, idState);
+            IQueryable<store> stores = db.store;
+            if (!all)
+            {
+                stores = stores.Where(s => !s.DeletionDatetime.HasValue);
+            }
+
+            if (idCompany > 0)
+            {
+                stores = stores.Where(s => s.company.IdCompany == idCompany);
+            }
+
+            if (name != null)
+            {
+                stores = stores.Where(s => s.Name.Contains(name));
+            }
+
+            if (zipCode != null)
+            {
+                stores = stores.Where(s => s.ZipCode == zipCode);
+            }
+
+            if (idState > 0)
+            {
+                stores = stores.Where(s => s.state.IdState == idState);
+            }
+            stores = stores.OrderBy(s => s.Name);
 
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)stores.Count() / pageSize));
@@ -42,7 +69,10 @@ namespace Cuponera.WebSite.Controllers
         // GET: store
         public async Task<ActionResult> Index(bool all = false, int company = 0, string name = null, string zipCode = null, int state = 0, int page = 1)
         {
-            var stores = get(all, company, name, zipCode, state, page);
+            var idUser = 1;
+            var stores = get(all, company, name, zipCode, state, idUser, page);
+
+            ViewBag.CanSelectCompany = true;
             return View(stores);
         }
 
@@ -119,12 +149,25 @@ namespace Cuponera.WebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            category category = await db.category.FindAsync(id);
-            if (category == null)
+            store store = await db.store.FindAsync(id);
+            if (store == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+
+
+            IEnumerable<state> states = (new stateController()).get(false);
+            ViewBag.States = states.Select(s =>
+                                new SelectListItem()
+                                {
+                                    Value = s.IdState.ToString(),
+                                    Text = s.Name
+                                });
+
+            if (store.Latitude != null) { ViewBag.Latitude = store.Latitude.ToString().Replace(",", "."); }
+            if (store.Longitude != null) { ViewBag.Longitude = store.Longitude.ToString().Replace(",", "."); }
+
+            return View(store);
         }
 
         // POST: store/Edit/5

@@ -28,6 +28,7 @@ namespace Cuponera.Entities
     public class GetNearestStores : store
     {
         public double Distance { get; set; }
+        public int HasOffers { get; set; }
     }
 
     public partial class CuponeraEntities
@@ -41,13 +42,24 @@ namespace Cuponera.Entities
                 ).ToList<GetProductAndOffers>();
         }
 
-        public List<GetNearestStores> GetNearestStores(int IdCategoria, double Latittud, double Longitude)
+        public List<GetNearestStores> GetNearestStores(int IdCategory, double Latitude, double Longitude)
         {
             return Database.SqlQuery<GetNearestStores>(
-                    "dbo.GetNearestStores @IdCategoria, @Latittud, @Longitude",
-                    new SqlParameter("IdCategoria", IdCategoria),
-                    new SqlParameter("Latittud", Latittud),
+                    "dbo.GetNearestStores @IdCategory, @Latitude, @Longitude",
+                    new SqlParameter("IdCategory", IdCategory),
+                    new SqlParameter("Latitude", Latitude),
                     new SqlParameter("Longitude", Longitude)
+                ).ToList<GetNearestStores>();
+        }
+
+        public List<GetNearestStores> GetNearestStoresByName(int IdCategory, double Latitude, double Longitude, String Name)
+        {
+            return Database.SqlQuery<GetNearestStores>(
+                    "dbo.GetNearestStoresByName @IdCategory, @Latitude, @Longitude", "@Name",
+                    new SqlParameter("IdCategory", IdCategory),
+                    new SqlParameter("Latitude", Latitude),
+                    new SqlParameter("Longitude", Longitude),
+                    new SqlParameter("Name", Name)
                 ).ToList<GetNearestStores>();
         }
     }
