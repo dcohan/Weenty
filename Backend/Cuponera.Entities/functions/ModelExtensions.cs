@@ -55,7 +55,7 @@ namespace Cuponera.Entities
         public List<GetNearestStores> GetNearestStoresByName(int IdCategory, double Latitude, double Longitude, String Name)
         {
             return Database.SqlQuery<GetNearestStores>(
-                    "dbo.GetNearestStoresByName @IdCategory, @Latitude, @Longitude", "@Name",
+                    "dbo.GetNearestStoresByName @IdCategory, @Latitude, @Longitude, @Name",
                     new SqlParameter("IdCategory", IdCategory),
                     new SqlParameter("Latitude", Latitude),
                     new SqlParameter("Longitude", Longitude),
