@@ -19,8 +19,10 @@ namespace Cuponera.WebSite.Helpers
                 return false;
             }
 
-            //If is admin, then shall pass
-            if (httpContext.User.IsInRole("admin")) return true;
+            //Override Principal for IsInRole Validation 
+            //TODO: figure out why, when a session already exist, this fails because simplemembership is not initialized
+            //if (httpContext.User.IsInRole("admin")) return true;
+            if (new CuponeraPrincipal(new CuponeraIdentity(httpContext.User.Identity)).IsInRole("admin")) return true;
 
             //Define Entity and Id of entity
             string entity = httpContext.Request.Url.Segments[1].Replace("/", string.Empty);

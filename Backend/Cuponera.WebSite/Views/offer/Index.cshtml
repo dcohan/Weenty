@@ -6,7 +6,7 @@
 
 <script type="text/javascript">
     var globals = {
-        controller: 'product',
+        controller: 'offer',
         filters: {
             include: ['all'],
             custom: [{
@@ -43,9 +43,6 @@
                         Estado
                     </th>
                     <th>
-                        Imagen
-                    </th>
-                    <th>
                         Precio
                     </th>
 <th></th>
@@ -67,10 +64,6 @@
                                 <img src="Images/x.ico" alt="inactive" class="inactive" />
                             }
                         </td>
-                        <td>
-                            <img src="@Html.DisplayFor(modelItem => item.ImagePath)" style="width:50px; height:50px" alt="inactive" class="inactive" />
-                        </td>
-
                         <td>
                             @Html.DisplayFor(modelItem => item.Price)
                         </td>

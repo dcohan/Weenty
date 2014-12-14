@@ -26,7 +26,14 @@
     </div>
 
     <div class="item-description">
-        <b>Imagen:</b> @Html.DisplayFor(model => model.ImagePath)
+        <b>Portada:</b> <img src="@Html.DisplayFor(model => model.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" /> 
+    </div>
+    <div class="item-description">
+        <b>Imagenes:</b> 
+        @foreach (var item in Model.images)
+        {
+            <img src="@Html.DisplayFor(model => item.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
+        }
     </div>
         <div class="item-description">
         <b>Estado:</b>

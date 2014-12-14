@@ -13,18 +13,28 @@ using System.IO;
 using System.Threading;
 using Cuponera.WebSite.Models;
 using Cuponera.WebSite.Helpers;
+using PagedList;
 
 namespace Cuponera.WebSite.Controllers
 {
-    public class offerController : Controller
+    public class offerController : UploadImagesBaseController
     {
-        private CuponeraEntities db = new CuponeraEntities();
+        
 
-        // GET: /offer/
-        public async Task<ActionResult> Index()
+        public offerController() : base(UploadImagesEnum.offer)
         {
-            var offer = db.offer.Include(o => o.product);
-            return View(await offer.ToListAsync());
+
+        }
+
+        // GET: product
+        public async Task<ActionResult> Index(bool all = false, string title = null, int pageNumber = 1)
+        {
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
+            var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())) && o.DeletionDatetime == null)
+                                     .OrderBy(o => o.Title)
+                                     .ToPagedList(pageNumber, pageSize);
+
+            return View(offers);
         }
 
         // GET: /offer/Details/5
@@ -57,55 +67,16 @@ namespace Cuponera.WebSite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdOffer,Title,Active,StartDatetime,ExpirationDatetime,IdProduct,ImagePath, Price")] offer offer, List<HttpPostedFileBase> fileUpload)
         {
-            var relativePath = ConfigurationManager.AppSettings["ImagePath"];
-            var serverPath = ConfigurationManager.AppSettings["ServerPath"];
 
             if (ModelState.IsValid)
             {
+                if (fileUpload.Count > 0) offer.ImagePath = GeneratePhisicalFile(fileUpload[0]);
                 db.offer.Add(offer);
-                
-                // Handling Attachments - 
-                bool firstItem = true;
-                foreach (HttpPostedFileBase item in fileUpload)
-                {
-                    if (item != null)
-                    {
-                        var extension = System.IO.Path.GetExtension(item.FileName);
-                        var fileName = Guid.NewGuid().ToString() + extension;
-                        var phisicalPath = System.Web.HttpRuntime.AppDomainAppPath + relativePath + "\\" + fileName;
-                        var virtualPath = serverPath + "/" + relativePath + "/" + fileName;
-                        if (firstItem)
-                        {
-                            offer.ImagePath =  virtualPath;
-                            firstItem = false;
-                            
-                            //Save Offer
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            images i = new images() { IdOffer = offer.IdOffer, ImagePath = virtualPath };
-                            db.images.Add(i);
-                            
-                            //Save Images
-                            db.SaveChanges();
-                        }
+                db.SaveChanges();
 
-                        //Save file
-                        using (var fileStream = System.IO.File.Create(phisicalPath))
-                        {
-                            item.InputStream.CopyTo(fileStream);
-                        }
+                //Save aditional images
+                UploadImages(fileUpload, offer.IdOffer);
 
-                    }
-                }
-
-                if (firstItem)
-                {
-                    db.SaveChanges();
-                }
-                 
-                
                 return RedirectToAction("Index");
             }
 
@@ -134,7 +105,7 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdOffer,Title,Active,StartDatetime,ExpirationDatetime,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath, Price")] offer offer)
+        public async Task<ActionResult> Edit([Bind(Include = "IdOffer,Title,Active,StartDatetime,ExpirationDatetime,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,Price")] offer offer)
         {
             if (ModelState.IsValid)
             {
@@ -153,22 +124,12 @@ namespace Cuponera.WebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            offer offer = await db.offer.FindAsync(id);
-            if (offer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(offer);
-        }
 
-        // POST: /offer/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
             offer offer = await db.offer.FindAsync(id);
-            db.offer.Remove(offer);
+            offer.DeletionDatetime = DateTime.Now;
+            db.Entry(offer).State = EntityState.Modified;
             await db.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
 

@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Cuponera.Entities;
+using System.Configuration;
+using PagedList;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -15,11 +17,15 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: /product/
-        public async Task<ActionResult> Index()
+        // GET: product
+        public async Task<ActionResult> Index(bool all = false, string title = null, int pageNumber = 1)
         {
-            var product = db.product.Include(p => p.category).Include(p => p.store);
-            return View(await product.ToListAsync());
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
+            var products = db.product.Where(p => title == null || p.Title.ToLower().Contains(title.ToLower()))
+                                     .OrderBy(p => p.Title)
+                                     .ToPagedList(pageNumber, pageSize);
+
+            return View(products);
         }
 
         // GET: /product/Details/5

@@ -782,6 +782,7 @@ tr.pager td {
 
 .list-content .filters {
     float:right;
+    padding-right: 70px;
 }
 
 .list-content .table-all{
@@ -821,7 +822,7 @@ tr.pager td {
 }
 
 .full-width {
-    width: 95%;
+    width: 80%;
 }
 
 .hidden {
