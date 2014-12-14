@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.44"
             android:background="@drawable/rectangle_corner_round"
-            android:drawableBottom="@drawable/ic_action_ticket"
+            android:drawableBottom="@drawable/icon_hotel"
             android:gravity="center"
             android:text="@string/menu_hotel"
             android:textColor="@color/white"

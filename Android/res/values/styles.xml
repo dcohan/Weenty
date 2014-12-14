@@ -21,7 +21,7 @@
     <style name="MenuButtonsStyle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:background">@color/gray_light</item>
+        <item name="android:background">@color/green_strong</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="android:paddingLeft">8dp</item>
@@ -31,7 +31,7 @@
 
     <!-- Header -->
     <style name="HeaderText">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
         <item name="android:shadowColor">@color/gray_light</item>

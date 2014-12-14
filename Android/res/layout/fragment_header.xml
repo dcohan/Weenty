@@ -9,28 +9,44 @@
         android:layout_height="@dimen/headerHeight"
         android:background="@drawable/web_view_header_background" >
 
-        <TextView
-            android:id="@+id/headerTitle"
-            style="@style/HeaderText"
+        <ImageView
+            android:id="@+id/menuButton"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="40dp"
-            android:text="" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/unknown"
+            android:scaleType="fitXY"
+            android:src="@drawable/menu_dropdown" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center_vertical" >
+            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@+id/menuButton"
+            android:orientation="vertical"
+            android:padding="2dp" >
 
             <ImageView
-                android:id="@+id/menuButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="40dp"
+                android:layout_weight="0.55"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/unknown"
-                android:scaleType="fitXY"
-                android:src="@drawable/menu_dropdown" />
+                android:padding="1dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/logo_app" />
+
+            <TextView
+                android:id="@+id/headerTitle"
+                style="@style/HeaderText"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="40dp"
+                android:layout_weight="0.45" />
         </LinearLayout>
 
         <LinearLayout
