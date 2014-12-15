@@ -17,6 +17,7 @@ using PagedList;
 
 namespace Cuponera.WebSite.Controllers
 {
+    [AuthorizeUserStoreAttribute]
     public class productController : UploadImagesBaseController
     {
         

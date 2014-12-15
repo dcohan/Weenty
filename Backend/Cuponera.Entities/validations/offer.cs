@@ -30,11 +30,6 @@ namespace Cuponera.Entities
         [Required(ErrorMessage = "Debe asociar la oferta a un producto.")]
         public int IdProduct { get; set; }
 
-        [Display(Name = "Imagen")]
-        [Required(ErrorMessage = "Debe ingresar una imagen para la oferta.")]
-        [DataType(DataType.ImageUrl)]
-        public string ImagePath { get; set; }
-
         [Display(Name = "Fecha inicio")]
         [DataType(DataType.Date)]
         public Nullable<DateTime> StartDatetime {get;set;}
