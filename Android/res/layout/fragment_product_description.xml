@@ -64,6 +64,15 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/store_hours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:textColor="@color/gray_cuponera"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/product_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,14 +92,16 @@
                 android:layout_width="@dimen/icons_size"
                 android:layout_height="@dimen/icons_size"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/icon_phone" />
+                android:src="@drawable/icon_phone"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/product_mail"
                 android:layout_width="@dimen/icons_size"
                 android:layout_height="@dimen/icons_size"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/icon_mail" />
+                android:src="@drawable/icon_mail"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/product_map"
@@ -104,7 +115,8 @@
                 android:layout_width="@dimen/icons_size"
                 android:layout_height="@dimen/icons_size"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/icon_fb" />
+                android:src="@drawable/icon_fb"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 

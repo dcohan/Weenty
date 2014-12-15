@@ -63,7 +63,7 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 	}
 
 	public void setTitle(String title) {
-		mViewProxy.findTextView(R.id.headerTitle).setText(title);
+		mViewProxy.findTextView(R.id.headerTitle).setText("San Bernardo");
 	}
 
 	public void setRightImage(final HeaderImageInterface image) {

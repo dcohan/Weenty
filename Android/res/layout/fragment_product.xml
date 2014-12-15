@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/product_listview"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:divider="@color/gray_light"
-    android:dividerHeight="2dp"
-    android:listSelector="@android:color/transparent"
-    android:overScrollMode="never"
-    android:paddingTop="2dp"
-    android:scrollbars="none" >
+    android:orientation="vertical" >
 
-</ListView>
+    <ListView
+        android:id="@+id/product_listview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        android:divider="@color/gray_light"
+        android:dividerHeight="2dp"
+        android:listSelector="@android:color/transparent"
+        android:overScrollMode="never"
+        android:paddingTop="2dp"
+        android:scrollbars="none" />
+
+    <ImageView
+        android:id="@+id/cx"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:scaleType="fitXY"
+        android:src="@drawable/cx_banner"
+        android:visibility="gone" />
+
+</LinearLayout>

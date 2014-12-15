@@ -3,18 +3,23 @@ package com.cuponera.service.offer;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.cuponera.pool.AsyncPoolLoader.HTTPMethod;
 import com.cuponera.pool.AsyncPoolRequest;
+import com.cuponera.service.store.StoreResponse;
+import com.cuponera.settings.Settings;
 
-public class OfferRequest extends AsyncPoolRequest<OfferResponse> implements Parcelable {
+@SuppressLint("ParcelCreator")
+public class OfferRequest extends AsyncPoolRequest<StoreResponse> implements Parcelable {
 
 	@Override
 	public String getPath() {
-		return "/offer?$expand=product/company";
+		return "/GetNearestStoresWithOffers?Latitude=" + Settings.getInstance(context).getLatitude() + "&Longitude="
+				+ Settings.getInstance(context).getLongitude();
 	}
 
 	public OfferRequest(Context context) {
@@ -77,7 +82,8 @@ public class OfferRequest extends AsyncPoolRequest<OfferResponse> implements Par
 	}
 
 	@Override
-	public void onServiceReturned(OfferResponse result) {
+	public void onServiceReturned(StoreResponse result) {
+		// TODO Auto-generated method stub
 
 	}
 

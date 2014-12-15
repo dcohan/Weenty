@@ -19,6 +19,7 @@ import com.cuponera.R;
 import com.cuponera.model.State;
 import com.cuponera.navigation.HeaderImageInterface;
 import com.cuponera.navigation.HeaderInterface;
+import com.cuponera.product.OfferFragment;
 import com.cuponera.service.state.StateRequest;
 import com.cuponera.service.state.StateResponse;
 import com.cuponera.settings.Settings;
@@ -59,7 +60,7 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 		mViewProxy.findTextView(R.id.cinema).setOnClickListener(dashboardListener);
 		mViewProxy.findImageView(R.id.munucipio).setOnClickListener(dashboardListener);
 		Utils.setCalibri(getActivity(), mViewProxy.findTextView(R.id.explore));
-		
+
 	}
 
 	private OnClickListener dashboardListener = new OnClickListener() {
@@ -81,7 +82,7 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 				getBaseActivity().openStore(Const.BEACH);
 				break;
 			case R.id.highlighted:
-				getBaseActivity().openStore(Const.HIGHLIGHTED);
+				getBaseActivity().startFragment(new OfferFragment());
 				break;
 			case R.id.cinema:
 				getBaseActivity().openStore(Const.CINEMA);
