@@ -790,7 +790,7 @@ tr.pager td {
 }
 
 .list-content .table-all td {
-    min-width: 60px;
+    min-width: 20px;
 }
 
 .list-content .filter{

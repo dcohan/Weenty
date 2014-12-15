@@ -56,9 +56,6 @@
                         Precio
                     </th>
                     <th>
-                        Precio
-                    </th>
-                    <th>
                         Estado
                     </th>
                     <th></th>
@@ -77,12 +74,9 @@
                             <span>@Html.DisplayFor(modelItem => item.Price)</span>
                         </td>
                         <td>
-                            <img src="@Html.DisplayFor(modelItem => item.ImagePath)" style="width:50px; height:50px" alt="inactive" class="inactive" />
-                        </td>
-                        <td>
                             @if (item.DeletionDatetime == null && item.Active && item.StartDatetime < DateTime.Now && item.ExpirationDatetime > DateTime.Now)
                             {
-                                <img src="Images/tick.ico" alt="active" class="active" />
+                                <img src="Images/tick.ico" alt="active" class="active" style="" />
                             }
                             else
                             {
@@ -90,24 +84,17 @@
                             }
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.category.Name)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.IdProduct }) |
-                            @Html.ActionLink("Detalle", "Details", new { id = item.IdProduct }) |
+                            @Html.ActionLink("Mod", "Edit", new { id = item.IdProduct }) |
+                            @Html.ActionLink("Ver", "Details", new { id = item.IdProduct }) |
                             @if (item.DeletionDatetime == null)
                             {
-                                <a href="#" class="deactivate" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                                <a href="#" class="deactivate" data-popup-to-open="dialog-confirm-deactivate">Del</a>
                             }
                             else
                             {
-                                <a href="#" class="activate" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                <a href="#" class="activate" data-popup-to-open="dialog-confirm-activate">Act</a>
                             } |
-                            @Html.ActionLink("Ofertar", "Create", "offer", new { IdProduct = item.IdProduct }, null)
+                            @Html.ActionLink("Offer", "Create", "offer", new { IdProduct = item.IdProduct }, null)
                         </td>
                     </tr>
                 }

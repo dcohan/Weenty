@@ -17,6 +17,7 @@ using PagedList;
 
 namespace Cuponera.WebSite.Controllers
 {
+    [AuthorizeUserStoreAttribute]
     public class offerController : UploadImagesBaseController
     {
         
@@ -38,7 +39,7 @@ namespace Cuponera.WebSite.Controllers
         }
 
         // GET: /offer/Details/5
-        [AuthorizeUserStoreAttribute]
+        
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -71,6 +72,8 @@ namespace Cuponera.WebSite.Controllers
             if (ModelState.IsValid)
             {
                 if (fileUpload.Count > 0) offer.ImagePath = GeneratePhisicalFile(fileUpload[0]);
+                offer.CreationDatetime = DateTime.Now;
+                offer.ModificationDatetime = DateTime.Now;
                 db.offer.Add(offer);
                 db.SaveChanges();
 
@@ -110,6 +113,7 @@ namespace Cuponera.WebSite.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(offer).State = EntityState.Modified;
+                offer.ModificationDatetime = DateTime.Now;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

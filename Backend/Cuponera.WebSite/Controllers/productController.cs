@@ -27,15 +27,14 @@ namespace Cuponera.WebSite.Controllers
         }
 
         // GET: product
-        public async Task<ActionResult> Index(bool all = false, string title = null, int pageNumber = 1)
+        public async Task<ActionResult> Index(bool all = false, string title = null, int? category = null, int pageNumber = 1)
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
-            var products = db.product.Where(p => title == null || p.Title.ToLower().Contains(title.ToLower()))
-                                     .OrderBy(p => p.Title);
+            var products = db.product.Where(p => (title == null || p.Title.ToLower().Contains(title.ToLower())))
+                                     .Where(p => (category == null || category == 0 || p.IdCategory == category))
+                                     .OrderBy(p => p.Title).ToPagedList(pageNumber, pageSize);
 
             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)products.Count() / pageSize));
-
-            products.ToPagedList(pageNumber, pageSize);
 
             return View(products);
         }
@@ -73,8 +72,10 @@ namespace Cuponera.WebSite.Controllers
             if (ModelState.IsValid)
             {
                 if (fileUpload.Count > 0) product.ImagePath = GeneratePhisicalFile(fileUpload[0]);
+                product.CreationDatetime = DateTime.Now;
+                product.ModificationDatetime = DateTime.Now;
                 db.product.Add(product);
-                db.SaveChangesAsync();
+                db.SaveChanges();
     			//Save aditional images
                 UploadImages(fileUpload, product.IdProduct);
                 return RedirectToAction("Index");
@@ -112,6 +113,7 @@ namespace Cuponera.WebSite.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;
+                product.ModificationDatetime = DateTime.Now;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
