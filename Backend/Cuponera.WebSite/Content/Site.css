@@ -782,7 +782,11 @@ tr.pager td {
 
 .list-content .filters {
     float:right;
-    padding-right: 70px;
+    /*padding-right: 70px;*/
+}
+
+.filters .filter input, .filters .filter select{
+    max-width: 80%;
 }
 
 .list-content .table-all{
@@ -821,8 +825,12 @@ tr.pager td {
 	width: 100%;
 }
 
+.filters.full-width {
+    float: left !important;
+}
+
 .full-width {
-    width: 80%;
+    width: 95%;
 }
 
 .hidden {
