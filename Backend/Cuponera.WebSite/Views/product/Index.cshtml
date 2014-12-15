@@ -7,6 +7,7 @@
 <script type="text/javascript">
     var globals = {
         controller: 'product',
+        min_filters_size: 400,
         filters: {
             include: ['all'],
             custom: [{
@@ -53,7 +54,7 @@
                         Categoria
                     </th>
                     <th>
-                        Precio
+                        $
                     </th>
                     <th>
                         Estado
@@ -84,17 +85,17 @@
                             }
                         </td>
                         <td>
-                            @Html.ActionLink("Mod", "Edit", new { id = item.IdProduct }) |
-                            @Html.ActionLink("Ver", "Details", new { id = item.IdProduct }) |
+                            @Html.ActionLink("Editar", "Edit", new { id = item.IdProduct }) |
+                            @Html.ActionLink("Detalle", "Details", new { id = item.IdProduct }) |
                             @if (item.DeletionDatetime == null)
                             {
-                                <a href="#" class="deactivate" data-popup-to-open="dialog-confirm-deactivate">Del</a>
+                                <a href="#" class="deactivate" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
                             }
                             else
                             {
-                                <a href="#" class="activate" data-popup-to-open="dialog-confirm-activate">Act</a>
+                                <a href="#" class="activate" data-popup-to-open="dialog-confirm-activate">Activar</a>
                             } |
-                            @Html.ActionLink("Offer", "Create", "offer", new { IdProduct = item.IdProduct }, null)
+                            @Html.ActionLink("Oferta", "Create", "offer", new { IdProduct = item.IdProduct }, null)
                         </td>
                     </tr>
                 }
