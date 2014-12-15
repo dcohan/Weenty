@@ -9,9 +9,8 @@
         android:id="@+id/product_company"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.05"
+        android:layout_weight="0.08"
         android:gravity="center"
-        android:paddingBottom="20dp"
         android:textColor="@color/pink"
         android:textSize="25sp"
         android:textStyle="bold" />
@@ -19,7 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.25"
+        android:layout_weight="0.19"
         android:orientation="horizontal" >
 
         <com.twotoasters.android.horizontalimagescroller.widget.HorizontalImageScroller
@@ -31,16 +30,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
+        android:layout_weight="0.73"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/product_name"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:textColor="@color/gray_cuponera"
-            android:textSize="15sp" />
+            android:padding="20dp" >
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_cuponera"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/product_name"
+                android:textColor="@color/gray_cuponera"
+                android:textSize="18sp" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/product_description"
@@ -48,25 +61,51 @@
             android:layout_height="wrap_content"
             android:padding="20dp"
             android:textColor="@color/gray_cuponera"
-            android:textSize="13sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/product_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:text="Telefono"
+            android:text="@string/phone"
             android:textColor="@color/gray_cuponera"
-            android:textSize="13sp" />
+            android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/product_map"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:text="Ver mapa"
-            android:textColor="@color/gray_cuponera"
-            android:textSize="13sp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <ImageView
+                android:id="@+id/product_phone_image"
+                android:layout_width="@dimen/icons_size"
+                android:layout_height="@dimen/icons_size"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/icon_phone" />
+
+            <ImageView
+                android:id="@+id/product_mail"
+                android:layout_width="@dimen/icons_size"
+                android:layout_height="@dimen/icons_size"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/icon_mail" />
+
+            <ImageView
+                android:id="@+id/product_map"
+                android:layout_width="@dimen/icons_size"
+                android:layout_height="@dimen/icons_size"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/icon_mapit" />
+
+            <ImageView
+                android:id="@+id/product_fb"
+                android:layout_width="@dimen/icons_size"
+                android:layout_height="@dimen/icons_size"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/icon_fb" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

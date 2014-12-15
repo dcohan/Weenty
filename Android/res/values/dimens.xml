@@ -15,5 +15,6 @@
     <dimen name="storename_text_size">20sp</dimen>
     <dimen name="storedescription_text_size">15sp</dimen>
     <dimen name="offer_circle">17dp</dimen>
+    <dimen name="icons_size">35dp</dimen>
 
 </resources>

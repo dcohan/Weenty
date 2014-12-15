@@ -31,4 +31,6 @@
     <string name="settings_title">Settings</string>
 
     <string name="home_search">Explorar</string>
+    
+    <string name="phone">Teléfono: </string>
 </resources>
