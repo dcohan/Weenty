@@ -24,6 +24,7 @@ import com.cuponera.service.state.StateResponse;
 import com.cuponera.settings.Settings;
 import com.cuponera.utils.Const;
 import com.cuponera.utils.LocationServices;
+import com.cuponera.utils.Utils;
 
 public class HomeFragment extends BaseFragment implements HeaderInterface {
 
@@ -57,6 +58,7 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 		mViewProxy.findTextView(R.id.highlighted).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.cinema).setOnClickListener(dashboardListener);
 		mViewProxy.findImageView(R.id.munucipio).setOnClickListener(dashboardListener);
+		Utils.setCalibri(getActivity(), mViewProxy.findTextView(R.id.explore));
 		
 	}
 
