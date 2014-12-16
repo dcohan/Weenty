@@ -14,6 +14,7 @@ import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.event.LoaderEvent;
 import com.cuponera.service.HttpService;
+import com.cuponera.service.ServiceConfig;
 import com.cuponera.ui.loader.LoaderInfo;
 import com.cuponera.utils.ErrorHandler;
 import com.cuponera.utils.Utils;
@@ -63,7 +64,7 @@ public class AsyncPoolManager {
 		loaders.add(loader);
 
 		((Activity) getContext()).getLoaderManager().restartLoader(loaders.size(), null, loader);
-	}
+	} 
 
 	public void loaderReturns(String result, AsyncPoolLoader loader) {
 		if (loaders == null || loaders.indexOf(loader) < 0) {
@@ -154,7 +155,7 @@ public class AsyncPoolManager {
 	private Map<String, Object> getDefaultParams(Context context) {
 		Map<String, Object> defaultParams = new HashMap<String, Object>();
 
-		defaultParams.put("DeviceId", "gs122sss00");
+		defaultParams.put("DeviceId", ServiceConfig.getDeviceId());
 		defaultParams.put("AppVersion", Utils.getAppVersion(context));
 		defaultParams.put("ResolutionWidth", Utils.getScreen(context).x);
 		defaultParams.put("ResolutionHeight", Utils.getScreen(context).y);
