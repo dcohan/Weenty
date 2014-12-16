@@ -24,6 +24,10 @@ namespace Cuponera.WebSite.Helpers
             //if (httpContext.User.IsInRole("admin")) return true;
             if (new CuponeraPrincipal(new CuponeraIdentity(httpContext.User.Identity)).IsInRole("admin")) return true;
 
+            //If is admin company, can admin every store
+            if (CuponeraIdentity.IsAdminCompany) return true;
+
+
             //Define Entity and Id of entity
             string entity = httpContext.Request.Url.Segments[1].Replace("/", string.Empty);
             int idEntity = Convert.ToInt32(httpContext.Request.Url.Segments[3].Replace("/",string.Empty));

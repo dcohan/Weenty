@@ -31,11 +31,19 @@ namespace Cuponera.WebSite.Models
                     var _user = db.UserProfile.FirstOrDefault(u => u.UserName.ToLower() == Name.ToLower());
                     HttpContext.Current.Session["userId"] = _user.UserId;
 
-                    var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId))
-                                  .Join(db.company, uc => uc.IdCompany, c => c.IdCompany, (cs, c) => new { IdCompany = c.IdCompany })
-                                  .Join(db.store, c => c.IdCompany, s => s.IdCompany, (c, s) => new { s.IdStore }).ToList();
+                    var userCompany = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId) && uc.IsAdmin).First();
 
-                    HttpContext.Current.Session["AvaiableStores"] = stores;
+                    //Is Admin
+                    if (userCompany != null)
+                    {
+                        HttpContext.Current.Session["AdminCompany"] = true;
+                    }
+                    else
+                    {
+                        var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId)).Select(s => s.IdStore).ToList();
+
+                        HttpContext.Current.Session["AvaiableStores"] = stores;
+                    }
                 }
             }
         }
@@ -71,6 +79,14 @@ namespace Cuponera.WebSite.Models
             get
             {
                 return (IEnumerable<object>)HttpContext.Current.Session["AvaiableStores"];
+            }
+        }
+
+        public static bool IsAdminCompany
+        {
+            get
+            {
+                return HttpContext.Current.Session["AdminCompany"] != null ? (bool)HttpContext.Current.Session["AdminCompany"] : false;
             }
         }
 
