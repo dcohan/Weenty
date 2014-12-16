@@ -45,6 +45,7 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.offer.Where(offer => offer.IdOffer == key && !offer.DeletionDatetime.HasValue));
         }
 
+        [Authorize]
         // PUT: odata/offer(5)
         public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<offer> patch)
         {
@@ -82,6 +83,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(offer);
         }
 
+        [Authorize]
         // POST: odata/offer
         public async Task<IHttpActionResult> Post(offer offer)
         {
@@ -96,6 +98,7 @@ namespace Cuponera.Backend.Controllers
             return Created(offer);
         }
 
+        [Authorize]
         // PATCH: odata/offer(5)
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<offer> patch)
@@ -134,6 +137,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(offer);
         }
 
+        [Authorize]
         // DELETE: odata/offer(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {

@@ -59,6 +59,7 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.category.Where(category => category.IdCategory == key && !category.DeletionDatetime.HasValue));
         }
 
+        [Authorize]
         // PUT: odata/category(5)
         public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<category> patch)
         {
@@ -96,6 +97,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(category);
         }
 
+        [Authorize]
         // POST: odata/category
         public async Task<IHttpActionResult> Post(category category)
         {
@@ -110,6 +112,7 @@ namespace Cuponera.Backend.Controllers
             return Created(category);
         }
 
+        [Authorize]
         // PATCH: odata/category(5)
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<category> patch)
@@ -148,6 +151,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(category);
         }
 
+        [Authorize]
         // DELETE: odata/category(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
@@ -163,6 +167,7 @@ namespace Cuponera.Backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IHttpActionResult> Activate([FromODataUri] int key)
         {
@@ -178,6 +183,7 @@ namespace Cuponera.Backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [Authorize]
         // GET: odata/category(5)/product
         [EnableQuery]
         public IQueryable<product> Getproduct([FromODataUri] int key)

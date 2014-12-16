@@ -44,6 +44,7 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.state.Where(state => state.IdState == key));
         }
 
+        [Authorize]
         // PUT: odata/state(5)
         public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<state> patch)
         {
@@ -81,6 +82,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(state);
         }
 
+        [Authorize]
         // POST: odata/state
         public async Task<IHttpActionResult> Post(state state)
         {
@@ -110,6 +112,7 @@ namespace Cuponera.Backend.Controllers
             return Created(state);
         }
 
+        [Authorize]
         // PATCH: odata/state(5)
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<state> patch)
@@ -148,6 +151,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(state);
         }
 
+        [Authorize]
         // DELETE: odata/state(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {

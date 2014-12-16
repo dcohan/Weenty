@@ -43,6 +43,7 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.preHomeImages.Where(preHomeImages => preHomeImages.IdPreHomeImage == key));
         }
 
+        [Authorize]
         // PUT: odata/preHomeImages(5)
         public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<preHomeImages> patch)
         {
@@ -80,6 +81,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(preHomeImages);
         }
 
+        [Authorize]
         // POST: odata/preHomeImages
         public async Task<IHttpActionResult> Post(preHomeImages preHomeImages)
         {
@@ -94,6 +96,7 @@ namespace Cuponera.Backend.Controllers
             return Created(preHomeImages);
         }
 
+        [Authorize]
         // PATCH: odata/preHomeImages(5)
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<preHomeImages> patch)
@@ -132,6 +135,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(preHomeImages);
         }
 
+        [Authorize]
         // DELETE: odata/preHomeImages(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {

@@ -45,6 +45,7 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.companySubscription.Where(companySubscription => companySubscription.IdCompanySubscription == key && !companySubscription.DeletionDatetime.HasValue));
         }
 
+        [Authorize]
         // PUT: odata/companySubscription(5)
         public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<companySubscription> patch)
         {
@@ -82,6 +83,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(companySubscription);
         }
 
+        [Authorize]
         // POST: odata/companySubscription
         public async Task<IHttpActionResult> Post(companySubscription companySubscription)
         {
@@ -96,6 +98,7 @@ namespace Cuponera.Backend.Controllers
             return Created(companySubscription);
         }
 
+        [Authorize]
         // PATCH: odata/companySubscription(5)
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<companySubscription> patch)
@@ -134,6 +137,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(companySubscription);
         }
 
+        [Authorize]
         // DELETE: odata/companySubscription(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {

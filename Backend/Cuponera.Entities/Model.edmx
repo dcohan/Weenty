@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="IdCategory" />
@@ -142,14 +142,14 @@
           <Key>
             <PropertyRef Name="IdState" />
           </Key>
-          <Property Name="IdState" Type="int" Nullable="false" />
+          <Property Name="IdState" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Link" Type="varchar" MaxLength="255" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-          <Property Name="Longitude" Type="float" Nullable="false" />
-          <Property Name="Latitude" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="store">
           <Key>
@@ -411,6 +411,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_userCompany_store">
+          <End Role="store" Type="Self.store" Multiplicity="0..1" />
+          <End Role="userCompany" Type="Self.userCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="IdStore" />
+            </Principal>
+            <Dependent Role="userCompany">
+              <PropertyRef Name="IdStore" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userCompany_userCompany">
+          <End Role="userCompany" Type="Self.userCompany" Multiplicity="1" />
+          <End Role="userCompany1" Type="Self.userCompany" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="userCompany">
+              <PropertyRef Name="IdUserCompany" />
+            </Principal>
+            <Dependent Role="userCompany1">
+              <PropertyRef Name="IdUserCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_userCompany_UserProfile">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="userCompany" Type="Self.userCompany" Multiplicity="*" />
@@ -511,6 +535,14 @@
             <End Role="company" EntitySet="company" />
             <End Role="userCompany" EntitySet="userCompany" />
           </AssociationSet>
+          <AssociationSet Name="FK_userCompany_store" Association="Self.FK_userCompany_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="userCompany" EntitySet="userCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userCompany_userCompany" Association="Self.FK_userCompany_userCompany">
+            <End Role="userCompany" EntitySet="userCompany" />
+            <End Role="userCompany1" EntitySet="userCompany" />
+          </AssociationSet>
           <AssociationSet Name="FK_userCompany_UserProfile" Association="Self.FK_userCompany_UserProfile">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="userCompany" EntitySet="userCompany" />
@@ -594,6 +626,14 @@
           <AssociationSet Name="FK_store_state" Association="CuponeraModel.FK_store_state">
             <End Role="state" EntitySet="state" />
             <End Role="store" EntitySet="store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userCompany_store" Association="CuponeraModel.FK_userCompany_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="userCompany" EntitySet="userCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userCompany_userCompany" Association="CuponeraModel.FK_userCompany_userCompany">
+            <End Role="userCompany" EntitySet="userCompany" />
+            <End Role="userCompany1" EntitySet="userCompany" />
           </AssociationSet>
           <AssociationSet Name="FK_userCompany_UserProfile" Association="CuponeraModel.FK_userCompany_UserProfile">
             <End Role="UserProfile" EntitySet="UserProfile" />
@@ -758,14 +798,14 @@
           <Key>
             <PropertyRef Name="IdState" />
           </Key>
-          <Property Name="IdState" Type="Int32" Nullable="false" />
+          <Property Name="IdState" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Link" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <Property Name="Longitude" Type="Double" Nullable="false" />
-          <Property Name="Latitude" Type="Double" Nullable="false" />
           <NavigationProperty Name="store" Relationship="CuponeraModel.FK_store_state" FromRole="state" ToRole="store" />
         </EntityType>
         <EntityType Name="store">
@@ -794,6 +834,7 @@
           <NavigationProperty Name="occasion" Relationship="CuponeraModel.FK_event_store" FromRole="store" ToRole="occasion" />
           <NavigationProperty Name="product" Relationship="CuponeraModel.FK_product_store" FromRole="store" ToRole="product" />
           <NavigationProperty Name="state" Relationship="CuponeraModel.FK_store_state" FromRole="store" ToRole="state" />
+          <NavigationProperty Name="userCompany" Relationship="CuponeraModel.FK_userCompany_store" FromRole="store" ToRole="userCompany" />
         </EntityType>
         <EntityType Name="subscription">
           <Key>
@@ -819,6 +860,9 @@
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
           <Property Name="IdStore" Type="Int32" />
           <NavigationProperty Name="company" Relationship="CuponeraModel.FK_userCompany_company" FromRole="userCompany" ToRole="company" />
+          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_userCompany_store" FromRole="userCompany" ToRole="store" />
+          <NavigationProperty Name="userCompany1" Relationship="CuponeraModel.FK_userCompany_userCompany" FromRole="userCompany" ToRole="userCompany1" />
+          <NavigationProperty Name="userCompany2" Relationship="CuponeraModel.FK_userCompany_userCompany" FromRole="userCompany1" ToRole="userCompany" />
           <NavigationProperty Name="UserProfile" Relationship="CuponeraModel.FK_userCompany_UserProfile" FromRole="userCompany" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="UserProfile">
@@ -1020,6 +1064,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_userCompany_store">
+          <End Type="CuponeraModel.store" Role="store" Multiplicity="0..1" />
+          <End Type="CuponeraModel.userCompany" Role="userCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="IdStore" />
+            </Principal>
+            <Dependent Role="userCompany">
+              <PropertyRef Name="IdStore" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userCompany_userCompany">
+          <End Type="CuponeraModel.userCompany" Role="userCompany" Multiplicity="1" />
+          <End Type="CuponeraModel.userCompany" Role="userCompany1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="userCompany">
+              <PropertyRef Name="IdUserCompany" />
+            </Principal>
+            <Dependent Role="userCompany1">
+              <PropertyRef Name="IdUserCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_userCompany_UserProfile">
           <End Type="CuponeraModel.UserProfile" Role="UserProfile" Multiplicity="1" />
           <End Type="CuponeraModel.userCompany" Role="userCompany" Multiplicity="*" />
@@ -1188,11 +1256,11 @@
           <EntitySetMapping Name="state">
             <EntityTypeMapping TypeName="CuponeraModel.state">
               <MappingFragment StoreEntitySet="state">
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Link" ColumnName="Link" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="IdState" ColumnName="IdState" />

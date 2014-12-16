@@ -47,6 +47,7 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.product.Where(product => product.IdProduct == key));
         }
 
+        [Authorize]
         // PUT: odata/product(5)
         public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<product> patch)
         {
@@ -84,6 +85,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(product);
         }
 
+        [Authorize]
         // POST: odata/product
         public async Task<IHttpActionResult> Post(product product)
         {
@@ -98,6 +100,7 @@ namespace Cuponera.Backend.Controllers
             return Created(product);
         }
 
+        [Authorize]
         // PATCH: odata/product(5)
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<product> patch)
@@ -136,6 +139,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(product);
         }
 
+        [Authorize]
         // DELETE: odata/product(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {

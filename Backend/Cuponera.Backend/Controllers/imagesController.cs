@@ -46,6 +46,7 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.images.Where(images => images.IdImage == key));
         }
 
+        [Authorize]
         // PUT: odata/images(5)
         public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<images> patch)
         {
@@ -83,6 +84,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(images);
         }
 
+        [Authorize]
         // POST: odata/images
         public async Task<IHttpActionResult> Post(images images)
         {
@@ -97,6 +99,7 @@ namespace Cuponera.Backend.Controllers
             return Created(images);
         }
 
+        [Authorize]
         // PATCH: odata/images(5)
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<images> patch)
@@ -135,6 +138,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(images);
         }
 
+        [Authorize]
         // DELETE: odata/images(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {

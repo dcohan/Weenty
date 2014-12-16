@@ -44,6 +44,7 @@ namespace Cuponera.Backend.Controllers
             return SingleResult.Create(db.occasion.Where(occasion => occasion.IdEvent == key && !occasion.DeletionDateTime.HasValue));
         }
 
+        [Authorize]
         // PUT: odata/occasion(5)
         public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<occasion> patch)
         {
@@ -81,6 +82,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(occasion);
         }
 
+        [Authorize]
         // POST: odata/occasion
         public async Task<IHttpActionResult> Post(occasion occasion)
         {
@@ -95,6 +97,7 @@ namespace Cuponera.Backend.Controllers
             return Created(occasion);
         }
 
+        [Authorize]
         // PATCH: odata/occasion(5)
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<occasion> patch)
@@ -133,6 +136,7 @@ namespace Cuponera.Backend.Controllers
             return Updated(occasion);
         }
 
+        [Authorize]
         // DELETE: odata/occasion(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
