@@ -83,19 +83,17 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Name,Link")] state state, string Latitude, string Longitude)
+        public async Task<ActionResult> Create([Bind(Include = "Name,SortFactor,duration")] subscription subscription, string Pricing)
         {
             if (ModelState.IsValid)
             {
-                if (Latitude != null) { state.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
-                if (Longitude != null) { state.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
+                if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
 
-                db.state.Add(state);
+                db.subscription.Add(subscription);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
-            return View(state);
+            return View(subscription);
         }
 
         // GET: /state/Edit/5
@@ -122,11 +120,11 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Name,SortFactor,duration")] subscription subscription, int SortFactor, int duration, string Price)
+        public async Task<ActionResult> Edit([Bind(Include = "Name,SortFactor,duration")] subscription subscription, string Pricing)
         {
             if (ModelState.IsValid)
             {
-                if (!String.IsNullOrEmpty(Price)) { subscription.Pricing = Convert.ToDecimal(Price.Replace(",", ".")); }
+                if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
