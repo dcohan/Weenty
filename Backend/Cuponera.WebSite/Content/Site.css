@@ -870,3 +870,7 @@ select {
 .ordered-subscriptions li.current{
     font-weight: bold;
 }
+
+.item-order input{
+    max-width: 50px;
+}

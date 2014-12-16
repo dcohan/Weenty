@@ -26,6 +26,7 @@ function callServer(args) {
     $.blockUI({ message: '<img class="loading-image" src="Images/loading.gif" style="width: 50px; height: 50px;"/> Por favor espere mientras se recargan los datos...' });
 
     $.ajax({
+        contentType: 'application/json',
         url: '/' + args.controller + '/' + args.action + id + qs,
         type: args.method,
         data: args.data

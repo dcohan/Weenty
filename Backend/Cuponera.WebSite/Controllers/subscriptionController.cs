@@ -131,6 +131,25 @@ namespace Cuponera.WebSite.Controllers
             return View(subscription);
         }
 
+
+        // POST: /state/Edit/5
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPut]
+        public async Task<ActionResult> UpdateOrder(string order)
+        {
+            /*
+            if (ModelState.IsValid)
+            {
+                if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+             */
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
         // GET: /state/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
