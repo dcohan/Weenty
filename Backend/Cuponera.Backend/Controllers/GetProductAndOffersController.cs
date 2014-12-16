@@ -42,5 +42,15 @@ namespace Cuponera.Backend.Controllers
 
             return response;
         }
+
+        // GET: GetNearestStoresWithOffers
+        [HttpGet]
+        public object GetNearestStoresWithOffers([FromUri] double Latitude, [FromUri] double Longitude)
+        {
+            var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
+            var response = new { value = db.GetNearestStoresWithOffers(Latitude, Longitude) };
+
+            return response;
+        }
     }
 }

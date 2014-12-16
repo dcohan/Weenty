@@ -29,6 +29,8 @@ namespace Cuponera.Entities
     {
         public double Distance { get; set; }
         public int HasOffers { get; set; }
+
+        public int IdCategory { get; set; }
     }
 
     public partial class CuponeraEntities
@@ -60,6 +62,15 @@ namespace Cuponera.Entities
                     new SqlParameter("Latitude", Latitude),
                     new SqlParameter("Longitude", Longitude),
                     new SqlParameter("Name", Name)
+                ).ToList<GetNearestStores>();
+        }
+
+        public List<GetNearestStores> GetNearestStoresWithOffers(double Latitude, double Longitude)
+        {
+            return Database.SqlQuery<GetNearestStores>(
+                    "dbo.GetNearestStoresWithOffers @Latitude, @Longitude",
+                    new SqlParameter("Latitude", Latitude),
+                    new SqlParameter("Longitude", Longitude)
                 ).ToList<GetNearestStores>();
         }
     }

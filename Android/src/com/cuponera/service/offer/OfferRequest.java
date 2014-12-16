@@ -78,7 +78,7 @@ public class OfferRequest extends AsyncPoolRequest<StoreResponse> implements Par
 
 	@Override
 	protected Class<?> getResponseClass() {
-		return OfferResponse.class;
+		return StoreResponse.class;
 	}
 
 	@Override
