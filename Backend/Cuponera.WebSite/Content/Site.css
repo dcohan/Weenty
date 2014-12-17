@@ -764,6 +764,10 @@ tr.pager td {
     text-align:center;
 }
 
+.table-all tbody td.centered-content {
+    text-align:center;
+}
+
 .table-all tbody td.current-status img{
     height: 20px;
     width: 20px;
