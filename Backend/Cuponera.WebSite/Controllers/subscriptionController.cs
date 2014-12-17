@@ -89,7 +89,6 @@ namespace Cuponera.WebSite.Controllers
             if (ModelState.IsValid)
             {
                 if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
-
                 db.subscription.Add(subscription);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -116,9 +115,10 @@ namespace Cuponera.WebSite.Controllers
             return View(subscription);
         }
 
-        // POST: /state/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        // POST: subscription/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "IdSubscription,Name,SortFactor,duration")] subscription subscription, string Pricing)
@@ -127,11 +127,14 @@ namespace Cuponera.WebSite.Controllers
             {
                 if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
 
+                db.Entry(subscription).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(subscription);
         }
+
+
 
         // GET: /state/Delete/5
         public async Task<ActionResult> Delete(int? id)
