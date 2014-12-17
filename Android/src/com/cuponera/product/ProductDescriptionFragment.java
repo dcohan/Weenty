@@ -1,26 +1,22 @@
 package com.cuponera.product;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
 import com.cuponera.map.GoogleMapFragment;
 import com.cuponera.model.Product;
 import com.cuponera.model.Store;
+import com.cuponera.service.images.ImagesRequest;
+import com.cuponera.service.images.ImagesResponse;
+import com.cuponera.utils.ImageGallery;
 import com.cuponera.utils.ValidationUtils;
-import com.twotoasters.android.horizontalimagescroller.image.ImageToLoad;
-import com.twotoasters.android.horizontalimagescroller.image.ImageToLoadUrl;
-import com.twotoasters.android.horizontalimagescroller.widget.HorizontalImageScroller;
-import com.twotoasters.android.horizontalimagescroller.widget.HorizontalImageScrollerAdapter;
 
 public class ProductDescriptionFragment extends BaseFragment {
 
@@ -47,10 +43,30 @@ public class ProductDescriptionFragment extends BaseFragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		product = getArguments().getParcelable(ARGS_PRODUCT);
 		store = getArguments().getParcelable(ARGS_STORE);
+		ImagesRequest request = new ImagesRequest(getBaseActivity()) {
+
+			@Override
+			public void onServiceReturned(ImagesResponse response) {
+				if (response != null && response.getImages().size() > 0) {
+					FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
+					transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(response.getImages()));
+					transaction.commit();
+				} else {
+					mViewProxy.findFrameLayout(R.id.gallery_adapter).setVisibility(View.GONE);
+				}
+			}
+		};
+		request.setIdProduct(product.getIdProduct());
+		request.execute(false);
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 
 		mViewProxy.findTextView(R.id.product_company).setText(store.getName());
 		mViewProxy.findTextView(R.id.product_description).setText(product.getpDescription());
@@ -67,21 +83,6 @@ public class ProductDescriptionFragment extends BaseFragment {
 		}
 
 		mViewProxy.findTextView(R.id.product_phone).setText(getResources().getString(R.string.phone) + store.getContactNumber());
-
-		ArrayList<ImageToLoad> images = new ArrayList<ImageToLoad>();
-		for (int i = 0; i < 20; i++) {
-			images.add(new ImageToLoadUrl("https://www.google.com.ar/images/google_favicon_128.png"));
-		}
-
-		HorizontalImageScroller scroller = (HorizontalImageScroller) mViewProxy.findView(R.id.my_horizontal_image_scroller);
-		scroller.setAdapter(new HorizontalImageScrollerAdapter(getActivity(), images));
-		scroller.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-			}
-		});
 
 		if (!ValidationUtils.isNullOrEmpty(store.getContactNumber())) {
 			mViewProxy.findImageView(R.id.product_phone_image).setVisibility(View.VISIBLE);

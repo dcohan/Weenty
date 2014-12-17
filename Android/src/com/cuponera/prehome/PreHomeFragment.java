@@ -25,7 +25,7 @@ public class PreHomeFragment extends BaseFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		if (!ValidationUtils.isNullOrEmpty(Settings.getInstance(getBaseActivity()).getPreHomeImage())) {
-			Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.image), Settings.getInstance(getBaseActivity()).getPreHomeImage());
+			Utils.loadImageFromUrl(getActivity(), mViewProxy.findImageView(R.id.image), Settings.getInstance(getBaseActivity()).getPreHomeImage());
 		}
 		SystemClock.sleep(1000);
 		runHome();

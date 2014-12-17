@@ -24,7 +24,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.androidquery.AQuery;
+import com.squareup.picasso.Picasso;
 
 public class Utils {
 
@@ -141,16 +141,8 @@ public class Utils {
 		}, 200);
 	}
 
-	public static void loadImageFromUrl(ImageView imageView, String url) {
-		AQuery aq = new AQuery(imageView);
-		Bitmap bitmap = aq.getCachedImage(url);
-		if (bitmap == null) {
-			if (Utils.hasInternetConnection(imageView.getContext())) {
-				aq.image(url, memCache, fileCache);
-			}
-		} else {
-			imageView.setImageBitmap(bitmap);
-		}
+	public static void loadImageFromUrl(Context context, ImageView imageView, String url) {
+		Picasso.with(context).load(url).into(imageView);
 	}
 
 	public static boolean hasInternetConnection(Context context) {
@@ -194,5 +186,6 @@ public class Utils {
 			return null;
 		}
 	}
+
 
 }
