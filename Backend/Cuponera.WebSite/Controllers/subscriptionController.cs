@@ -66,7 +66,8 @@ namespace Cuponera.WebSite.Controllers
                 return HttpNotFound();
             }
 
-            var all_subscriptions = get(false);
+
+            var all_subscriptions = get(subscription.DeletionDatetime != null);
             ViewBag.AllSubscriptions = all_subscriptions.OrderBy(s => s.SortFactor);
 
             return View(subscription);
@@ -120,11 +121,12 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Name,SortFactor,duration")] subscription subscription, string Pricing)
+        public async Task<ActionResult> Edit([Bind(Include = "IdSubscription,Name,SortFactor,duration")] subscription subscription, string Pricing)
         {
             if (ModelState.IsValid)
             {
                 if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
+
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -138,14 +140,14 @@ namespace Cuponera.WebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            state state = await db.state.FindAsync(id);
-            if (state == null)
+            subscription subscription = await db.subscription.FindAsync(id);
+            if (subscription == null)
             {
                 return HttpNotFound();
             }
 
 
-            state.DeletionDatetime = DateTime.Now;
+            subscription.DeletionDatetime = DateTime.Now;
             await db.SaveChangesAsync();
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
@@ -159,13 +161,13 @@ namespace Cuponera.WebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            state state = await db.state.FindAsync(id);
-            if (state == null)
+            subscription subscription = await db.subscription.FindAsync(id);
+            if (subscription == null)
             {
                 return HttpNotFound();
             }
 
-            state.DeletionDatetime = null;
+            subscription.DeletionDatetime = null;
             await db.SaveChangesAsync();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
