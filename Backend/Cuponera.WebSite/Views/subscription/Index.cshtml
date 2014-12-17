@@ -88,64 +88,6 @@
                 </tbody>
             </table>
 
-            <script type="text/javascript">
-                $(function () {
-                    $('#reorder').click(function () {
-                        $('.item-order').each(function (k, v) {
-                            var $v = $(v);
-                            $v.html(
-                                $('<input>').val($v.html())
-                            );
-                        });
-
-                        $(this).addClass('hidden');
-                        $('#accept-reorder').removeClass('hidden');
-                    });
-
-                    $('#accept-reorder').click(function () {
-                        var allOk = true;
-                        $('.item-order input').each(function (k, v) {
-                            if (!allOk) { return false; }
-
-                            $v = $(v);
-                            allOk &= $.isNumeric($v.val());
-                            if (!allOk) { $v.addClass('has-error'); }
-                        });
-                        if (!allOk) { return false; }
-
-                        updateSubscriptionOrder();
-                    });
-                });
-
-                function updateSubscriptionOrder() {
-                    var $rows = $('table.table tbody tr');
-                    var order = [];
-                    $rows.each(function (k, v) {
-                        $v = $(v);
-                        order.push({ id: $v.data('item-id'), value: parseInt($v.find('input').val()) });
-                    });
-
-                    updateOrder(order);
-                }
-
-                function updateOrder(order) {
-                    if (!order || !order.length) {
-                        return false;
-                    }
-
-                    var args = {};
-                    args.controller = 'subscription';
-                    args.action = 'UpdateOrder';
-                    args.method = 'PUT';
-                    args.data = JSON.stringify({ order: order });
-                    args.success = function () { if (reload && typeof reload === 'function') { reload(); } };
-                    callServer(args);
-                }
-            </script>
-            <input type="button" value="Reordenar" id="reorder" />
-            <input type="button" value="Aceptar" class="hidden" id="accept-reorder" />
-
-
             @Html.Partial("Paginator")
         </div>
 
