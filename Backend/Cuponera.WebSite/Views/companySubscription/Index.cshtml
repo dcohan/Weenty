@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Cuponera.Entities.companySubscription>
+
+@{
+    ViewBag.Title = "Suscripciones";
+}
+
+<script type="text/javascript">
+    var globals = {
+        controller: 'companySubscription'
+    };
+
+    $(function () {
+        $('#companies option').click(function () {
+            var id_subscription = parseInt($(this).data('id-subscription') || 0);
+            if (id_subscription > 0) {
+                $('#subscriptions').val(id_subscription);
+            }
+        });
+    });
+</script>
+
+<h2>Suscripciones</h2>
+
+
+<div class="list-content">
+    @Html.Partial("AntiForgeryTokenForm")
+    @Html.Partial("Filters")
+
+
+
+    @if (Model.Count() == 0)
+    {
+        <div class="no-data">No hay datos.</div>
+    }
+    else
+    {
+        <select multiple class="float-left" id="companies">
+            @foreach (var item in Model)
+            {
+                <option value="@item.IdCompany" data-id-subscription="@item.IdSubscription">@item.company.Name</option>
+            }
+        </select>
+
+        <select class="float-right" id="subscriptions">
+            @foreach (var subscription in ViewBag.Subscriptions)
+            {
+                <option value="@subscription.IdSubscription">@subscription.subscription.Name</option>
+            }
+        </select>
+
+        }
+</div>

@@ -206,6 +206,7 @@
     <Compile Include="Controllers\preHomeController.cs" />
     <Compile Include="Controllers\productController.cs" />
     <Compile Include="Controllers\stateController.cs" />
+    <Compile Include="Controllers\companySubscriptionController.cs" />
     <Compile Include="Controllers\subscriptionController.cs" />
     <Compile Include="Controllers\storeController.cs" />
     <Compile Include="Controllers\categoryController.cs" />
@@ -351,6 +352,10 @@
     <Content Include="Views\subscription\Details.cshtml" />
     <Content Include="Views\subscription\Edit.cshtml" />
     <Content Include="Views\subscription\Index.cshtml" />
+    <Content Include="Views\companySubscription\Create.cshtml" />
+    <Content Include="Views\companySubscription\Details.cshtml" />
+    <Content Include="Views\companySubscription\Edit.cshtml" />
+    <Content Include="Views\companySubscription\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
