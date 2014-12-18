@@ -155,7 +155,7 @@ namespace Cuponera.WebSite.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        // POST: category/Activate/5
+        // POST: state/Activate/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Activate(int id)

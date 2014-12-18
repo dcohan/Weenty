@@ -45,7 +45,7 @@ namespace Cuponera.WebSite.Controllers
             return Helpers.JSONHelper.SerializeJSON(states.ToList().Select(state => new { id = state.IdState, name = state.Name }));
         }
         
-        // GET: /state/
+        // GET: /subscription/
         public async Task<ActionResult> Index(bool all = false, string name = null, int page = 1)
         {
             var subscriptions = get(all, name, page);
@@ -53,7 +53,7 @@ namespace Cuponera.WebSite.Controllers
             return View(subscriptions);
         }
 
-        // GET: /state/Details/5
+        // GET: /subscription/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -73,13 +73,13 @@ namespace Cuponera.WebSite.Controllers
             return View(subscription);
         }
 
-        // GET: /state/Create
+        // GET: /subscription/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: /state/Create
+        // POST: /subscription/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -96,7 +96,7 @@ namespace Cuponera.WebSite.Controllers
             return View(subscription);
         }
 
-        // GET: /state/Edit/5
+        // GET: /subscription/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -136,7 +136,7 @@ namespace Cuponera.WebSite.Controllers
 
 
 
-        // GET: /state/Delete/5
+        // GET: /subscription/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -155,7 +155,7 @@ namespace Cuponera.WebSite.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        // POST: category/Activate/5
+        // POST: subscription/Activate/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Activate(int id)
