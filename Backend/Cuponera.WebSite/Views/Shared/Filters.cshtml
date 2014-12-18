@@ -156,7 +156,9 @@
 
 
 
-
+    if (!globals.filters) {
+        $('.filters').remove();
+    }
 
     var _common_filters = [{
         controlType: 'checkbox',
