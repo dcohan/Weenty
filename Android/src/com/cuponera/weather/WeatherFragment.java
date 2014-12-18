@@ -5,8 +5,11 @@ import android.os.Bundle;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
+import com.cuponera.event.ErrorEvent;
+import com.cuponera.event.EventBus;
 import com.cuponera.service.weather.WeatherRequest;
 import com.cuponera.service.weather.WeatherResponse;
+import com.cuponera.utils.ErrorHandler;
 import com.cuponera.utils.Utils;
 
 public class WeatherFragment extends BaseFragment {
@@ -25,12 +28,18 @@ public class WeatherFragment extends BaseFragment {
 			@SuppressLint("DefaultLocale")
 			@Override
 			public void onServiceReturned(WeatherResponse result) {
-				Utils.loadImageFromUrl(getActivity(), mViewProxy.findImageView(R.id.weather_image), "http://openweathermap.org/img/w/"
-						+ result.getWeather().get(0).getIcon() + ".png");
-				mViewProxy.findTextView(R.id.weather_temp).setText(
-						"En estos momentos hay " + (int) result.getMainWeather().getTemp() + "° y una humedad del "
-								+ (int) result.getMainWeather().getHumidity() + "%. La presion es de " + result.getMainWeather().getPressure() + " milibares.");
+				if (result != null && result.getWeather() != null && result.getWeather().size() > 0 && result.getMainWeather() != null) {
+					Utils.loadImageFromUrl(getActivity(), mViewProxy.findImageView(R.id.weather_image), "http://openweathermap.org/img/w/"
+							+ result.getWeather().get(0).getIcon() + ".png");
+					mViewProxy.findTextView(R.id.weather_temp).setText(
+							"En estos momentos hay " + (int) result.getMainWeather().getTemp() + "° y una humedad del "
+									+ (int) result.getMainWeather().getHumidity() + "%. La presion es de " + result.getMainWeather().getPressure()
+									+ " milibares.");
 
+				} else {
+					EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.NO_RESULTS_FOUND));
+					getBaseActivity().onHomeButton();
+				}
 			}
 		};
 
