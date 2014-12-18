@@ -31,7 +31,7 @@ namespace Cuponera.WebSite.Models
                     var _user = db.UserProfile.FirstOrDefault(u => u.UserName.ToLower() == Name.ToLower());
                     HttpContext.Current.Session["userId"] = _user.UserId;
 
-                    var userCompany = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId) && uc.IsAdmin).First();
+                    var userCompany = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId) && uc.IsAdmin).FirstOrDefault();
 
                     //Is Admin
                     if (userCompany != null)

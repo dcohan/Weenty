@@ -30,31 +30,39 @@ namespace Cuponera.WebSite.Helpers
 
             //Define Entity and Id of entity
             string entity = httpContext.Request.Url.Segments[1].Replace("/", string.Empty);
-            int idEntity = Convert.ToInt32(httpContext.Request.Url.Segments[3].Replace("/",string.Empty));
-            List<int> stores = new List<int>();
 
-            using (CuponeraEntities db = new CuponeraEntities())
+            //Only applies to operation on specific resources, not for Index
+            if (httpContext.Request.Url.Segments.Count() > 3)
             {
-                switch (entity)
+                int idEntity = Convert.ToInt32(httpContext.Request.Url.Segments[3].Replace("/", string.Empty));
+                List<int> stores = new List<int>();
+
+                using (CuponeraEntities db = new CuponeraEntities())
                 {
-                    case "offer":
-                        stores.Add(db.offer.Where(o => o.IdOffer.Equals(idEntity)).FirstOrDefault().product.store.IdStore);
-                        break;
-                    case "product":
-                        stores.Add(db.product.Where(p => p.IdProduct.Equals(idEntity)).FirstOrDefault().store.IdStore);
-                        break;
-                    case "company":
-                        stores.AddRange(db.company.Where(c => c.IdCompany.Equals(idEntity)).FirstOrDefault().store.Select(s => s.IdStore));
-                        break;
-                    case "store":
-                        stores.Add(idEntity);
-                        break;
+                    switch (entity)
+                    {
+                        case "offer":
+                            stores.Add(db.offer.Where(o => o.IdOffer.Equals(idEntity)).FirstOrDefault().product.store.IdStore);
+                            break;
+                        case "product":
+                            stores.Add(db.product.Where(p => p.IdProduct.Equals(idEntity)).FirstOrDefault().store.IdStore);
+                            break;
+                        case "company":
+                            stores.AddRange(db.company.Where(c => c.IdCompany.Equals(idEntity)).FirstOrDefault().store.Select(s => s.IdStore));
+                            break;
+                        case "store":
+                            stores.Add(idEntity);
+                            break;
+                    }
                 }
+
+                //Otherwise, I need to check if he can admin over the selected company/store
+                return CuponeraPrincipal.CanAdminStores(stores);
             }
-
-
-            //Otherwise, I need to check if he can admin over the selected company/store
-            return CuponeraPrincipal.CanAdminStores( stores );           
+            else
+            {
+                return true;
+            }
         }
     }
 }
