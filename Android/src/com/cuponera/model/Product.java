@@ -26,10 +26,10 @@ public class Product extends BaseModel {
 	private double oPrice;
 
 	@JsonProperty("IdProduct")
-	private double idProduct;
+	private int idProduct;
 
 	@JsonProperty("IdOffer")
-	private double idOffer;
+	private int idOffer;
 
 	public String getpTitle() {
 		return pTitle;
@@ -87,19 +87,19 @@ public class Product extends BaseModel {
 		this.oPrice = oPrice;
 	}
 
-	public double getIdProduct() {
+	public int getIdProduct() {
 		return idProduct;
 	}
 
-	public void setIdProduct(double idProduct) {
+	public void setIdProduct(int idProduct) {
 		this.idProduct = idProduct;
 	}
 
-	public double getIdOffer() {
+	public int getIdOffer() {
 		return idOffer;
 	}
 
-	public void setIdOffer(double idOffer) {
+	public void setIdOffer(int idOffer) {
 		this.idOffer = idOffer;
 	}
 

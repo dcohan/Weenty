@@ -66,7 +66,8 @@ namespace Cuponera.WebSite.Controllers
                 return HttpNotFound();
             }
 
-            var all_subscriptions = get(false);
+
+            var all_subscriptions = get(subscription.DeletionDatetime != null);
             ViewBag.AllSubscriptions = all_subscriptions.OrderBy(s => s.SortFactor);
 
             return View(subscription);
@@ -83,19 +84,16 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Name,Link")] state state, string Latitude, string Longitude)
+        public async Task<ActionResult> Create([Bind(Include = "Name,SortFactor,duration")] subscription subscription, string Pricing)
         {
             if (ModelState.IsValid)
             {
-                if (Latitude != null) { state.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
-                if (Longitude != null) { state.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
-
-                db.state.Add(state);
+                if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
+                db.subscription.Add(subscription);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
-            return View(state);
+            return View(subscription);
         }
 
         // GET: /state/Edit/5
@@ -117,21 +115,26 @@ namespace Cuponera.WebSite.Controllers
             return View(subscription);
         }
 
-        // POST: /state/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        // POST: subscription/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Name,SortFactor,duration")] subscription subscription, int SortFactor, int duration, string Price)
+        public async Task<ActionResult> Edit([Bind(Include = "IdSubscription,Name,SortFactor,duration")] subscription subscription, string Pricing)
         {
             if (ModelState.IsValid)
             {
-                if (!String.IsNullOrEmpty(Price)) { subscription.Pricing = Convert.ToDecimal(Price.Replace(",", ".")); }
+                if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
+
+                db.Entry(subscription).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(subscription);
         }
+
+
 
         // GET: /state/Delete/5
         public async Task<ActionResult> Delete(int? id)
@@ -140,14 +143,14 @@ namespace Cuponera.WebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            state state = await db.state.FindAsync(id);
-            if (state == null)
+            subscription subscription = await db.subscription.FindAsync(id);
+            if (subscription == null)
             {
                 return HttpNotFound();
             }
 
 
-            state.DeletionDatetime = DateTime.Now;
+            subscription.DeletionDatetime = DateTime.Now;
             await db.SaveChangesAsync();
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
@@ -161,13 +164,13 @@ namespace Cuponera.WebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            state state = await db.state.FindAsync(id);
-            if (state == null)
+            subscription subscription = await db.subscription.FindAsync(id);
+            if (subscription == null)
             {
                 return HttpNotFound();
             }
 
-            state.DeletionDatetime = null;
+            subscription.DeletionDatetime = null;
             await db.SaveChangesAsync();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);

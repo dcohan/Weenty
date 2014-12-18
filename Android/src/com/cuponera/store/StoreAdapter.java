@@ -34,12 +34,11 @@ public class StoreAdapter extends BaseListAdapter {
 		if (!s.hasOffers()) {
 			mViewProxy.findView(R.id.offer_circle).setVisibility(View.GONE);
 		}
-		Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.store_image), s.getImagePath());
+		Utils.loadImageFromUrl(activity, mViewProxy.findImageView(R.id.store_image), s.getImagePath());
 		mViewProxy.findTextView(R.id.store_name).setText(s.getName());
 		Utils.setCalibri(activity, mViewProxy.findTextView(R.id.store_name));
 		mViewProxy.findTextView(R.id.store_address).setText(s.getAddress());
-		mViewProxy.findTextView(R.id.store_distance).setText(s.getDistance() + "km");
+		mViewProxy.findTextView(R.id.store_distance).setText(String.format("%.2f", s.getDistance()) + "km");
 		return mViewProxy.getView();
 	}
-
 }

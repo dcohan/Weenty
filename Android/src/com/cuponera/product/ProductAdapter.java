@@ -37,12 +37,12 @@ public class ProductAdapter extends BaseListAdapter {
 		mViewProxy.findTextView(R.id.product_company).setText(store.getName());
 		Utils.setCalibri(activity, mViewProxy.findTextView(R.id.product_company));
 		if (p.getIdOffer() > 0) {// IS OFFER
-			Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.product_image), p.getoImagePath());
+			Utils.loadImageFromUrl(activity, mViewProxy.findImageView(R.id.product_image), p.getoImagePath());
 			mViewProxy.findTextView(R.id.product_name).setText(p.getoTitle());
 			mViewProxy.findTextView(R.id.product_price).setText("$" + String.valueOf(p.getoPrice()));
 		} else {// IS NORMAL PRODUCT
 			mViewProxy.findView(R.id.offer_circle).setVisibility(View.GONE);
-			Utils.loadImageFromUrl(mViewProxy.findImageView(R.id.product_image), p.getpImagePath());
+			Utils.loadImageFromUrl(activity, mViewProxy.findImageView(R.id.product_image), p.getpImagePath());
 			mViewProxy.findTextView(R.id.product_name).setText(p.getpTitle());
 			mViewProxy.findTextView(R.id.product_price).setText("$" + String.valueOf(p.getpPrice()));
 		}

@@ -42,6 +42,9 @@
                             @Html.DisplayNameFor(model => model.Name)
                         </th>
                         <th>
+                            @Html.DisplayNameFor(model => model.SortFactor)
+                        </th>
+                        <th>
                             Estado
                         </th>
                         <th></th>
@@ -53,6 +56,9 @@
                         <tr data-item-id="@item.IdSubscription">
                             <td>
                                 <span class="item-name">@Html.DisplayFor(modelItem => item.Name)</span>
+                            </td>
+                            <td class="centered-content">
+                                <span class="item-order">@Html.DisplayFor(modelItem => item.SortFactor)</span>
                             </td>
                             <td class="current-status">
                                 @if (item.DeletionDatetime == null)
@@ -81,6 +87,7 @@
                     }
                 </tbody>
             </table>
+
             @Html.Partial("Paginator")
         </div>
 
