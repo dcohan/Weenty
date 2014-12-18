@@ -23,7 +23,6 @@ public abstract class BaseFragment extends Fragment {
 		
 		if(this instanceof HeaderInterface){
 			getBaseActivity().navBarFragment.setTitle(((HeaderInterface) BaseFragment.this).getTitle());
-			getBaseActivity().navBarFragment.setRightImage(((HeaderInterface) BaseFragment.this).getRightImage());
 		}
 		
 		return mViewProxy.getView();
