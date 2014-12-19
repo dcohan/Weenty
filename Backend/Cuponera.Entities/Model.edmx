@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="IdCategory" />
@@ -172,6 +172,7 @@
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
           <Property Name="ImagePath" Type="varchar" MaxLength="250" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="subscription">
           <Key>
@@ -835,6 +836,7 @@
           <NavigationProperty Name="product" Relationship="CuponeraModel.FK_product_store" FromRole="store" ToRole="product" />
           <NavigationProperty Name="state" Relationship="CuponeraModel.FK_store_state" FromRole="store" ToRole="state" />
           <NavigationProperty Name="userCompany" Relationship="CuponeraModel.FK_userCompany_store" FromRole="store" ToRole="userCompany" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="subscription">
           <Key>
@@ -1270,6 +1272,7 @@
           <EntitySetMapping Name="store">
             <EntityTypeMapping TypeName="CuponeraModel.store">
               <MappingFragment StoreEntitySet="store">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />

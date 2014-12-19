@@ -45,7 +45,7 @@ public abstract class ProfileRequest extends AsyncPoolRequest<ProfileResponse> {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("Latitude", Settings.getInstance(context).getLatitude());
 		params.put("Longitude", Settings.getInstance(context).getLongitude());
-		params.put("Geolocation", Settings.getInstance(context).isLocationEnable() ? 1 : 0);
+		params.put("Geolocation", Settings.getInstance(context).isLocationEnable());
 		if (!ValidationUtils.isNullOrEmpty(Settings.getInstance(context).getProfileId())) {
 			params.put("IdProfile", Settings.getInstance(context).getProfileId());
 		}
