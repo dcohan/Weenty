@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
@@ -62,6 +63,10 @@ public class SearchFragment extends BaseFragment {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+					if (mViewProxy.findEditText(R.id.search_edit).getText().toString().length() < 3) {
+						Toast.makeText(getActivity(), "Ingrese por lo menos 3 letras.", Toast.LENGTH_LONG).show();
+						return false;
+					}
 					Utils.hideKeyboard(getActivity(), mViewProxy.getView());
 					search();
 					return true;
