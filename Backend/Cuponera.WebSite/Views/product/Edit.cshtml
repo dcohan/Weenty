@@ -21,7 +21,9 @@
                 return this.optional(element) || Globalize.parseDate(value) !== null;
         }
 
-        $(".date-picker").datepicker();
+        $(".date-picker").datepicker({
+            dateFormat: "dd/mm/yy"
+        });
     });
 </script>
 
