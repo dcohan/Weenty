@@ -37,12 +37,15 @@ namespace Cuponera.WebSite.Models
                     if (userCompany != null)
                     {
                         HttpContext.Current.Session["AdminCompany"] = true;
+                        var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId)).Select(s => s.IdStore).ToList();
+
+                        HttpContext.Current.Session["AvailableStores"] = stores;
                     }
                     else
                     {
                         var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId)).Select(s => s.IdStore).ToList();
 
-                        HttpContext.Current.Session["AvaiableStores"] = stores;
+                        HttpContext.Current.Session["AvailableStores"] = stores;
                     }
                 }
             }
@@ -74,11 +77,11 @@ namespace Cuponera.WebSite.Models
             }
         }
 
-        public static IEnumerable<object> CurrentAvaiableStores
+        public static List<Nullable<Int32>> CurrentAvaiableStores
         {
             get
             {
-                return (IEnumerable<object>)HttpContext.Current.Session["AvaiableStores"];
+                return (List<Nullable<Int32>>)HttpContext.Current.Session["AvailableStores"];
             }
         }
 
