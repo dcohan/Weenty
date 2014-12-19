@@ -6,8 +6,21 @@
 
 <h2>Editar</h2>
 
+@Scripts.Render("~/bundles/globalization")
+@Scripts.Render("~/bundles/globalization_ar")
+
 <script type="text/javascript">
     $(function () {
+        
+
+        $.validator.methods.date = function (value, element) {
+                Globalize.culture("es-AR");
+                // you can alternatively pass the culture to parseDate instead of
+                // setting the culture above, like so:
+                // parseDate(value, null, "en-AU")
+                return this.optional(element) || Globalize.parseDate(value) !== null;
+        }
+
         $(".date-picker").datepicker();
     });
 </script>
@@ -90,10 +103,13 @@
         <div class="form-group">
             <div class="col-md-10">
                 <div class="control-label col-md-2 item-description">
-                    <b>Portada:</b> <img src="@Html.DisplayFor(model => model.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
+                    <div><b>Portada:</b></div>
+                     <img src="@Html.DisplayFor(model => model.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
                 </div>
                 <div class="item-description">
-                    <b>Imagenes:</b>
+                <div>
+                        <b>Imagenes:</b>
+                </div>
                     @foreach (var item in Model.images)
                     {
                         <img src="@Html.DisplayFor(model => item.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />

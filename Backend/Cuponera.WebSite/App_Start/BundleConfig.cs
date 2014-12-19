@@ -30,6 +30,12 @@ namespace Cuponera.WebSite
             bundles.Add(new ScriptBundle("~/bundles/googlemaps").Include(
                         "~/Scripts/maps.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/globalization").Include(
+                      "~/Scripts/globalize/globalize.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/globalization_ar").Include(
+                      "~/Scripts/globalize/cultures/globalize.culture.es-AR.js"));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

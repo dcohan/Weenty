@@ -16,14 +16,14 @@ namespace Cuponera.Entities
     {
         [Display(Name="Titulo")]
         [Required(ErrorMessage = "Debe ingresar un titulo válido para la oferta.")]
-        [MaxLength(100, ErrorMessage = "El titulo de la oferta debe tener como máximo de 100 caracteres."), MinLength(5, ErrorMessage = "El titulo de la oferta debe tener como mínimo 10 caracteres.")]
+        [MaxLength(500, ErrorMessage = "El titulo de la oferta debe tener como máximo de 500 caracteres."), MinLength(5, ErrorMessage = "El titulo de la oferta debe tener como mínimo 10 caracteres.")]
         public string Title { get; set; }
 
         [Display(Name = "Activo")]
         public int Active { get; set; }
 
         [Display(Name = "Fecha fin")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime ExpirationDatetime { get; set; }
 
         [Display(Name = "Producto")]
@@ -31,15 +31,15 @@ namespace Cuponera.Entities
         public int IdProduct { get; set; }
 
         [Display(Name = "Fecha inicio")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public Nullable<DateTime> StartDatetime {get;set;}
 
         [Display(Name = "Fecha creacion")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public Nullable<DateTime> CreationDatetime { get; set; }
 
         [Display(Name = "Fecha modificacion")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public Nullable<DateTime> ModificationDatetime { get; set; }
 
     }
