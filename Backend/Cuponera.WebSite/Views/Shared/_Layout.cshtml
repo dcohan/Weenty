@@ -47,14 +47,23 @@
                     </section>
                     <nav>
                         <ul id="menu">
-                            <li>@Html.ActionLink("Tipo suscripciones", "Index", "subscription")</li>
-                            <li>@Html.ActionLink("Suscripciones", "Index", "companySubscription")</li>
-                            <li>@Html.ActionLink("Categorías", "Index", "category")</li>
-                            <li>@Html.ActionLink("Ciudades", "Index", "state")</li>
-                            <li>@Html.ActionLink("Empresas", "Index", "company")</li>
-                            <li>@Html.ActionLink("Sucursales", "Index", "store")</li>
-                            <li>@Html.ActionLink("Productos", "Index", "product")</li>
-                            <li>@Html.ActionLink("Ofertas", "Index", "offer")</li>
+                            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                            {
+                                var principal = new Cuponera.WebSite.Models.CuponeraPrincipal(new Cuponera.WebSite.Models.CuponeraIdentity(HttpContext.Current.User.Identity));
+                                if (principal.IsInRole("admin"))
+                                {
+                                    <li>@Html.ActionLink("Tipo suscripciones", "Index", "subscription")</li>
+                                    <li>@Html.ActionLink("Suscripciones", "Index", "companySubscription")</li>
+                                    <li>@Html.ActionLink("Categorías", "Index", "category")</li>
+                                    <li>@Html.ActionLink("Ciudades", "Index", "state")</li>
+                                    <li>@Html.ActionLink("Empresas", "Index", "company")</li>
+                                }
+                                <li>@Html.ActionLink("Sucursales", "Index", "store")</li>
+                                <li>@Html.ActionLink("Productos", "Index", "product")</li>
+                                <li>@Html.ActionLink("Ofertas", "Index", "offer")</li>
+                            }
+                            
+                          
                         </ul>
                     </nav>
                 </div>
