@@ -14,6 +14,7 @@ using System.Threading;
 using Cuponera.WebSite.Models;
 using Cuponera.WebSite.Helpers;
 using PagedList;
+using System.Data.Entity.Validation;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -125,23 +126,33 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdOffer,Title,StartDatetime,ExpirationDatetime,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,Price")] offer offer)
+        public async Task<ActionResult> Edit([Bind(Include = "IdOffer,Title,Description,StartDatetime,ExpirationDatetime,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,Price,ImagePath")] offer offer, List<HttpPostedFileBase> fileUpload)
         {
 
 			if (!Validate(offer))
             {
                 return View(offer);
-            }            
-            
-            if (ModelState.IsValid)
-            {
-                db.Entry(offer).State = EntityState.Modified;
-                offer.ModificationDatetime = DateTime.Now;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
-            ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", offer.IdProduct);
-            return View(offer);
+
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    db.Entry(offer).State = EntityState.Modified;
+                    offer.ModificationDatetime = DateTime.Now;
+                    await db.SaveChangesAsync();
+                    //Save aditional images
+                    UploadImages(fileUpload, offer.IdOffer);
+                    return RedirectToAction("Index");
+                }
+                ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", offer.IdProduct);
+                return View(offer);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                return View(offer);
+            }
         }
 
         // GET: /offer/Delete/5
