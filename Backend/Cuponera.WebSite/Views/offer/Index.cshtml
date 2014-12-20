@@ -15,7 +15,7 @@
                 controlId: 'title',
                 controlDefaultValue: '@(Request.Params["title"] != null ? @Request.Params["title"] : "")',
                 label: 'Titulo'
-            },{
+            }, {
                 controlType: 'select',
                 controlId: 'category',
                 controlDefaultValue: '@(Request.Params["category"] != null ? @Request.Params["category"] : "")',
@@ -34,7 +34,7 @@
         $('#category').width(10);
         $('#item-name').width(10);
     });
-    
+
 </script>
 
 <h2>Ofertas</h2>
@@ -87,10 +87,21 @@
                         </td>
 
                         <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.IdOffer }) |
-                            @Html.ActionLink("Detalle", "Details", new { id = item.IdOffer }) |
-                            @Html.ActionLink("Borrar", "Delete", new { id = item.IdOffer })
+                            @Html.ActionLink("Editar", "Edit", new { id = item.IdOffer }, new { @class = "editIcon" })
                         </td>
+                        <td>
+                            @Html.ActionLink("Detalle", "Details", new { id = item.IdOffer }, new { @class = "detailsIcon" })
+                        </td>
+                        <td>
+                            @if (item.DeletionDatetime == null)
+                            {
+                                <a href="#" class="removeIcon" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                            }
+                            else
+                            {
+                                <a href="#" class="addIcon" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                            }
+                        <td></td>
                     </tr>
                 }
 
