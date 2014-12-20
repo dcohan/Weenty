@@ -71,16 +71,19 @@
                                 }
                             </td>
                             <td>
-                                @Html.ActionLink("Editar", "Edit", new { id = item.IdSubscription }) |
-                                @Html.ActionLink("Detalle", "Details", new { id = item.IdSubscription }) |
-
+                                @Html.ActionLink("Editar", "Edit", new { id = item.IdSubscription }, new { @class = "editIcon" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Detalle", "Details", new { id = item.IdSubscription }, new { @class = "detailsIcon" })
+                            </td>
+                            <td>
                                 @if (item.DeletionDatetime == null)
                                 {
-                                    <a href="#" class="deactivate" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                                    <a href="#" class="removeIcon" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
                                 }
                                 else
                                 {
-                                    <a href="#" class="activate" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                    <a href="#" class="addIcon" data-popup-to-open="dialog-confirm-activate">Activar</a>
                                 }
                             </td>
                         </tr>
