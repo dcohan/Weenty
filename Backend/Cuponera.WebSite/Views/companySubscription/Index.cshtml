@@ -76,7 +76,8 @@
                 <select multiple class="" id="companies" name="companies">
                     @foreach (var item in Model)
                     {
-                        <option value="@item.IdCompany" data-id-subscription="@item.IdSubscription" data-end-date="@(item.EndDate == DateTime.MinValue ? "null" : @item.EndDate.ToShortDateString())" class="@(item.IdSubscription > 0 ? "assigned" : "not-assigned")">@item.company.Name</option>
+                        <option value="@item.IdCompany" data-id-subscription="@item.IdSubscription" data-end-date="@(item.EndDate == DateTime.MinValue ? "null" : @item.EndDate.ToShortDateString())" 
+                                style="@(item.IdSubscription > 0 && item.subscription != null && !String.IsNullOrEmpty(item.subscription.Icon) ? "background-image: url('" + item.subscription.Icon + "'); background-position-x: right; background-repeat: no-repeat; background-size: 15px;" : "");">@item.company.Name</option>
                     }
                 </select>
             </div>

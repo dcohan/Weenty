@@ -25,7 +25,7 @@ namespace Cuponera.WebSite.Controllers
                 subscriptions = subscriptions.Where(s => s.DeletionDatetime == null);
             }
 
-            return subscriptions;
+            return subscriptions.OrderBy(s => s.SortFactor);
         }
 
 
@@ -52,8 +52,10 @@ namespace Cuponera.WebSite.Controllers
                 cs.EndDate = DateTime.MinValue;
                 if (filteredCompanySubscription != null && filteredCompanySubscription.Count() > 0) {
                     var firstCompanySubscription = filteredCompanySubscription.FirstOrDefault();
+
                     cs.IdSubscription = firstCompanySubscription.IdSubscription;
                     cs.EndDate = firstCompanySubscription.EndDate;
+                    cs.subscription = firstCompanySubscription.subscription;
                 }
                 
                 
