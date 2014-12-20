@@ -23,6 +23,7 @@ namespace Cuponera.Entities
         public string Contact { get; set; }
 
         [Display(Name = "Teléfono")]
+        [MaxLength(20, ErrorMessage = "El teléfono debe tener como máximo de 20 caracteres."), MinLength(6, ErrorMessage = "El teléfono debe tener como mínimo 6 caracteres.")]
         public string Telephone { get; set; }
 
         [Display(Name = "E-mail")]

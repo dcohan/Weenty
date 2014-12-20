@@ -128,14 +128,6 @@
         </div>
 
         <div class="form-group">
-            Activo
-            <div class="col-md-10">
-                @Html.CheckBoxFor(model => model.Active)
-                @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             Fecha Inicio
             <div class="col-md-10">
                 @Html.EditorFor(model => model.StartDatetime)
