@@ -27,13 +27,48 @@ namespace Cuponera.WebSite.Controllers
 
         }
 
+        private void GetStores(product product=null)
+        {
+            var stores = db.store.Where(s => s.DeletionDatetime == null);
+
+             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+             {
+                stores = stores.Where(s => CuponeraIdentity.AdminCompany == s.IdCompany)
+                               .Where(s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore));
+             }
+
+             var permitedStores = stores.OrderBy(s => s.Name);
+
+            if (product == null)
+            {
+                ViewBag.IdStore = new SelectList(permitedStores, "IdStore", "Name");
+            }
+            else
+            {
+                ViewBag.IdStore = new SelectList(permitedStores, "IdStore", "Name", product.IdStore);
+            }
+        }
+
+        private void GetCategories(product product=null)
+        {
+            if (product == null)
+            {
+                ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name");
+            }
+            else
+            {
+                ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
+            }
+        }
+
         private bool Validate(product product)
         {
             if (product.ExpirationDatetime.HasValue && product.ExpirationDatetime <= product.StartDatetime)
             {
                 ModelState.AddModelError("Date", "Las fechas de expiración debe ser inferior a la de inicio");
-                ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
-                ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name", product.IdStore);
+                GetStores(product);
+                GetCategories(product);
+                
                 return false;
             }
 
@@ -79,8 +114,8 @@ namespace Cuponera.WebSite.Controllers
         // GET: /product/Create
         public ActionResult Create()
         {
-            ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name");
-            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name");
+            GetCategories();
+            GetStores();
             return View();
         }
 
@@ -108,8 +143,8 @@ namespace Cuponera.WebSite.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
-            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name", product.IdStore);
+            GetCategories(product);
+            GetStores(product);
             return View(product);
         }
 
@@ -125,8 +160,8 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
-            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name", product.IdStore);
+            GetCategories(product);
+            GetStores(product);
             return View(product);
         }
 
