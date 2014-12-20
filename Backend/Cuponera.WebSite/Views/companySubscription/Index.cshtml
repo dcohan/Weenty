@@ -14,22 +14,28 @@
     };
 
     $(function () {
-        $('#companies option').click(function () {
-            $('.subscription-advise').addClass('hidden');
-            var id_subscription = parseInt($(this).data('id-subscription') || 0);
-            var end_date = $(this).data('end-date');
 
-            if (id_subscription > 0) {
-                $('#subscriptions').val(id_subscription);
-            } else {
-                $('.subscription-advise').removeClass('hidden');
-            }
-
+        $('#companies').change(function () {
             $('#endDate').val('');
-            var selected_companies = $('#companies option:selected');            
-            if (selected_companies.length === 1 && end_date) {
-                $('#endDate').val(end_date);
+            $('.subscription-advise').addClass('hidden');
+
+            var selected_companies = $('#companies option:selected');
+            if (selected_companies.length === 1) {
+                var $company = $(selected_companies[0]);
+                var id_subscription = $company.data('id-subscription') || 0;
+                var end_date = $company.data('end-date');
+
+                if (id_subscription > 0) {
+                    $('#subscriptions').val(id_subscription);
+                } else {
+                    $('.subscription-advise').removeClass('hidden');
+                }
+
+                if (end_date) {
+                    $('#endDate').val(end_date);
+                }
             }
+
         });
 
         $('#assign').click(function () {
