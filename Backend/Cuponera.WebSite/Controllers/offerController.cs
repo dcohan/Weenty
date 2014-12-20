@@ -37,6 +37,14 @@ namespace Cuponera.WebSite.Controllers
                 return false;
             }
 
+            if (db.offer.Where(o => o.Active && o.IdOffer != offer.IdOffer && o.ExpirationDatetime < DateTime.Now
+                                && o.ExpirationDatetime < offer.StartDatetime).Count() > 0)
+            {
+                ModelState.AddModelError("ServerValidations", "Existe otra oferta en curso, no puede haber mas de una oferta vigente para un producto");
+                ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", offer.IdProduct);
+                return false;
+            }
+
             return true;
         }
 
@@ -44,13 +52,19 @@ namespace Cuponera.WebSite.Controllers
         public async Task<ActionResult> Index(bool all = false, string title = null, int pageNumber = 1)
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
-            var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())))
-                                     .OrderBy(o => o.Title)
-                                     .ToPagedList(pageNumber, pageSize);
+            var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())));
 
-            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)offers.Count() / pageSize));
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+                offers = offers.Where(o => CuponeraIdentity.AdminCompany == o.product.store.IdCompany)
+                               .Where(o => CuponeraIdentity.CurrentAvaiableStores.Contains(o.product.IdStore));
+            }
 
-            return View(offers);
+            var permitedOffers = offers.OrderBy(o => o.Title);
+
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)permitedOffers.Count() / pageSize));
+
+            return View(permitedOffers.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: /offer/Details/5

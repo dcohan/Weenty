@@ -36,7 +36,7 @@ namespace Cuponera.WebSite.Models
                     //Is Admin
                     if (userCompany != null)
                     {
-                        HttpContext.Current.Session["AdminCompany"] = true;
+                        HttpContext.Current.Session["AdminCompany"] = userCompany.IdCompany;
                         var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId)).Select(s => s.IdStore).ToList();
 
                         HttpContext.Current.Session["AvailableStores"] = stores;
@@ -85,11 +85,11 @@ namespace Cuponera.WebSite.Models
             }
         }
 
-        public static bool IsAdminCompany
+        public static int AdminCompany
         {
             get
             {
-                return HttpContext.Current.Session["AdminCompany"] != null ? (bool)HttpContext.Current.Session["AdminCompany"] : false;
+                return HttpContext.Current.Session["AdminCompany"] != null ? (int)HttpContext.Current.Session["AdminCompany"] : 0;
             }
         }
 
@@ -117,6 +117,11 @@ namespace Cuponera.WebSite.Models
 
                 return _user.webpages_Roles.Where(r => r.RoleName.Equals(role)).Count() > 0;
             }   
+        }
+
+        public static bool CanAdminStore(int IdStore)
+        {
+            return CuponeraIdentity.CurrentAvaiableStores.Where(s => s == IdStore).Count() > 0;
         }
 
         public static bool CanAdminStores(List<int> IdStores)

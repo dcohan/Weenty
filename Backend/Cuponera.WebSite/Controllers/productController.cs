@@ -27,7 +27,7 @@ namespace Cuponera.WebSite.Controllers
 
         }
 
-        private bool ValidateProduct(product product)
+        private bool Validate(product product)
         {
             if (product.ExpirationDatetime.HasValue && product.ExpirationDatetime <= product.StartDatetime)
             {
@@ -45,12 +45,19 @@ namespace Cuponera.WebSite.Controllers
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             var products = db.product.Where(p => (title == null || p.Title.ToLower().Contains(title.ToLower())))
-                                     .Where(p => (category == null || category == 0 || p.IdCategory == category))
-                                     .OrderBy(p => p.Title).ToPagedList(pageNumber, pageSize);
+                                     .Where(p => (category == null || category == 0 || p.IdCategory == category));
 
-            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)products.Count() / pageSize));
+             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+             {
+                products = products.Where(p => CuponeraIdentity.AdminCompany == p.store.IdCompany)
+                                   .Where(p => CuponeraIdentity.CurrentAvaiableStores.Contains(p.IdStore));
+             }
 
-            return View(products);
+             var permitedProducts = products.OrderBy(o => o.Title);
+
+             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)permitedProducts.Count() / pageSize));
+
+             return View(permitedProducts.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: /product/Details/5
@@ -83,7 +90,7 @@ namespace Cuponera.WebSite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="IdProduct,Title,StartDatetime,ExpirationDatetime,ImagePath,IdCategory,Description,IdStore, Price")] product product, List<HttpPostedFileBase> fileUpload)
         {
-            if (!ValidateProduct(product))
+            if (!Validate(product))
             {
                 return View(product);
             }
@@ -129,7 +136,7 @@ namespace Cuponera.WebSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "IdProduct,Title,Active,StartDatetime,ExpirationDatetime,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description,IdStore, Price, Files")] product product, List<HttpPostedFileBase> fileUpload)
         {
-            if (!ValidateProduct(product))
+            if (!Validate(product))
             {
                 return View(product);
             }
