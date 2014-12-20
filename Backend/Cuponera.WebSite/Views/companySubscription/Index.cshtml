@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<Cuponera.Entities.companySubscription>
 
 @{
-    ViewBag.Title = "Suscripciones";
+    ViewBag.Title = "Editar suscripciones";
 }
+
+
+@Scripts.Render("~/bundles/globalization")
+@Scripts.Render("~/bundles/globalization_ar")
 
 <script type="text/javascript">
     var globals = {
@@ -11,11 +15,36 @@
 
     $(function () {
         $('#companies option').click(function () {
+            $('.subscription-advise').addClass('hidden');
             var id_subscription = parseInt($(this).data('id-subscription') || 0);
+            var end_date = $(this).data('end-date');
+
             if (id_subscription > 0) {
                 $('#subscriptions').val(id_subscription);
+            } else {
+                $('.subscription-advise').removeClass('hidden');
+            }
+
+            $('#endDate').val('');
+            var selected_companies = $('#companies option:selected');            
+            if (selected_companies.length === 1 && end_date) {
+                $('#endDate').val(end_date);
             }
         });
+
+        $('#assign').click(function () {
+            var id_subscription = $('#subscriptions').val();
+            var ids_company = $('#companies option:selected').val();
+
+            if (!id_subscription || !ids_company || !ids_company.length) {
+                return false;
+            }
+        });
+
+        $(".date-picker").datepicker({
+            dateFormat: "dd/mm/yy"
+        });
+
     });
 </script>
 
@@ -34,19 +63,41 @@
     }
     else
     {
-        <select multiple class="float-left" id="companies">
-            @foreach (var item in Model)
-            {
-                <option value="@item.IdCompany" data-id-subscription="@item.IdSubscription">@item.company.Name</option>
-            }
-        </select>
+        <form method="post">
 
-        <select class="float-right" id="subscriptions">
-            @foreach (var subscription in ViewBag.Subscriptions)
-            {
-                <option value="@subscription.IdSubscription">@subscription.subscription.Name</option>
-            }
-        </select>
+            <div class="step step-1">
+                <span class="step-description">Paso 1: seleccione las empresas a suscribir.</span><br />
+                <select multiple class="" id="companies" name="companies">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.IdCompany" data-id-subscription="@item.IdSubscription" data-end-date="@(item.EndDate == DateTime.MinValue ? "null" : @item.EndDate.ToShortDateString())" class="@(item.IdSubscription > 0 ? "assigned" : "not-assigned")">@item.company.Name</option>
+                    }
+                </select>
+            </div>
 
-        }
+
+            <div class="step step-2">
+                <span class="step-description">Paso 2: seleccione el tipo de suscripción.</span><br />
+                <div class="subscription-advise hidden">La empresa seleccionada aún no tiene una suscripción asignada.</div>
+                <select class="" id="subscriptions" name="subscriptions">
+                    @foreach (var subscription in ViewBag.Subscriptions)
+                    {
+                        <option value="@subscription.IdSubscription">@subscription.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="step step-3">
+                <span class="step-description">Paso 3: elija la fecha de caducidad de la suscripción.</span><br />
+                <span class="step-note">
+                    Tenga en cuenta que todas la suscripciones que está por crear caducarán el día seleccionado.<br />
+                    Si deja el campo en blanco la fecha de caducidad de las suscripciones existentes permanecerá y la de las nuevas será la duración de la suscripción a partir del día de la fecha.
+                </span><br />
+
+                <input type="text" name="endDate" id="endDate" class="date-picker" />
+            </div>
+            <input type="submit" id="assign" value="Asignar" />
+        </form>
+
+    }
 </div>

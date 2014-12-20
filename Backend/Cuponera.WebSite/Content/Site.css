@@ -878,3 +878,30 @@ select {
 .item-order input{
     max-width: 50px;
 }
+
+.step {
+    margin-bottom: 10px;
+}
+
+.step span.step-description{
+    font-weight: bold;
+}
+
+.list-content select[multiple]{
+    min-height: 500px;
+    
+}
+
+.list-content select{
+    width: 400px;
+}
+
+.subscription-advise {
+    color: red;
+}
+
+.not-assigned {
+    background-position-x: right;
+    background-image: url('../Images/x.png');
+    background-repeat: no-repeat;
+}

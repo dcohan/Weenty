@@ -16,16 +16,16 @@ namespace Cuponera.WebSite.Controllers
     public class companySubscriptionController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
-        public IEnumerable<companySubscription> get(bool all = true)
+        public IEnumerable<subscription> get(bool all = true)
         {
-            IEnumerable<companySubscription> companySubscription = db.companySubscription;
+            IEnumerable<subscription> subscriptions = db.subscription;
 
             if (!all)
             {
-                companySubscription = companySubscription.Where(s => s.DeletionDatetime == null);
+                subscriptions = subscriptions.Where(s => s.DeletionDatetime == null);
             }
 
-            return companySubscription;
+            return subscriptions;
         }
 
 
@@ -36,7 +36,7 @@ namespace Cuponera.WebSite.Controllers
             var subscriptions = get(all);
             ViewBag.Subscriptions = subscriptions;
 
-            var companies = db.company;
+            var companies = db.company.OrderBy(c => c.Name);
             var currentCompanySubscriptions = db.companySubscription;
             var companySubscriptions = new List<Cuponera.Entities.companySubscription>();
             
@@ -47,134 +47,63 @@ namespace Cuponera.WebSite.Controllers
                 cs.IdCompany = company.IdCompany;
                 cs.company = company;
                 var filteredCompanySubscription = currentCompanySubscriptions.Where(c => c.IdCompany == company.IdCompany);
-                cs.IdSubscription = filteredCompanySubscription.Count() > 0 ? filteredCompanySubscription.FirstOrDefault().IdSubscription : 0;
+                
+                cs.IdSubscription = 0;
+                cs.EndDate = DateTime.MinValue;
+                if (filteredCompanySubscription != null && filteredCompanySubscription.Count() > 0) {
+                    var firstCompanySubscription = filteredCompanySubscription.FirstOrDefault();
+                    cs.IdSubscription = firstCompanySubscription.IdSubscription;
+                    cs.EndDate = firstCompanySubscription.EndDate;
+                }
+                
+                
                 companySubscriptions.Add(cs);
             } 
 
             return View(companySubscriptions);
         }
 
-        // GET: /companySubscription/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            subscription subscription = await db.subscription.FindAsync(id);
-            if (subscription == null)
-            {
-                return HttpNotFound();
-            }
 
-
-            var all_subscriptions = get(subscription.DeletionDatetime != null);
-
-            return View(subscription);
-        }
-
-        // GET: /companySubscription/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: /companySubscription/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: /companySubscription/
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,SortFactor,duration")] subscription subscription, string Pricing)
+        public async Task<ActionResult> Index(int subscriptions, int[] companies)
         {
-            if (ModelState.IsValid)
+            for (int a = 0; a < companies.Count(); a++)
             {
-                if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
-                db.subscription.Add(subscription);
+                IEnumerable<companySubscription> companySubscription = db.companySubscription;
+                companySubscription = companySubscription.Where(cs => cs.IdCompany == companies[a]);
+
+                if (companySubscription != null && companySubscription.Count() > 0)
+                {
+                    companySubscription.FirstOrDefault().IdSubscription = subscriptions;
+                }
+                else
+                {
+                    var subscription = db.subscription.Where(s => s.IdSubscription == subscriptions);
+                    if (subscription == null || subscription.Count() == 0)
+                    {
+                        continue;
+                    }
+
+                    int duration = subscription.FirstOrDefault().duration;
+
+                    var cs = new companySubscription();
+                    cs.IdSubscription = subscriptions;
+                    cs.IdCompany = companies.ElementAt(a);
+                    cs.CreationDatetime = DateTime.Now;
+                    cs.EndDate = DateTime.Now.AddDays(duration);
+                    
+
+                    db.companySubscription.Add(cs);
+                }
+
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
-            return View(subscription);
-        }
-
-        // GET: /companySubscription/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            subscription subscription = await db.subscription.FindAsync(id);
-            if (subscription == null)
-            {
-                return HttpNotFound();
-            }
-
-            var all_subscriptions = get(false);
-
-            return View(subscription);
+            return RedirectToAction("Index");
         }
 
 
-        // POST: companySubscription/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdSubscription,Name,SortFactor,duration")] subscription subscription, string Pricing)
-        {
-            if (ModelState.IsValid)
-            {
-                if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
-
-                db.Entry(subscription).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(subscription);
-        }
-
-
-
-        // GET: /companySubscription/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            subscription subscription = await db.subscription.FindAsync(id);
-            if (subscription == null)
-            {
-                return HttpNotFound();
-            }
-
-
-            subscription.DeletionDatetime = DateTime.Now;
-            await db.SaveChangesAsync();
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
-        }
-
-        // POST: companySubscription/Activate/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Activate(int id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            subscription subscription = await db.subscription.FindAsync(id);
-            if (subscription == null)
-            {
-                return HttpNotFound();
-            }
-
-            subscription.DeletionDatetime = null;
-            await db.SaveChangesAsync();
-
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
-        }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
