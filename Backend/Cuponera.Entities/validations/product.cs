@@ -48,10 +48,9 @@ namespace Cuponera.Entities
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartDatetime { get; set; }
 
-        [Required(ErrorMessage = "Debe ingresar una fecha de expiración válida.")]
         [Display(Name = "Fecha fin")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime ExpirationDatetime { get; set; }
+        public Nullable<DateTime> ExpirationDatetime { get; set; }
 
         [Required(ErrorMessage = "Debe asociar el producto a una categoria.")]
         public int IdCategory { get; set; }

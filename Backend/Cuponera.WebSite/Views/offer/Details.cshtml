@@ -14,28 +14,10 @@
     </div>
 
     <div class="item-description">
-        <b>Precio:</b> @Html.DisplayFor(model => model.Price)
+        <b>Descripción:</b> @Html.DisplayFor(model => model.Description)
     </div>
 
     <div class="item-description">
-        <b>Fecha de inicio:</b> @Html.DisplayFor(model => model.StartDatetime)
-    </div>
-
-    <div class="item-description">
-        <b>Fecha de finalización:</b> @Html.DisplayFor(model => model.ExpirationDatetime)
-    </div>
-
-    <div class="item-description">
-        <b>Portada:</b> <img src="@Html.DisplayFor(model => model.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" /> 
-    </div>
-    <div class="item-description">
-        <b>Imagenes:</b> 
-        @foreach (var item in Model.images)
-        {
-            <img src="@Html.DisplayFor(model => item.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
-        }
-    </div>
-        <div class="item-description">
         <b>Estado:</b>
         @if (Model.DeletionDatetime == null)
         {
@@ -47,6 +29,38 @@
             <img src="../../Images/x.ico" alt="inactive" class="inactive" />
         }
     </div>
+
+    <div class="item-description">
+        <b>Precio:</b> @Html.DisplayFor(model => model.Price)
+    </div>
+
+
+    <div class="item-description">
+        <b>Fecha de inicio:</b> @Html.DisplayFor(model => model.StartDatetime)
+    </div>
+
+    <div class="item-description">
+        <b>Fecha de finalización:</b> @Html.DisplayFor(model => model.ExpirationDatetime)
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <div class="control-label col-md-2 item-description">
+                <b>Portada:</b> <img src="@Html.DisplayFor(model => model.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
+            </div>
+            <div class="item-description">
+                <b>Imagenes:</b>
+                @foreach (var item in Model.images)
+                {
+                    <img src="@Html.DisplayFor(model => item.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
+                }
+            </div>
+        </div>
+    </div>
+
+
+    
+     
 
 
 </div>

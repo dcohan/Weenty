@@ -7,6 +7,7 @@
 <script type="text/javascript">
     var globals = {
         controller: 'offer',
+        min_filters_size: 400,
         filters: {
             include: ['all'],
             custom: [{
@@ -14,9 +15,26 @@
                 controlId: 'title',
                 controlDefaultValue: '@(Request.Params["title"] != null ? @Request.Params["title"] : "")',
                 label: 'Titulo'
+            },{
+                controlType: 'select',
+                controlId: 'category',
+                controlDefaultValue: '@(Request.Params["category"] != null ? @Request.Params["category"] : "")',
+                label: 'Categoría',
+                source: {
+                    include_all: true,
+                    controller: 'category',
+                    action: 'GetAllBasicData'
+                }
             }]
         }
     };
+
+
+    $(document).ready(function () {
+        $('#category').width(10);
+        $('#item-name').width(10);
+    });
+    
 </script>
 
 <h2>Ofertas</h2>
@@ -40,32 +58,32 @@
                         Titulo
                     </th>
                     <th>
-                        Estado
+                        $
                     </th>
                     <th>
-                        Precio
+                        Estado
                     </th>
-<th></th>
+                    <th></th>
                 </tr>
 
                 @foreach (var item in Model)
                 {
-                    <tr>
+                    <tr data-item-id="@item.IdProduct">
                         <td>
-                            @Html.DisplayFor(modelItem => item.Title)
+                            <span class="item-name">@Html.DisplayFor(modelItem => item.Title)</span>
                         </td>
                         <td>
-                            @if (item.DeletionDatetime == null && item.StartDatetime < DateTime.Now && item.ExpirationDatetime > DateTime.Now)
+                            <span>@Html.DisplayFor(modelItem => item.Price)</span>
+                        </td>
+                        <td>
+                            @if (item.Active)
                             {
-                                <img src="Images/tick.ico" alt="active" class="active" />
+                                <img src="Images/tick.ico" alt="active" class="active" style="" />
                             }
                             else
                             {
                                 <img src="Images/x.ico" alt="inactive" class="inactive" />
                             }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
                         </td>
 
                         <td>

@@ -27,13 +27,27 @@ namespace Cuponera.WebSite.Controllers
 
         }
 
+        private bool Validate(offer offer)
+        {
+            if (offer.ExpirationDatetime.HasValue && offer.ExpirationDatetime <= offer.StartDatetime)
+            {
+                ModelState.AddModelError("Date", "Las fechas de expiración debe ser inferior a la de inicio");
+                ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", offer.IdProduct);   
+                return false;
+            }
+
+            return true;
+        }
+
         // GET: product
         public async Task<ActionResult> Index(bool all = false, string title = null, int pageNumber = 1)
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
-            var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())) && o.DeletionDatetime == null)
+            var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())))
                                      .OrderBy(o => o.Title)
                                      .ToPagedList(pageNumber, pageSize);
+
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)offers.Count() / pageSize));
 
             return View(offers);
         }
@@ -68,7 +82,10 @@ namespace Cuponera.WebSite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdOffer,Title,StartDatetime,ExpirationDatetime,IdProduct,ImagePath, Price")] offer offer, List<HttpPostedFileBase> fileUpload)
         {
-
+			 if (!Validate(offer))
+            {
+                return View(offer);
+            }
             if (ModelState.IsValid)
             {
                 if (fileUpload.Count > 0) offer.ImagePath = GeneratePhisicalFile(fileUpload[0]);
@@ -110,6 +127,12 @@ namespace Cuponera.WebSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "IdOffer,Title,StartDatetime,ExpirationDatetime,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,Price")] offer offer)
         {
+
+			if (!Validate(offer))
+            {
+                return View(offer);
+            }            
+            
             if (ModelState.IsValid)
             {
                 db.Entry(offer).State = EntityState.Modified;
