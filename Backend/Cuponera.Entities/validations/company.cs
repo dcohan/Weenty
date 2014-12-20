@@ -23,6 +23,7 @@ namespace Cuponera.Entities
         public string Contact { get; set; }
 
         [Display(Name = "Teléfono")]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "El formato del teléfono no es válido. Solamente números")]
         public string Telephone { get; set; }
 
         [Display(Name = "E-mail")]
