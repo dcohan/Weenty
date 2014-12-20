@@ -22,15 +22,20 @@
         <ol class="ordered-subscriptions">       
         @foreach (var subscription in ViewBag.AllSubscriptions)
         {
-                <li class="@(subscription.IdSubscription == Model.IdSubscription ? "current" : "")">@subscription.Name</li>
+                <li class="@(subscription.IdSubscription == Model.IdSubscription ? "current" : "")">@subscription.Name <img class="small-icon" src="@subscription.Icon" title="@subscription.Name" alt="@subscription.Name" /></li>
         }
         </ol>
 
     </div>
 
     <div class="item-description">
-        <b>@Html.DisplayNameFor(model => model.duration):</b> @Html.DisplayFor(model => model.duration) días
+        <b>@Html.DisplayNameFor(model => model.Duration):</b> @Html.DisplayFor(model => model.Duration) días
     </div>
+
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.Icon):</b> <img class="icon" src="@Model.Icon" title="@Model.Name" alt="@Model.Name" />
+    </div>
+
     
     <div class="item-description">
         <b>Estado:</b>

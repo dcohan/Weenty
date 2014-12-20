@@ -712,6 +712,7 @@
     <Content Include="Views\subscription\Edit.cshtml" />
     <Content Include="Views\subscription\Index.cshtml" />
     <Content Include="Views\companySubscription\Index.cshtml" />
+    <Content Include="Views\Shared\Paginator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
