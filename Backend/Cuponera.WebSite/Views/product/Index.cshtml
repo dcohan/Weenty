@@ -92,10 +92,25 @@
                             }
                         </td>
                         <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.IdProduct }) |
-                            @Html.ActionLink("Detalle", "Details", new { id = item.IdProduct }) |
-                            @Html.ActionLink("Oferta", "Create", "offer", new { IdProduct = item.IdProduct }, null)
+                            @Html.ActionLink("Editar", "Edit", new { id = item.IdProduct }, new { @class = "editIcon" })
                         </td>
+                        <td>
+                            @Html.ActionLink("Detalle", "Details", new { id = item.IdProduct }, new { @class = "detailsIcon" })
+                        </td>
+                        <td>
+                            @if (item.DeletionDatetime == null)
+                            {
+                                <a href="#" class="removeIcon" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                            }
+                            else
+                            {
+                                <a href="#" class="addIcon" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                            }
+                        <td>
+                            @Html.ActionLink("Oferta", "Create", "offer", new { IdProduct = item.IdProduct }, new { @class = "offerIcon" })
+>>>>>>> first part of icons
+                        </td>
+                        
                     </tr>
                 }
 

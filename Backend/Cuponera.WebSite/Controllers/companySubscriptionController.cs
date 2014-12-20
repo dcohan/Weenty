@@ -66,8 +66,15 @@ namespace Cuponera.WebSite.Controllers
 
         // POST: /companySubscription/
         [HttpPost]
-        public async Task<ActionResult> Index(int subscriptions, int[] companies)
+        public async Task<ActionResult> Index(int subscriptions, int[] companies, DateTime? endDate)
         {
+            int duration = 0;
+            if (!endDate.HasValue)
+            {
+                var subscription = db.subscription.Where(s => s.IdSubscription == subscriptions);
+                duration = subscription.FirstOrDefault().Duration;
+            }
+
             for (int a = 0; a < companies.Count(); a++)
             {
                 IEnumerable<companySubscription> companySubscription = db.companySubscription;
@@ -75,24 +82,21 @@ namespace Cuponera.WebSite.Controllers
 
                 if (companySubscription != null && companySubscription.Count() > 0)
                 {
-                    companySubscription.FirstOrDefault().IdSubscription = subscriptions;
+                    var cs = companySubscription.FirstOrDefault();
+                    cs.IdSubscription = subscriptions;
+                    if (endDate.HasValue)
+                    {
+                        cs.EndDate = endDate.Value;
+                    }
+                    cs.ModificationDatetime = DateTime.Now;
                 }
                 else
                 {
-                    var subscription = db.subscription.Where(s => s.IdSubscription == subscriptions);
-                    if (subscription == null || subscription.Count() == 0)
-                    {
-                        continue;
-                    }
-
-                    int duration = subscription.FirstOrDefault().duration;
-
                     var cs = new companySubscription();
                     cs.IdSubscription = subscriptions;
                     cs.IdCompany = companies.ElementAt(a);
                     cs.CreationDatetime = DateTime.Now;
-                    cs.EndDate = DateTime.Now.AddDays(duration);
-                    
+                    cs.EndDate = endDate.HasValue ? endDate.Value : DateTime.Now.AddDays(duration);
 
                     db.companySubscription.Add(cs);
                 }
