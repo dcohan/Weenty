@@ -31,6 +31,9 @@ namespace Cuponera.Entities
         [Display(Name = "Duración")]
         [Required(ErrorMessage = "Debe completar la duración de la suscripción.")]
         [Range(1, Int32.MaxValue, ErrorMessage = "El orden de la suscripción debe ser mayor a 0.")]
-        public int duration { get; set; }
+        public int Duration { get; set; }
+
+        [Display(Name = "Ícono")]
+        public string Icon { get; set; }
     }
 }

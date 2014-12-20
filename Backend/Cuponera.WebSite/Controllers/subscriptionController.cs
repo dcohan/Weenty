@@ -84,7 +84,7 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,SortFactor,duration")] subscription subscription, string Pricing)
+        public async Task<ActionResult> Create([Bind(Include = "Name,SortFactor,Duration,Icon")] subscription subscription, string Pricing)
         {
             if (ModelState.IsValid)
             {
@@ -121,7 +121,7 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdSubscription,Name,SortFactor,duration")] subscription subscription, string Pricing)
+        public async Task<ActionResult> Edit([Bind(Include = "IdSubscription,Name,SortFactor,Duration,Icon")] subscription subscription, string Pricing)
         {
             if (ModelState.IsValid)
             {

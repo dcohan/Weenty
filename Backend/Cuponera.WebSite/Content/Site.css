@@ -943,3 +943,14 @@ select {
     background-image: url('../Images/x.png');
     background-repeat: no-repeat;
 }
+
+
+img.icon{
+    height: 30px;
+    width: 30px;
+}
+
+img.small-icon {
+    height: 15px;
+    width: 15px;
+}
