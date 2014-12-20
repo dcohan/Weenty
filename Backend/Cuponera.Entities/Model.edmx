@@ -184,8 +184,8 @@
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-          <Property Name="duration" Type="int" Nullable="false" />
-          <Property Name="icon" Type="varchar" MaxLength="250" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="Icon" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="userCompany">
           <Key>
@@ -848,9 +848,9 @@
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <Property Name="duration" Type="Int32" Nullable="false" />
           <NavigationProperty Name="companySubscription" Relationship="CuponeraModel.FK_companySubscription_subscription" FromRole="subscription" ToRole="companySubscription" />
-          <Property Name="icon" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="Icon" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="userCompany">
           <Key>
@@ -1295,8 +1295,8 @@
           <EntitySetMapping Name="subscription">
             <EntityTypeMapping TypeName="CuponeraModel.subscription">
               <MappingFragment StoreEntitySet="subscription">
-                <ScalarProperty Name="icon" ColumnName="icon" />
-                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />

@@ -72,7 +72,7 @@ namespace Cuponera.WebSite.Controllers
             if (!endDate.HasValue)
             {
                 var subscription = db.subscription.Where(s => s.IdSubscription == subscriptions);
-                duration = subscription.FirstOrDefault().duration;
+                duration = subscription.FirstOrDefault().Duration;
             }
 
             for (int a = 0; a < companies.Count(); a++)
