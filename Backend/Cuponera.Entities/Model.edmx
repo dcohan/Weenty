@@ -80,7 +80,6 @@
           </Key>
           <Property Name="IdOffer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" />
-          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="StartDatetime" Type="datetime2" Precision="0" />
           <Property Name="ExpirationDatetime" Type="datetime2" Precision="0" />
           <Property Name="IdProduct" Type="int" Nullable="false" />
@@ -89,6 +88,7 @@
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
           <Property Name="ImagePath" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Price" Type="float" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="preHomeImages">
           <Key>
@@ -109,7 +109,6 @@
           </Key>
           <Property Name="IdProduct" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" />
-          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="StartDatetime" Type="datetime2" Precision="0" />
           <Property Name="ExpirationDatetime" Type="datetime2" Precision="0" />
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
@@ -731,7 +730,6 @@
           </Key>
           <Property Name="IdOffer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="StartDatetime" Type="DateTime" Precision="0" />
           <Property Name="ExpirationDatetime" Type="DateTime" Precision="0" />
           <Property Name="IdProduct" Type="Int32" Nullable="false" />
@@ -742,6 +740,7 @@
           <Property Name="Price" Type="Double" />
           <NavigationProperty Name="images" Relationship="CuponeraModel.FK_images_offer" FromRole="offer" ToRole="images" />
           <NavigationProperty Name="product" Relationship="CuponeraModel.FK_offer_product" FromRole="offer" ToRole="product" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="preHomeImages">
           <Key>
@@ -762,7 +761,6 @@
           </Key>
           <Property Name="IdProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="StartDatetime" Type="DateTime" Precision="0" />
           <Property Name="ExpirationDatetime" Type="DateTime" Precision="0" />
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
@@ -1190,6 +1188,7 @@
           <EntitySetMapping Name="offer">
             <EntityTypeMapping TypeName="CuponeraModel.offer">
               <MappingFragment StoreEntitySet="offer">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
@@ -1198,7 +1197,6 @@
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
                 <ScalarProperty Name="ExpirationDatetime" ColumnName="ExpirationDatetime" />
                 <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="IdOffer" ColumnName="IdOffer" />
               </MappingFragment>
@@ -1231,7 +1229,6 @@
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
                 <ScalarProperty Name="ExpirationDatetime" ColumnName="ExpirationDatetime" />
                 <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
               </MappingFragment>

@@ -21,7 +21,6 @@ namespace Cuponera.Entities
     
         public int IdOffer { get; set; }
         public string Title { get; set; }
-        public bool Active { get; set; }
         public Nullable<System.DateTime> StartDatetime { get; set; }
         public Nullable<System.DateTime> ExpirationDatetime { get; set; }
         public int IdProduct { get; set; }
@@ -30,6 +29,7 @@ namespace Cuponera.Entities
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
         public string ImagePath { get; set; }
         public Nullable<double> Price { get; set; }
+        public string Description { get; set; }
     
         public virtual ICollection<images> images { get; set; }
         public virtual product product { get; set; }

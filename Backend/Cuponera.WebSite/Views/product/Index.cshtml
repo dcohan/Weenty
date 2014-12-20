@@ -75,7 +75,7 @@
                             <span>@Html.DisplayFor(modelItem => item.Price)</span>
                         </td>
                         <td>
-                            @if (item.DeletionDatetime == null && item.Active && item.StartDatetime < DateTime.Now && item.ExpirationDatetime > DateTime.Now)
+                            @if (item.DeletionDatetime == null && item.StartDatetime < DateTime.Now && item.ExpirationDatetime > DateTime.Now)
                             {
                                 <img src="Images/tick.ico" alt="active" class="active" style="" />
                             }

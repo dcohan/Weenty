@@ -22,7 +22,6 @@ namespace Cuponera.Entities
     
         public int IdProduct { get; set; }
         public string Title { get; set; }
-        public bool Active { get; set; }
         public Nullable<System.DateTime> StartDatetime { get; set; }
         public Nullable<System.DateTime> ExpirationDatetime { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="469dd5574e874b678ab69f758416789a" Name="Diagram1">
+      <Diagram DiagramId="469dd5574e874b678ab69f758416789a" Name="Diagram1" ZoomLevel="96">
         <EntityTypeShape EntityType="CuponeraModel.category" Width="1.5" PointX="6" PointY="12" />
         <EntityTypeShape EntityType="CuponeraModel.company" Width="1.5" PointX="0.75" PointY="8.625" />
         <EntityTypeShape EntityType="CuponeraModel.companySubscription" Width="1.5" PointX="6" PointY="8.75" />
