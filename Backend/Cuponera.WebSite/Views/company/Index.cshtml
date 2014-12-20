@@ -28,7 +28,8 @@
 
 
 
-    @if (Model.Count() == 0) {
+    @if (Model.Count() == 0)
+    {
         <div class="no-data">No hay datos.</div>
     }
     else
@@ -64,16 +65,19 @@
                                 }
                             </td>
                             <td>
-                                @Html.ActionLink("Editar", "Edit", new { id = item.IdCompany }) |
-                                @Html.ActionLink("Detalle", "Details", new { id = item.IdCompany }) |
-
+                                @Html.ActionLink("Editar", "Edit", new { id = item.IdCompany }, new { @class = "editIcon" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Detalle", "Details", new { id = item.IdCompany }, new { @class = "detailsIcon" })
+                            </td>
+                            <td>
                                 @if (item.DeletionDatetime == null)
                                 {
-                                    <a href="#" class="deactivate" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                                    <a href="#" class="removeIcon" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
                                 }
                                 else
                                 {
-                                    <a href="#" class="activate" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                    <a href="#" class="addIcon" data-popup-to-open="dialog-confirm-activate">Activar</a>
                                 }
                             </td>
                         </tr>
@@ -88,5 +92,5 @@
     <p>
         @Html.ActionLink("Nuevo", "Create")
     </p>
-        
+
 </div>
