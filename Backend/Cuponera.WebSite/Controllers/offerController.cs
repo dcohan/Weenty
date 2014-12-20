@@ -49,10 +49,11 @@ namespace Cuponera.WebSite.Controllers
         }
 
         // GET: product
-        public async Task<ActionResult> Index(bool all = false, string title = null, int pageNumber = 1)
+        public async Task<ActionResult> Index(bool all = false, string title = null, int page = 1)
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
-            var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())));
+            var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())))
+                                 .Where(o => all || o.DeletionDatetime == null);
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
@@ -64,7 +65,7 @@ namespace Cuponera.WebSite.Controllers
 
             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)permitedOffers.Count() / pageSize));
 
-            return View(permitedOffers.ToPagedList(pageNumber, pageSize));
+            return View(permitedOffers.ToPagedList(page, pageSize));
         }
 
         // GET: /offer/Details/5
