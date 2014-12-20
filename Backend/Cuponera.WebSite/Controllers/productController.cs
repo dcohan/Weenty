@@ -27,6 +27,19 @@ namespace Cuponera.WebSite.Controllers
 
         }
 
+        private bool ValidateProduct(product product)
+        {
+            if (product.ExpirationDatetime.HasValue && product.ExpirationDatetime <= product.StartDatetime)
+            {
+                ModelState.AddModelError("Date", "Las fechas de expiración debe ser inferior a la de inicio");
+                ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
+                ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name", product.IdStore);
+                return false;
+            }
+
+            return true;
+        }
+
         // GET: product
         public async Task<ActionResult> Index(bool all = false, string title = null, int? category = null, int pageNumber = 1)
         {
@@ -68,8 +81,13 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="IdProduct,Title,Active,StartDatetime,ExpirationDatetime,ImagePath,IdCategory,Description,IdStore, Price")] product product, List<HttpPostedFileBase> fileUpload)
+        public ActionResult Create([Bind(Include="IdProduct,Title,StartDatetime,ExpirationDatetime,ImagePath,IdCategory,Description,IdStore, Price")] product product, List<HttpPostedFileBase> fileUpload)
         {
+            if (!ValidateProduct(product))
+            {
+                return View(product);
+            }
+
             if (ModelState.IsValid)
             {
                 if (fileUpload.Count > 0) product.ImagePath = GeneratePhisicalFile(fileUpload[0]);
@@ -109,17 +127,23 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdProduct,Title,Active,StartDatetime,ExpirationDatetime,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description,IdStore, Price")] product product)
+        public async Task<ActionResult> Edit([Bind(Include = "IdProduct,Title,Active,StartDatetime,ExpirationDatetime,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description,IdStore, Price, Files")] product product, List<HttpPostedFileBase> fileUpload)
         {
+            if (!ValidateProduct(product))
+            {
+                return View(product);
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;
                 product.ModificationDatetime = DateTime.Now;
                 await db.SaveChangesAsync();
+                //Save aditional images
+                UploadImages(fileUpload, product.IdProduct);
                 return RedirectToAction("Index");
             }
-            ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
-            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name", product.IdStore);
+
             return View(product);
         }
 
@@ -138,28 +162,6 @@ namespace Cuponera.WebSite.Controllers
 
             product.DeletionDatetime = DateTime.Now;
             await db.SaveChangesAsync();
-
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
-        }
-
-        // GET: store/Activate/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Activate(int id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            product product = await db.product.FindAsync(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-
-            product.DeletionDatetime = null;
-            await db.SaveChangesAsync();
-
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

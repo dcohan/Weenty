@@ -28,6 +28,13 @@
             }]
         }
     };
+
+
+    $(document).ready(function () {
+        $('#category').width(10);
+        $('#item-name').width(10);
+    });
+    
 </script>
 
 <h2>Productos</h2>
@@ -75,7 +82,7 @@
                             <span>@Html.DisplayFor(modelItem => item.Price)</span>
                         </td>
                         <td>
-                            @if (item.DeletionDatetime == null && item.Active && item.StartDatetime < DateTime.Now && item.ExpirationDatetime > DateTime.Now)
+                            @if (item.Active)
                             {
                                 <img src="Images/tick.ico" alt="active" class="active" style="" />
                             }
@@ -87,14 +94,6 @@
                         <td>
                             @Html.ActionLink("Editar", "Edit", new { id = item.IdProduct }) |
                             @Html.ActionLink("Detalle", "Details", new { id = item.IdProduct }) |
-                            @if (item.DeletionDatetime == null)
-                            {
-                                <a href="#" class="deactivate" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
-                            }
-                            else
-                            {
-                                <a href="#" class="activate" data-popup-to-open="dialog-confirm-activate">Activar</a>
-                            } |
                             @Html.ActionLink("Oferta", "Create", "offer", new { IdProduct = item.IdProduct }, null)
                         </td>
                     </tr>

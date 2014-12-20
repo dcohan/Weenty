@@ -4,6 +4,8 @@
     ViewBag.Title = "Crear";
 }
 
+<h2<Crear</h2>
+
 <style type="text/css">
     #selectedFiles img {
         max-width: 200px;
@@ -16,10 +18,11 @@
         color: transparent;
     }
 </style>
+@Scripts.Render("~/bundles/globalization")
+@Scripts.Render("~/bundles/globalization_ar")
 
-<script src="~/Scripts/jquery-1.7.1.js"></script>
+<script type="text/javascript">
 
-<script>
     var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
     var files;
@@ -91,16 +94,33 @@
         $('#@Html.IdFor(i => i.ImagePath)').val(storedFiles);
 
     }
+
+    $(function () {
+        
+
+        $.validator.methods.date = function (value, element) {
+                Globalize.culture("es-AR");
+                // you can alternatively pass the culture to parseDate instead of
+                // setting the culture above, like so:
+                // parseDate(value, null, "en-AU")
+                return this.optional(element) || Globalize.parseDate(value) !== null;
+        }
+
+        $(".date-picker").removeClass('input-validation-error');
+        $(".date-picker").datepicker({
+            dateFormat: "dd/mm/yy"
+        });
+
+        document.getElementsByClassName('hidden');
+        $(".hidden").removeClass('input-validation-error');
+
+    });
 </script>
-
-
-<h2>Alta</h2>
-
 
 @using (Html.BeginForm("Create", "product", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmID" }))
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
         <h4>Producto</h4>
         <hr />
@@ -114,7 +134,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, "Descripcion", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Description, "Descripción", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
@@ -122,7 +142,7 @@
         </div>
 
         <div class="form-group">
-            Activo
+            @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.CheckBoxFor(model => model.Active)
                 @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
@@ -138,7 +158,6 @@
         </div>
 
 
-
         <div class="form-group">
             @Html.LabelFor(model => model.IdStore, "Sucursal", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -146,7 +165,6 @@
                 @Html.ValidationMessageFor(model => model.IdStore, "", new { @class = "text-danger" })
             </div>
         </div>
-
 
         <div class="form-group">
             @Html.LabelFor(model => model.IdCategory, "Categoria", new { @class = "control-label col-md-2" })
@@ -159,16 +177,17 @@
         <div class="form-group">
             Fecha Inicio
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDatetime)
-                @Html.ValidationMessageFor(model => model.StartDatetime)
+                @Html.EditorFor(model => model.StartDatetime, new { htmlAttributes = new { @class = "form-control, date-picker" } })
+                @Html.ValidationMessageFor(model => model.StartDatetime, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             Fecha Fin
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ExpirationDatetime)
-                @Html.ValidationMessageFor(model => model.ExpirationDatetime)
+                @Html.EditorFor(model => model.ExpirationDatetime, new { htmlAttributes = new { @class = "form-control, date-picker" } })
+                @Html.ValidationMessage("Date")
+                @Html.ValidationMessageFor(model => model.ExpirationDatetime, "", new { @class = "text-danger" })
             </div>
         </div>
 

@@ -6,10 +6,95 @@
 
 <h2>Editar</h2>
 
+<style type="text/css">
+    #selectedFiles img {
+        max-width: 200px;
+        max-height: 200px;
+        float: left;
+        margin-bottom: 10px;
+    }
+
+    input[type='file'] {
+        color: transparent;
+    }
+</style>
 @Scripts.Render("~/bundles/globalization")
 @Scripts.Render("~/bundles/globalization_ar")
 
 <script type="text/javascript">
+
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var files;
+    var storedFiles = [];
+    var upc = 0;
+
+
+
+    $(function () {
+
+        $(":file").attr('title', '  ');
+        var $loading = $('#loadingDiv').hide();
+
+        $("input[id^='fileToUpload']").change(function (e) {
+            doReCreate(e);
+        });
+
+        selDiv = $("#selectedFiles");
+    });
+
+
+    function doReCreate(e) {
+        upc = upc + 1;
+        handleFileSelect(e);
+
+        $("input[id^='fileToUpload']").hide();
+
+        $('<input>').attr({
+            type: 'file',
+            multiple: 'multiple',
+            id: 'fileToUpload' + upc,
+            class: 'fUpload',
+            name: 'fileUpload',
+            style: 'float: left',
+            title: '  ',
+            onchange: "doReCreate(event)"
+
+        }).appendTo('#uploaders');
+    }
+
+
+    function handleFileSelect(e) {
+
+        //selDiv.innerHTML = ""; storedFiles = [];
+        selDiv = document.querySelector("#selectedFiles");
+
+        if (!e.target.files) return;
+
+        //selDiv.innerHTML = "";
+        files = e.target.files;
+
+        for (var i = 0; i < files.length; i++) {
+            //if (i == 0) { selDiv.innerHTML = ""; storedFiles = []; }
+            var f = files[i];
+            selDiv.innerHTML += "<div>" + f.name + "<a onclick='removeAtt(this)'> X </a></div>";
+            storedFiles.push(f.name);
+        }
+        $('#@Html.IdFor(i => i.ImagePath)').val(storedFiles);
+    }
+
+    function removeAtt(t) {
+        var serEle = $(t).parent().text().slice(0, -3);
+        var index = storedFiles.indexOf(serEle);
+        if (index !== -1) {
+            storedFiles.splice(index, 1);
+        }
+        $(t).parent().remove();
+
+        $('#@Html.IdFor(i => i.ImagePath)').val(storedFiles);
+
+    }
+
     $(function () {
         
 
@@ -21,13 +106,18 @@
                 return this.optional(element) || Globalize.parseDate(value) !== null;
         }
 
+        $(".date-picker").removeClass('input-validation-error');
         $(".date-picker").datepicker({
             dateFormat: "dd/mm/yy"
         });
+
+        document.getElementsByClassName('hidden');
+        $(".hidden").removeClass('input-validation-error');
+
     });
 </script>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "product", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmID" }))
 {
     @Html.AntiForgeryToken()
     
@@ -97,6 +187,7 @@
             @Html.LabelFor(model => model.ExpirationDatetime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ExpirationDatetime, new { htmlAttributes = new { @class = "form-control, date-picker" } })
+                @Html.ValidationMessage("Date")
                 @Html.ValidationMessageFor(model => model.ExpirationDatetime, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -120,7 +211,27 @@
             </div>
         </div>
 
-        
+        <div class="hidden">
+            @Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="labelstyle">
+            <label>Files</label>
+        </div>
+
+        <div id="uploaders">
+            <input type="file" id="fileToUpload" name="fileUpload" multiple="multiple" style="float: left;" />
+            <br />
+            <span id="spnFile" style="float: left; color: #FF0000"></span>
+            @Html.ValidationMessage("File")
+            @Html.Hidden("hdnFileUpload")
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="control-section" style="padding: 0px;">
+            <div id="selectedFiles"></div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

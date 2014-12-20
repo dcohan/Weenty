@@ -10,7 +10,24 @@ namespace Cuponera.Entities
     [MetadataType(typeof(productMetadata))]
     public partial class product
     {
-
+        public bool Active
+        {
+            get
+            {
+                return !DeletionDatetime.HasValue;
+            }
+            set
+            {
+                if (value)
+                {
+                    DeletionDatetime = null;
+                }
+                else
+                {
+                    DeletionDatetime = DateTime.Now;
+                }
+            }
+        }
     }
     public class productMetadata
     {
@@ -20,13 +37,18 @@ namespace Cuponera.Entities
 
         [Required(ErrorMessage = "Debe ingresar una descripción válida para el producto.")]
         [MaxLength(500, ErrorMessage = "la descripción del producto debe tener como máximo de 500 caracteres."), MinLength(10, ErrorMessage = "La descripción del producto debe tener como mínimo 10 caracteres.")]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
+
+        [Display(Name="Activo")]
+        public bool Active { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar una fecha de activación válida.")]
         [Display(Name = "Fecha inicio")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartDatetime { get; set; }
 
+        [Required(ErrorMessage = "Debe ingresar una fecha de expiración válida.")]
         [Display(Name = "Fecha fin")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ExpirationDatetime { get; set; }
