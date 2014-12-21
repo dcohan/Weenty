@@ -13,9 +13,16 @@ using PagedList;
 
 namespace Cuponera.WebSite.Controllers
 {
-    public class subscriptionController : Controller
+    public class subscriptionController : UploadImagesBaseController
     {
         private CuponeraEntities db = new CuponeraEntities();
+
+        public subscriptionController()
+            : base(UploadImagesEnum.subscription)
+        {
+
+        }
+
         public IEnumerable<subscription> get(bool all = true, string name = null, int pageNumber = 1)
         {
             IEnumerable<subscription> subscriptions = db.subscription;
@@ -66,9 +73,7 @@ namespace Cuponera.WebSite.Controllers
                 return HttpNotFound();
             }
 
-
-            var all_subscriptions = get(subscription.DeletionDatetime != null);
-            ViewBag.AllSubscriptions = all_subscriptions.OrderBy(s => s.SortFactor);
+            ViewBag.AllSubscriptions = db.subscription.Where(s => s.DeletionDatetime == null).OrderBy(s => s.SortFactor);
 
             return View(subscription);
         }
@@ -84,11 +89,13 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,SortFactor,Duration,Icon")] subscription subscription, string Pricing)
+        public async Task<ActionResult> Create([Bind(Include = "Name,SortFactor,Duration")] subscription subscription, string Pricing, List<HttpPostedFileBase> fileUpload)
         {
             if (ModelState.IsValid)
             {
                 if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
+                if (fileUpload.Count > 0) { subscription.Icon = GeneratePhisicalFile(fileUpload.FirstOrDefault()); }
+
                 db.subscription.Add(subscription);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -121,11 +128,12 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdSubscription,Name,SortFactor,Duration,Icon")] subscription subscription, string Pricing)
+        public async Task<ActionResult> Edit([Bind(Include = "IdSubscription,Name,SortFactor,Duration")] subscription subscription, string Pricing, List<HttpPostedFileBase> fileUpload)
         {
             if (ModelState.IsValid)
             {
                 if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
+                if (fileUpload.Count > 0) { subscription.Icon = GeneratePhisicalFile(fileUpload.FirstOrDefault()); }
 
                 db.Entry(subscription).State = EntityState.Modified;
                 await db.SaveChangesAsync();
