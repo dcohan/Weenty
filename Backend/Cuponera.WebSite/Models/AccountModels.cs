@@ -36,7 +36,10 @@ namespace Cuponera.WebSite.Models
                     //Is Admin
                     if (userCompany != null)
                     {
-                        HttpContext.Current.Session["AdminCompany"] = userCompany.IdCompany;
+                        if (userCompany.IsAdmin)
+                        {
+                            HttpContext.Current.Session["AdminCompany"] = userCompany.IdCompany;
+                        }
                         var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId)).Select(s => s.IdStore).ToList();
 
                         HttpContext.Current.Session["AvailableStores"] = stores;
