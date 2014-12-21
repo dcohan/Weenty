@@ -3,11 +3,16 @@ var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(),
 var files;
 var storedFiles = [];
 var upc = 0;
+var img_options = {};
 
 $(function () {
 
     var $file_uploader = $("input[id^='fileToUpload']");
     $file_uploader.prop('title', '');
+
+    img_options = {
+        multiple: images && images.multiple
+    };
 
     $file_uploader.change(function (e) {
         doReCreate(e);
@@ -20,7 +25,7 @@ function doReCreate(e) {
     upc = upc + 1;
     handleFileSelect(e);
 
-    if (one_image) { return; }
+    if (img_options && !img_options.multiple) { return; }
 
     $("input[id^='fileToUpload']").hide();
 
@@ -45,7 +50,7 @@ function handleFileSelect(e) {
 
     files = e.target.files;
 
-    if (one_image) {
+    if (img_options && !img_options.multiple){
         $selDiv.empty();
         storedFiles = [];
     }

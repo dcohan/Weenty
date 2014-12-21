@@ -7,6 +7,12 @@
 @Scripts.Render("~/bundles/imagesUploader")
 <h2>Agregar suscripción</h2>
 
+<script type="text/javascript">
+    var images = {
+        multiple: false
+    };
+</script>
+
 @using (Html.BeginForm("Create", "subscription", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()

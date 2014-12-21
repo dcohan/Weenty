@@ -7,7 +7,9 @@
 @Scripts.Render("~/bundles/imagesUploader")
 
 <script type="text/javascript">
-    var one_image = true;
+    var images = {
+        multiple: false
+    };
 </script>
 
 <h2>Editar @Html.DisplayFor(model => model.Name)</h2>
