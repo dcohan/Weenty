@@ -101,6 +101,7 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
+            GetProducts(offer);
             return View(offer);
         }
 

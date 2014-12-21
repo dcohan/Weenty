@@ -19,7 +19,24 @@ namespace Cuponera.WebSite.Controllers
         private CuponeraEntities db = new CuponeraEntities();
 
 
-
+        public void GetCompanies(store store = null)
+        {
+            var companies = db.company.Where(s => s.DeletionDatetime == null);
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+                companies = db.store.Where( s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore) &&
+                                                     s.DeletionDatetime == null).Select(s => s.company);
+            }
+        
+            if (store != null)
+            {
+                ViewBag.IdCompany = new SelectList(companies, "IdCompany", "Name", store.IdCompany);
+            }
+            else
+            {
+                ViewBag.IdCompany = new SelectList(companies, "IdCompany", "Name");
+            }
+        }
 
         private IEnumerable<store> get(bool all, int idCompany, string name, string zipCode, int idState, int idUser, int pageNumber)
         {
@@ -53,10 +70,12 @@ namespace Cuponera.WebSite.Controllers
             {
                 if (CuponeraIdentity.AdminCompany > 0)
                 {
-                    stores = stores.Where(s =>  CuponeraIdentity.AdminCompany == s.IdCompany);
+                    stores = stores.Where(s => CuponeraIdentity.AdminCompany == s.IdCompany);
                 }
-
-                stores = stores.Where(s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore));
+                else
+                {
+                    stores = stores.Where(s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore));
+                }
             }
 
             stores = stores.OrderBy(s => s.Name);
@@ -108,7 +127,7 @@ namespace Cuponera.WebSite.Controllers
 
             if (store.Latitude != null) { ViewBag.Latitude = store.Latitude.ToString().Replace(",", "."); }
             if (store.Longitude != null) { ViewBag.Longitude = store.Longitude.ToString().Replace(",", "."); }
-            
+            GetCompanies(store);
             return View(store);
         }
 
@@ -122,6 +141,7 @@ namespace Cuponera.WebSite.Controllers
                                     Value = s.IdState.ToString(),
                                     Text = s.Name
                                 });
+            GetCompanies();
             return View();
         }
 
@@ -130,26 +150,20 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description")] store store, string Latitude, string Longitude)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,IdCompany,StoreHours,Email,FacebookUrl,WhatsApp,Description")] store store, string Latitude, string Longitude)
         {
             if (ModelState.IsValid)
             {
                 if (Latitude != null) { store.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
                 if (Longitude != null) { store.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
-                //var userId = ((CuponeraIdentity)Thread.CurrentPrincipal.Identity).UserId;
-                int idUser = 1;
-
-                var idCompany = db.userCompany.Where(uc => uc.IdUser == idUser);
-                if (idCompany.ToList().Count() > 0)
-                {
-                    store.IdCompany = Convert.ToInt32(idCompany.FirstOrDefault().IdCompany);
-                }
+                
 
                 db.store.Add(store);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
+            GetCompanies(store);
             return View(store);
         }
 
@@ -178,6 +192,7 @@ namespace Cuponera.WebSite.Controllers
             if (store.Latitude != null) { ViewBag.Latitude = store.Latitude.ToString().Replace(",", "."); }
             if (store.Longitude != null) { ViewBag.Longitude = store.Longitude.ToString().Replace(",", "."); }
 
+            GetCompanies(store);
             return View(store);
         }
 
@@ -204,6 +219,7 @@ namespace Cuponera.WebSite.Controllers
                 db.store.Add(store);
                 await db.SaveChangesAsync();
             }
+            GetCompanies(store);
             return View(store);
         }
 
