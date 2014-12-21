@@ -28,12 +28,32 @@ namespace Cuponera.WebSite.Controllers
 
         }
 
+        public void GetProducts(offer offer=null)
+        {
+            var products = db.product.Where(p => p.DeletionDatetime == null);
+
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+                products = products.Where(p => CuponeraIdentity.AdminCompany == p.store.IdCompany ||
+                                           CuponeraIdentity.CurrentAvaiableStores.Contains(p.IdStore));
+            }
+
+            if (offer != null)
+            {
+                ViewBag.IdProduct = new SelectList(products, "IdProduct", "Title", offer.IdProduct);
+            }
+            else
+            {
+                ViewBag.IdProduct = new SelectList(products, "IdProduct", "Title");
+            }
+        }
+
         private bool Validate(offer offer)
         {
             if (offer.ExpirationDatetime.HasValue && offer.ExpirationDatetime <= offer.StartDatetime)
             {
                 ModelState.AddModelError("Date", "Las fechas de expiración debe ser inferior a la de inicio");
-                ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", offer.IdProduct);   
+                GetProducts(offer);
                 return false;
             }
 
@@ -41,7 +61,7 @@ namespace Cuponera.WebSite.Controllers
                                 && o.ExpirationDatetime < offer.StartDatetime).Count() > 0)
             {
                 ModelState.AddModelError("ServerValidations", "Existe otra oferta en curso, no puede haber mas de una oferta vigente para un producto");
-                ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", offer.IdProduct);
+                GetProducts(offer);
                 return false;
             }
 
@@ -87,7 +107,7 @@ namespace Cuponera.WebSite.Controllers
         // GET: /offer/Create
         public ActionResult Create()
         {
-            ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title");
+            GetProducts();
             return View();
         }
 
@@ -116,7 +136,7 @@ namespace Cuponera.WebSite.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", offer.IdProduct);
+            GetProducts(offer);
             return View(offer);
         }
 
@@ -132,7 +152,7 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", offer.IdProduct);
+            GetProducts(offer); 
             return View(offer);
         }
 
@@ -161,7 +181,7 @@ namespace Cuponera.WebSite.Controllers
                     UploadImages(fileUpload, offer.IdOffer);
                     return RedirectToAction("Index");
                 }
-                ViewBag.IdProduct = new SelectList(db.product, "IdProduct", "Title", offer.IdProduct);
+                GetProducts(offer);
                 return View(offer);
             }
             catch (DbEntityValidationException ex)

@@ -13,7 +13,6 @@ using Cuponera.WebSite.Helpers;
 
 namespace Cuponera.WebSite.Controllers
 {
-    [AuthorizeUserStoreAttribute(MustBeAdmin=true)]
     public class categoryController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
@@ -31,6 +30,7 @@ namespace Cuponera.WebSite.Controllers
             return companies.Skip(elemsToSkip).Take(pageSize);
         }
 
+        [Authorize]
         public string GetAllBasicData()
         {
             Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
@@ -62,6 +62,7 @@ namespace Cuponera.WebSite.Controllers
             return View(category);
         }
 
+        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
         // GET: category/Create
         public ActionResult Create()
         {
@@ -73,6 +74,7 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
         public async Task<ActionResult> Create([Bind(Include = "IdCategory,Name,CreationDatetime,ModificationDatetime,DeletionDatetime")] category category)
         {
             if (ModelState.IsValid)
@@ -85,6 +87,7 @@ namespace Cuponera.WebSite.Controllers
             return View(category);
         }
 
+        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
         // GET: category/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -100,6 +103,7 @@ namespace Cuponera.WebSite.Controllers
             return View(category);
         }
 
+        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
         // POST: category/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

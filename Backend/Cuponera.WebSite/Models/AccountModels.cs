@@ -24,7 +24,7 @@ namespace Cuponera.WebSite.Models
             AuthenticationType = baseIdentity.AuthenticationType;
             Name = baseIdentity.Name;
 
-            if (HttpContext.Current.Session != null && HttpContext.Current.Session["userId"] == null)
+            if (HttpContext.Current.Session != null)
             {
                 using (CuponeraEntities db = new CuponeraEntities())
                 {
