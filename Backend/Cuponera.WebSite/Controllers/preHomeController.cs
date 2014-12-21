@@ -8,9 +8,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Cuponera.Entities;
+using Cuponera.WebSite.Helpers;
 
 namespace Cuponera.WebSite.Controllers
 {
+    [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
     public class preHomeController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();

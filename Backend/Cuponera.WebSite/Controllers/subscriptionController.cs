@@ -10,9 +10,11 @@ using System.Web.Mvc;
 using Cuponera.Entities;
 using System.Configuration;
 using PagedList;
+using Cuponera.WebSite.Helpers;
 
 namespace Cuponera.WebSite.Controllers
 {
+    [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
     public class subscriptionController : UploadImagesBaseController
     {
         private CuponeraEntities db = new CuponeraEntities();

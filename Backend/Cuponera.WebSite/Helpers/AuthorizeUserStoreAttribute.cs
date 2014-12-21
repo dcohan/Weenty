@@ -11,6 +11,9 @@ namespace Cuponera.WebSite.Helpers
 {
     public class AuthorizeUserStoreAttribute : AuthorizeAttribute
     {
+        public bool MustBeAdmin { get; set; }
+        public bool MustBeCompanyAdmin { get; set; }
+
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             var isAuthorized = base.AuthorizeCore(httpContext);
@@ -19,10 +22,22 @@ namespace Cuponera.WebSite.Helpers
                 return false;
             }
 
+            
+
             //Override Principal for IsInRole Validation 
             //TODO: figure out why, when a session already exist, this fails because simplemembership is not initialized
             //if (httpContext.User.IsInRole("admin")) return true;
-            if (new CuponeraPrincipal(new CuponeraIdentity(httpContext.User.Identity)).IsInRole("admin")) return true;
+            if (new CuponeraPrincipal(new CuponeraIdentity(httpContext.User.Identity)).IsInRole("admin"))
+            {
+                return true;
+            }
+            else
+            {
+                if (MustBeAdmin) return false;
+            }
+
+
+
 
             //Define Entity and Id of entity
             string entity = httpContext.Request.Url.Segments[1].Replace("/", string.Empty);
@@ -35,6 +50,7 @@ namespace Cuponera.WebSite.Helpers
 
                 using (CuponeraEntities db = new CuponeraEntities())
                 {
+                    var userId = db.UserProfile.Where(u => u.UserName.Equals(httpContext.User.Identity)).Select(u => u.UserId).FirstOrDefault();
                     switch (entity)
                     {
                         case "offer":
@@ -45,6 +61,12 @@ namespace Cuponera.WebSite.Helpers
                             break;
                         case "company":
                             stores.AddRange(db.company.Where(c => c.IdCompany.Equals(idEntity)).FirstOrDefault().store.Select(s => s.IdStore));
+
+                            if (MustBeAdmin && db.userCompany.Where(uc => uc.IdCompany.Equals(idEntity) && uc.IdUser.Equals(userId) && uc.IsAdmin).Count() <= 0)
+                            {
+                                return false;
+                            }
+
                             break;
                         case "store":
                             stores.Add(idEntity);

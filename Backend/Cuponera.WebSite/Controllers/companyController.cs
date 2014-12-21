@@ -13,6 +13,7 @@ using Cuponera.Entities;
 
 namespace Cuponera.WebSite.Controllers
 {
+    [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
     public class companyController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();

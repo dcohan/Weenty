@@ -20,7 +20,7 @@ namespace Cuponera.WebSite.Controllers
         subscription
     }
 
-    public class UploadImagesBaseController : Controller
+    public abstract class UploadImagesBaseController : Controller
     {
         private static string _relativePath;
         private static string _serverPath;
