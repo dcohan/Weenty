@@ -953,3 +953,14 @@ img.small-icon {
     height: 15px;
     width: 15px;
 }
+
+#selectedFiles img {
+    max-width: 200px;
+    max-height: 200px;
+    float: left;
+    margin-bottom: 10px;
+}
+
+input[type='file'] {
+    color: transparent;
+}
