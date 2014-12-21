@@ -48,6 +48,17 @@ namespace Cuponera.WebSite.Controllers
             {
                 stores = stores.Where(s => s.state.IdState == idState);
             }
+
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+                if (CuponeraIdentity.AdminCompany > 0)
+                {
+                    stores = stores.Where(s =>  CuponeraIdentity.AdminCompany == s.IdCompany);
+                }
+
+                stores = stores.Where(s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore));
+            }
+
             stores = stores.OrderBy(s => s.Name);
 
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);

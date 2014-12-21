@@ -33,8 +33,8 @@ namespace Cuponera.WebSite.Controllers
 
              if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
              {
-                stores = stores.Where(s => CuponeraIdentity.AdminCompany == s.IdCompany)
-                               .Where(s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore));
+                stores = stores.Where(s => CuponeraIdentity.AdminCompany == s.IdCompany ||
+                                           CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore));
              }
 
              var permitedStores = stores.OrderBy(s => s.Name);
@@ -85,8 +85,8 @@ namespace Cuponera.WebSite.Controllers
 
              if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
              {
-                products = products.Where(p => CuponeraIdentity.AdminCompany == p.store.IdCompany)
-                                   .Where(p => CuponeraIdentity.CurrentAvaiableStores.Contains(p.IdStore));
+                products = products.Where(p => CuponeraIdentity.AdminCompany == p.store.IdCompany ||  
+                                               CuponeraIdentity.CurrentAvaiableStores.Contains(p.IdStore));
              }
 
              var permitedProducts = products.OrderBy(o => o.Title);

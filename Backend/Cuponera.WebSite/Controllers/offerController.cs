@@ -57,8 +57,8 @@ namespace Cuponera.WebSite.Controllers
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
-                offers = offers.Where(o => CuponeraIdentity.AdminCompany == o.product.store.IdCompany)
-                               .Where(o => CuponeraIdentity.CurrentAvaiableStores.Contains(o.product.IdStore));
+                offers = offers.Where(o => CuponeraIdentity.AdminCompany == o.product.store.IdCompany ||
+                                           CuponeraIdentity.CurrentAvaiableStores.Contains(o.product.IdStore));
             }
 
             var permitedOffers = offers.OrderBy(o => o.Title);
