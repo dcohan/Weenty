@@ -57,7 +57,7 @@ namespace Cuponera.WebSite.Controllers
                 return false;
             }
 
-            if (db.offer.Where(o => o.Active && o.IdOffer != offer.IdOffer && o.ExpirationDatetime < DateTime.Now
+            if (db.offer.Where(o => !o.DeletionDatetime.HasValue && o.IdOffer != offer.IdOffer && o.ExpirationDatetime < DateTime.Now
                                 && o.ExpirationDatetime < offer.StartDatetime).Count() > 0)
             {
                 ModelState.AddModelError("ServerValidations", "Existe otra oferta en curso, no puede haber mas de una oferta vigente para un producto");
@@ -117,7 +117,7 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdOffer,Title,StartDatetime,ExpirationDatetime,IdProduct,ImagePath, Price")] offer offer, List<HttpPostedFileBase> fileUpload)
+        public ActionResult Create([Bind(Include = "IdOffer,Title,StartDatetime,ExpirationDatetime,Description,IdProduct,ImagePath, Price")] offer offer, List<HttpPostedFileBase> fileUpload)
         {
 			 if (!Validate(offer))
             {

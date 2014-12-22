@@ -32,9 +32,19 @@ function callServer(args) {
     })
    .success(function (data, textStatus, jqXHR) {
        if (args.success) {
-           if (data) data = JSON.parse(data);
-           args.success(data, textStatus, jqXHR);
+           if (data) {
+               try {
+                   data = JSON.parse(data);
+                   args.success(data, textStatus, jqXHR);
+               } catch (err) {
+                   alert('No tiene permisos para borrar el elemento.')
+                   
+               }
+           }
+           
        }
+
+       $.unblockUI();
    })
     .complete(function () {
         $.unblockUI();
