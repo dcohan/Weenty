@@ -57,6 +57,12 @@
                                     <li>@Html.ActionLink("Categorías", "Index", "category")</li>
                                     <li>@Html.ActionLink("Ciudades", "Index", "state")</li>
                                 }
+
+                                if (principal.IsInRole("admin") || Cuponera.WebSite.Models.CuponeraIdentity.AdminCompany > 0)
+                                {
+                                    <li>@Html.ActionLink("Usuarios", "Index", "userCompany")</li>
+                                }
+
                                 <li>@Html.ActionLink("Empresas", "Index", "company")</li>
                                 <li>@Html.ActionLink("Sucursales", "Index", "store")</li>
                                 <li>@Html.ActionLink("Productos", "Index", "product")</li>

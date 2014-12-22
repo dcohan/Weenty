@@ -4,22 +4,23 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <div>
-    <h4>userCompany</h4>
+    <h4>Usuario</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
-            @Html.DisplayNameFor(model => model.IsAdmin)
+            Usuario
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IsAdmin)
+            @Html.DisplayFor(model => model.UserProfile.UserName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.company.Name)
+            Compañia
         </dt>
 
         <dd>
@@ -27,40 +28,24 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.store.Name)
+            Admin
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAdmin)
+        </dd>
+
+        <dt>
+            Sucursal
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.store.Name)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.userCompany1.IdUserCompany)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.userCompany1.IdUserCompany)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.userCompany2.IdUserCompany)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.userCompany2.IdUserCompany)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserProfile.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserProfile.UserName)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdUserCompany }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdUserCompany }) |
+    @Html.ActionLink("Volver", "Index")
 </p>

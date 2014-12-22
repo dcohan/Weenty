@@ -9,19 +9,101 @@ using System.Web;
 using System.Web.Mvc;
 using Cuponera.Entities;
 using Cuponera.WebSite.Helpers;
+using System.Configuration;
+using Cuponera.WebSite.Models;
+using PagedList;
 
 namespace Cuponera.WebSite.Controllers
 {
-    [AuthorizeUserStoreAttribute]
+    [AuthorizeUserStoreAttribute(MustBeCompanyAdmin=true)]
     public class userCompanyController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        // GET: userCompany
-        public async Task<ActionResult> Index()
+        public void GetCompany(userCompany userCompany=null)
         {
-            var userCompany = db.userCompany.Include(u => u.company).Include(u => u.store).Include(u => u.userCompany1).Include(u => u.userCompany2).Include(u => u.UserProfile);
-            return View(await userCompany.ToListAsync());
+            var companies = db.company.Where(c => !c.DeletionDatetime.HasValue);
+
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+                if (CuponeraIdentity.AdminCompany > 0)
+                {
+                    companies = companies.Where(c => CuponeraIdentity.AdminCompany == c.IdCompany);
+                }
+                else
+                {
+                    companies = db.store.Where(s => CuponeraPrincipal.CanAdminStore(s.IdStore)).Select(s => s.company);
+                }
+            }
+
+            if (userCompany != null)
+            {
+                ViewBag.IdCompany = new SelectList(companies, "IdCompany", "Name", userCompany.IdCompany);
+            }
+            else
+            {
+                ViewBag.IdCompany = new SelectList(companies, "IdCompany", "Name");
+            }
+        }
+
+        public void GetStore(userCompany userCompany = null)
+        {
+            var stores = db.store.Where(s => !s.DeletionDatetime.HasValue);
+
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+                if (CuponeraIdentity.AdminCompany > 0)
+                {
+                    stores = stores.Where(s => CuponeraIdentity.AdminCompany == s.IdCompany);
+                }
+                else
+                {
+                    stores = stores.Where(s => CuponeraPrincipal.CanAdminStore(s.IdStore));
+                }
+            }
+
+            if (userCompany != null)
+            {
+                ViewBag.IdStore = new SelectList(stores, "IdStore", "Name", userCompany.IdCompany);
+            }
+            else
+            {
+                ViewBag.IdStore = new SelectList(stores, "IdStore", "Name");
+            }
+        }
+
+        public IEnumerable<userCompany> get(int idCompany = 0, int page = 1)
+        {
+            IEnumerable<userCompany> ucs = db.userCompany;
+
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+                ucs = ucs.Where(u => CuponeraIdentity.AdminCompany == u.IdCompany);
+
+                ViewBag.CanSelectCompany = CuponeraIdentity.AdminCompany > 0;
+            }
+            else
+            {
+                ViewBag.CanSelectCompany = true;
+            }
+
+            if (idCompany > 0)
+            {
+                ucs = ucs.Where(u => u.IdCompany.Equals(idCompany));
+            }
+
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)ucs.Count() / pageSize));
+
+            ucs = ucs.OrderBy(u => u.company.Name);
+
+            return ucs.ToPagedList(page, pageSize);
+        }
+
+        // GET: userCompany
+        public async Task<ActionResult> Index(int company = 0, int page = 1)
+        {
+            return View(get(company, page));
         }
 
         
@@ -37,18 +119,18 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
+            GetCompany(userCompany);
             return View(userCompany);
         }
 
         // GET: userCompany/Create
         public ActionResult Create()
         {
-            ViewBag.IdCompany = new SelectList(db.company, "IdCompany", "Name");
-            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name");
+            GetCompany();
+            GetStore();
             ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany");
-            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany");
-            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName");
-            return View();
+            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany");            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName");
+            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName");            return View();
         }
 
         // POST: userCompany/Create
@@ -65,13 +147,13 @@ namespace Cuponera.WebSite.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdCompany = new SelectList(db.company, "IdCompany", "Name", userCompany.IdCompany);
-            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name", userCompany.IdStore);
+            GetCompany(userCompany);
+            GetStore(userCompany);
             ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);
-            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);
-            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName", userCompany.IdUser);
-            return View(userCompany);
-        }
+            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName", userCompany.IdUser);
+            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName", userCompany.IdUser);            return View(userCompany);
+            return View(userCompany); 
+       }
 
         // GET: userCompany/Edit/5
         public async Task<ActionResult> Edit(int? id)
@@ -85,10 +167,11 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdCompany = new SelectList(db.company, "IdCompany", "Name", userCompany.IdCompany);
-            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name", userCompany.IdStore);
+
+            GetCompany(userCompany);
+            GetStore(userCompany);
             ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);
-            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);
+            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName", userCompany.IdUser);
             ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName", userCompany.IdUser);
             return View(userCompany);
         }
@@ -106,8 +189,8 @@ namespace Cuponera.WebSite.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdCompany = new SelectList(db.company, "IdCompany", "Name", userCompany.IdCompany);
-            ViewBag.IdStore = new SelectList(db.store, "IdStore", "Name", userCompany.IdStore);
+            GetCompany(userCompany);
+            GetStore(userCompany);
             ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);
             ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);
             ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName", userCompany.IdUser);

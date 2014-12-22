@@ -1,63 +1,102 @@
 ﻿@model IEnumerable<Cuponera.Entities.userCompany>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Usuarios";
 }
 
-<h2>Index</h2>
+<h2>Usuarios</h2>
+
+<script type="text/javascript">
+    var globals = {
+        controller: 'userCompany',
+        filters: {
+            custom: [{
+                controlType: 'select',
+                controlId: 'company',
+                controlDefaultValue: '@(Request.Params["company"] != null ? @Request.Params["company"] : "")',
+                label: 'Empresa',
+                visible: @(ViewBag.CanSelectCompany != null && ViewBag.CanSelectCompany ? "true" : "false"),
+                source: {
+                    include_all: true,
+                    controller: 'company',
+                    action: 'GetAllBasicData'
+                }
+            }]
+        }
+    };
+
+    $(document).ready(function () {
+        $('#company').width(10);
+        $('#item-name').width(10);
+        $('.filters').width(250)
+    });
+
+</script>
+
+@Html.Partial("AntiForgeryTokenForm")
+@Html.Partial("Filters")
+
+
+@if (Model.Count() == 0)
+{
+    <div class="no-data">No hay datos.</div>
+}
+else
+{
+    <div class="table-all">
+        <table class="table">
+            <tr>
+                <th>
+                    Admin
+                </th>
+                <th>
+                    Compañia
+                </th>
+                <th>
+                    Sucursal
+                </th>
+                <th>
+                    Usuario
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsAdmin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.company.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.store.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserProfile.UserName)
+                    </td>
+                    <td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdUserCompany }, new { @class = "editIcon" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detalle", "Details", new { id = item.IdUserCompany }, new { @class = "detailsIcon" })
+                    </td>
+                    <td>
+                        <a href="#" class="removeIcon" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        @Html.Partial("Paginator")
+    </div>
+
+
+
+<div style="clear:both;"></div>
+}
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nuevo", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IsAdmin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.company.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.store.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.userCompany1.IdUserCompany)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.userCompany2.IdUserCompany)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserProfile.UserName)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsAdmin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.company.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.store.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.userCompany1.IdUserCompany)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.userCompany2.IdUserCompany)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserProfile.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdUserCompany }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdUserCompany }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdUserCompany })
-        </td>
-    </tr>
-}
-
-</table>
