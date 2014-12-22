@@ -31,11 +31,7 @@ public class WeatherFragment extends BaseFragment {
 				if (result != null && result.getWeather() != null && result.getWeather().size() > 0 && result.getMainWeather() != null) {
 					Utils.loadImageFromUrl(getActivity(), mViewProxy.findImageView(R.id.weather_image), "http://openweathermap.org/img/w/"
 							+ result.getWeather().get(0).getIcon() + ".png");
-					mViewProxy.findTextView(R.id.weather_temp).setText(
-							"En estos momentos hay " + (int) result.getMainWeather().getTemp() + "° y una humedad del "
-									+ (int) result.getMainWeather().getHumidity() + "%. La presion es de " + result.getMainWeather().getPressure()
-									+ " milibares.");
-
+					//mViewProxy.findTextView(R.id.min_temp).setText(text);
 				} else {
 					EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.NO_RESULTS_FOUND));
 					getBaseActivity().onHomeButton();

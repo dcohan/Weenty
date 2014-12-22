@@ -4,11 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rectangle_corner_round_gray"
+        android:padding="10dp"
+        android:text="@string/today"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="10dp" >
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp" >
 
         <ImageView
             android:id="@+id/weather_image"
@@ -23,13 +36,15 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/min_temp"
                 android:layout_width="@dimen/width_weather"
                 android:layout_height="@dimen/width_weather"
                 android:background="@color/gray_strong"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="@string/min"
                 android:textColor="@color/white"
-                android:textSize="@dimen/weather_values_size" />
+                android:textSize="@dimen/weather_values_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="@dimen/width_weather"
@@ -38,7 +53,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:text="20"
                 android:textColor="@color/white"
-                android:textSize="@dimen/weather_values_size" />
+                android:textSize="@dimen/weather_values_size"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -48,13 +64,15 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/max_temp"
                 android:layout_width="@dimen/width_weather"
                 android:layout_height="@dimen/width_weather"
                 android:background="@color/gray_strong"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="@string/max"
                 android:textColor="@color/white"
-                android:textSize="@dimen/weather_values_size" />
+                android:textSize="@dimen/weather_values_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="@dimen/width_weather"
@@ -63,7 +81,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:text="25"
                 android:textColor="@color/white"
-                android:textSize="@dimen/weather_values_size" />
+                android:textSize="@dimen/weather_values_size"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -73,13 +92,15 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/humidity"
                 android:layout_width="@dimen/width_weather"
                 android:layout_height="@dimen/width_weather"
                 android:background="@color/gray_strong"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="@string/humity"
                 android:textColor="@color/white"
-                android:textSize="@dimen/weather_values_size" />
+                android:textSize="@dimen/weather_values_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="@dimen/width_weather"
@@ -88,16 +109,20 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:text="12%"
                 android:textColor="@color/white"
-                android:textSize="@dimen/weather_values_size" />
+                android:textSize="@dimen/weather_values_size"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
     <TextView
-        android:id="@+id/weather_temp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/rectangle_corner_round_gray"
         android:padding="10dp"
-        android:textColor="@color/green_strong"
-        android:textSize="20sp" />
+        android:text="@string/next_days"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
 </LinearLayout>
