@@ -51,11 +51,11 @@ public class ImageGallery extends BaseFragment {
 	private View insertPhoto(String path) {
 
 		LinearLayout layout = new LinearLayout(getBaseActivity());
-		layout.setLayoutParams(new LayoutParams(250, 250));
+		layout.setLayoutParams(new LayoutParams(400, 400));
 		layout.setGravity(Gravity.CENTER);
 
 		ImageView imageView = new ImageView(getBaseActivity());
-		imageView.setLayoutParams(new LayoutParams(220, 220));
+		imageView.setLayoutParams(new LayoutParams(380, 380));
 		imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		Utils.loadImageFromUrl(getActivity(), imageView, path);
 

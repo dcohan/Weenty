@@ -51,6 +51,9 @@ public class Store extends BaseModel {
 
 	@JsonProperty("IdCategory")
 	private int idCategory;
+	
+	@JsonProperty("Description")
+	private String description;
 
 	public double getDistance() {
 		return distance;
@@ -178,6 +181,14 @@ public class Store extends BaseModel {
 
 	public void setIdCategory(int idCategory) {
 		this.idCategory = idCategory;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

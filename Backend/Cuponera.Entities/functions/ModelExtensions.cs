@@ -21,6 +21,9 @@ namespace Cuponera.Entities
         public int IdOffer { get; set; }
         public string OTitle { get; set; }
         public string OImagePath { get; set; }
+
+        public string ODescription { get; set; }
+
         public double OPrice { get; set; }
 
     }

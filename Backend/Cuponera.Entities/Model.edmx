@@ -181,11 +181,11 @@
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Pricing" Type="money" Nullable="false" />
           <Property Name="SortFactor" Type="int" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="Icon" Type="varchar" MaxLength="250" />
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-          <Property Name="Duration" Type="int" Nullable="false" />
-          <Property Name="Icon" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="userCompany">
           <Key>

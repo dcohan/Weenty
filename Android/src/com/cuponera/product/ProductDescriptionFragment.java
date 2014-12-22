@@ -69,7 +69,6 @@ public class ProductDescriptionFragment extends BaseFragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		mViewProxy.findTextView(R.id.product_company).setText(store.getName());
-		mViewProxy.findTextView(R.id.product_description).setText(product.getpDescription());
 		if (product.getIdOffer() > 0) {
 			mViewProxy.findTextView(R.id.product_name).setText(product.getoTitle());
 			mViewProxy.findTextView(R.id.product_price).setText("$" + String.valueOf(product.getoPrice()));
@@ -77,12 +76,16 @@ public class ProductDescriptionFragment extends BaseFragment {
 			mViewProxy.findTextView(R.id.product_name).setText(product.getpTitle());
 			mViewProxy.findTextView(R.id.product_price).setText("$" + String.valueOf(product.getpPrice()));
 		}
+		mViewProxy.findTextView(R.id.product_description).setText(product.getpDescription());
+		mViewProxy.findTextView(R.id.store_description).setText(store.getDescription());
 		if (!ValidationUtils.isNullOrEmpty(store.getStoreHours())) {
 			mViewProxy.findTextView(R.id.store_hours).setText(store.getStoreHours());
 			mViewProxy.findTextView(R.id.store_hours).setVisibility(View.VISIBLE);
 		}
 
-		mViewProxy.findTextView(R.id.product_phone).setText(getResources().getString(R.string.phone) + store.getContactNumber());
+		mViewProxy.findTextView(R.id.store_phone).setText(store.getContactNumber());
+		mViewProxy.findTextView(R.id.store_address).setText(store.getAddress());
+		mViewProxy.findTextView(R.id.store_mail).setText(store.getEmail());
 
 		if (!ValidationUtils.isNullOrEmpty(store.getContactNumber())) {
 			mViewProxy.findImageView(R.id.product_phone_image).setVisibility(View.VISIBLE);
