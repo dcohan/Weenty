@@ -120,8 +120,8 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	}
 
-	public void openStore(int category) {
-		Fragment product = StoreFragment.newInstance(category);
+	public void openStore(int category, String categoryName) {
+		Fragment product = StoreFragment.newInstance(category, categoryName);
 		replaceFragment(product, R.id.container, true);
 	}
 

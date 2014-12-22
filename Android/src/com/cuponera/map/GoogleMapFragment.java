@@ -1,5 +1,7 @@
 package com.cuponera.map;
 
+import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,19 +22,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GoogleMapFragment extends BaseFragment {
 
-	private Store item;
+	private ArrayList<Store> item;
 	private static final String ARGS_ITEM = "args_item";
 	private MapView mapView;
 	private GoogleMap map;
 
-	public static GoogleMapFragment newInstance(Store item) {
+	public static GoogleMapFragment newInstance(ArrayList<Store> item) {
 
 		GoogleMapFragment fragment = new GoogleMapFragment();
 		Bundle b = fragment.getArguments();
 		if (b == null)
 			b = new Bundle();
 
-		b.putParcelable(ARGS_ITEM, item);
+		b.putParcelableArrayList(ARGS_ITEM, item);
 
 		fragment.setArguments(b);
 		return fragment;
@@ -53,18 +55,25 @@ public class GoogleMapFragment extends BaseFragment {
 		mapView.onCreate(savedInstanceState);
 		map = mapView.getMap();
 
-		item = getArguments().getParcelable(ARGS_ITEM);
+		item = getArguments().getParcelableArrayList(ARGS_ITEM);
+		int firstElementList = 0;
+		for (Store store : item) {
+			if (store.getLatitude() != 0) {
+				firstElementList++;
+				LatLng mapCenter = new LatLng(store.getLatitude(), store.getLongitude());
 
-		LatLng mapCenter = new LatLng(item.getLatitude(), item.getLongitude());
+				if (firstElementList == 1) {
+					map.moveCamera(CameraUpdateFactory.newLatLngZoom(mapCenter, 13));
+					CameraPosition cameraPosition = CameraPosition.builder().target(mapCenter).zoom(13).bearing(90).build();
+					map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 2000, null);
+				}
 
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(mapCenter, 13));
+				map.addMarker(new MarkerOptions().position(mapCenter).title(store.getName().toUpperCase()).snippet(store.getAddress())
+						.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_location)));
 
-		CameraPosition cameraPosition = CameraPosition.builder().target(mapCenter).zoom(13).bearing(90).build();
+			}
+		}
 
-		map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 2000, null);
-
-		map.addMarker(new MarkerOptions().position(mapCenter).title(item.getName().toUpperCase()).snippet(item.getAddress())
-				.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_location)));
 		return v;
 	}
 

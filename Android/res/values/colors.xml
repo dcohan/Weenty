@@ -9,5 +9,7 @@
     <color name="gray_light">#dedee0</color>
     <color name="green_strong">#9ece34</color>
     <color name="orange_strong">#f99121</color>
+    <color name="city_color">#888c1b</color>
+    
 
 </resources>

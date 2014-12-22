@@ -18,13 +18,13 @@ namespace Cuponera.Entities
         public string PDescription { get; set; }
         public double PPrice { get; set; }
 
-        public int IdOffer { get; set; }
+        public Nullable<int> IdOffer { get; set; }
         public string OTitle { get; set; }
         public string OImagePath { get; set; }
 
         public string ODescription { get; set; }
 
-        public double OPrice { get; set; }
+        public Nullable<double> OPrice { get; set; }
 
     }
 

@@ -41,7 +41,7 @@ public class MoreAdapter extends BaseListAdapter {
 			@Override
 			public void onClick(View v) {
 				FragmentTransaction transaction = ((BaseActivity) activity).getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container, StoreFragment.newInstance(c.getId()));
+				transaction.replace(R.id.container, StoreFragment.newInstance(c.getId(), c.getName()));
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}

@@ -6,97 +6,29 @@
 
 <h2>Editar</h2>
 
-<style type="text/css">
-    #selectedFiles img {
-        max-width: 200px;
-        max-height: 200px;
-        float: left;
-        margin-bottom: 10px;
-    }
 
-    input[type='file'] {
-        color: transparent;
-    }
-</style>
 @Scripts.Render("~/bundles/globalization")
 @Scripts.Render("~/bundles/globalization_ar")
+@Scripts.Render("~/bundles/imagesUploader")
 
 <script type="text/javascript">
+    var images = {
+        multiple: true,
+        container_id: 'images'
+    };
 
-    var nowTemp = new Date();
-    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-    var files;
-    var storedFiles = [];
-    var upc = 0;
-
-
+    var images_to_remove = [];
 
     $(function () {
+        $('.delete-icon').click(function () {
+            var $container = $(this).closest('.image-container');
+            var id_image = $container.data('id-image');
+            images_to_remove.push(id_image);
 
-        $(":file").attr('title', '  ');
-        var $loading = $('#loadingDiv').hide();
 
-        $("input[id^='fileToUpload']").change(function (e) {
-            doReCreate(e);
+            $container.remove();
+            $('#imagesToRemove').val(images_to_remove.join(','));
         });
-
-        selDiv = $("#selectedFiles");
-    });
-
-
-    function doReCreate(e) {
-        upc = upc + 1;
-        handleFileSelect(e);
-
-        $("input[id^='fileToUpload']").hide();
-
-        $('<input>').attr({
-            type: 'file',
-            multiple: 'multiple',
-            id: 'fileToUpload' + upc,
-            class: 'fUpload',
-            name: 'fileUpload',
-            style: 'float: left',
-            title: '  ',
-            onchange: "doReCreate(event)"
-
-        }).appendTo('#uploaders');
-    }
-
-
-    function handleFileSelect(e) {
-
-        //selDiv.innerHTML = ""; storedFiles = [];
-        selDiv = document.querySelector("#selectedFiles");
-
-        if (!e.target.files) return;
-
-        //selDiv.innerHTML = "";
-        files = e.target.files;
-
-        for (var i = 0; i < files.length; i++) {
-            //if (i == 0) { selDiv.innerHTML = ""; storedFiles = []; }
-            var f = files[i];
-            selDiv.innerHTML += "<div>" + f.name + "<a onclick='removeAtt(this)'> X </a></div>";
-            storedFiles.push(f.name);
-        }
-        $('#@Html.IdFor(i => i.ImagePath)').val(storedFiles);
-    }
-
-    function removeAtt(t) {
-        var serEle = $(t).parent().text().slice(0, -3);
-        var index = storedFiles.indexOf(serEle);
-        if (index !== -1) {
-            storedFiles.splice(index, 1);
-        }
-        $(t).parent().remove();
-
-        $('#@Html.IdFor(i => i.ImagePath)').val(storedFiles);
-
-    }
-
-    $(function () {
-        
 
         $.validator.methods.date = function (value, element) {
                 Globalize.culture("es-AR");
@@ -184,24 +116,30 @@
             </div>
         </div>
 
-      
+
         <div class="form-group">
             <div class="col-md-10">
-                <div class="control-label col-md-2 item-description">
-                    <div><b>Portada:</b></div>
-                     <img src="@Html.DisplayFor(model => model.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
-                </div>
-                <div class="item-description">
-                <div>
-                        <b>Imagenes:</b>
-                </div>
+                <span>Imágenes</span>
+                <div class="images-container">
+                    <div class="image-container" data-id-image="main">
+                        @if (!string.IsNullOrEmpty(Model.ImagePath))
+                        {
+                            <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview inactive" alt="inactive" />
+                            <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+                        }
+                    </div>
                     @foreach (var item in Model.images)
                     {
-                        <img src="@Html.DisplayFor(model => item.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
+                        <div class="image-container" data-id-image="@Html.DisplayFor(model => item.IdImage)">
+                            <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="inactive" />
+                            <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+
+                        </div>
                     }
                 </div>
             </div>
         </div>
+        <input type="hidden" id="imagesToRemove" name="imagesToRemove" />
 
         <div class="hidden">
             @Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @class = "form-control" } })
@@ -210,7 +148,7 @@
         <div class="labelstyle">
             <label>Files</label>
         </div>
-
+   
         <div id="uploaders">
             <input type="file" id="fileToUpload" name="fileUpload" multiple="multiple" style="float: left;" />
             <br />
