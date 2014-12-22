@@ -8,9 +8,30 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.07"
-        android:orientation="horizontal" >
-        
+        android:orientation="horizontal"
+        android:paddingBottom="1dp" >
+
+        <ImageView
+            android:id="@+id/location_stores_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:src="@drawable/icon_location_green" />
+
+        <TextView
+            android:id="@+id/store_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="@color/gray_cuponera"
+            android:textSize="20sp" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light" />
 
     <ListView
         android:id="@+id/store_listview"

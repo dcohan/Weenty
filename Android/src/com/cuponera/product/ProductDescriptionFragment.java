@@ -1,5 +1,7 @@
 package com.cuponera.product;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -116,8 +118,10 @@ public class ProductDescriptionFragment extends BaseFragment {
 		mViewProxy.findImageView(R.id.product_map).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (store.getLatitude() != 0) {
-					getBaseActivity().pushFragment(GoogleMapFragment.newInstance(store), true);
+				ArrayList<Store> storeArray = new ArrayList<Store>();
+				storeArray.add(store);
+				if (storeArray.get(0) != null && storeArray.get(0).getLatitude() != 0) {
+					getBaseActivity().pushFragment(GoogleMapFragment.newInstance(storeArray), true);
 				}
 			}
 		});

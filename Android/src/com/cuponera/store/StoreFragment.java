@@ -12,6 +12,7 @@ import com.cuponera.BaseFragment;
 import com.cuponera.R;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
+import com.cuponera.map.GoogleMapFragment;
 import com.cuponera.model.Store;
 import com.cuponera.product.ProductFragment;
 import com.cuponera.service.store.StoreRequest;
@@ -27,7 +28,7 @@ public class StoreFragment extends BaseFragment {
 
 	@Override
 	protected int getLayout() {
-		return R.layout.fragment_product;
+		return R.layout.fragment_store;
 	}
 
 	public static StoreFragment newInstance(int idCategory, String categoryName) {
@@ -71,6 +72,7 @@ public class StoreFragment extends BaseFragment {
 	}
 
 	private void fillAdapter() {
+		mViewProxy.findTextView(R.id.store_category).setText(getArguments().getString(ARGS_NAME_CATEGORY));
 		mViewProxy.findImageView(R.id.cx).setVisibility(View.VISIBLE);
 		mViewProxy.findImageView(R.id.cx).setOnClickListener(new OnClickListener() {
 
@@ -80,6 +82,15 @@ public class StoreFragment extends BaseFragment {
 
 			}
 		});
+
+		mViewProxy.findImageView(R.id.location_stores_image).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				getBaseActivity().pushFragment(GoogleMapFragment.newInstance(store), true);
+			}
+		});
+
 		adapter = new StoreAdapter(getBaseActivity(), store);
 		adapter.notifyDataSetChanged();
 		mViewProxy.findListView(R.id.store_listview).setAdapter(adapter);
