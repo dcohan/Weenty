@@ -5,33 +5,33 @@ import java.util.ArrayList;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import com.cuponera.model.MainWeather;
-import com.cuponera.model.Weather;
+import com.cuponera.model.WeatherCity;
 import com.cuponera.service.BaseResponse;
 
 public class WeatherResponse extends BaseResponse {
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("weather")
-	private ArrayList<Weather> weather;
+	@JsonProperty("city")
+	private WeatherCity weatherCity;
 
-	@JsonProperty("main")
-	private MainWeather mainWeather;
+	@JsonProperty("list")
+	private ArrayList<MainWeather> mainWeather;
 
-	public ArrayList<Weather> getWeather() {
-		return weather;
-	}
-
-	public void setWeather(ArrayList<Weather> weather) {
-		this.weather = weather;
-	}
-
-	public MainWeather getMainWeather() {
+	public ArrayList<MainWeather> getMainWeather() {
 		return mainWeather;
 	}
 
-	public void setMainWeather(MainWeather mainWeather) {
+	public void setMainWeather(ArrayList<MainWeather> mainWeather) {
 		this.mainWeather = mainWeather;
+	}
+
+	public WeatherCity getWeatherCity() {
+		return weatherCity;
+	}
+
+	public void setWeatherCity(WeatherCity weatherCity) {
+		this.weatherCity = weatherCity;
 	}
 
 }

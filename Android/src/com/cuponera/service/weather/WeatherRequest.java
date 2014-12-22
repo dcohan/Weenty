@@ -31,8 +31,8 @@ public abstract class WeatherRequest extends AsyncPoolRequest<WeatherResponse> {
 
 	@Override
 	public String getPath() {
-		return "/data/2.5/weather?lat=" + (int) Settings.getInstance(context).getLatitude() + "&lon=" + (int) Settings.getInstance(context).getLongitude()
-				+ "&lang=es&units=metric";
+		return "/data/2.5/forecast/daily?lat=" + (int) Settings.getInstance(context).getLatitude() + "&lon=" + (int) Settings.getInstance(context).getLongitude()
+				+ "lang=es&units=metric&cnt=5";
 	}
 
 	@Override

@@ -16,9 +16,7 @@
     <dimen name="storedescription_text_size">15sp</dimen>
     <dimen name="offer_circle">17dp</dimen>
     <dimen name="icons_size">35dp</dimen>
-    
-    <dimen name="width_weather">40dp</dimen>
-    
+    <dimen name="width_weather">50dp</dimen>
     <dimen name="weather_values_size">13sp</dimen>
 
 </resources>

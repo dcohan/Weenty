@@ -28,10 +28,12 @@ public class WeatherFragment extends BaseFragment {
 			@SuppressLint("DefaultLocale")
 			@Override
 			public void onServiceReturned(WeatherResponse result) {
-				if (result != null && result.getWeather() != null && result.getWeather().size() > 0 && result.getMainWeather() != null) {
+				if (result != null && result.getMainWeather() != null && result.getMainWeather().size() > 0 && result.getMainWeather() != null) {
 					Utils.loadImageFromUrl(getActivity(), mViewProxy.findImageView(R.id.weather_image), "http://openweathermap.org/img/w/"
-							+ result.getWeather().get(0).getIcon() + ".png");
-					//mViewProxy.findTextView(R.id.min_temp).setText(text);
+							+ result.getMainWeather().get(0).getWeather().get(0).getIcon() + ".png");
+					mViewProxy.findTextView(R.id.min_temp).setText((int) result.getMainWeather().get(0).getTemp().getMin() + "¡");
+					mViewProxy.findTextView(R.id.max_temp).setText((int) result.getMainWeather().get(0).getTemp().getMax() + "¡");
+					mViewProxy.findTextView(R.id.humidity).setText((int) result.getMainWeather().get(0).getHumidity() + "%");
 				} else {
 					EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.NO_RESULTS_FOUND));
 					getBaseActivity().onHomeButton();

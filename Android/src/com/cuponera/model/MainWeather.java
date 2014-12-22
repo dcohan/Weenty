@@ -1,11 +1,13 @@
 package com.cuponera.model;
 
+import java.util.ArrayList;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class MainWeather extends BaseModel {
 
 	@JsonProperty("temp")
-	private double temp;
+	private Temperature temp;
 
 	@JsonProperty("pressure")
 	private double pressure;
@@ -13,13 +15,8 @@ public class MainWeather extends BaseModel {
 	@JsonProperty("humidity")
 	private double humidity;
 
-	public double getTemp() {
-		return temp;
-	}
-
-	public void setTemp(double temp) {
-		this.temp = temp;
-	}
+	@JsonProperty("weather")
+	private ArrayList<Weather> weather;
 
 	public double getPressure() {
 		return pressure;
@@ -35,6 +32,22 @@ public class MainWeather extends BaseModel {
 
 	public void setHumidity(double humidity) {
 		this.humidity = humidity;
+	}
+
+	public ArrayList<Weather> getWeather() {
+		return weather;
+	}
+
+	public void setWeather(ArrayList<Weather> weather) {
+		this.weather = weather;
+	}
+
+	public Temperature getTemp() {
+		return temp;
+	}
+
+	public void setTemp(Temperature temp) {
+		this.temp = temp;
 	}
 
 }

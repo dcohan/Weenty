@@ -36,7 +36,6 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/min_temp"
                 android:layout_width="@dimen/width_weather"
                 android:layout_height="@dimen/width_weather"
                 android:background="@color/gray_strong"
@@ -47,11 +46,11 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/min_temp"
                 android:layout_width="@dimen/width_weather"
                 android:layout_height="@dimen/width_weather"
                 android:background="@color/light_blue"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="20"
                 android:textColor="@color/white"
                 android:textSize="@dimen/weather_values_size"
                 android:textStyle="bold" />
@@ -64,7 +63,6 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/max_temp"
                 android:layout_width="@dimen/width_weather"
                 android:layout_height="@dimen/width_weather"
                 android:background="@color/gray_strong"
@@ -75,11 +73,11 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/max_temp"
                 android:layout_width="@dimen/width_weather"
                 android:layout_height="@dimen/width_weather"
                 android:background="@color/light_red"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="25"
                 android:textColor="@color/white"
                 android:textSize="@dimen/weather_values_size"
                 android:textStyle="bold" />
@@ -92,7 +90,6 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/humidity"
                 android:layout_width="@dimen/width_weather"
                 android:layout_height="@dimen/width_weather"
                 android:background="@color/gray_strong"
@@ -103,11 +100,11 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/humidity"
                 android:layout_width="@dimen/width_weather"
                 android:layout_height="@dimen/width_weather"
                 android:background="@color/light_light_blue"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="12%"
                 android:textColor="@color/white"
                 android:textSize="@dimen/weather_values_size"
                 android:textStyle="bold" />
@@ -117,8 +114,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_margin="10dp"
         android:background="@drawable/rectangle_corner_round_gray"
         android:padding="10dp"
         android:text="@string/next_days"
