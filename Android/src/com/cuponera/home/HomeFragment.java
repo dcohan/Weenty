@@ -70,22 +70,22 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 
 			switch (v.getId()) {
 			case R.id.hotel:
-				getBaseActivity().openStore(Const.HOTEL);
+				getBaseActivity().openStore(Const.HOTEL, getResources().getString(R.string.menu_hotel));
 				break;
 			case R.id.gastronomic:
-				getBaseActivity().openStore(Const.GASTRONOMIC);
+				getBaseActivity().openStore(Const.GASTRONOMIC, getResources().getString(R.string.menu_grastronomic));
 				break;
 			case R.id.store:
-				getBaseActivity().openStore(Const.STORE);
+				getBaseActivity().openStore(Const.STORE, getResources().getString(R.string.menu_store));
 				break;
 			case R.id.beach:
-				getBaseActivity().openStore(Const.BEACH);
+				getBaseActivity().openStore(Const.BEACH, getResources().getString(R.string.menu_beach));
 				break;
 			case R.id.highlighted:
 				getBaseActivity().startFragment(new OfferFragment());
 				break;
 			case R.id.cinema:
-				getBaseActivity().openStore(Const.CINEMA);
+				getBaseActivity().openStore(Const.CINEMA, getResources().getString(R.string.menu_cinema));
 				break;
 			case R.id.munucipio:
 				getBaseActivity().openURL("http://www.lacosta.gov.ar/");

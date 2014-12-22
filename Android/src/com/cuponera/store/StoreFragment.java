@@ -21,6 +21,7 @@ import com.cuponera.utils.ErrorHandler;
 public class StoreFragment extends BaseFragment {
 
 	private static final String ARGS_ID_CATEGORY = "args_id_category";
+	private static final String ARGS_NAME_CATEGORY = "args_name_category";
 	private ArrayList<Store> store;
 	private StoreAdapter adapter;
 
@@ -29,13 +30,14 @@ public class StoreFragment extends BaseFragment {
 		return R.layout.fragment_product;
 	}
 
-	public static StoreFragment newInstance(int idCategory) {
+	public static StoreFragment newInstance(int idCategory, String categoryName) {
 
 		StoreFragment fragment = new StoreFragment();
 		Bundle b = fragment.getArguments();
 		if (b == null)
 			b = new Bundle();
 		b.putInt(ARGS_ID_CATEGORY, idCategory);
+		b.putString(ARGS_NAME_CATEGORY, categoryName);
 
 		fragment.setArguments(b);
 		return fragment;
@@ -80,9 +82,9 @@ public class StoreFragment extends BaseFragment {
 		});
 		adapter = new StoreAdapter(getBaseActivity(), store);
 		adapter.notifyDataSetChanged();
-		mViewProxy.findListView(R.id.product_listview).setAdapter(adapter);
+		mViewProxy.findListView(R.id.store_listview).setAdapter(adapter);
 
-		mViewProxy.findListView(R.id.product_listview).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		mViewProxy.findListView(R.id.store_listview).setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
