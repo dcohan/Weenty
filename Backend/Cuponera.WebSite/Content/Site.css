@@ -964,3 +964,28 @@ img.small-icon {
 input[type='file'] {
     color: transparent;
 }
+
+img.preview{
+    height: 80px;
+    width: 80px;
+}
+
+.images-container{
+    position: relative;
+}
+
+.image-container {
+    display: inline-block;
+}
+
+.image-container .preview {
+    position: relative; 
+    z-index: 1;
+}
+
+.image-container .delete-icon{
+    left:-10px;
+    position: relative;
+    top: -65px;
+    z-index: 10;
+}
