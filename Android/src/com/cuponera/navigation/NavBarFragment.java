@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
+import com.cuponera.search.SearchFragment;
 import com.cuponera.utils.Utils;
 import com.cuponera.weather.WeatherFragment;
 
@@ -31,6 +32,15 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 
 		menu.setDelegate(this);
 
+		mViewProxy.findImageView(R.id.auxiliarImage).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Utils.hideKeyboard(getActivity(), getView());
+				getBaseActivity().startFragment(new SearchFragment());
+			}
+		});
+
 		mViewProxy.findImageView(R.id.homeButton).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -40,7 +50,18 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 			}
 		});
 
+		mViewProxy.findImageView(R.id.app_logo).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Utils.hideKeyboard(getActivity(), getView());
+				getBaseActivity().onHomeButton();
+			}
+		});
+
 		menuButton = mViewProxy.findImageView(R.id.menuButton);
+
+		Utils.setCalibri(getActivity(), mViewProxy.findTextView(R.id.headerTitle));
 		menuButton.setOnClickListener(new OnClickListener() {
 
 			@Override
