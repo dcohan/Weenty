@@ -984,8 +984,8 @@ img.preview{
 }
 
 .image-container .delete-icon{
-    left:-10px;
+    left:-12px;
     position: relative;
-    top: -65px;
+    top: -73px;
     z-index: 10;
 }

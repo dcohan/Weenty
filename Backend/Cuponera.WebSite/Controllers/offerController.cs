@@ -162,7 +162,7 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdOffer,Title,Description,StartDatetime,ExpirationDatetime,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,Price,ImagePath")] offer offer, List<HttpPostedFileBase> fileUpload)
+        public async Task<ActionResult> Edit([Bind(Include = "IdOffer,Title,Description,StartDatetime,ExpirationDatetime,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,Price,ImagePath")] offer offer, List<HttpPostedFileBase> fileUpload, string imagesToRemove)
         {
 
 			if (!Validate(offer))
@@ -175,6 +175,24 @@ namespace Cuponera.WebSite.Controllers
 
                 if (ModelState.IsValid)
                 {
+                    string[] images_to_remove = imagesToRemove.Split(new Char[] { ',' });
+
+                    if (images_to_remove.Contains("main"))
+                    {
+                        offer.ImagePath = null;
+                    }
+                    foreach (string image_to_remove in images_to_remove)
+                    {
+                        if (image_to_remove == "main")
+                        {
+                            continue;
+                        }
+                        int current_image_to_remove = Convert.ToInt32(image_to_remove);
+                        var image = db.images.Where(i => i.IdImage == current_image_to_remove);
+                        db.images.Remove(image.FirstOrDefault());
+                    }
+
+
                     db.Entry(offer).State = EntityState.Modified;
                     offer.ModificationDatetime = DateTime.Now;
                     await db.SaveChangesAsync();
