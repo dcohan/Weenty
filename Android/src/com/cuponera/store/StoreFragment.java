@@ -18,6 +18,7 @@ import com.cuponera.product.ProductFragment;
 import com.cuponera.service.store.StoreRequest;
 import com.cuponera.service.store.StoreResponse;
 import com.cuponera.utils.ErrorHandler;
+import com.cuponera.utils.Utils;
 
 public class StoreFragment extends BaseFragment {
 
@@ -73,6 +74,7 @@ public class StoreFragment extends BaseFragment {
 
 	private void fillAdapter() {
 		mViewProxy.findTextView(R.id.store_category).setText(getArguments().getString(ARGS_NAME_CATEGORY));
+		Utils.setCalibri(getActivity(), mViewProxy.findTextView(R.id.store_category));
 		mViewProxy.findImageView(R.id.cx).setVisibility(View.VISIBLE);
 		mViewProxy.findImageView(R.id.cx).setOnClickListener(new OnClickListener() {
 
