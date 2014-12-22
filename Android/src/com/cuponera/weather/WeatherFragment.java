@@ -1,5 +1,7 @@
 package com.cuponera.weather;
 
+import java.util.Calendar;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
@@ -34,6 +36,22 @@ public class WeatherFragment extends BaseFragment {
 					mViewProxy.findTextView(R.id.min_temp).setText((int) result.getMainWeather().get(0).getTemp().getMin() + "¡");
 					mViewProxy.findTextView(R.id.max_temp).setText((int) result.getMainWeather().get(0).getTemp().getMax() + "¡");
 					mViewProxy.findTextView(R.id.humidity).setText((int) result.getMainWeather().get(0).getHumidity() + "%");
+
+					Utils.loadImageFromUrl(getActivity(), mViewProxy.findImageView(R.id.weather_image_tomorrow), "http://openweathermap.org/img/w/"
+							+ result.getMainWeather().get(1).getWeather().get(0).getIcon() + ".png");
+					mViewProxy.findTextView(R.id.min_temp_tomorrow).setText((int) result.getMainWeather().get(1).getTemp().getMin() + "¡");
+					mViewProxy.findTextView(R.id.max_temp_tomorrow).setText((int) result.getMainWeather().get(1).getTemp().getMax() + "¡");
+
+					Utils.loadImageFromUrl(getActivity(), mViewProxy.findImageView(R.id.weather_image_tomorrow2), "http://openweathermap.org/img/w/"
+							+ result.getMainWeather().get(2).getWeather().get(0).getIcon() + ".png");
+					mViewProxy.findTextView(R.id.min_temp_tomorrow_2).setText((int) result.getMainWeather().get(2).getTemp().getMin() + "¡");
+					mViewProxy.findTextView(R.id.max_temp_tomorrow_2).setText((int) result.getMainWeather().get(2).getTemp().getMax() + "¡");
+
+					Utils.loadImageFromUrl(getActivity(), mViewProxy.findImageView(R.id.weather_image_tomorrow3), "http://openweathermap.org/img/w/"
+							+ result.getMainWeather().get(3).getWeather().get(0).getIcon() + ".png");
+					mViewProxy.findTextView(R.id.min_temp_tomorrow_3).setText((int) result.getMainWeather().get(3).getTemp().getMin() + "¡");
+					mViewProxy.findTextView(R.id.max_temp_tomorrow_3).setText((int) result.getMainWeather().get(3).getTemp().getMax() + "¡");
+
 				} else {
 					EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.NO_RESULTS_FOUND));
 					getBaseActivity().onHomeButton();
