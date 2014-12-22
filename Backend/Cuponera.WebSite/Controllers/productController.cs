@@ -187,7 +187,7 @@ namespace Cuponera.WebSite.Controllers
                 }
                 foreach (string image_to_remove in images_to_remove)
                 {
-                    if (image_to_remove == "main")
+                    if (image_to_remove == "main" || string.IsNullOrEmpty(image_to_remove))
                     {
                         continue;
                     }

@@ -211,10 +211,29 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description")] store store, string Latitude, string Longitude)
+        public async Task<ActionResult> Edit([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description")] store store, string Latitude, string Longitude, string imagesToRemove)
         {
             if (ModelState.IsValid)
             {
+
+                string[] images_to_remove = imagesToRemove.Split(new Char[] { ',' });
+
+                if (images_to_remove.Contains("main"))
+                {
+                    store.ImagePath = null;
+                }
+                foreach (string image_to_remove in images_to_remove)
+                {
+                    if (image_to_remove == "main" || string.IsNullOrEmpty(image_to_remove))
+                    {
+                        continue;
+                    }
+                    int current_image_to_remove = Convert.ToInt32(image_to_remove);
+                    var image = db.images.Where(i => i.IdImage == current_image_to_remove);
+                    db.images.Remove(image.FirstOrDefault());
+                }
+
+
                 if (Latitude != null) { store.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
                 if (Longitude != null) { store.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
                 //var userId = ((CuponeraIdentity)Thread.CurrentPrincipal.Identity).UserId;
