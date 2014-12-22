@@ -50,7 +50,7 @@ namespace Cuponera.WebSite.Helpers
 
                 using (CuponeraEntities db = new CuponeraEntities())
                 {
-                    var userId = db.UserProfile.Where(u => u.UserName.Equals(httpContext.User.Identity)).Select(u => u.UserId).FirstOrDefault();
+                    var userId = db.UserProfile.Where(u => u.UserName.Equals(httpContext.User.Identity.Name)).Select(u => u.UserId).FirstOrDefault();
                     switch (entity)
                     {
                         case "offer":
@@ -62,7 +62,7 @@ namespace Cuponera.WebSite.Helpers
                         case "company":
                             stores.AddRange(db.company.Where(c => c.IdCompany.Equals(idEntity)).FirstOrDefault().store.Select(s => s.IdStore));
 
-                            if (MustBeAdmin && db.userCompany.Where(uc => uc.IdCompany.Equals(idEntity) && uc.IdUser.Equals(userId) && uc.IsAdmin).Count() <= 0)
+                            if (MustBeCompanyAdmin && db.userCompany.Where(uc => uc.IdCompany.Equals(idEntity) && uc.IdUser.Equals(userId) && uc.IsAdmin).Count() <= 0)
                             {
                                 return false;
                             }
@@ -79,6 +79,28 @@ namespace Cuponera.WebSite.Helpers
             }
             else
             {
+                using (CuponeraEntities db = new CuponeraEntities())
+                {
+                    var userId = db.UserProfile.Where(u => u.UserName.Equals(httpContext.User.Identity.Name)).Select(u => u.UserId).FirstOrDefault();
+                    switch (entity)
+                    {
+                        case "store":
+                        case "company":
+                            if (MustBeCompanyAdmin)
+                            {
+                                if (CuponeraIdentity.AdminCompany > 0)
+                                {
+                                    return true;
+                                }
+                                else
+                                    return false;
+                            }
+
+                            break;
+
+                    }
+                }
+
                 return true;
             }
         }

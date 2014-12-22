@@ -213,6 +213,7 @@
     <Compile Include="Controllers\companyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UploadImagesBaseController.cs" />
+    <Compile Include="Controllers\userCompanyController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -714,6 +715,11 @@
     <Content Include="Views\subscription\Index.cshtml" />
     <Content Include="Views\companySubscription\Index.cshtml" />
     <Content Include="Views\Shared\Paginator.cshtml" />
+    <Content Include="Views\userCompany\Create.cshtml" />
+    <Content Include="Views\userCompany\Delete.cshtml" />
+    <Content Include="Views\userCompany\Details.cshtml" />
+    <Content Include="Views\userCompany\Edit.cshtml" />
+    <Content Include="Views\userCompany\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

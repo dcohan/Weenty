@@ -129,19 +129,7 @@ namespace Cuponera.WebSite.Models
 
         public static bool CanAdminStores(List<int> IdStores)
         {
-            //I'll try to get from SessionState
-            List<int> currStore;
-            if (IdStores == null  || IdStores.Count() == 0)
-            {
-                currStore = new List<int>();
-                currStore.Add((int)HttpContext.Current.Session["currentStore"]);
-            }
-            else
-            {
-                currStore = IdStores;
-            }
-
-            return CuponeraIdentity.CurrentAvaiableStores.Join(currStore, s1 => s1, s2 => s2, (s1,s2) => new { store = s1 } ).Count() > 0;
+            return CuponeraIdentity.CurrentAvaiableStores.Join(IdStores, s1 => s1, s2 => s2, (s1, s2) => new { store = s1 }).Count() > 0;
         }
     }
     public class UsersContext : DbContext

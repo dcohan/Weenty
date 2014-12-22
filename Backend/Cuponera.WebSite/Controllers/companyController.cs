@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using Cuponera.WebSite.Helpers;
 using Cuponera.Entities;
+using Cuponera.WebSite.Models;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -18,11 +19,31 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
         private IEnumerable<company> get(bool all, string name, int pageNumber)
         {
             Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
             IEnumerable<company> companies = cb.Getcompany(all, name);
+
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+                if (CuponeraIdentity.AdminCompany > 0)
+                {
+                    companies = companies.Where(c => CuponeraIdentity.AdminCompany == c.IdCompany);
+                }
+                else
+                {
+                    companies = db.store.Where(s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore)).Select(s => s.company).Where(c => c.DeletionDatetime == null);
+                    if (!all)
+                    {
+                        companies = companies.Where(c => !c.DeletionDatetime.HasValue);
+                    }
+
+                    if (name != null)
+                    {
+                        companies = companies.Where(c => c.Name.Contains(name));
+                    }
+                }
+            }
 
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)companies.Count() / pageSize));
@@ -31,7 +52,7 @@ namespace Cuponera.WebSite.Controllers
             return companies.Skip(elemsToSkip).Take(pageSize);
         }
 
-        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
+        [AuthorizeUserStoreAttribute]
         // GET: company
         public async Task<ActionResult> Index(bool all = false, string name = null, int page = 1)
         {
@@ -45,10 +66,22 @@ namespace Cuponera.WebSite.Controllers
             Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
             IEnumerable<company> companies = cb.Getcompany(false);
 
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+                if (CuponeraIdentity.AdminCompany > 0)
+                {
+                    companies = companies.Where(c => CuponeraIdentity.AdminCompany == c.IdCompany);
+                }
+                else
+                {
+                    companies = db.store.Where(s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore)).Select(s => s.company).Where(c => c.DeletionDatetime == null);
+                }
+            }
+
             return Helpers.JSONHelper.SerializeJSON(companies.ToList().Select(company => new { id = company.IdCompany, name = company.Name }));
         }
 
-        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
+        [AuthorizeUserStoreAttribute]
         // GET: company/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -64,14 +97,14 @@ namespace Cuponera.WebSite.Controllers
             return View(company);
         }
 
-        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin=true)]
         // GET: company/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // POST: company/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -89,7 +122,7 @@ namespace Cuponera.WebSite.Controllers
             return View(company);
         }
 
-        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // GET: company/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -105,7 +138,7 @@ namespace Cuponera.WebSite.Controllers
             return View(company);
         }
 
-        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // POST: company/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -122,8 +155,8 @@ namespace Cuponera.WebSite.Controllers
             return View(company);
         }
 
-        
-        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
+
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // GET: company/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
@@ -133,7 +166,7 @@ namespace Cuponera.WebSite.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // GET: company/Activate/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -145,7 +178,7 @@ namespace Cuponera.WebSite.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // POST: company/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

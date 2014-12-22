@@ -11,6 +11,7 @@ using Cuponera.Entities;
 using System.Configuration;
 using Cuponera.WebSite.Models;
 using System.Threading;
+using Cuponera.WebSite.Helpers;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -19,6 +20,7 @@ namespace Cuponera.WebSite.Controllers
         private CuponeraEntities db = new CuponeraEntities();
 
 
+        [Authorize]
         public void GetCompanies(store store = null)
         {
             var companies = db.company.Where(s => s.DeletionDatetime == null);
@@ -38,6 +40,7 @@ namespace Cuponera.WebSite.Controllers
             }
         }
 
+        [AuthorizeUserStoreAttribute]
         private IEnumerable<store> get(bool all, int idCompany, string name, string zipCode, int idState, int idUser, int pageNumber)
         {
             IQueryable<store> stores = db.store;
@@ -87,6 +90,7 @@ namespace Cuponera.WebSite.Controllers
             return stores.Skip(elemsToSkip).Take(pageSize);
         }
 
+        [Authorize]
         public string GetAllBasicData()
         {
             Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
@@ -94,7 +98,8 @@ namespace Cuponera.WebSite.Controllers
 
             return Helpers.JSONHelper.SerializeJSON(categories.ToList().Select(category => new { id = category.IdCategory, name = category.Name }));
         }
-        
+
+        [AuthorizeUserStoreAttribute]
 
         // GET: store
         public async Task<ActionResult> Index(bool all = false, int company = 0, string name = null, string zipCode = null, int state = 0, int page = 1)
@@ -106,6 +111,7 @@ namespace Cuponera.WebSite.Controllers
             return View(stores);
         }
 
+        [AuthorizeUserStoreAttribute]
         // GET: store/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -131,6 +137,7 @@ namespace Cuponera.WebSite.Controllers
             return View(store);
         }
 
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // GET: store/Create
         public ActionResult Create()
         {
@@ -145,6 +152,7 @@ namespace Cuponera.WebSite.Controllers
             return View();
         }
 
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // POST: store/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -167,6 +175,7 @@ namespace Cuponera.WebSite.Controllers
             return View(store);
         }
 
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // GET: store/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -196,6 +205,7 @@ namespace Cuponera.WebSite.Controllers
             return View(store);
         }
 
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // POST: store/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -223,6 +233,7 @@ namespace Cuponera.WebSite.Controllers
             return View(store);
         }
 
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // GET: store/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
@@ -243,7 +254,7 @@ namespace Cuponera.WebSite.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // GET: store/Activate/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -266,6 +277,7 @@ namespace Cuponera.WebSite.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // POST: store/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

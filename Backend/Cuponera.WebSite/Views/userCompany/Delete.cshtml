@@ -1,0 +1,72 @@
+﻿@model Cuponera.Entities.userCompany
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>userCompany</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAdmin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAdmin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.company.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.company.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.store.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.store.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.userCompany1.IdUserCompany)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userCompany1.IdUserCompany)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.userCompany2.IdUserCompany)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userCompany2.IdUserCompany)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserProfile.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserProfile.UserName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
