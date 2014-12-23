@@ -179,8 +179,7 @@ namespace Cuponera.WebSite.Controllers
 
             if (ModelState.IsValid)
             {
-                var productInDB = db.product.Where(p => p.IdProduct == product.IdProduct);
-                string previousImagePath = productInDB.FirstOrDefault().ImagePath;
+                string previousImagePath = db.product.Where(p => p.IdProduct == product.IdProduct).Select(p => p.ImagePath).FirstOrDefault();
 
                 string[] images_to_remove = imagesToRemove.Split(new Char[] { ',' });
                 RemoveImages(images_to_remove);
@@ -190,7 +189,7 @@ namespace Cuponera.WebSite.Controllers
                 db.Entry(product).State = EntityState.Modified;
                 product.ModificationDatetime = DateTime.Now;
 
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                
                 //Save aditional images
                 UploadImages(fileUpload, product.IdProduct);
