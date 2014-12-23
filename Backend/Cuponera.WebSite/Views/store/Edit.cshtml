@@ -12,7 +12,9 @@
         $('#longitude').val(lng);
     }
 
+    var images_to_remove = [];
     $(function () {
+
         var map = maps.initialize({
             editable: true
         });
@@ -34,6 +36,16 @@
                     geocoder.getCoordinatesByAddress(address, city, province, country);
                 }
             });
+        });
+
+        $('.delete-icon').click(function () {
+            var $container = $(this).closest('.image-container');
+            var id_image = $container.data('id-image');
+            images_to_remove.push(id_image);
+
+
+            $container.remove();
+            $('#imagesToRemove').val(images_to_remove.join(','));
         });
     });
 </script>
@@ -173,8 +185,33 @@
 
 
         <div class="form-group">
+            <div class="col-md-10">
+                <span>Imágenes</span>
+                <div class="images-container">
+                    <div class="image-container" data-id-image="main">
+                        @if (!string.IsNullOrEmpty(Model.ImagePath))
+                        {
+                            <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview inactive" alt="inactive" />
+                            <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+                        }
+                    </div>
+                    @foreach (var item in Model.images)
+                    {
+                        <div class="image-container" data-id-image="@Html.DisplayFor(model => item.IdImage)">
+                            <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="inactive" />
+                            <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="imagesToRemove" name="imagesToRemove" />
+
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-default" />
+                <input type="submit" value="Guardar" class="btn btn-default" />
             </div>
         </div>
     </div>

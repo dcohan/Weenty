@@ -971,19 +971,29 @@ img.preview{
 }
 
 .images-container{
+    margin-top: 20px;
     position: relative;
 }
 
 .image-container {
-    display: inline-block;
+    margin-top: 10px;
 }
 
-.image-container .preview {
+.image-container.selected{
+    border: solid 5px blue;
+}
+
+.image-container-content, .image-container {
+    display: inline-block;
+    padding: 10px;
+}
+
+.image-container-content .preview {
     position: relative; 
     z-index: 1;
 }
 
-.image-container .delete-icon{
+.image-container-content .delete-icon{
     left:-12px;
     position: relative;
     top: -73px;

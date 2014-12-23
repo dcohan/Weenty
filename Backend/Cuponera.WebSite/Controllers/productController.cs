@@ -170,7 +170,7 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdProduct,Title,Active,StartDatetime,ExpirationDatetime,CreationDatetime,ModificationDatetime,DeletionDatetime,ImagePath,IdCategory,Description,IdStore, Price, Files")] product product, List<HttpPostedFileBase> fileUpload, string imagesToRemove)
+        public async Task<ActionResult> Edit([Bind(Include = "IdProduct,Title,Active,StartDatetime,ExpirationDatetime,IdCategory,Description,IdStore, Price, Files")] product product, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
         {
             if (!Validate(product))
             {
@@ -179,26 +179,19 @@ namespace Cuponera.WebSite.Controllers
 
             if (ModelState.IsValid)
             {
-                string[] images_to_remove = imagesToRemove.Split(new Char[] { ',' });
+                var productInDB = db.product.Where(p => p.IdProduct == product.IdProduct);
+                string previousImagePath = productInDB.FirstOrDefault().ImagePath;
 
-                if (images_to_remove.Contains("main"))
-                {
-                    product.ImagePath = null;
-                }
-                foreach (string image_to_remove in images_to_remove)
-                {
-                    if (image_to_remove == "main" || string.IsNullOrEmpty(image_to_remove))
-                    {
-                        continue;
-                    }
-                    int current_image_to_remove = Convert.ToInt32(image_to_remove);
-                    var image = db.images.Where(i => i.IdImage == current_image_to_remove);
-                    db.images.Remove(image.FirstOrDefault());
-                }
+                string[] images_to_remove = imagesToRemove.Split(new Char[] { ',' });
+                RemoveImages(images_to_remove);
+                product.ImagePath = ChangeCoverImage(previousImagePath, ImagePath, images_to_remove.Contains("main"), product.IdProduct);
+
 
                 db.Entry(product).State = EntityState.Modified;
                 product.ModificationDatetime = DateTime.Now;
+
                 await db.SaveChangesAsync();
+               
                 //Save aditional images
                 UploadImages(fileUpload, product.IdProduct);
                 return RedirectToAction("Index");

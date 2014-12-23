@@ -74,6 +74,48 @@ namespace Cuponera.WebSite.Controllers
             }
         }
 
+
+        public string ChangeCoverImage(string previousImage, string newImage, bool mustRemovePrevious, int idObject)
+        {
+            if (!String.IsNullOrEmpty(newImage))
+            {
+                if (!mustRemovePrevious)
+                {
+                    switch (_definedType){
+                        case UploadImagesEnum.product:
+                            //the previous main is one more image.
+                            db.images.Add(new images() { IdProduct = idObject, ImagePath = previousImage });
+
+                            var imageToRemove = db.images.Where(i => i.ImagePath == newImage && i.IdProduct == idObject).FirstOrDefault();
+                            db.images.Remove(imageToRemove);
+                            break;
+                    }
+
+                    db.SaveChanges();
+                }
+
+                return newImage;
+            }
+
+            return null;
+        }
+
+        public void RemoveImages(string[] imagesToRemove)
+        {
+            foreach (string image_to_remove in imagesToRemove)
+            {
+                if (image_to_remove == "main" || string.IsNullOrEmpty(image_to_remove))
+                {
+                    continue;
+                }
+                int current_image_to_remove = Convert.ToInt32(image_to_remove);
+                var image = db.images.Where(i => i.IdImage == current_image_to_remove);
+                db.images.Remove(image.FirstOrDefault());
+            }
+
+            db.SaveChanges();
+        }
+
         /// <summary>
         /// Save phisically a file 
         /// </summary>

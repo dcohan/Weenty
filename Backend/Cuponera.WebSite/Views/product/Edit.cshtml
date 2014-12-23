@@ -9,17 +9,24 @@
 
 @Scripts.Render("~/bundles/globalization")
 @Scripts.Render("~/bundles/globalization_ar")
-@Scripts.Render("~/bundles/imagesUploader")
 
 <script type="text/javascript">
-    var images = {
-        multiple: true,
-        container_id: 'images'
-    };
-
     var images_to_remove = [];
+    var images = [];
 
     $(function () {
+        $('.image-container').click(function () {
+            $('.image-container').removeClass('selected');
+            $(this).addClass('selected');
+
+            var id_image = $(this).data('id-image');
+            $(images).each(function(k,v){
+                if (v.id_image == id_image) {
+                    $('#ImagePath').attr('value', v.url);
+                }
+            });
+        });
+
         $('.delete-icon').click(function () {
             var $container = $(this).closest('.image-container');
             var id_image = $container.data('id-image');
@@ -119,48 +126,51 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                <span>Imágenes</span>
+                <label class="control-label col-md-2" for="">Imágenes</label>
                 <div class="images-container">
-                    <div class="image-container" data-id-image="main">
-                        @if (!string.IsNullOrEmpty(Model.ImagePath))
-                        {
-                            <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview inactive" alt="inactive" />
-                            <img src="~/Images/x_images.png" class="small-icon delete-icon" />
-                        }
+                    <div class="image-container selected" data-id-image="main">
+                        <div class="image-container-content">
+                            @if (!string.IsNullOrEmpty(Model.ImagePath))
+                            {
+                                <script type="text/javascript">
+                                    images.push({
+                                        id_image: 'main',
+                                        url: "@Model.ImagePath"
+                                    });
+                                </script>
+                                <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview inactive" alt="inactive" />
+                                <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+                            }
+                        </div>
                     </div>
                     @foreach (var item in Model.images)
                     {
+                        <script type="text/javascript">
+                            images.push({
+                                id_image: @item.IdImage,
+                                url: "@item.ImagePath"
+                            });
+                        </script>
                         <div class="image-container" data-id-image="@Html.DisplayFor(model => item.IdImage)">
-                            <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="inactive" />
-                            <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+                            <div class="image-container-content">
+                                <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="inactive" />
+                                <img src="~/Images/x_images.png" class="small-icon delete-icon" />
 
+                            </div>
                         </div>
                     }
                 </div>
             </div>
         </div>
         <input type="hidden" id="imagesToRemove" name="imagesToRemove" />
-
         <div class="hidden">
             @Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @class = "form-control" } })
         </div>
 
-        <div class="labelstyle">
-            <label>Files</label>
-        </div>
-   
-        <div id="uploaders">
-            <input type="file" id="fileToUpload" name="fileUpload" multiple="multiple" style="float: left;" />
-            <br />
-            <span id="spnFile" style="float: left; color: #FF0000"></span>
-            @Html.ValidationMessage("File")
-            @Html.Hidden("hdnFileUpload")
-        </div>
-        <br />
-        <br />
-        <br />
-        <div class="control-section" style="padding: 0px;">
-            <div id="selectedFiles"></div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" />
+            </div>
         </div>
 
         <div class="form-group">
