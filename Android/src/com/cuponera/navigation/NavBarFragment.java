@@ -50,14 +50,6 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 			}
 		});
 
-		mViewProxy.findImageView(R.id.app_logo).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Utils.hideKeyboard(getActivity(), getView());
-				getBaseActivity().onHomeButton();
-			}
-		});
 
 		menuButton = mViewProxy.findImageView(R.id.menuButton);
 
