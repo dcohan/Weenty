@@ -135,12 +135,12 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/day_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gray_strong"
                 android:gravity="center_vertical|center_horizontal"
                 android:padding="5dp"
-                android:text="@string/tomorrow"
                 android:textColor="@color/white"
                 android:textSize="@dimen/weather_values_size"
                 android:textStyle="bold" />
@@ -192,12 +192,12 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/day_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gray_strong"
                 android:gravity="center_vertical|center_horizontal"
                 android:padding="5dp"
-                android:text="@string/tomorrow2"
                 android:textColor="@color/white"
                 android:textSize="@dimen/weather_values_size"
                 android:textStyle="bold" />
@@ -241,7 +241,8 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-         <LinearLayout
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
