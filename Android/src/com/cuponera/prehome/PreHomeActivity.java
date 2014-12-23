@@ -39,7 +39,7 @@ public class PreHomeActivity extends BaseActivity {
 		navBarFragment.hide();
 		navBarFragment.getMenu().disable();
 		FrameLayout fm = (FrameLayout) findViewById(R.id.container);
-		fm.setBackgroundDrawable(getResources().getDrawable(R.drawable.logo_app));
+		fm.setBackgroundDrawable(getResources().getDrawable(R.drawable.logo_prehome));
 
 		PrehomeRequest prehomeRequest = new PrehomeRequest(this) {
 

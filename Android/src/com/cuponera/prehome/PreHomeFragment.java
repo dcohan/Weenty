@@ -1,7 +1,6 @@
 package com.cuponera.prehome;
 
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.View;
 
 import com.cuponera.BaseFragment;
@@ -27,7 +26,6 @@ public class PreHomeFragment extends BaseFragment {
 		if (!ValidationUtils.isNullOrEmpty(Settings.getInstance(getBaseActivity()).getPreHomeImage())) {
 			Utils.loadImageFromUrl(getActivity(), mViewProxy.findImageView(R.id.image), Settings.getInstance(getBaseActivity()).getPreHomeImage());
 		}
-		SystemClock.sleep(1000);
 		runHome();
 
 	}
