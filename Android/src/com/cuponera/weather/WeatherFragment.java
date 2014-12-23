@@ -43,6 +43,7 @@ public class WeatherFragment extends BaseFragment {
 					SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
 
 					Calendar calendar = Calendar.getInstance();
+					calendar.add(Calendar.DAY_OF_MONTH, 1);
 					weekDay = dayFormat.format(calendar.getTime());
 					mViewProxy.findTextView(R.id.day_1).setText(weekDay);
 
