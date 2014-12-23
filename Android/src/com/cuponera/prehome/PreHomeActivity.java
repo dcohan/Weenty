@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.location.Location;
 import android.os.Bundle;
+import android.widget.FrameLayout;
 
 import com.cuponera.BaseActivity;
 import com.cuponera.R;
@@ -31,11 +32,14 @@ public class PreHomeActivity extends BaseActivity {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		navBarFragment.hide();
 		navBarFragment.getMenu().disable();
+		FrameLayout fm = (FrameLayout) findViewById(R.id.container);
+		fm.setBackgroundDrawable(getResources().getDrawable(R.drawable.logo_app));
 
 		PrehomeRequest prehomeRequest = new PrehomeRequest(this) {
 

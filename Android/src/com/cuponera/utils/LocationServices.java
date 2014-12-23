@@ -17,7 +17,7 @@ import com.cuponera.settings.Settings;
 
 public class LocationServices implements LocationListener {
 
-	private static int TimeInterval = 1800000; // 30 minutes
+	private static int TimeInterval = 900000; // 15 minutes
 	private static int DistanceInterval = 500; // 500 meters
 	private static int MaxTimeWaitingGPSLocation = 10000; // 10 seconds
 	private static int FAKE_ACCURACY = 123123123;
