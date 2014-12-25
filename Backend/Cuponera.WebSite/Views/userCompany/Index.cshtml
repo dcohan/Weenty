@@ -77,14 +77,15 @@ else
                     </td>
                     <td>
                     <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.IdUserCompany }, new { @class = "editIcon" })
+                        @Html.ActionLink("Detalle", "Details", new { id = item.IdUserCompany }, new { @class = "detailsIcon", title = "Detalle" })
                     </td>
                     <td>
-                        @Html.ActionLink("Detalle", "Details", new { id = item.IdUserCompany }, new { @class = "detailsIcon" })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdUserCompany }, new { @class = "editIcon", title = "Editar" })
                     </td>
                     <td>
-                        <a href="#" class="removeIcon" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                        <a href="#" class="removeIcon" title="Eliminar" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
                     </td>
+
                 </tr>
             }
 

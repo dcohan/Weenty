@@ -98,19 +98,19 @@
                                 }
                             </td>
                             <td>
-                                @Html.ActionLink("Editar", "Edit", new { id = item.IdStore }, new { @class = "editIcon" })
+                                @Html.ActionLink("Detalle", "Details", new { id = item.IdStore }, new { @class = "detailsIcon", title = "Detalle" })
                             </td>
                             <td>
-                                @Html.ActionLink("Detalle", "Details", new { id = item.IdStore }, new { @class = "detailsIcon" })
+                                @Html.ActionLink("Editar", "Edit", new { id = item.IdStore }, new { @class = "editIcon", title = "Editar" })
                             </td>
                             <td>
                                 @if (item.DeletionDatetime == null)
                                 {
-                                    <a href="#" class="removeIcon" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                                    <a href="#" class="removeIcon" title="Eliminar" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
                                 }
                                 else
                                 {
-                                    <a href="#" class="addIcon" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                    <a href="#" class="addIcon" title="Activar" data-popup-to-open="dialog-confirm-activate">Activar</a>
                                 }
                             </td>
                         </tr>
