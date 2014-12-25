@@ -3,86 +3,89 @@
 @{
     ViewBag.Title = "Crear";
 }
-
-@Scripts.Render("~/bundles/imagesUploader")
-<h2>Agregar suscripción</h2>
+@Scripts.Render("~/bundles/jqueryval")
 
 <script type="text/javascript">
-    var images = {
-        multiple: false
-    };
+    $(function () {
+        $('#fileUpload').change(function (e) {
+            var files = e.target.files;
+            if (!files.length) { return; }
+
+            $('.files-name').empty();
+            $(files).each(function (k, v) {
+                $('.files-name').append(
+                    $('<div></div>').html(v.name)
+                );
+            });
+        });
+    });
 </script>
+
+<h2>Agregar suscripción</h2>
 
 @using (Html.BeginForm("Create", "subscription", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Suscripción</h4>
-        <hr />
+                <h4>Suscripción</h4>
+                <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, "Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                <div class="form-group">
+        @Html.LabelFor(model => model.Name, "Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+        @Html.LabelFor(model => model.Pricing, "Precio", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+        @Html.EditorFor(model => model.Pricing, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Pricing, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+        @Html.LabelFor(model => model.Duration, "Duración del plan (en días)", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+        @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+        @Html.LabelFor(model => model.SortFactor, "Número orden", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+        @Html.EditorFor(model => model.SortFactor, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.SortFactor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="fileUpload">Imágenes</label>
+                    <div class="col-md-10">
+                        <input type="file" id="fileUpload" name="fileUpload" />
+                    </div>
+
+                    Las imagen seleccionada es:
+                    <div class="files-name">
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Aceptar" class="btn btn-default" />
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Pricing, "Precio", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Pricing, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Pricing, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Duration, "Duración del plan (en días)", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SortFactor, "Número orden", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SortFactor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SortFactor, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div id="uploaders">
-            @Html.LabelFor(model => model.Icon, "Ícono", htmlAttributes: new { @class = "control-label col-md-2" })
-            <input type="file" id="fileToUpload" name="fileUpload" multiple="multiple" style="float: left;" />
-            <br />
-            <span id="spnFile" style="float: left; color: #FF0000"></span>
-            @Html.ValidationMessage("File")
-            @Html.Hidden("hdnFileUpload")
-        </div>
-        <br />
-        <br />
-        <br />
-        <div class="control-section" style="padding: 0px;">
-            <div id="selectedFiles"></div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Aceptar" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
 }
 
-<div>
+        <div>
     @Html.ActionLink("Volver", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    </div>

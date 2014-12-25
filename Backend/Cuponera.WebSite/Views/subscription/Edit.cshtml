@@ -7,9 +7,51 @@
 @Scripts.Render("~/bundles/imagesUploader")
 
 <script type="text/javascript">
-    var images = {
-        multiple: false
-    };
+    var images_to_remove = [];
+    var images = [];
+
+    $(function () {
+        $('#fileUpload').change(function (e) {
+            var files = e.target.files;
+            if (!files.length) { return; }
+
+            $('.files-name').empty();
+            $(files).each(function (k, v) {
+                $('.files-name').append(
+                    $('<div></div>').html(v.name)
+                );
+            });
+        });
+
+        $('.image-container').click(function () {
+            $('.image-container').removeClass('selected');
+            $(this).addClass('selected');
+
+            var id_image = $(this).data('id-image');
+            $(images).each(function (k, v) {
+                if (v.id_image == id_image) {
+                    $('#ImagePath').attr('value', v.url);
+                }
+            });
+        });
+
+        $('.delete-icon').click(function () {
+            var $container = $(this).closest('.image-container');
+            var id_image = $container.data('id-image');
+            images_to_remove.push(id_image);
+
+            var selected_image_path = $('#ImagePath').val();
+            $(images).each(function (k, v) {
+                if (v.id_image == id_image && selected_image_path == v.url) {
+                    $('#ImagePath').attr('value', '');
+                }
+            });
+
+            $container.remove();
+            $('#imagesToRemove').val(images_to_remove.join(','));
+        });
+
+    });
 </script>
 
 <h2>Editar @Html.DisplayFor(model => model.Name)</h2>
@@ -56,28 +98,41 @@
                 @Html.ValidationMessageFor(model => model.SortFactor, "", new { @class = "text-danger" })
             </div>
         </div>
+        
 
-        <div id="uploaders">
-            @Html.LabelFor(model => model.Icon, "Ícono actual", htmlAttributes: new { @class = "control-label col-md-2" })
-            
-            <div class="item-description">
-                <img class="icon" src="@Model.Icon" title="@Model.Name" alt="@Model.Name" />
+        <div class="form-group">
+            <div class="col-md-10">
+                <label class="control-label col-md-2" for="">Ícono</label>
+                <div class="mini-images-container">
+                    @if (!string.IsNullOrEmpty(Model.Icon))
+                    {
+                        <div class="mini-image-container" data-id-image="main">
+                            <div class="mini-image-container-content">
+                                <img src="@Html.DisplayFor(model => model.Icon)" class="icon" title="@Model.Name" alt="@Model.Name" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" />
             </div>
 
-            <span class="step-description">Tenga en cuenta que el ícono es único por lo que al modificarlo lo reemplazará.</span><br />
+            Las imágenes seleccionadas son:
+            <div class="files-name">
 
-            <input type="file" id="fileToUpload" name="fileUpload" multiple="multiple" style="float: left;" />
-            <br />
-            <span id="spnFile" style="float: left; color: #FF0000"></span>
-            @Html.ValidationMessage("File")
-            @Html.Hidden("hdnFileUpload")
+            </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <div class="control-section" style="padding: 0px;">
-            <div id="selectedFiles"></div>
-        </div>
+
+
+
+
+
+
 
 
         <div class="form-group">

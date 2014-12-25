@@ -975,6 +975,11 @@ img.preview{
     position: relative;
 }
 
+.mini-image-container {
+    height: 30px;
+    margin-top: 10px;
+}
+
 .image-container {
     height: 100px;
     margin-top: 10px;
@@ -982,6 +987,11 @@ img.preview{
 
 .image-container.selected{
     border: solid 5px blue;
+}
+
+.mini-image-container-content {
+    height: 30px;
+    width: 30px;
 }
 
 .image-container-content {
