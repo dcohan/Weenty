@@ -128,17 +128,24 @@ namespace Cuponera.WebSite.Controllers
                     case UploadImagesEnum.offer:
                         exMain = new images() { IdOffer = idObject, ImagePath = exMainPath };
                         newMainQuery = from i in db.images
-                                                          where i.ImagePath == newMainPath 
-                                                            && i.IdOffer == idObject
-                                                          select i;
+                                        where i.ImagePath == newMainPath 
+                                        && i.IdOffer == idObject
+                                        select i;
                         break;
+                    case UploadImagesEnum.store:
+                        exMain = new images() { IdStore = idObject, ImagePath = exMainPath };
+                        newMainQuery = from i in db.images
+                                        where i.ImagePath == newMainPath 
+                                        && i.IdStore == idObject
+                                        select i;
 
+                        break;
                     default:
                         break;
                 }
 
 
-                if (!String.IsNullOrEmpty(exMainPath) && exMain != null)
+                if (!mustRemovePrevious && !String.IsNullOrEmpty(exMainPath) && exMain != null)
                 {
                     //the previous main is one more image.
                     db.images.Add(exMain);

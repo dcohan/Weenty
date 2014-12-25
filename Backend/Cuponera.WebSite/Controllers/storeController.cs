@@ -232,27 +232,34 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description")] store store, string Latitude, string Longitude, string imagesToRemove)
+        public async Task<ActionResult> Edit([Bind(Include = "IdStore,Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
         {
             if (ModelState.IsValid)
             {
 
-                string[] images_to_remove = imagesToRemove.Split(new Char[] { ',' });
+                fileUpload = FilterFiles(fileUpload);
 
-                if (images_to_remove.Contains("main"))
+                HttpPostedFileBase fileImagePath;
+                if (String.IsNullOrEmpty(ImagePath) && fileUpload.Count() == 1)
                 {
-                    store.ImagePath = null;
+                    fileImagePath = fileUpload.FirstOrDefault();
+                    fileUpload.RemoveAt(0);
+                    ImagePath = GeneratePhisicalFile(fileImagePath);
                 }
-                foreach (string image_to_remove in images_to_remove)
+
+                string previousImagePath = db.store.Where(s => s.IdStore == store.IdStore).Select(s => s.ImagePath).FirstOrDefault();
+
+                string[] images_to_remove = imagesToRemove.Split(new Char[] { ',' });
+                RemoveImages(images_to_remove);
+
+                string remainingImagePath = GetRemainImageName(store.IdStore);
+                if (!string.IsNullOrEmpty(remainingImagePath))
                 {
-                    if (image_to_remove == "main" || string.IsNullOrEmpty(image_to_remove))
-                    {
-                        continue;
-                    }
-                    int current_image_to_remove = Convert.ToInt32(image_to_remove);
-                    var image = db.images.Where(i => i.IdImage == current_image_to_remove);
-                    db.images.Remove(image.FirstOrDefault());
+                    ImagePath = remainingImagePath;
                 }
+
+                store.ImagePath = ChangeCoverImage(previousImagePath, ImagePath, images_to_remove.Contains("main"), store.IdStore);
+
 
 
                 if (Latitude != null) { store.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
@@ -266,8 +273,15 @@ namespace Cuponera.WebSite.Controllers
                     store.IdCompany = Convert.ToInt32(idCompany.FirstOrDefault().IdCompany);
                 }
 
-                db.store.Add(store);
-                await db.SaveChangesAsync();
+
+                db.Entry(store).State = EntityState.Modified;
+                store.ModificationDatetime = DateTime.Now;
+
+                db.SaveChanges();
+                //Save aditional images
+                UploadImages(fileUpload, store.IdStore);
+
+                return RedirectToAction("Index");
             }
             GetCompanies(store);
             return View(store);
