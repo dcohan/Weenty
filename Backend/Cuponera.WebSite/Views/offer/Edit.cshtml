@@ -10,86 +10,45 @@
 @Scripts.Render("~/bundles/globalization_ar")
 
 <script type="text/javascript">
-
-    var nowTemp = new Date();
-    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-    var files;
-    var storedFiles = [];
-    var upc = 0;
-
-
+    var images_to_remove = [];
+    var images = [];
 
     $(function () {
+        $('#fileUpload').change(function (e) {
+            var files = e.target.files;
+            if (!files.length) { return; }
 
-        $(":file").attr('title', '  ');
-        var $loading = $('#loadingDiv').hide();
-
-        $("input[id^='fileToUpload']").change(function (e) {
-            doReCreate(e);
+            $('.files-name').empty();
+            $(files).each(function (k, v) {
+                $('.files-name').append(
+                    $('<div></div>').html(v.name)
+                );
+            });
         });
 
-        selDiv = $("#selectedFiles");
-    });
+        $('.image-container').click(function () {
+            $('.image-container').removeClass('selected');
+            $(this).addClass('selected');
 
+            var id_image = $(this).data('id-image');
+            $(images).each(function (k, v) {
+                if (v.id_image == id_image) {
+                    $('#ImagePath').attr('value', v.url);
+                }
+            });
+        });
 
-    function doReCreate(e) {
-        upc = upc + 1;
-        handleFileSelect(e);
-
-        $("input[id^='fileToUpload']").hide();
-
-        $('<input>').attr({
-            type: 'file',
-            multiple: 'multiple',
-            id: 'fileToUpload' + upc,
-            class: 'fUpload',
-            name: 'fileUpload',
-            style: 'float: left',
-            title: '  ',
-            onchange: "doReCreate(event)"
-
-        }).appendTo('#uploaders');
-    }
-
-
-    function handleFileSelect(e) {
-
-        //selDiv.innerHTML = ""; storedFiles = [];
-        selDiv = document.querySelector("#selectedFiles");
-
-        if (!e.target.files) return;
-
-        //selDiv.innerHTML = "";
-        files = e.target.files;
-
-        for (var i = 0; i < files.length; i++) {
-            //if (i == 0) { selDiv.innerHTML = ""; storedFiles = []; }
-            var f = files[i];
-            selDiv.innerHTML += "<div>" + f.name + "<a onclick='removeAtt(this)'> X </a></div>";
-            storedFiles.push(f.name);
-        }
-        $('#@Html.IdFor(i => i.ImagePath)').val(storedFiles);
-    }
-
-    function removeAtt(t) {
-        var serEle = $(t).parent().text().slice(0, -3);
-        var index = storedFiles.indexOf(serEle);
-        if (index !== -1) {
-            storedFiles.splice(index, 1);
-        }
-        $(t).parent().remove();
-
-        $('#@Html.IdFor(i => i.ImagePath)').val(storedFiles);
-
-    }
-
-    var images_to_remove = [];
-    $(function () {
         $('.delete-icon').click(function () {
             var $container = $(this).closest('.image-container');
             var id_image = $container.data('id-image');
             images_to_remove.push(id_image);
 
+            var selected_image_path = $('#ImagePath').val();
+            $(images).each(function (k, v) {
+                if (v.id_image == id_image && selected_image_path == v.url) {
+                    $('#ImagePath').attr('value', '');
+                }
+            });
 
             $container.remove();
             $('#imagesToRemove').val(images_to_remove.join(','));
@@ -169,50 +128,65 @@
       
         <div class="form-group">
             <div class="col-md-10">
-                <span>Imágenes</span>
+                <label class="control-label col-md-2" for="">Imágenes</label>
+                <span>@(Model.images.Count() == 0 && string.IsNullOrEmpty(Model.ImagePath) ? "No hay imágenes cargadas." : "")</span>
                 <div class="images-container">
-                    <div class="image-container" data-id-image="main">
-                        @if (!string.IsNullOrEmpty(Model.ImagePath))
-                        {
-                            <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview inactive" alt="inactive" />
-                            <img src="~/Images/x_images.png" class="small-icon delete-icon" />
-                        }
-                    </div>
+                    @if (!string.IsNullOrEmpty(Model.ImagePath))
+                    {
+                        <div class="image-container selected" data-id-image="main">
+                            <div class="image-container-content">
+
+                                <script type="text/javascript">
+                                    images.push({
+                                        id_image: 'main',
+                                        url: "@Model.ImagePath"
+                                    });
+                                </script>
+                                <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview inactive" alt="Portada" />
+                                <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+                            </div>
+                        </div>
+                    }
                     @foreach (var item in Model.images)
                     {
+                        <script type="text/javascript">
+                            images.push({
+                                id_image: @item.IdImage,
+                                url: "@item.ImagePath"
+                            });
+                        </script>
                         <div class="image-container" data-id-image="@Html.DisplayFor(model => item.IdImage)">
-                            <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="inactive" />
-                            <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+                            <div class="image-container-content">
+                                <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="Imagen" />
+                                <img src="~/Images/x_images.png" class="small-icon delete-icon" />
 
+                            </div>
                         </div>
                     }
                 </div>
             </div>
         </div>
-        <input type="hidden" id="imagesToRemove" name="imagesToRemove" />
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" />
+            </div>
+
+            Las imágenes seleccionadas son:
+            <div class="files-name">
+
+            </div>
+        </div>
+
+        <br />
 
         <div class="hidden">
+            <input type="hidden" id="imagesToRemove" name="imagesToRemove" />
             @Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @class = "form-control" } })
             @Html.EditorFor(model => model.IdProduct, new { htmlAttributes = new { @class = "form-control" } })
         </div>
 
-        <div class="labelstyle">
-            <label>Files</label>
-        </div>
-
-        <div id="uploaders">
-            <input type="file" id="fileToUpload" name="fileUpload" multiple="multiple" style="float: left;" />
-            <br />
-            <span id="spnFile" style="float: left; color: #FF0000"></span>
-            @Html.ValidationMessage("File")
-            @Html.Hidden("hdnFileUpload")
-        </div>
-        <br />
-        <br />
-        <br />
-        <div class="control-section" style="padding: 0px;">
-            <div id="selectedFiles"></div>
-        </div>
+        
 
         @Html.ValidationMessage("ServerValidations")
         <div class="form-group">

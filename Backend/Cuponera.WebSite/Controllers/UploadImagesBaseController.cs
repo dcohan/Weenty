@@ -101,42 +101,61 @@ namespace Cuponera.WebSite.Controllers
         }
 
 
-        public string ChangeCoverImage(string previousImage, string newImage, bool mustRemovePrevious, int idObject)
+        public string ChangeCoverImage(string exMainPath, string newMainPath, bool mustRemovePrevious, int idObject)
         {
 
-            if (previousImage == newImage)
+            if (exMainPath == newMainPath)
             {
-                return previousImage;
+                return exMainPath;
             }
 
-            if (!String.IsNullOrEmpty(newImage))
+            if (!String.IsNullOrEmpty(newMainPath))
             {
+                images exMain = null;
+                IQueryable<images> newMainQuery = null;
 
-                switch (_definedType){
+                switch (_definedType)
+                {
                     case UploadImagesEnum.product:
-                        //the previous main is one more image.
-                        if (!mustRemovePrevious)
-                        {
-                            if (!String.IsNullOrEmpty(previousImage))
-                            {
-                                db.images.Add(new images() { IdProduct = idObject, ImagePath = previousImage });
-                            }
-                        }
+                        exMain = new images() { IdProduct = idObject, ImagePath = exMainPath };
+                        newMainQuery = from i in db.images
+                                        where i.ImagePath == newMainPath 
+                                        && i.IdProduct == idObject
+                                        select i;
 
-                        if (!String.IsNullOrEmpty(newImage)) { 
-                            var imageToRemove = db.images.Where(i => i.ImagePath == newImage && i.IdProduct == idObject).FirstOrDefault();
-
-                            if (imageToRemove != null)
-                            {
-                                db.images.Remove(imageToRemove);
-                            }
-                        }
                         break;
+
+                    case UploadImagesEnum.offer:
+                        exMain = new images() { IdOffer = idObject, ImagePath = exMainPath };
+                        newMainQuery = from i in db.images
+                                                          where i.ImagePath == newMainPath 
+                                                            && i.IdOffer == idObject
+                                                          select i;
+                        break;
+
+                    default:
+                        break;
+                }
+
+
+                if (!String.IsNullOrEmpty(exMainPath) && exMain != null)
+                {
+                    //the previous main is one more image.
+                    db.images.Add(exMain);
+                }
+
+                if (!String.IsNullOrEmpty(newMainPath))
+                {
+                    var toRemove = newMainQuery.FirstOrDefault();
+                    if (toRemove != null)
+                    {
+                        db.images.Remove(toRemove);
+                    }
                 }
 
                 db.SaveChanges();
 
-                return newImage;
+                return newMainPath;
             }
 
             return null;

@@ -18,19 +18,6 @@
     </div>
 
     <div class="item-description">
-        <b>Estado:</b>
-        @if (Model.DeletionDatetime == null)
-        {
-            <img src="../../Images/tick.ico" alt="active" class="active" />
-
-        }
-        else
-        {
-            <img src="../../Images/x.ico" alt="inactive" class="inactive" />
-        }
-    </div>
-
-    <div class="item-description">
         <b>Precio:</b> @Html.DisplayFor(model => model.Price)
     </div>
 
@@ -43,22 +30,43 @@
         <b>Fecha de finalización:</b> @Html.DisplayFor(model => model.ExpirationDatetime)
     </div>
 
-    <div class="form-group">
+    <div class="item-description">
         <div class="col-md-10">
-            <div class="control-label col-md-2 item-description">
-                <b>Portada:</b> <img src="@Html.DisplayFor(model => model.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
-            </div>
-            <div class="item-description">
-                <b>Imagenes:</b>
+            <b>Imágenes:</b>
+            <span>@(Model.images.Count() == 0 && string.IsNullOrEmpty(Model.ImagePath) ? "No hay imágenes cargadas." : "")</span>
+            <div class="images-container">
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <div class="image-container selected" data-id-image="main">
+                        <div class="image-container-content">
+                            <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview selected" alt="Portada" />
+                        </div>
+                    </div>
+                }
                 @foreach (var item in Model.images)
                 {
-                    <img src="@Html.DisplayFor(model => item.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
+                    <div class="image-container" data-id-image="@Html.DisplayFor(model => item.IdImage)">
+                        <div class="image-container-content">
+                            <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="Imagen" />
+                        </div>
+                    </div>
                 }
             </div>
         </div>
     </div>
 
+    <div class="item-description">
+        <b>Estado:</b>
+        @if (Model.DeletionDatetime == null)
+        {
+            <img src="../../Images/tick.ico" alt="active" class="active" />
 
+        }
+        else
+        {
+            <img src="../../Images/x.ico" alt="inactive" class="inactive" />
+        }
+    </div>
     
      
 
