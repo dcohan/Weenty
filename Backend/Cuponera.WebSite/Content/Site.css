@@ -970,17 +970,23 @@ img.preview{
     width: 80px;
 }
 
-.images-container{
-    margin-top: 20px;
+.images-container {
+    margin-top: 10px;
     position: relative;
 }
 
 .image-container {
+    height: 100px;
     margin-top: 10px;
 }
 
 .image-container.selected{
     border: solid 5px blue;
+}
+
+.image-container-content {
+    height: 80px;
+    width: 80px;
 }
 
 .image-container-content, .image-container {
@@ -994,8 +1000,10 @@ img.preview{
 }
 
 .image-container-content .delete-icon{
-    left:-12px;
+    cursor: pointer;
+    left:73px;
     position: relative;
-    top: -73px;
+    top: -90px;
     z-index: 10;
 }
+

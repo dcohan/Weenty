@@ -12,6 +12,18 @@
 
 <script type="text/javascript">
     $(function () {
+        $('#fileUpload').change(function (e) {
+            var files = e.target.files;
+            if (!files.length) { return; }
+
+            $('.files-name').empty();
+            $(files).each(function (k, v) {
+                $('.files-name').append(
+                    $('<div></div>').html(v.name)
+                );
+            });
+        });
+
         $.validator.methods.date = function (value, element) {
                 Globalize.culture("es-AR");
                 // you can alternatively pass the culture to parseDate instead of
@@ -56,15 +68,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.CheckBoxFor(model => model.Active)
-                @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, "Precio", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Price, "Precio ($)", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
@@ -106,9 +110,13 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="fileUpload">Imágenes</label>
             <div class="col-md-10">
                 <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" />
+            </div>
+
+            Las imágenes seleccionadas son:
+            <div class="files-name">
+
             </div>
         </div>
 

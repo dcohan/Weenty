@@ -52,14 +52,24 @@
 
     <div class="form-group">
         <div class="col-md-10">
-            <div class="control-label col-md-2 item-description">
-                <b>Portada:</b> <img src="@Html.DisplayFor(model => model.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
-            </div>
-            <div class="item-description">
-                <b>Imagenes:</b>
+            <b>Imágenes:</b>
+            <span>@(Model.images.Count() == 0 && string.IsNullOrEmpty(Model.ImagePath) ? "No hay imágenes cargadas." : "Presione en en la que quiera seleccionar como imagen de portada.")</span>
+            <div class="images-container">
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <div class="image-container selected" data-id-image="main">
+                        <div class="image-container-content">
+                            <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview selected" alt="Portada" />
+                        </div>
+                    </div>
+                }
                 @foreach (var item in Model.images)
                 {
-                    <img src="@Html.DisplayFor(model => item.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
+                    <div class="image-container" data-id-image="@Html.DisplayFor(model => item.IdImage)">
+                        <div class="image-container-content">
+                            <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="Imagen" />
+                        </div>
+                    </div>
                 }
             </div>
         </div>

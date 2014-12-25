@@ -15,6 +15,18 @@
     var images = [];
 
     $(function () {
+        $('#fileUpload').change(function(e){
+            var files = e.target.files;
+            if (!files.length) { return; }
+
+            $('.files-name').empty();
+            $(files).each(function(k, v){
+                $('.files-name').append(
+                    $('<div></div>').html(v.name)
+                );
+            });
+        });
+
         $('.image-container').click(function () {
             $('.image-container').removeClass('selected');
             $(this).addClass('selected');
@@ -32,6 +44,12 @@
             var id_image = $container.data('id-image');
             images_to_remove.push(id_image);
 
+            var selected_image_path = $('#ImagePath').val();
+            $(images).each(function(k, v){
+                if (v.id_image == id_image && selected_image_path == v.url) {
+                    $('#ImagePath').attr('value', '');
+                }
+            });
 
             $container.remove();
             $('#imagesToRemove').val(images_to_remove.join(','));
@@ -83,7 +101,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Price, "Precio", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Price, "Precio ($)", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
@@ -127,38 +145,40 @@
         <div class="form-group">
             <div class="col-md-10">
                 <label class="control-label col-md-2" for="">Imágenes</label>
+                <span>@(Model.images.Count() == 0 && string.IsNullOrEmpty(Model.ImagePath) ? "No hay imágenes cargadas." : "")</span>
                 <div class="images-container">
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
                     <div class="image-container selected" data-id-image="main">
                         <div class="image-container-content">
-                            @if (!string.IsNullOrEmpty(Model.ImagePath))
-                            {
+                            
                                 <script type="text/javascript">
                                     images.push({
                                         id_image: 'main',
                                         url: "@Model.ImagePath"
                                     });
                                 </script>
-                                <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview inactive" alt="inactive" />
+                                <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview inactive" alt="Portada" />
                                 <img src="~/Images/x_images.png" class="small-icon delete-icon" />
-                            }
                         </div>
                     </div>
-                    @foreach (var item in Model.images)
-                    {
-                        <script type="text/javascript">
-                            images.push({
-                                id_image: @item.IdImage,
-                                url: "@item.ImagePath"
-                            });
-                        </script>
-                        <div class="image-container" data-id-image="@Html.DisplayFor(model => item.IdImage)">
-                            <div class="image-container-content">
-                                <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="inactive" />
-                                <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+                }
+                @foreach (var item in Model.images)
+                {
+                    <script type="text/javascript">
+                        images.push({
+                            id_image: @item.IdImage,
+                            url: "@item.ImagePath"
+                        });
+                    </script>
+                    <div class="image-container" data-id-image="@Html.DisplayFor(model => item.IdImage)">
+                        <div class="image-container-content">
+                            <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="Imagen" />
+                            <img src="~/Images/x_images.png" class="small-icon delete-icon" />
 
-                            </div>
                         </div>
-                    }
+                    </div>
+                }
                 </div>
             </div>
         </div>
@@ -171,8 +191,14 @@
             <div class="col-md-10">
                 <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" />
             </div>
+
+            Las imágenes seleccionadas son:
+            <div class="files-name">
+
+            </div>
         </div>
 
+        <br />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Guardar" class="btn btn-default" />

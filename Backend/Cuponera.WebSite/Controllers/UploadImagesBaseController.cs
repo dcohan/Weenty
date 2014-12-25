@@ -35,12 +35,38 @@ namespace Cuponera.WebSite.Controllers
             _definedType = defType;
         }
 
-        public void UploadImages(List<HttpPostedFileBase> fileUpload, int IdObject, bool skipFirst = true)
+        public List<HttpPostedFileBase> FilterFiles(List<HttpPostedFileBase> fileUpload)
         {
-            if (fileUpload.Count() == 0 || (fileUpload.Count() == 1 && skipFirst)) return;
+            return fileUpload.Where(f => f != null && f.ContentType.Contains("image")).ToList();
+        }
+
+        public string GetRemainImageName(int IdObject)
+        {
+            IQueryable<images> images = db.images;
+            switch (_definedType)
+            {
+                case UploadImagesEnum.offer:
+                    break;
+                case UploadImagesEnum.product:
+                    images = images.Where(i => i.IdProduct == IdObject);
+                    break;
+                case UploadImagesEnum.store:                    
+                    break;
+            }
+
+            if (images.Count() == 1)
+            {
+                return images.FirstOrDefault().ImagePath;
+            }
+
+            return null;
+        }
+
+        public void UploadImages(List<HttpPostedFileBase> fileUpload, int IdObject)
+        {
+            if (fileUpload.Count() == 0) return;
 
             List<HttpPostedFileBase> finalFilesToUpload = fileUpload;
-            if (skipFirst) finalFilesToUpload.Remove(finalFilesToUpload[0]);
 
             foreach (HttpPostedFileBase item in fileUpload)
             {
@@ -77,22 +103,38 @@ namespace Cuponera.WebSite.Controllers
 
         public string ChangeCoverImage(string previousImage, string newImage, bool mustRemovePrevious, int idObject)
         {
+
+            if (previousImage == newImage)
+            {
+                return previousImage;
+            }
+
             if (!String.IsNullOrEmpty(newImage))
             {
-                if (!mustRemovePrevious)
-                {
-                    switch (_definedType){
-                        case UploadImagesEnum.product:
-                            //the previous main is one more image.
-                            db.images.Add(new images() { IdProduct = idObject, ImagePath = previousImage });
 
+                switch (_definedType){
+                    case UploadImagesEnum.product:
+                        //the previous main is one more image.
+                        if (!mustRemovePrevious)
+                        {
+                            if (!String.IsNullOrEmpty(previousImage))
+                            {
+                                db.images.Add(new images() { IdProduct = idObject, ImagePath = previousImage });
+                            }
+                        }
+
+                        if (!String.IsNullOrEmpty(newImage)) { 
                             var imageToRemove = db.images.Where(i => i.ImagePath == newImage && i.IdProduct == idObject).FirstOrDefault();
-                            db.images.Remove(imageToRemove);
-                            break;
-                    }
 
-                    db.SaveChanges();
+                            if (imageToRemove != null)
+                            {
+                                db.images.Remove(imageToRemove);
+                            }
+                        }
+                        break;
                 }
+
+                db.SaveChanges();
 
                 return newImage;
             }
