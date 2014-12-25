@@ -13,10 +13,15 @@ import com.cuponera.pool.AsyncPoolRequest;
 public class ImagesRequest extends AsyncPoolRequest<ImagesResponse> implements Parcelable {
 
 	private int idProduct;
+	private int idStore;
 
 	@Override
 	public String getPath() {
-		return "/images?$filter=IdProduct%20eq%20" + getIdProduct();
+		if (idStore > 0) {
+			return "/images?$filter=IdStore%20eq%20" + getIdStore();
+		} else {
+			return "/images?$filter=IdProduct%20eq%20" + getIdProduct();
+		}
 	}
 
 	public ImagesRequest(Context context) {
@@ -89,6 +94,14 @@ public class ImagesRequest extends AsyncPoolRequest<ImagesResponse> implements P
 
 	public void setIdProduct(int idProduct) {
 		this.idProduct = idProduct;
+	}
+
+	public int getIdStore() {
+		return idStore;
+	}
+
+	public void setIdStore(int idStore) {
+		this.idStore = idStore;
 	}
 
 }

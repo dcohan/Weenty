@@ -1,5 +1,7 @@
 package com.cuponera.search;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import android.os.Bundle;
@@ -91,7 +93,11 @@ public class SearchFragment extends BaseFragment {
 			}
 		};
 		request.setIdCategory(category.get(viewPager.getCurrentItem()).getId());
-		request.setName(mViewProxy.findEditText(R.id.search_edit).getText().toString());
+		try {
+			request.setName(URLEncoder.encode(mViewProxy.findEditText(R.id.search_edit).getText().toString(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		request.execute(false);
 
 	}
