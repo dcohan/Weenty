@@ -46,12 +46,25 @@
                 return false;
             }
         });
+
+
+        $('#fileUpload').change(function (e) {
+            var files = e.target.files;
+            if (!files.length) { return; }
+
+            $('.files-name').empty();
+            $(files).each(function (k, v) {
+                $('.files-name').append(
+                    $('<div></div>').html(v.name)
+                );
+            });
+        });
     });
 </script>
 
 <h2>Agregar sucursal</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "store", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmID" }))
 {
     @Html.AntiForgeryToken()
 
@@ -175,6 +188,17 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="control-label col-md-2" for="fileUpload">Imágenes</label>
+            <div class="col-md-10">
+                <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" />
+            </div>
+
+            Las imágenes seleccionadas son:
+            <div class="files-name">
+
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

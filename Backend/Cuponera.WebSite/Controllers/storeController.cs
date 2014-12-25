@@ -15,10 +15,16 @@ using Cuponera.WebSite.Helpers;
 
 namespace Cuponera.WebSite.Controllers
 {
-    public class storeController : Controller
+    public class storeController : UploadImagesBaseController
     {
         private CuponeraEntities db = new CuponeraEntities();
 
+
+        public storeController()
+            : base(UploadImagesEnum.store)
+        {
+
+        }
 
         [Authorize]
         public void GetCompanies(store store = null)
@@ -158,16 +164,31 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,IdCompany,StoreHours,Email,FacebookUrl,WhatsApp,Description")] store store, string Latitude, string Longitude)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,IdCompany,StoreHours,Email,FacebookUrl,WhatsApp,Description")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload)
         {
             if (ModelState.IsValid)
             {
                 if (Latitude != null) { store.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
                 if (Longitude != null) { store.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
-                
+
+                fileUpload = FilterFiles(fileUpload);
+                string imagePath = null;
+                HttpPostedFileBase fileImagePath;
+                if (fileUpload.Count() == 1)
+                {
+                    fileImagePath = fileUpload.FirstOrDefault();
+                    fileUpload.RemoveAt(0);
+                    imagePath = GeneratePhisicalFile(fileImagePath);
+                }
+
+                store.ImagePath = imagePath;
+
 
                 db.store.Add(store);
                 await db.SaveChangesAsync();
+
+                //Save aditional images
+                UploadImages(fileUpload, store.IdStore);
                 return RedirectToAction("Index");
             }
 
