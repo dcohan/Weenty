@@ -86,7 +86,7 @@
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ImagePath" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="250" />
           <Property Name="Price" Type="float" />
           <Property Name="Description" Type="varchar" MaxLength="1000" />
         </EntityType>
@@ -737,7 +737,7 @@
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Price" Type="Double" />
           <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="images" Relationship="CuponeraModel.FK_images_offer" FromRole="offer" ToRole="images" />
