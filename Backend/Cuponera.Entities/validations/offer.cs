@@ -55,5 +55,9 @@ namespace Cuponera.Entities
         public Nullable<DateTime> ExpirationDatetime { get; set; }
 
 
+        [Required(ErrorMessage = "Debe ingresar un precio.")]
+        public Nullable<double> Price { get; set; }
+
+
     }
 }

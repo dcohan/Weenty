@@ -55,5 +55,8 @@ namespace Cuponera.Entities
         [Required(ErrorMessage = "Debe asociar el producto a una categoria.")]
         public int IdCategory { get; set; }
 
+        [Required(ErrorMessage = "Debe ingresar un precio.")]
+        public Nullable<double> Price { get; set; }
+
     }
 }
