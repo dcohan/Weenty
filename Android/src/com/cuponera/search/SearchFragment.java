@@ -20,11 +20,11 @@ import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.model.Category;
 import com.cuponera.model.Store;
-import com.cuponera.product.ProductFragment;
 import com.cuponera.service.category.CategoryRequest;
 import com.cuponera.service.category.CategoryResponse;
 import com.cuponera.service.store.StoreResponse;
 import com.cuponera.store.StoreAdapter;
+import com.cuponera.store.StoreDescriptionFragment;
 import com.cuponera.utils.ErrorHandler;
 import com.cuponera.utils.Utils;
 
@@ -130,7 +130,10 @@ public class SearchFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container, ProductFragment.newInstance(category.get(viewPager.getCurrentItem()).getId(), store.get(position)));
+				// transaction.replace(R.id.container,
+				// StoreDescriptionFragment.newInstance(category.get(viewPager.getCurrentItem()).getId(),
+				// store.get(position)));
+				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(store.get(position)));
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}

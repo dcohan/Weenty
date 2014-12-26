@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 
 import com.cuponera.BaseFragment;
@@ -58,15 +57,6 @@ public class OfferFragment extends BaseFragment {
 	}
 
 	private void fillAdapter() {
-		mViewProxy.findImageView(R.id.cx).setVisibility(View.VISIBLE);
-		mViewProxy.findImageView(R.id.cx).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				getBaseActivity().openURL("http://www.redcx.com/");
-
-			}
-		});
 		adapter = new StoreAdapter(getBaseActivity(), store);
 		adapter.notifyDataSetChanged();
 		mViewProxy.findListView(R.id.product_listview).setAdapter(adapter);
