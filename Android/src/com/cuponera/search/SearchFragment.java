@@ -139,4 +139,10 @@ public class SearchFragment extends BaseFragment {
 			}
 		});
 	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Utils.hideKeyboard(getBaseActivity(), mViewProxy.getView());
+	}
 }

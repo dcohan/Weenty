@@ -100,6 +100,7 @@ public class StoreFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
+				transaction.setCustomAnimations(R.anim.transition_slide_in_left, R.anim.transition_slide_out_left);
 				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(store.get(position)));
 				transaction.addToBackStack(null);
 				transaction.commit();
