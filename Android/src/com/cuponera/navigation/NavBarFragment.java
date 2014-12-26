@@ -10,7 +10,11 @@ import com.cuponera.BaseFragment;
 import com.cuponera.R;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.search.SearchFragment;
+import com.cuponera.service.weather.WeatherRequest;
+import com.cuponera.service.weather.WeatherResponse;
+import com.cuponera.settings.Settings;
 import com.cuponera.utils.Utils;
+import com.cuponera.utils.ValidationUtils;
 import com.cuponera.weather.WeatherFragment;
 
 public class NavBarFragment extends BaseFragment implements MenuInterface {
@@ -50,7 +54,6 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 			}
 		});
 
-
 		menuButton = mViewProxy.findImageView(R.id.menuButton);
 
 		Utils.setCalibri(getActivity(), mViewProxy.findTextView(R.id.headerTitle));
@@ -71,10 +74,33 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 			}
 		});
 
+		WeatherRequest request = new WeatherRequest(getActivity()) {
+
+			@Override
+			public void showLoading() {
+			}
+
+			@Override
+			public void hideLoading() {
+			}
+
+			@Override
+			public void onServiceReturned(WeatherResponse result) {
+				if (result != null && result.getWeatherCity() != null) {
+					Settings.getInstance(getActivity()).setCity(result.getWeatherCity().getCityName());
+				}
+			}
+		};
+
+		if (Settings.getInstance(getActivity()).getLatitude() != 0) {
+			request.execute(false);
+		}
+
 	}
 
 	public void setTitle(String title) {
-		mViewProxy.findTextView(R.id.headerTitle).setText("San Bernardo");
+		mViewProxy.findTextView(R.id.headerTitle).setText(
+				ValidationUtils.isNullOrEmpty(Settings.getInstance(getActivity()).getCity()) ? "San Bernardo" : Settings.getInstance(getActivity()).getCity());
 	}
 
 	public MenuFragment getMenu() {

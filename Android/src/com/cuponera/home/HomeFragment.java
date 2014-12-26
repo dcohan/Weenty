@@ -153,6 +153,7 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 					if (state.getName().equalsIgnoreCase(arrayAdapter.getItem(which))) {
 						Settings.getInstance(getActivity()).setLatitude(state.getLatitude());
 						Settings.getInstance(getActivity()).setLongitude(state.getLongitude());
+						Settings.getInstance(getActivity()).setCity(state.getName());
 						getMuni();
 					}
 				}

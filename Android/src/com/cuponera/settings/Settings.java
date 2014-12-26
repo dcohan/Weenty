@@ -20,6 +20,7 @@ public class Settings {
 	private static final String PROFILE_ID = "profile_id";
 	private static final String GEOLOCATION = "geolocation";
 	private static final String PREHOMEIMAGE = "prehomeimage";
+	private static final String CITY = "city";
 
 	public Settings(Context context) {
 		mContext = context;
@@ -44,6 +45,14 @@ public class Settings {
 
 	public String getAccountId() {
 		return mSharedPreferences.getString(ACCOUNT_ID, null);
+	}
+
+	public void setCity(String city) {
+		getEditor().putString(CITY, city).commit();
+	}
+
+	public String getCity() {
+		return mSharedPreferences.getString(CITY, null);
 	}
 
 	public void setPrehomeImage(String prehomeImage) {

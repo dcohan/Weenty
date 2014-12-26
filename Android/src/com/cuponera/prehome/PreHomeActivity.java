@@ -50,8 +50,8 @@ public class PreHomeActivity extends BaseActivity {
 
 		};
 		prehomeRequest.execute();
-
 		getLatitudeAndRun();
+
 	}
 
 	private void createProfile() {
