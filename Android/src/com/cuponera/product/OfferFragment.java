@@ -17,6 +17,7 @@ import com.cuponera.model.Store;
 import com.cuponera.service.offer.OfferRequest;
 import com.cuponera.service.store.StoreResponse;
 import com.cuponera.store.StoreAdapter;
+import com.cuponera.store.StoreDescriptionFragment;
 import com.cuponera.utils.ErrorHandler;
 
 public class OfferFragment extends BaseFragment {
@@ -65,7 +66,7 @@ public class OfferFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container, ProductFragment.newInstance(store.get(position).getIdCategory(), store.get(position)));
+				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(store.get(position).getIdCategory(), store.get(position)));
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}
