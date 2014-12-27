@@ -827,17 +827,21 @@ tr.pager td {
     /*padding-right: 70px;*/
 }
 
-.filters .filter input, .filters .filter select {
-    max-width: 80%;
+.filters .filter input.larger {
+    width: 73% !important;
+}
+
+.filters .filter select.larger {
+    width: 75% !important;
 }
 
 .list-content .table-all {
     float: left;
 }
 
-    .list-content .table-all td {
-        min-width: 20px;
-    }
+.list-content .table-all td {
+    min-width: 20px;
+}
 
 .list-content .filter {
     margin-bottom: 10px;

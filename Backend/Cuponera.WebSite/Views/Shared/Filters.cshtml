@@ -82,15 +82,17 @@
             // label: input
             var $filter_group = $('<div></div>');
             $filter_group.append(
-                $('<span></span>')
+                $('<label></label>')
                     .html(filter.label + ':')
                     .addClass('filter-label-pre')
                     .addClass('float-left')
+                    .prop('for', filter.controlId)
             );
             
             $input = $('<input>').prop('type', filter.controlType)
                                 .prop('id', filter.controlId)
-                                .addClass('float-right');
+                                .addClass('float-right')
+                                .addClass('larger');
 
             if (filter.controlDefaultValue) { 
                 $input.val(filter.controlDefaultValue); 
@@ -106,14 +108,16 @@
             // label: select
             var $filter_group = $('<div></div>');
             $filter_group.append(
-                $('<span></span>')
+                $('<label></label>')
                     .html(filter.label + ':')
                     .addClass('filter-label-pre')
                     .addClass('float-left')
+                    .prop('for', filter.controlId)
             );
 
             $select = $('<select></select>').prop('id', filter.controlId)
-                                            .addClass('float-right');
+                                            .addClass('float-right')
+                                            .addClass('larger');
             getSourceData({
                 include_all: filter.source.include_all,
                 default: filter.controlDefaultValue,
