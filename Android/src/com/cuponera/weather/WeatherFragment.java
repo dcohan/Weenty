@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
@@ -25,14 +26,14 @@ public class WeatherFragment extends BaseFragment {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 
 		WeatherRequest request = new WeatherRequest(getActivity()) {
 
 			@SuppressLint("DefaultLocale")
 			@Override
-			public void onServiceReturned(WeatherResponse result) {
+			protected void serviceReady(WeatherResponse result) {
 				if (result != null && result.getMainWeather() != null && result.getMainWeather().size() > 0 && result.getMainWeather() != null) {
 					Utils.loadImageFromUrl(getActivity(), mViewProxy.findImageView(R.id.weather_image), "http://openweathermap.org/img/w/"
 							+ result.getMainWeather().get(0).getWeather().get(0).getIcon() + ".png");
@@ -76,9 +77,11 @@ public class WeatherFragment extends BaseFragment {
 					EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.NO_RESULTS_FOUND));
 					getBaseActivity().onHomeButton();
 				}
+
 			}
 		};
-
-		request.execute(false);
+		if (!request.isResultCached()) {
+			request.execute(false);
+		}
 	}
 }

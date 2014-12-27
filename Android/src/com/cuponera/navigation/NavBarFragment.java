@@ -85,14 +85,16 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 			}
 
 			@Override
-			public void onServiceReturned(WeatherResponse result) {
+			protected void serviceReady(WeatherResponse result) {
 				if (result != null && result.getWeatherCity() != null) {
 					Settings.getInstance(getActivity()).setCity(result.getWeatherCity().getCityName());
+					setTitle(result.getWeatherCity().getCityName());
 				}
+
 			}
 		};
 
-		if (Settings.getInstance(getActivity()).getLatitude() != 0) {
+		if (Settings.getInstance(getActivity()).getLatitude() != 0 && !request.isResultCached()) {
 			request.execute(false);
 		}
 
