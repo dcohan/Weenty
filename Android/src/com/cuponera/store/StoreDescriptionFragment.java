@@ -110,8 +110,9 @@ public class StoreDescriptionFragment extends BaseFragment {
 			mViewProxy.findImageView(R.id.product_mail).setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Intent result = new Intent(android.content.Intent.ACTION_SEND);
+					Intent result = new Intent(android.content.Intent.ACTION_SENDTO);
 					result.setType("plain/text");
+					result.setData(Uri.parse("mailto:" + store.getEmail()));
 					result.putExtra(android.content.Intent.EXTRA_EMAIL, store.getEmail());
 					result.putExtra(android.content.Intent.EXTRA_SUBJECT, store.getName());
 					startActivity(result);
