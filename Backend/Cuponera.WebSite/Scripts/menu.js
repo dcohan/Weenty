@@ -1,29 +1,43 @@
-( function( $ ) {
-    $( document ).ready(function() {
+(function ($) {
+     $(document).ready(function () {
         $('#cssmenu > ul').prepend('<li class=\"mobile\"><a href=\"#\"><span>Menu <i>&#9776;</i></span></a></li>');
-
-        $('#cssmenu > ul > li > a').click(function (e) {
-            $('#cssmenu li').removeClass('active');
-            $(this).closest('li').addClass('active');	
-
-            var checkElement = $(this).next();
-
-            if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-                $(this).closest('li').removeClass('active');
-                checkElement.slideUp('normal');
+        var menu_is_mobile = $('#cssmenu > ul > li.mobile').css('display') !== 'none';
+        $('#cssmenu > ul > li').click(function (e) {
+            if (!menu_is_mobile) {
+                return false;
             }
+            openMenu($(this), e);
+        });
 
-            if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-                $('#cssmenu ul ul:visible').slideUp('normal');
-                checkElement.slideDown('normal');
+        $('#cssmenu > ul > li').hover(function (e) {
+            if (menu_is_mobile) {
+                return false;
             }
-
-            if ($(this).parent().hasClass('mobile')) {
-                e.preventDefault();
-                $('#cssmenu').toggleClass('expand');
-            }
-
-            return $(this).closest('li').find('ul').children().length == 0;
+            openMenu($(this), e);
         });
     });
-} )( jQuery );
+})(jQuery);
+
+function openMenu($elem, e) {
+    $('#cssmenu li').removeClass('active');
+    $elem.addClass('active');
+
+    var checkElement = $elem.find('ul');
+
+    if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+        // Must be closed
+        $elem.closest('li').removeClass('active');
+        checkElement.slideUp('normal');
+    } else {
+        // Must be opened
+        $('#cssmenu ul ul:visible').slideUp('normal');
+        checkElement.slideDown('normal');
+    }
+
+    if ($elem.hasClass('mobile')) {
+        e.preventDefault();
+        $('#cssmenu').toggleClass('expand');
+    }
+
+    return $elem.find('ul').children().length == 0;
+}
