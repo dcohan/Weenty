@@ -9,17 +9,32 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/product_company"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.05"
-            android:paddingBottom="1dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="6dp"
-            android:textColor="@color/pink"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:layout_weight="0.05" >
+
+            <TextView
+                android:id="@+id/product_company"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="1dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="6dp"
+                android:textColor="@color/pink"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/offer_circle"
+                android:layout_width="@dimen/offer_circle"
+                android:layout_height="@dimen/offer_circle"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/offer_circle"
+                android:visibility="gone" />
+        </RelativeLayout>
 
         <FrameLayout
             android:id="@+id/gallery_adapter"

@@ -3,6 +3,7 @@ package com.cuponera.more;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 import com.cuponera.BaseFragment;
@@ -35,20 +36,21 @@ public class MoreFragment extends BaseFragment implements HeaderInterface {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		category = new ArrayList<Category>();
 		CategoryRequest request = new CategoryRequest(getActivity()) {
 
 			@Override
-			public void onServiceReturned(CategoryResponse result) {
-				category.addAll(result.getCategory());
+			protected void serviceReady(CategoryResponse response) {
+				category.addAll(response.getCategory());
 				fillAdapter();
+
 			}
 		};
-
-		request.execute();
-
+		if (!request.isResultCached()) {
+			request.execute();
+		}
 	}
 
 	@Override
@@ -57,8 +59,8 @@ public class MoreFragment extends BaseFragment implements HeaderInterface {
 		if (adapter != null)
 			fillAdapter();
 	}
-	
-	private void fillAdapter(){
+
+	private void fillAdapter() {
 		moreList = mViewProxy.findListView(R.id.more_listview);
 		adapter = new MoreAdapter(getActivity(), category);
 		adapter.notifyDataSetChanged();

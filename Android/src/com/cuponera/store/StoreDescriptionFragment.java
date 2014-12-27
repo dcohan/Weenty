@@ -28,15 +28,17 @@ public class StoreDescriptionFragment extends BaseFragment {
 	}
 
 	private static final String ARGS_STORE = "args_store";
+	private static final String ARGS_ID_CATEGORY = "args_id_category";
 	private Store store;
 
-	public static StoreDescriptionFragment newInstance(Store s) {
+	public static StoreDescriptionFragment newInstance(int idCategory, Store s) {
 
 		StoreDescriptionFragment fragment = new StoreDescriptionFragment();
 		Bundle b = fragment.getArguments();
 		if (b == null)
 			b = new Bundle();
 
+		b.putInt(ARGS_ID_CATEGORY, idCategory);
 		b.putParcelable(ARGS_STORE, (Parcelable) s);
 		fragment.setArguments(b);
 		return fragment;
@@ -67,14 +69,17 @@ public class StoreDescriptionFragment extends BaseFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		mViewProxy.findTextView(R.id.product_company).setText(store.getName());
+		if (store.hasOffers() || store.hasProducts()) {
+			mViewProxy.findView(R.id.offer_circle).setVisibility(View.VISIBLE);
+		}
 		mViewProxy.findTextView(R.id.store_description).setText(store.getDescription());
 
-		mViewProxy.findTextView(R.id.store_description).setOnClickListener(new OnClickListener() {
+		mViewProxy.findView(R.id.offer_circle).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container, ProductFragment.newInstance(2, store));
+				transaction.replace(R.id.container, ProductFragment.newInstance(getArguments().getInt(ARGS_ID_CATEGORY), store));
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}

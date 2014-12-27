@@ -3,6 +3,7 @@ package com.cuponera.search;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -42,25 +43,23 @@ public class SearchFragment extends BaseFragment {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
 		category = new ArrayList<Category>();
 		CategoryRequest request = new CategoryRequest(getActivity()) {
 
 			@Override
-			public void onServiceReturned(CategoryResponse result) {
-				category.addAll(result.getCategory());
+			protected void serviceReady(CategoryResponse response) {
+				category.addAll(response.getCategory());
 				fillCategory();
+
 			}
 		};
 
-		request.execute();
-
-	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+		if (!request.isResultCached()) {
+			request.execute();
+		}
 		mViewProxy.findEditText(R.id.search_edit).setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -130,10 +129,7 @@ public class SearchFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-				// transaction.replace(R.id.container,
-				// StoreDescriptionFragment.newInstance(category.get(viewPager.getCurrentItem()).getId(),
-				// store.get(position)));
-				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(store.get(position)));
+				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(category.get(viewPager.getCurrentItem()).getId(), store.get(position)));
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}
