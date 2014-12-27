@@ -1,0 +1,77 @@
+﻿<script type="text/javascript" src="~/Scripts/menu.js"></script>
+<link rel="stylesheet" href="~/Content/menu.css" />
+
+<nav>
+    <div id='cssmenu'>
+        <ul>
+            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var principal = new Cuponera.WebSite.Models.CuponeraPrincipal(new Cuponera.WebSite.Models.CuponeraIdentity(HttpContext.Current.User.Identity));
+                if (principal.IsInRole("admin"))
+                {
+                    <li class='has-sub'>
+                        <a href='#'><span>Suscripciones</span></a>
+                        <ul>
+                            <li><a href='/subscription'><span>Tipo suscripciones</span></a></li>
+                            <li class="last"><a href='/companySubscription'><span>Suscripciones</span></a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href='/category'><span>Categorías</span></a></li>
+                    <li><a href='/state'><span>Ciudades</span></a></li>
+                }
+
+                <li><a href='/company'><span>Empresas</span></a></li>
+                <li><a href='/store'><span>Sucursales</span></a></li>
+
+                <li class='has-sub'>
+                    <a href='#'><span>Productos</span></a>
+                    <ul>
+                        <li><a href='/product'><span>Productos</span></a></li>
+                        <li><a href='/offer'><span>Ofertas</span></a></li>
+                    </ul>
+                </li>
+
+
+                if (principal.IsInRole("admin") || Cuponera.WebSite.Models.CuponeraIdentity.AdminCompany > 0)
+                {
+                    <li class="last"><a href='/userCompany'><span>Usuarios</span></a></li>
+                }
+            }
+            
+        </ul>
+    </div>
+
+
+
+
+
+
+
+
+    <ul id="menu">
+        @if (HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            var principal = new Cuponera.WebSite.Models.CuponeraPrincipal(new Cuponera.WebSite.Models.CuponeraIdentity(HttpContext.Current.User.Identity));
+            if (principal.IsInRole("admin"))
+            {
+                <li>@Html.ActionLink("Tipo suscripciones", "Index", "subscription")</li>
+                <li>@Html.ActionLink("Suscripciones", "Index", "companySubscription")</li>
+                <li>@Html.ActionLink("Categorías", "Index", "category")</li>
+                <li>@Html.ActionLink("Ciudades", "Index", "state")</li>
+            }
+
+            if (principal.IsInRole("admin") || Cuponera.WebSite.Models.CuponeraIdentity.AdminCompany > 0)
+            {
+                <li>@Html.ActionLink("Usuarios", "Index", "userCompany")</li>
+            }
+
+            <li>@Html.ActionLink("Empresas", "Index", "company")</li>
+            <li>@Html.ActionLink("Sucursales", "Index", "store")</li>
+            <li>@Html.ActionLink("Productos", "Index", "product")</li>
+            <li>@Html.ActionLink("Ofertas", "Index", "offer")</li>
+        }
+
+
+    </ul>
+</nav>
