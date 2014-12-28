@@ -52,7 +52,15 @@ namespace Cuponera.WebSite.Controllers
             IQueryable<store> stores = db.store;
             if (!all)
             {
-                stores = stores.Where(s => !s.DeletionDatetime.HasValue);
+                stores = stores.Where(s => !s.DeletionDatetime.HasValue && !s.company.DeletionDatetime.HasValue);
+            }
+
+            foreach (var store in stores)
+            {
+                if (store.company.DeletionDatetime != null)
+                {
+                    store.DeletionDatetime = store.company.DeletionDatetime;
+                }
             }
 
             if (idCompany > 0)
