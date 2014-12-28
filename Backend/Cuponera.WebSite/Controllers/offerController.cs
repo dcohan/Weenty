@@ -30,7 +30,10 @@ namespace Cuponera.WebSite.Controllers
 
         public void GetProducts(offer offer=null)
         {
-            var products = db.product.Where(p => p.DeletionDatetime == null);
+            IQueryable<product> products = db.product;
+            if (offer.product.DeletionDatetime == null) { 
+                products = products.Where(p => p.DeletionDatetime == null);
+            }
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
@@ -38,7 +41,7 @@ namespace Cuponera.WebSite.Controllers
                                            CuponeraIdentity.CurrentAvaiableStores.Contains(p.IdStore));
             }
 
-
+            ViewBag.Products = products;
             ViewBag.IdProduct = new SelectList(products, "IdProduct", "Title", offer != null ? offer.IdProduct : 0);
         }
 

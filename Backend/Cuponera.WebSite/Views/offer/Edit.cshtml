@@ -14,7 +14,32 @@
     var images_to_remove = [];
     var images = [];
 
+    var products = [];
+    @foreach (var product in ViewBag.Products)
+    {
+        @:products.push({id: @product.IdProduct, active: '@(product.DeletionDatetime == null )'.toLowerCase() == 'true' });
+    }
+
     $(function () {
+        $('#IdProduct').change(function (k, v){
+            $('.advertisment').addClass('hidden');
+            var product_id = $(this).val();
+            if (!product_id) { return; }
+
+            var found = false;
+            var cp;
+            for (var i = 0; i < products.length && !found; i++) {
+                cp = products[i];
+
+                if (cp.id == product_id){
+                    found = true;
+                    if (!cp.active) {
+                        $('.advertisment').removeClass('hidden');
+                    }
+                }
+            }
+        });
+
         $('#fileUpload').change(function (e) {
             var files = e.target.files;
             if (!files.length) { return; }
@@ -100,13 +125,19 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group float-left">
             @Html.LabelFor(model => model.IdProduct, "Producto *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.IdProduct, null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdProduct, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="advertisment float-right">
+            Atención: el producto elegido está desactivado.
+        </div>
+
+        <div style="clear:both"></div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Price, "Precio ($) *", new { @class = "control-label col-md-2" })
