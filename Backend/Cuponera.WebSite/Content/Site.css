@@ -808,6 +808,7 @@ tr.pager td {
 
 .table-all tbody td.centered-content {
     text-align: center;
+    padding-right: 0;
 }
 
 .table-all tbody td.current-status img {
