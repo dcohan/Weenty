@@ -1,10 +1,10 @@
 ﻿@model Cuponera.Entities.userCompany
 
 @{
-    ViewBag.Title = "Editar";
+    ViewBag.Title = "Editar " + Model.UserProfile.UserName;
 }
 
-<h2>Editar</h2>
+<h2>@Html.DisplayFor(model => model.UserProfile.UserName)</h2>
 
 
 @using (Html.BeginForm())
