@@ -5,20 +5,20 @@
             var principal = new Cuponera.WebSite.Models.CuponeraPrincipal(new Cuponera.WebSite.Models.CuponeraIdentity(HttpContext.Current.User.Identity));
             if (principal.IsInRole("admin"))
             {
-                <li>@Html.ActionLink("Ciudad", "Index", "state")</li>
-                <li>@Html.ActionLink("Categoría", "Index", "category")</li>
-                <li>@Html.ActionLink("Tipo suscripción", "Index", "subscription")</li>
-                <li>@Html.ActionLink("Suscribir", "Index", "companySubscription")</li>
+                <li>@Html.ActionLink("Ciudades", "Index", "state")</li>
+                <li>@Html.ActionLink("Categorías", "Index", "category")</li>
+                <li>@Html.ActionLink("Tipos suscripción", "Index", "subscription")</li>
+                <li>@Html.ActionLink("Suscribir empresa", "Index", "companySubscription")</li>
             }
 
-            <li>@Html.ActionLink("Empresa", "Index", "company")</li>
-            <li>@Html.ActionLink("Sucursal", "Index", "store")</li>
-            <li>@Html.ActionLink("Producto", "Index", "product")</li>
+            <li>@Html.ActionLink("Empresas", "Index", "company")</li>
+            <li>@Html.ActionLink("Sucursales", "Index", "store")</li>
+            <li>@Html.ActionLink("Productos", "Index", "product")</li>
             <li>@Html.ActionLink("Ofertas", "Index", "offer")</li>
 
             if (principal.IsInRole("admin") || Cuponera.WebSite.Models.CuponeraIdentity.AdminCompany > 0)
             {
-                <li>@Html.ActionLink("Usuario", "Index", "userCompany")</li>
+                <li>@Html.ActionLink("Usuarios", "Index", "userCompany")</li>
             }
         }
 
