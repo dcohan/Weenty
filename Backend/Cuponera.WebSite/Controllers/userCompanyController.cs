@@ -72,7 +72,7 @@ namespace Cuponera.WebSite.Controllers
             }
         }
 
-        public IEnumerable<userCompany> get(int idCompany = 0, int page = 1)
+        public IEnumerable<userCompany> get(bool all = false, int idCompany = 0, int page = 1)
         {
             IEnumerable<userCompany> ucs = db.userCompany;
 
@@ -92,6 +92,11 @@ namespace Cuponera.WebSite.Controllers
                 ucs = ucs.Where(u => u.IdCompany.Equals(idCompany));
             }
 
+            if (!all)
+            {
+                ucs = ucs.Where(u => (u.store != null && u.store.DeletionDatetime == null) && (u.company != null && u.company.DeletionDatetime == null));
+            }
+
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)ucs.Count() / pageSize));
 
@@ -101,9 +106,10 @@ namespace Cuponera.WebSite.Controllers
         }
 
         // GET: userCompany
-        public async Task<ActionResult> Index(int company = 0, int page = 1)
+        public async Task<ActionResult> Index(bool all = false, int company = 0, int page = 1)
         {
-            return View(get(company, page));
+            var users = get(all, company, page);
+            return View(users);
         }
 
         
