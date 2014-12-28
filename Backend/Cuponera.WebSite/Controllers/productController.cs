@@ -51,13 +51,15 @@ namespace Cuponera.WebSite.Controllers
 
         private void GetCategories(product product=null)
         {
+            var categories = db.category.Where(c => c.DeletionDatetime == null);
+
             if (product == null)
             {
-                ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name");
+                ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name");
             }
             else
             {
-                ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
+                ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name", product.IdCategory);
             }
         }
 

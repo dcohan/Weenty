@@ -115,7 +115,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.state.Name, "Localidad", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.state.Name, "Localidad *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.IdState, new SelectList(
                   ViewBag.States,
