@@ -1,10 +1,8 @@
 ﻿@model Cuponera.Entities.subscription
 
 @{
-    ViewBag.Title = "Editar";
+    ViewBag.Title = "Editar " + Model.Name;
 }
-
-@Scripts.Render("~/bundles/imagesUploader")
 
 <script type="text/javascript">
     var images_to_remove = [];
@@ -54,7 +52,7 @@
     });
 </script>
 
-<h2>Editar @Html.DisplayFor(model => model.Name)</h2>
+<h2>@Html.DisplayFor(model => model.Name)</h2>
 
 @using (Html.BeginForm("Edit", "subscription", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {

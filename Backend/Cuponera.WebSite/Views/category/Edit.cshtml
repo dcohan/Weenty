@@ -1,11 +1,11 @@
 ﻿@model Cuponera.Entities.category
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar " + Model.Name;
 }
 
 
-<h2>Editar @Html.DisplayFor(model => model.Name)</h2>
+<h2>@Html.DisplayFor(model => model.Name)</h2>
 
 
 @using (Html.BeginForm())

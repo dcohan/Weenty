@@ -1,10 +1,10 @@
 ﻿@model Cuponera.Entities.offer
 
 @{
-    ViewBag.Title = "Detalle";
+    ViewBag.Title = "Detalle oferta del producto " + Model.product.Title;
 }
 
-<h2>Detalle</h2>
+<h2>@Model.product.Title</h2>
 
 <div>
     <h4>Oferta</h4>
