@@ -1031,3 +1031,7 @@ img.preview{
     z-index: 10;
 }
 
+
+.deleted {
+    color: rgb(255, 0, 0);
+}

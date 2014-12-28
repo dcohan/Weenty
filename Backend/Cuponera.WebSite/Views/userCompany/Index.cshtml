@@ -10,6 +10,7 @@
     var globals = {
         controller: 'userCompany',
         filters: {
+            include: ['all'],
             custom: [{
                 controlType: 'select',
                 controlId: 'company',
@@ -68,7 +69,7 @@
                             @Html.DisplayFor(modelItem => item.IsAdmin)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.company.Name)
+                            <span class="@(item.company.DeletionDatetime != null ? "deleted" : "")">@Html.DisplayFor(modelItem => item.company.Name)</span>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.store.Name)
