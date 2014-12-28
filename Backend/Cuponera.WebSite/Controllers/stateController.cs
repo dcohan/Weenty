@@ -26,7 +26,7 @@ namespace Cuponera.WebSite.Controllers
 
             if (name != null)
             {
-                states = states.Where(s => s.Name.Contains(name));
+                states = states.Where(s => s.Name.ToLowerInvariant().Contains(name.ToLowerInvariant()));
             }
 
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
@@ -34,8 +34,6 @@ namespace Cuponera.WebSite.Controllers
 
             int elemsToSkip = pageSize * (pageNumber - 1);
             return states.Skip(elemsToSkip).Take(pageSize);
-
-            return states;
         }
 
 
