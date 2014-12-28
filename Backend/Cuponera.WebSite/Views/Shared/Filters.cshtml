@@ -85,22 +85,17 @@
                 $('<label></label>')
                     .html(filter.label + ':')
                     .addClass('filter-label-pre')
-                    .addClass('float-left')
                     .prop('for', filter.controlId)
             );
             
             $input = $('<input>').prop('type', filter.controlType)
                                 .prop('id', filter.controlId)
-                                .addClass('float-right')
                                 .addClass('larger');
 
             if (filter.controlDefaultValue) { 
                 $input.val(filter.controlDefaultValue); 
             }
-            $filter_group.append($input)
-                        .append(
-                            $('<div></div>').css('clear', 'both')
-                        );
+            $filter_group.append($input);
 
             return $filter_group;
         },
@@ -111,12 +106,10 @@
                 $('<label></label>')
                     .html(filter.label + ':')
                     .addClass('filter-label-pre')
-                    .addClass('float-left')
                     .prop('for', filter.controlId)
             );
 
             $select = $('<select></select>').prop('id', filter.controlId)
-                                            .addClass('float-right')
                                             .addClass('larger');
             getSourceData({
                 include_all: filter.source.include_all,
@@ -127,10 +120,8 @@
                 element: $select
             });
 
-            $filter_group.append($select)
-                        .append(
-                            $('<div></div>').css('clear', 'both')
-                        )
+            $filter_group.append($select);
+
             if (!filter.visible && filter.visible != undefined) {
                 $filter_group.addClass('hidden');
             }

@@ -824,19 +824,24 @@ tr.pager td {
 
 .list-content .filters {
     float: right;
-    /*padding-right: 70px;*/
+    width: 37%;
+}
+
+.list-content .filters.full-width {
+    width: 96% !important;
 }
 
 .filters .filter input.larger {
-    width: 73% !important;
+    width: 96% !important;
 }
 
 .filters .filter select.larger {
-    width: 75% !important;
+    width: 99% !important;
 }
 
 .list-content .table-all {
     float: left;
+    max-width: 60%;
 }
 
 .list-content .table-all td {
