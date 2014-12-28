@@ -796,9 +796,13 @@ tr.pager td {
 }
 
 
+.table-all tbody td.operation.first{
+    padding-left: 20px;
+    text-align: center;
+}
 
 .table-all tbody td.current-status {
-    padding-right: 0px;
+    padding-right: 0;
     text-align: center;
 }
 

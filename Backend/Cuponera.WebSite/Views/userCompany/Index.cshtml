@@ -75,14 +75,13 @@ else
                     <td>
                         @Html.DisplayFor(modelItem => item.UserProfile.UserName)
                     </td>
-                    <td>
-                    <td>
+                    <td class="operation first">
                         @Html.ActionLink("Detalle", "Details", new { id = item.IdUserCompany }, new { @class = "detailsIcon", title = "Detalle" })
                     </td>
-                    <td>
+                    <td class="operation">
                         @Html.ActionLink("Editar", "Edit", new { id = item.IdUserCompany }, new { @class = "editIcon", title = "Editar" })
                     </td>
-                    <td>
+                    <td class="operation">
                         <a href="#" class="removeIcon" title="Eliminar" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
                     </td>
 
