@@ -14,7 +14,8 @@
             <li>@Html.ActionLink("Empresa", "Index", "company")</li>
             <li>@Html.ActionLink("Sucursal", "Index", "store")</li>
             <li>@Html.ActionLink("Producto", "Index", "product")</li>
-            
+            <li>@Html.ActionLink("Ofertas", "Index", "offer")</li>
+
             if (principal.IsInRole("admin") || Cuponera.WebSite.Models.CuponeraIdentity.AdminCompany > 0)
             {
                 <li>@Html.ActionLink("Usuario", "Index", "userCompany")</li>
