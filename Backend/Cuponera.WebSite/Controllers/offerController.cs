@@ -67,12 +67,20 @@ namespace Cuponera.WebSite.Controllers
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())))
-                                 .Where(o => all || o.DeletionDatetime == null);
+                                 .Where(o => (all || o.DeletionDatetime == null && o.product.DeletionDatetime == null));
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
                 offers = offers.Where(o => CuponeraIdentity.AdminCompany == o.product.store.IdCompany ||
                                            CuponeraIdentity.CurrentAvaiableStores.Contains(o.product.IdStore));
+            }
+
+            foreach (var offer in offers)
+            {
+                if (offer.product.DeletionDatetime != null)
+                {
+                    offer.DeletionDatetime = offer.product.DeletionDatetime;
+                }
             }
 
             var permitedOffers = offers.OrderBy(o => o.Title);
