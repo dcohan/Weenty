@@ -721,6 +721,7 @@
     <Content Include="Views\userCompany\Details.cshtml" />
     <Content Include="Views\userCompany\Edit.cshtml" />
     <Content Include="Views\userCompany\Index.cshtml" />
+    <Content Include="Views\Shared\Menu.cshtml" />
     <Content Include="Views\Thankyou\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

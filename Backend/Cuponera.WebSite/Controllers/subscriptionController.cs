@@ -96,7 +96,13 @@ namespace Cuponera.WebSite.Controllers
             if (ModelState.IsValid)
             {
                 if (!String.IsNullOrEmpty(Pricing)) { subscription.Pricing = Convert.ToDecimal(Pricing); }
-                if (fileUpload.Count > 0) { subscription.Icon = GeneratePhisicalFile(fileUpload.FirstOrDefault()); }
+
+                fileUpload = FilterFiles(fileUpload);
+                if (fileUpload.Count() == 1)
+                {
+                    subscription.Icon = GeneratePhisicalFile(fileUpload.FirstOrDefault());
+                }
+
 
                 db.subscription.Add(subscription);
                 await db.SaveChangesAsync();

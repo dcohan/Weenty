@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title Weenty</title>
+        <title>Weenty | @ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" title="Weenty!" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
@@ -45,36 +45,7 @@
                     <section id="login">
                         @Html.Partial("_LoginPartial")
                     </section>
-                    <nav>
-                        <ul id="menu">
-                            @if (HttpContext.Current.User.Identity.IsAuthenticated)
-                            {
-                                var principal = new Cuponera.WebSite.Models.CuponeraPrincipal(new Cuponera.WebSite.Models.CuponeraIdentity(HttpContext.Current.User.Identity));
-                                if (Cuponera.WebSite.Models.CuponeraIdentity.CurrentUserIsActive)
-                                { 
-                                    if (principal.IsInRole("admin"))
-                                    {
-                                        <li>@Html.ActionLink("Tipo suscripciones", "Index", "subscription")</li>
-                                        <li>@Html.ActionLink("Suscripciones", "Index", "companySubscription")</li>
-                                        <li>@Html.ActionLink("Categorías", "Index", "category")</li>
-                                        <li>@Html.ActionLink("Ciudades", "Index", "state")</li>
-                                    }
-
-                                    if (principal.IsInRole("admin") || Cuponera.WebSite.Models.CuponeraIdentity.AdminCompany > 0)
-                                    {
-                                        <li>@Html.ActionLink("Usuarios", "Index", "userCompany")</li>
-                                    }
-                                
-
-                                    <li>@Html.ActionLink("Empresas", "Index", "company")</li>
-                                    <li>@Html.ActionLink("Sucursales", "Index", "store")</li>
-                                    <li>@Html.ActionLink("Productos", "Index", "product")</li>
-                                    <li>@Html.ActionLink("Ofertas", "Index", "offer")</li>
-                                }   
-                            }
-
-                        </ul>
-                    </nav>
+                    @Html.Partial("Menu")
                 </div>
             </div>
         </header>

@@ -1,9 +1,8 @@
 ﻿@model Cuponera.Entities.product
 
 @{
-    ViewBag.Title = "Crear";
+    ViewBag.Title = "Agregar producto";
 }
-
 
 <h2>Agregar producto</h2>
 
@@ -12,6 +11,18 @@
 
 <script type="text/javascript">
     $(function () {
+        $('#fileUpload').change(function (e) {
+            var files = e.target.files;
+            if (!files.length) { return; }
+
+            $('.files-name').empty();
+            $(files).each(function (k, v) {
+                $('.files-name').append(
+                    $('<div></div>').html(v.name)
+                );
+            });
+        });
+
         $.validator.methods.date = function (value, element) {
                 Globalize.culture("es-AR");
                 // you can alternatively pass the culture to parseDate instead of
@@ -25,7 +36,6 @@
             dateFormat: "dd/mm/yy"
         });
 
-        document.getElementsByClassName('hidden');
         $(".hidden").removeClass('input-validation-error');
 
     });
@@ -40,7 +50,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Title, "Nombre", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Title, "Nombre *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
@@ -56,40 +66,31 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.CheckBoxFor(model => model.Active)
-                @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, "Precio", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Price, "Precio ($) *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
             </div>
         </div>
 
-
         <div class="form-group">
-            @Html.LabelFor(model => model.IdStore, "Sucursal", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdCategory, "Categoria *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("IdStore", String.Empty)
-                @Html.ValidationMessageFor(model => model.IdStore, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdCategory, "Categoria", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdCategory", String.Empty)
+                @Html.DropDownList("IdCategory")
                 @Html.ValidationMessageFor(model => model.IdCategory, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="StartDatetime">Fecha Inicio</label>
+            @Html.LabelFor(model => model.IdStore, "Sucursal *", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IdStore")
+                @Html.ValidationMessageFor(model => model.IdStore, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="StartDatetime">Fecha Inicio *</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.StartDatetime, new { htmlAttributes = new { @class = "form-control, date-picker" } })
                 @Html.ValidationMessageFor(model => model.StartDatetime, "", new { @class = "text-danger" })
@@ -109,6 +110,11 @@
             <label class="control-label col-md-2" for="fileUpload">Imágenes</label>
             <div class="col-md-10">
                 <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" />
+            </div>
+
+            Las imágenes seleccionadas son:
+            <div class="files-name">
+
             </div>
         </div>
 

@@ -30,7 +30,10 @@ namespace Cuponera.WebSite.Controllers
 
         public void GetProducts(offer offer=null)
         {
-            var products = db.product.Where(p => p.DeletionDatetime == null);
+            IQueryable<product> products = db.product;
+            if (offer.product.DeletionDatetime == null) { 
+                products = products.Where(p => p.DeletionDatetime == null);
+            }
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
@@ -38,29 +41,23 @@ namespace Cuponera.WebSite.Controllers
                                            CuponeraIdentity.CurrentAvaiableStores.Contains(p.IdStore));
             }
 
-            if (offer != null)
-            {
-                ViewBag.IdProduct = new SelectList(products, "IdProduct", "Title", offer.IdProduct);
-            }
-            else
-            {
-                ViewBag.IdProduct = new SelectList(products, "IdProduct", "Title");
-            }
+            ViewBag.Products = products;
+            ViewBag.IdProduct = new SelectList(products, "IdProduct", "Title", offer != null ? offer.IdProduct : 0);
         }
 
         private bool Validate(offer offer)
         {
             if (offer.ExpirationDatetime.HasValue && offer.ExpirationDatetime <= offer.StartDatetime)
             {
-                ModelState.AddModelError("Date", "Las fechas de expiración debe ser inferior a la de inicio");
+                ModelState.AddModelError("Date", "Las fechas de expiración debe ser inferior a la de inicio.");
                 GetProducts(offer);
                 return false;
             }
 
             if (db.offer.Where(o => !o.DeletionDatetime.HasValue && o.IdOffer != offer.IdOffer && o.ExpirationDatetime < DateTime.Now
-                                && o.ExpirationDatetime < offer.StartDatetime).Count() > 0)
+                                && o.ExpirationDatetime < offer.StartDatetime && o.IdProduct == offer.IdProduct).Count() > 0)
             {
-                ModelState.AddModelError("ServerValidations", "Existe otra oferta en curso, no puede haber mas de una oferta vigente para un producto");
+                ModelState.AddModelError("ServerValidations", "Existe otra oferta en curso, no puede haber mas de una oferta vigente para un producto.");
                 GetProducts(offer);
                 return false;
             }
@@ -73,12 +70,20 @@ namespace Cuponera.WebSite.Controllers
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())))
-                                 .Where(o => all || o.DeletionDatetime == null);
+                                 .Where(o => (all || o.DeletionDatetime == null && o.product.DeletionDatetime == null));
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
                 offers = offers.Where(o => CuponeraIdentity.AdminCompany == o.product.store.IdCompany ||
                                            CuponeraIdentity.CurrentAvaiableStores.Contains(o.product.IdStore));
+            }
+
+            foreach (var offer in offers)
+            {
+                if (offer.product.DeletionDatetime != null)
+                {
+                    offer.DeletionDatetime = offer.product.DeletionDatetime;
+                }
             }
 
             var permitedOffers = offers.OrderBy(o => o.Title);
@@ -106,9 +111,15 @@ namespace Cuponera.WebSite.Controllers
         }
 
         // GET: /offer/Create
-        public ActionResult Create()
+        public ActionResult Create(int IdProduct = 0)
         {
-            GetProducts();
+            offer offer = null;
+            if (IdProduct > 0)
+            {
+                offer = new offer() { IdProduct = IdProduct };
+            }
+
+            GetProducts(offer);
             return View();
         }
 
@@ -117,15 +128,28 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdOffer,Title,StartDatetime,ExpirationDatetime,Description,IdProduct,ImagePath, Price")] offer offer, List<HttpPostedFileBase> fileUpload)
+        public ActionResult Create([Bind(Include = "IdOffer,Title,StartDatetime,ExpirationDatetime,Description,IdProduct,Price")] offer offer, List<HttpPostedFileBase> fileUpload)
         {
-			 if (!Validate(offer))
+			if (!Validate(offer))
             {
                 return View(offer);
             }
+
+
             if (ModelState.IsValid)
             {
-                if (fileUpload.Count > 0) offer.ImagePath = GeneratePhisicalFile(fileUpload[0]);
+                fileUpload = FilterFiles(fileUpload);
+
+                string imagePath = null;
+                HttpPostedFileBase fileImagePath;
+                if (fileUpload.Count() == 1)
+                {
+                    fileImagePath = fileUpload.FirstOrDefault();
+                    fileUpload.RemoveAt(0);
+                    imagePath = GeneratePhisicalFile(fileImagePath);
+                }
+                offer.ImagePath = imagePath;
+
                 offer.CreationDatetime = DateTime.Now;
                 offer.ModificationDatetime = DateTime.Now;
                 db.offer.Add(offer);
@@ -133,7 +157,6 @@ namespace Cuponera.WebSite.Controllers
 
                 //Save aditional images
                 UploadImages(fileUpload, offer.IdOffer);
-
                 return RedirectToAction("Index");
             }
 
@@ -162,7 +185,7 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdOffer,Title,Description,StartDatetime,ExpirationDatetime,IdProduct,CreationDatetime,ModificationDatetime,DeletionDatetime,Price,ImagePath")] offer offer, List<HttpPostedFileBase> fileUpload, string imagesToRemove)
+        public async Task<ActionResult> Edit([Bind(Include = "IdOffer,Title,Description,StartDatetime,ExpirationDatetime,IdProduct,Price")] offer offer, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
         {
 
 			if (!Validate(offer))
@@ -175,27 +198,34 @@ namespace Cuponera.WebSite.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    string[] images_to_remove = imagesToRemove.Split(new Char[] { ',' });
+                    fileUpload = FilterFiles(fileUpload);
+                    HttpPostedFileBase fileImagePath;
+                    if (String.IsNullOrEmpty(ImagePath) && fileUpload.Count() == 1)
+                    {
+                        fileImagePath = fileUpload.FirstOrDefault();
+                        fileUpload.RemoveAt(0);
+                        ImagePath = GeneratePhisicalFile(fileImagePath);
+                    }
 
-                    if (images_to_remove.Contains("main"))
+                    string previousImagePath = db.offer.Where(o => o.IdOffer == offer.IdOffer).Select(p => p.ImagePath).FirstOrDefault();
+
+                    string[] images_to_remove = imagesToRemove.Split(new Char[] { ',' });
+                    RemoveImages(images_to_remove);
+
+                    string remainingImagePath = GetRemainImageName(offer.IdOffer);
+                    if (!string.IsNullOrEmpty(remainingImagePath))
                     {
-                        offer.ImagePath = null;
+                        ImagePath = remainingImagePath;
                     }
-                    foreach (string image_to_remove in images_to_remove)
-                    {
-                        if (image_to_remove == "main" || string.IsNullOrEmpty(image_to_remove))
-                        {
-                            continue;
-                        }
-                        int current_image_to_remove = Convert.ToInt32(image_to_remove);
-                        var image = db.images.Where(i => i.IdImage == current_image_to_remove);
-                        db.images.Remove(image.FirstOrDefault());
-                    }
+
+                    offer.ImagePath = ChangeCoverImage(previousImagePath, ImagePath, images_to_remove.Contains("main"), offer.IdOffer);
+
+
 
 
                     db.Entry(offer).State = EntityState.Modified;
                     offer.ModificationDatetime = DateTime.Now;
-                    await db.SaveChangesAsync();
+                    db.SaveChanges();
                     //Save aditional images
                     UploadImages(fileUpload, offer.IdOffer);
                     return RedirectToAction("Index");

@@ -40,6 +40,8 @@ function callServer(args) {
                    alert('No tiene permisos para borrar el elemento.')
                    
                }
+           } else {
+               args.success(data, textStatus, jqXHR);
            }
            
        }

@@ -14,7 +14,6 @@ import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.map.GoogleMapFragment;
 import com.cuponera.model.Store;
-import com.cuponera.product.ProductFragment;
 import com.cuponera.service.store.StoreRequest;
 import com.cuponera.service.store.StoreResponse;
 import com.cuponera.utils.ErrorHandler;
@@ -101,7 +100,8 @@ public class StoreFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container, ProductFragment.newInstance(getArguments().getInt(ARGS_ID_CATEGORY), store.get(position)));
+				transaction.setCustomAnimations(R.anim.transition_slide_in_left, R.anim.transition_slide_out_left);
+				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(getArguments().getInt(ARGS_ID_CATEGORY), store.get(position)));
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}

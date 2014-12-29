@@ -19,6 +19,7 @@ import com.cuponera.R;
 import com.cuponera.model.State;
 import com.cuponera.navigation.HeaderImageInterface;
 import com.cuponera.navigation.HeaderInterface;
+import com.cuponera.navigation.NavBarFragment;
 import com.cuponera.product.OfferFragment;
 import com.cuponera.service.state.StateRequest;
 import com.cuponera.service.state.StateResponse;
@@ -153,6 +154,11 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 					if (state.getName().equalsIgnoreCase(arrayAdapter.getItem(which))) {
 						Settings.getInstance(getActivity()).setLatitude(state.getLatitude());
 						Settings.getInstance(getActivity()).setLongitude(state.getLongitude());
+						Settings.getInstance(getActivity()).setCity(state.getName());
+						NavBarFragment navBarFragment = (NavBarFragment) getBaseActivity().getSupportFragmentManager().findFragmentById(R.id.navBar);
+						if (navBarFragment != null) {
+							navBarFragment.setTitle(state.getName());
+						}
 						getMuni();
 					}
 				}

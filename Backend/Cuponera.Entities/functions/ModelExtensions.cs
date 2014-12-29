@@ -33,6 +33,7 @@ namespace Cuponera.Entities
         public double Distance { get; set; }
         public int HasOffers { get; set; }
 
+        public int HasProducts { get; set; }
         public int IdCategory { get; set; }
     }
 

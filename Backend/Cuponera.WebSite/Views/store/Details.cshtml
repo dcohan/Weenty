@@ -1,13 +1,12 @@
 ﻿@model Cuponera.Entities.store
 
 @{
-    ViewBag.Title = "Detalles";
+    ViewBag.Title = "Detalle " + Model.Name;
 }
 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
 @Scripts.Render("~/bundles/googlemaps")
 
-<h2>@Html.DisplayFor(model => model.Name)</h2>
 
 
 <script type="text/javascript">
@@ -24,6 +23,8 @@
     });
 </script>
 
+
+<h2>@Html.DisplayFor(model => model.Name)</h2>
 
 <div>
     <br />
@@ -80,7 +81,30 @@
     </div>
 
  
-
+    <div class="item-description">
+        <div class="col-md-10">
+            <b>Imágenes:</b>
+            <span>@(Model.images.Count() == 0 && string.IsNullOrEmpty(Model.ImagePath) ? "No hay imágenes cargadas." : "")</span>
+            <div class="images-container">
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <div class="image-container selected" data-id-image="main">
+                        <div class="image-container-content">
+                            <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview selected" alt="Portada" />
+                        </div>
+                    </div>
+                }
+                @foreach (var item in Model.images)
+                {
+                    <div class="image-container" data-id-image="@Html.DisplayFor(model => item.IdImage)">
+                        <div class="image-container-content">
+                            <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="Imagen" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 
     <div class="item-description">
         <b>Estado:</b>

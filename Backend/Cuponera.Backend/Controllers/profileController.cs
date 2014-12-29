@@ -88,10 +88,21 @@ namespace Cuponera.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.profile.Add(profile);
-            await db.SaveChangesAsync();
 
-            return Created(profile);
+           IQueryable<profile> p = db.profile.Where(pro => pro.DeviceId == profile.DeviceId);
+
+            if (p.Count() == 0)
+            {
+                db.profile.Add(profile);
+                await db.SaveChangesAsync();
+                return Created(profile);
+            }
+            else {
+                profile.IdProfile = p.SingleOrDefault().IdProfile;
+                return Created(profile);
+            }  
+
+           
         }
 
         // PATCH: odata/profile(5)

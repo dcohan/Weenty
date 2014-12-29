@@ -218,7 +218,7 @@ footer {
 /* menu
 ----------------------------------------------------------*/
 ul#menu {
-    font-size: 1.3em;
+    font-size: 1.1em;
     font-weight: 600;
     margin: 0 0 5px;
     padding: 0;
@@ -796,14 +796,19 @@ tr.pager td {
 }
 
 
+.table-all tbody td.operation.first{
+    padding-left: 20px;
+    text-align: center;
+}
 
 .table-all tbody td.current-status {
-    padding-right: 0px;
+    padding-right: 0;
     text-align: center;
 }
 
 .table-all tbody td.centered-content {
     text-align: center;
+    padding-right: 0;
 }
 
 .table-all tbody td.current-status img {
@@ -824,20 +829,29 @@ tr.pager td {
 
 .list-content .filters {
     float: right;
-    /*padding-right: 70px;*/
+    width: 37%;
 }
 
-.filters .filter input, .filters .filter select {
-    max-width: 80%;
+.list-content .filters.full-width {
+    width: 96% !important;
+}
+
+.filters .filter input.larger {
+    width: 96% !important;
+}
+
+.filters .filter select.larger {
+    width: 99% !important;
 }
 
 .list-content .table-all {
     float: left;
+    max-width: 60%;
 }
 
-    .list-content .table-all td {
-        min-width: 20px;
-    }
+.list-content .table-all td {
+    min-width: 20px;
+}
 
 .list-content .filter {
     margin-bottom: 10px;
@@ -970,17 +984,33 @@ img.preview{
     width: 80px;
 }
 
-.images-container{
-    margin-top: 20px;
+.images-container {
+    margin-top: 10px;
     position: relative;
 }
 
+.mini-image-container {
+    height: 30px;
+    margin-top: 10px;
+}
+
 .image-container {
+    height: 100px;
     margin-top: 10px;
 }
 
 .image-container.selected{
     border: solid 5px blue;
+}
+
+.mini-image-container-content {
+    height: 30px;
+    width: 30px;
+}
+
+.image-container-content {
+    height: 80px;
+    width: 80px;
 }
 
 .image-container-content, .image-container {
@@ -994,8 +1024,14 @@ img.preview{
 }
 
 .image-container-content .delete-icon{
-    left:-12px;
+    cursor: pointer;
+    left:73px;
     position: relative;
-    top: -73px;
+    top: -90px;
     z-index: 10;
+}
+
+
+.deleted {
+    color: rgb(255, 0, 0);
 }

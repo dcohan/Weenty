@@ -1,8 +1,9 @@
 ﻿@model Cuponera.Entities.store
 
 @{
-    ViewBag.Title = "Editar";
+    ViewBag.Title = "Editar " + Model.Name;
 }
+
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
 @Scripts.Render("~/bundles/googlemaps")
 
@@ -13,7 +14,48 @@
     }
 
     var images_to_remove = [];
+    var images = [];
+
     $(function () {
+        $('#fileUpload').change(function(e){
+            var files = e.target.files;
+            if (!files.length) { return; }
+
+            $('.files-name').empty();
+            $(files).each(function(k, v){
+                $('.files-name').append(
+                    $('<div></div>').html(v.name)
+                );
+            });
+        });
+
+        $('.image-container').click(function () {
+            $('.image-container').removeClass('selected');
+            $(this).addClass('selected');
+
+            var id_image = $(this).data('id-image');
+            $(images).each(function(k,v){
+                if (v.id_image == id_image) {
+                    $('#ImagePath').attr('value', v.url);
+                }
+            });
+        });
+
+        $('.delete-icon').click(function () {
+            var $container = $(this).closest('.image-container');
+            var id_image = $container.data('id-image');
+            images_to_remove.push(id_image);
+
+            var selected_image_path = $('#ImagePath').val();
+            $(images).each(function(k, v){
+                if (v.id_image == id_image && selected_image_path == v.url) {
+                    $('#ImagePath').attr('value', '');
+                }
+            });
+
+            $container.remove();
+            $('#imagesToRemove').val(images_to_remove.join(','));
+        });
 
         var map = maps.initialize({
             editable: true
@@ -37,23 +79,13 @@
                 }
             });
         });
-
-        $('.delete-icon').click(function () {
-            var $container = $(this).closest('.image-container');
-            var id_image = $container.data('id-image');
-            images_to_remove.push(id_image);
-
-
-            $container.remove();
-            $('#imagesToRemove').val(images_to_remove.join(','));
-        });
     });
 </script>
 
 
-<h2>Editar @Html.DisplayFor(model => model.Name)</h2>
+<h2>@Html.DisplayFor(model => model.Name)</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "store", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmID" }))
 {
     @Html.AntiForgeryToken()
 
@@ -65,7 +97,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, "Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Name, "Nombre *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -82,7 +114,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IdCompany, "Compañia", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdCompany, "Compañia *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("IdCompany", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdCompany, "", new { @class = "text-danger" })
@@ -100,7 +132,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Address, "Dirección", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Address, "Dirección *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @id = "address", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
@@ -109,7 +141,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.state.Name, "Localidad", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.state.Name, "Localidad *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.IdState, new SelectList(
                   ViewBag.States,
@@ -186,28 +218,61 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                <span>Imágenes</span>
+                <label class="control-label col-md-2" for="">Imágenes</label>
+                <span>@(Model.images.Count() == 0 && string.IsNullOrEmpty(Model.ImagePath) ? "No hay imágenes cargadas." : "")</span>
                 <div class="images-container">
-                    <div class="image-container" data-id-image="main">
-                        @if (!string.IsNullOrEmpty(Model.ImagePath))
-                        {
-                            <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview inactive" alt="inactive" />
-                            <img src="~/Images/x_images.png" class="small-icon delete-icon" />
-                        }
-                    </div>
+                    @if (!string.IsNullOrEmpty(Model.ImagePath))
+                    {
+                        <div class="image-container selected" data-id-image="main">
+                            <div class="image-container-content">
+
+                                <script type="text/javascript">
+                                    images.push({
+                                        id_image: 'main',
+                                        url: "@Model.ImagePath"
+                                    });
+                                </script>
+                                <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview inactive" alt="Portada" />
+                                <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+                            </div>
+                        </div>
+                    }
                     @foreach (var item in Model.images)
                     {
+                        <script type="text/javascript">
+                            images.push({
+                                id_image: @item.IdImage,
+                                url: "@item.ImagePath"
+                            });
+                        </script>
                         <div class="image-container" data-id-image="@Html.DisplayFor(model => item.IdImage)">
-                            <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="inactive" />
-                            <img src="~/Images/x_images.png" class="small-icon delete-icon" />
-
+                            <div class="image-container-content">
+                                <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="Imagen" />
+                                <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+                            </div>
                         </div>
                     }
                 </div>
             </div>
         </div>
-        <input type="hidden" id="imagesToRemove" name="imagesToRemove" />
+ 
+        <div class="hidden">
+            <input type="hidden" id="imagesToRemove" name="imagesToRemove" />
+            @Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+       
+         <div class="form-group">
+            <div class="col-md-10">
+                <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" />
+            </div>
 
+            Las imágenes seleccionadas son:
+            <div class="files-name">
+
+            </div>
+        </div>
+
+        <br />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

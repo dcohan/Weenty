@@ -10,6 +10,7 @@
     var globals = {
         controller: 'userCompany',
         filters: {
+            include: ['all'],
             custom: [{
                 controlType: 'select',
                 controlId: 'company',
@@ -33,70 +34,72 @@
 
 </script>
 
-@Html.Partial("AntiForgeryTokenForm")
-@Html.Partial("Filters")
+<div class="list-content">
+    @Html.Partial("AntiForgeryTokenForm")
+    @Html.Partial("Filters")
 
 
-@if (Model.Count() == 0)
-{
-    <div class="no-data">No hay datos.</div>
-}
-else
-{
-    <div class="table-all">
-        <table class="table">
-            <tr>
-                <th>
-                    Admin
-                </th>
-                <th>
-                    Compañia
-                </th>
-                <th>
-                    Sucursal
-                </th>
-                <th>
-                    Usuario
-                </th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
+    @if (Model.Count() == 0)
+    {
+        <div class="no-data">No hay datos.</div>
+    }
+    else
+    {
+        <div class="table-all">
+            <table class="table">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsAdmin)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.company.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.store.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserProfile.UserName)
-                    </td>
-                    <td>
-                    <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.IdUserCompany }, new { @class = "editIcon" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("Detalle", "Details", new { id = item.IdUserCompany }, new { @class = "detailsIcon" })
-                    </td>
-                    <td>
-                        <a href="#" class="removeIcon" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
-                    </td>
+                    <th>
+                        Admin
+                    </th>
+                    <th>
+                        Compañia
+                    </th>
+                    <th>
+                        Sucursal
+                    </th>
+                    <th>
+                        Usuario
+                    </th>
                 </tr>
-            }
 
-        </table>
-        @Html.Partial("Paginator")
-    </div>
+                @foreach (var item in Model)
+                {
+                    <tr data-item-id="@item.IdUserCompany">
+                        <td class="centered-content">
+                            @Html.DisplayFor(modelItem => item.IsAdmin)
+                        </td>
+                        <td>
+                            <span class="@(item.company.DeletionDatetime != null ? "deleted" : "")">@Html.DisplayFor(modelItem => item.company.Name)</span>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.store.Name)
+                        </td>
+                        <td>
+                            <span class="item-name">@Html.DisplayFor(modelItem => item.UserProfile.UserName)</span>
+                        </td>
+                        <td class="operation first">
+                            @Html.ActionLink("Detalle", "Details", new { id = item.IdUserCompany }, new { @class = "detailsIcon", title = "Detalle" })
+                        </td>
+                        <td class="operation">
+                            @Html.ActionLink("Editar", "Edit", new { id = item.IdUserCompany }, new { @class = "editIcon", title = "Editar" })
+                        </td>
+                        <td class="operation">
+                            <a href="#" class="removeIcon" title="Eliminar" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+            @Html.Partial("Paginator")
+        </div>
 
 
 
-<div style="clear:both;"></div>
-}
+        <div style="clear:both;"></div>
+    }
 
-<p>
-    @Html.ActionLink("Nuevo", "Create")
-</p>
+    <p>
+        @Html.ActionLink("Nuevo", "Create")
+    </p>
+</div>

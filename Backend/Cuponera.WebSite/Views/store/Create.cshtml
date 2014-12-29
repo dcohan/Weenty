@@ -1,7 +1,7 @@
 ﻿@model Cuponera.Entities.store
 
 @{
-    ViewBag.Title = "Store";
+    ViewBag.Title = "Agregar sucursal";
 }
 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
@@ -46,12 +46,25 @@
                 return false;
             }
         });
+
+
+        $('#fileUpload').change(function (e) {
+            var files = e.target.files;
+            if (!files.length) { return; }
+
+            $('.files-name').empty();
+            $(files).each(function (k, v) {
+                $('.files-name').append(
+                    $('<div></div>').html(v.name)
+                );
+            });
+        });
     });
 </script>
 
 <h2>Agregar sucursal</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "store", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmID" }))
 {
     @Html.AntiForgeryToken()
 
@@ -60,7 +73,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, "Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Name, "Nombre *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -76,7 +89,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IdCompany, "Compañia", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdCompany, "Compañia *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("IdCompany", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdCompany, "", new { @class = "text-danger" })
@@ -94,7 +107,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Address, "Dirección", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Address, "Dirección *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @id = "address", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
@@ -102,7 +115,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.state.Name, "Localidad", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.state.Name, "Localidad *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.IdState, new SelectList(
                   ViewBag.States,
@@ -119,9 +132,6 @@
 
 
         <div class="float-left map" id="googleMap"></div>
-
-        <div class="advertisment float-right">
-        </div>
 
         @Html.HiddenFor(model => model.Latitude, htmlAttributes: new { @id = "latitude" })
         @Html.HiddenFor(model => model.Longitude, htmlAttributes: new { @id = "longitude" })
@@ -175,6 +185,17 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="control-label col-md-2" for="fileUpload">Imágenes</label>
+            <div class="col-md-10">
+                <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" />
+            </div>
+
+            Las imágenes seleccionadas son:
+            <div class="files-name">
+
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

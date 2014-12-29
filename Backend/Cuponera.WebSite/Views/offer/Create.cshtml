@@ -1,102 +1,29 @@
 ﻿@model Cuponera.Entities.offer
 
 @{
-    ViewBag.Title = "Alta";
+    ViewBag.Title = "Agregar oferta";
 }
 
-<h2<Crear</h2>
+<h2>Agregar oferta</h2>
 
-<style type="text/css">
-    #selectedFiles img {
-        max-width: 200px;
-        max-height: 200px;
-        float: left;
-        margin-bottom: 10px;
-    }
-
-    input[type='file'] {
-        color: transparent;
-    }
-</style>
 @Scripts.Render("~/bundles/globalization")
 @Scripts.Render("~/bundles/globalization_ar")
 
 <script type="text/javascript">
 
-    var nowTemp = new Date();
-    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-    var files;
-    var storedFiles = [];
-    var upc = 0;
-
-
-
-    $(function () {
-
-        $(":file").attr('title', '  ');
-        var $loading = $('#loadingDiv').hide();
-
-        $("input[id^='fileToUpload']").change(function (e) {
-            doReCreate(e);
-        });
-
-        selDiv = $("#selectedFiles");
-    });
-
-
-    function doReCreate(e) {
-        upc = upc + 1;
-        handleFileSelect(e);
-
-        $("input[id^='fileToUpload']").hide();
-
-        $('<input>').attr({
-            type: 'file',
-            multiple: 'multiple',
-            id: 'fileToUpload' + upc,
-            class: 'fUpload',
-            name: 'fileUpload',
-            style: 'float: left',
-            title: '  ',
-            onchange: "doReCreate(event)"
-
-        }).appendTo('#uploaders');
-    }
-
-
-    function handleFileSelect(e) {
-
-        //selDiv.innerHTML = ""; storedFiles = [];
-        selDiv = document.querySelector("#selectedFiles");
-
-        if (!e.target.files) return;
-
-        //selDiv.innerHTML = "";
-        files = e.target.files;
-
-        for (var i = 0; i < files.length; i++) {
-            //if (i == 0) { selDiv.innerHTML = ""; storedFiles = []; }
-            var f = files[i];
-            selDiv.innerHTML += "<div>" + f.name + "<a onclick='removeAtt(this)'> X </a></div>";
-            storedFiles.push(f.name);
-        }
-        $('#@Html.IdFor(i => i.ImagePath)').val(storedFiles);
-    }
-
-    function removeAtt(t) {
-        var serEle = $(t).parent().text().slice(0, -3);
-        var index = storedFiles.indexOf(serEle);
-        if (index !== -1) {
-            storedFiles.splice(index, 1);
-        }
-        $(t).parent().remove();
-
-        $('#@Html.IdFor(i => i.ImagePath)').val(storedFiles);
-
-    }
-
     $(function () {
         
+        $('#fileUpload').change(function (e) {
+            var files = e.target.files;
+            if (!files.length) { return; }
+
+            $('.files-name').empty();
+            $(files).each(function (k, v) {
+                $('.files-name').append(
+                    $('<div></div>').html(v.name)
+                );
+            });
+        });
 
         $.validator.methods.date = function (value, element) {
                 Globalize.culture("es-AR");
@@ -115,6 +42,7 @@
         $(".hidden").removeClass('input-validation-error');
 
     });
+
 </script>
 
 @using (Html.BeginForm("Create", "offer", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmID" }))
@@ -126,7 +54,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Title, "Nombre", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Title, "Nombre *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
@@ -134,7 +62,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, "Descripción", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Description, "Descripción *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
@@ -142,23 +70,15 @@
         </div>
 
 		<div class="form-group">
-            Producto
+            @Html.LabelFor(model => model.IdProduct, "Producto *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("IdProduct", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.IdProduct, null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdProduct, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.CheckBoxFor(model => model.Active)
-                @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, "Precio", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Price, "Precio ($) *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
@@ -166,7 +86,7 @@
         </div>
 
         <div class="form-group">
-            Fecha Inicio
+            @Html.LabelFor(model => model.StartDatetime, "Fecha Inicio *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.StartDatetime, new { htmlAttributes = new { @class = "form-control, date-picker" } })
                 @Html.ValidationMessageFor(model => model.StartDatetime, "", new { @class = "text-danger" })
@@ -174,7 +94,7 @@
         </div>
 
         <div class="form-group">
-            Fecha Fin
+            @Html.LabelFor(model => model.ExpirationDatetime, "Fecha Expiración", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ExpirationDatetime, new { htmlAttributes = new { @class = "form-control, date-picker" } })
                 @Html.ValidationMessage("Date")
@@ -184,22 +104,16 @@
 
 
 
-        <div class="labelstyle">
-            <label>Files</label>
-        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImagePath, "Imágenes", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" />
+            </div>
 
-        <div id="uploaders">
-            <input type="file" id="fileToUpload" name="fileUpload" multiple="multiple" style="float: left;" />
-            <br />
-            <span id="spnFile" style="float: left; color: #FF0000"></span>
-            @Html.ValidationMessage("File")
-            @Html.Hidden("hdnFileUpload")
-        </div>
-        <br />
-        <br />
-        <br />
-        <div class="control-section" style="padding: 0px;">
-            <div id="selectedFiles"></div>
+            Las imágenes seleccionadas son:
+            <div class="files-name">
+
+            </div>
         </div>
 
         @Html.ValidationMessage("ServerValidations")

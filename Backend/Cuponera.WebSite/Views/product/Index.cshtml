@@ -81,7 +81,7 @@
                         <td>
                             <span>@Html.DisplayFor(modelItem => item.Price)</span>
                         </td>
-                        <td>
+                        <td class="current-status">
                             @if (item.Active)
                             {
                                 <img src="Images/tick.ico" alt="active" class="active" style="" />
@@ -91,24 +91,24 @@
                                 <img src="Images/x.ico" alt="inactive" class="inactive" />
                             }
                         </td>
-                        <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.IdProduct }, new { @class = "editIcon" })
+                        <td class="operation first">
+                            @Html.ActionLink("Detalle", "Details", new { id = item.IdProduct }, new { @class = "detailsIcon", title = "Detalle" })
                         </td>
-                        <td>
-                            @Html.ActionLink("Detalle", "Details", new { id = item.IdProduct }, new { @class = "detailsIcon" })
+                        <td class="operation">
+                            @Html.ActionLink("Editar", "Edit", new { id = item.IdProduct }, new { @class = "editIcon", title = "Editar" })
                         </td>
-                        <td>
+                        <td class="operation">
                             @if (item.DeletionDatetime == null)
                             {
-                                <a href="#" class="removeIcon" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                                <a href="#" class="removeIcon" title="Eliminar" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
                             }
                             else
                             {
-                                <a href="#" class="addIcon" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                <a href="#" class="addIcon" title="Activar" data-popup-to-open="dialog-confirm-activate">Activar</a>
                             }
-                        <td>
-                            @Html.ActionLink("Oferta", "Create", "offer", new { IdProduct = item.IdProduct }, new { @class = "offerIcon" })
-
+                        </td>
+                        <td class="operation">
+                            @Html.ActionLink("Oferta", "Create", "offer", new { IdProduct = item.IdProduct }, new { @class = "offerIcon", title="Crear Oferta" })
                         </td>
                         
                     </tr>

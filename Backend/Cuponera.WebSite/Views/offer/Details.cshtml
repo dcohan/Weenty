@@ -1,20 +1,62 @@
 ﻿@model Cuponera.Entities.offer
 
 @{
-    ViewBag.Title = "Detalle";
+    ViewBag.Title = "Detalle oferta del producto " + Model.product.Title;
 }
 
-<h2>Detalle</h2>
+<h2>@Model.product.Title</h2>
 
 <div>
     <h4>Oferta</h4>
     <hr />
+    <div class="item-description">
+        <b>Producto:</b> @Html.DisplayFor(model => model.product.Title)
+    </div>
+
     <div class="item-description">
         <b>Nombre:</b> @Html.DisplayFor(model => model.Title)
     </div>
 
     <div class="item-description">
         <b>Descripción:</b> @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="item-description">
+        <b>Precio:</b> $@Html.DisplayFor(model => model.Price)
+    </div>
+
+
+    <div class="item-description">
+        <b>Fecha de inicio:</b> @Html.DisplayFor(model => model.StartDatetime)
+    </div>
+
+    <div class="item-description">
+        <b>Fecha de finalización:</b> @Html.DisplayFor(model => model.ExpirationDatetime)
+    </div>
+
+    <div class="item-description">
+        <div class="col-md-10">
+            <b>Imágenes:</b>
+            <span>@(Model.images.Count() == 0 && string.IsNullOrEmpty(Model.ImagePath) ? "No hay imágenes cargadas." : "")</span>
+            <div class="images-container">
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <div class="image-container selected" data-id-image="main">
+                        <div class="image-container-content">
+                            <img src="@Html.DisplayFor(model => model.ImagePath)" class="preview selected" alt="Portada" />
+                        </div>
+                    </div>
+                }
+                @foreach (var item in Model.images)
+                {
+                    <div class="image-container" data-id-image="@Html.DisplayFor(model => item.IdImage)">
+                        <div class="image-container-content">
+                            <img src="@Html.DisplayFor(model => item.ImagePath)" class="preview inactive" alt="Imagen" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 
     <div class="item-description">
@@ -29,36 +71,6 @@
             <img src="../../Images/x.ico" alt="inactive" class="inactive" />
         }
     </div>
-
-    <div class="item-description">
-        <b>Precio:</b> @Html.DisplayFor(model => model.Price)
-    </div>
-
-
-    <div class="item-description">
-        <b>Fecha de inicio:</b> @Html.DisplayFor(model => model.StartDatetime)
-    </div>
-
-    <div class="item-description">
-        <b>Fecha de finalización:</b> @Html.DisplayFor(model => model.ExpirationDatetime)
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-10">
-            <div class="control-label col-md-2 item-description">
-                <b>Portada:</b> <img src="@Html.DisplayFor(model => model.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
-            </div>
-            <div class="item-description">
-                <b>Imagenes:</b>
-                @foreach (var item in Model.images)
-                {
-                    <img src="@Html.DisplayFor(model => item.ImagePath)" style="width:80px; height:80px" alt="inactive" class="inactive" />
-                }
-            </div>
-        </div>
-    </div>
-
-
     
      
 

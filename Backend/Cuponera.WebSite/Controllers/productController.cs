@@ -51,13 +51,15 @@ namespace Cuponera.WebSite.Controllers
 
         private void GetCategories(product product=null)
         {
+            var categories = db.category.Where(c => c.DeletionDatetime == null);
+
             if (product == null)
             {
-                ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name");
+                ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name");
             }
             else
             {
-                ViewBag.IdCategory = new SelectList(db.category, "IdCategory", "Name", product.IdCategory);
+                ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name", product.IdCategory);
             }
         }
 
@@ -124,7 +126,7 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="IdProduct,Title,StartDatetime,ExpirationDatetime,ImagePath,IdCategory,Description,IdStore, Price")] product product, List<HttpPostedFileBase> fileUpload)
+        public ActionResult Create([Bind(Include="IdProduct,Title,StartDatetime,ExpirationDatetime,IdCategory,Description,IdStore, Price")] product product, List<HttpPostedFileBase> fileUpload)
         {
             if (!Validate(product))
             {
@@ -133,7 +135,18 @@ namespace Cuponera.WebSite.Controllers
 
             if (ModelState.IsValid)
             {
-                if (fileUpload.Count > 0) product.ImagePath = GeneratePhisicalFile(fileUpload[0]);
+                fileUpload = FilterFiles(fileUpload);
+                string imagePath = null;
+                HttpPostedFileBase fileImagePath;
+                if (fileUpload.Count() == 1)
+                {
+                    fileImagePath = fileUpload.FirstOrDefault();
+                    fileUpload.RemoveAt(0);
+                    imagePath = GeneratePhisicalFile(fileImagePath);
+                }
+
+                product.ImagePath = imagePath;
+
                 product.CreationDatetime = DateTime.Now;
                 product.ModificationDatetime = DateTime.Now;
                 db.product.Add(product);
@@ -170,7 +183,7 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdProduct,Title,Active,StartDatetime,ExpirationDatetime,IdCategory,Description,IdStore, Price, Files")] product product, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
+        public async Task<ActionResult> Edit([Bind(Include = "IdProduct,Title,Active,StartDatetime,ExpirationDatetime,IdCategory,Description,IdStore, Price")] product product, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
         {
             if (!Validate(product))
             {
@@ -179,12 +192,28 @@ namespace Cuponera.WebSite.Controllers
 
             if (ModelState.IsValid)
             {
+                fileUpload = FilterFiles(fileUpload);
+
+                HttpPostedFileBase fileImagePath;
+                if (String.IsNullOrEmpty(ImagePath) && fileUpload.Count() == 1)
+                {
+                    fileImagePath = fileUpload.FirstOrDefault();
+                    fileUpload.RemoveAt(0);
+                    ImagePath = GeneratePhisicalFile(fileImagePath);
+                }
+
                 string previousImagePath = db.product.Where(p => p.IdProduct == product.IdProduct).Select(p => p.ImagePath).FirstOrDefault();
 
                 string[] images_to_remove = imagesToRemove.Split(new Char[] { ',' });
                 RemoveImages(images_to_remove);
-                product.ImagePath = ChangeCoverImage(previousImagePath, ImagePath, images_to_remove.Contains("main"), product.IdProduct);
 
+                string remainingImagePath = GetRemainImageName(product.IdProduct);
+                if (!string.IsNullOrEmpty(remainingImagePath)) 
+                {
+                    ImagePath = remainingImagePath;
+                }
+
+                product.ImagePath = ChangeCoverImage(previousImagePath, ImagePath, images_to_remove.Contains("main"), product.IdProduct);
 
                 db.Entry(product).State = EntityState.Modified;
                 product.ModificationDatetime = DateTime.Now;

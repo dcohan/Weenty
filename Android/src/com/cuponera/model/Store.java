@@ -49,9 +49,12 @@ public class Store extends BaseModel {
 	@JsonProperty("HasOffers")
 	private int hasOffers;
 
+	@JsonProperty("HasProducts")
+	private int hasProducts;
+
 	@JsonProperty("IdCategory")
 	private int idCategory;
-	
+
 	@JsonProperty("Description")
 	private String description;
 
@@ -173,6 +176,14 @@ public class Store extends BaseModel {
 
 	public void setHasOffers(int hasOffers) {
 		this.hasOffers = hasOffers;
+	}
+
+	public boolean hasProducts() {
+		return hasProducts == 1;
+	}
+
+	public void setHasProducts(int hasProducts) {
+		this.hasProducts = hasProducts;
 	}
 
 	public int getIdCategory() {

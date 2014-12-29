@@ -1,13 +1,11 @@
 ﻿@model Cuponera.Entities.state
 
 @{
-    ViewBag.Title = "Detalles";
+    ViewBag.Title = "Detalle " + Model.Name;
 }
 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
 @Scripts.Render("~/bundles/googlemaps")
-
-<h2>@Html.DisplayFor(model => model.Name)</h2>
 
 
 <script type="text/javascript">
@@ -25,6 +23,7 @@
 </script>
 
 
+<h2>@Html.DisplayFor(model => model.Name)</h2>
 <div>
     <div class="item-description">
         <b>@Html.DisplayNameFor(model => model.Name):</b> @Html.DisplayFor(model => model.Name)
