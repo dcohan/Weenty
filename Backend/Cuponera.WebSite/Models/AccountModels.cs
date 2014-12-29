@@ -30,25 +30,30 @@ namespace Cuponera.WebSite.Models
                 {
                     var _user = db.UserProfile.FirstOrDefault(u => u.UserName.ToLower() == Name.ToLower());
                     HttpContext.Current.Session["userId"] = _user.UserId;
+                    HttpContext.Current.Session["userActive"] = _user.Active;
 
-                    var userCompany = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId) && uc.IsAdmin).FirstOrDefault();
-
-                    //Is Admin
-                    if (userCompany != null)
+                    if (_user.Active!=null && (bool)_user.Active)
                     {
-                        if (userCompany.IsAdmin)
+
+                        var userCompany = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId) && uc.IsAdmin).FirstOrDefault();
+
+                        //Is Admin
+                        if (userCompany != null)
                         {
-                            HttpContext.Current.Session["AdminCompany"] = userCompany.IdCompany;
+                            if (userCompany.IsAdmin)
+                            {
+                                HttpContext.Current.Session["AdminCompany"] = userCompany.IdCompany;
+                            }
+                            var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId)).Select(s => s.IdStore).ToList();
+
+                            HttpContext.Current.Session["AvailableStores"] = stores;
                         }
-                        var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId)).Select(s => s.IdStore).ToList();
+                        else
+                        {
+                            var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId)).Select(s => s.IdStore).ToList();
 
-                        HttpContext.Current.Session["AvailableStores"] = stores;
-                    }
-                    else
-                    {
-                        var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId)).Select(s => s.IdStore).ToList();
-
-                        HttpContext.Current.Session["AvailableStores"] = stores;
+                            HttpContext.Current.Session["AvailableStores"] = stores;
+                        }
                     }
                 }
             }
@@ -77,6 +82,14 @@ namespace Cuponera.WebSite.Models
             get
             {
                 return (int)HttpContext.Current.Session["userId"];
+            }
+        }
+
+        public static bool CurrentUserIsActive
+        {
+            get
+            {
+                return HttpContext.Current.Session["userActive"] != null && (bool)HttpContext.Current.Session["userActive"];
             }
         }
 
@@ -199,6 +212,12 @@ namespace Cuponera.WebSite.Models
         [Required]
         [Display(Name = "Usuario")]
         public string UserName { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        public bool Active { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "La {0} debe ser al menos de {2} caracteres de largo.", MinimumLength = 6)]

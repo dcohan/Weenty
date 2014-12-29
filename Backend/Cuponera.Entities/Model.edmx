@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="IdCategory" />
@@ -86,7 +86,7 @@
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ImagePath" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="250" />
           <Property Name="Price" Type="float" />
           <Property Name="Description" Type="varchar" MaxLength="1000" />
         </EntityType>
@@ -109,16 +109,16 @@
           </Key>
           <Property Name="IdProduct" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
+          <Property Name="IdCategory" Type="int" Nullable="false" />
+          <Property Name="IdStore" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" />
           <Property Name="StartDatetime" Type="datetime2" Precision="0" />
           <Property Name="ExpirationDatetime" Type="datetime2" Precision="0" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="250" />
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ImagePath" Type="varchar" MaxLength="250" />
-          <Property Name="IdCategory" Type="int" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="1000" />
-          <Property Name="IdStore" Type="int" Nullable="false" />
-          <Property Name="Price" Type="float" />
         </EntityType>
         <EntityType Name="profile">
           <Key>
@@ -203,6 +203,8 @@
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="56" Nullable="false" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="webpages_Membership">
           <Key>
@@ -737,7 +739,7 @@
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Price" Type="Double" />
           <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="images" Relationship="CuponeraModel.FK_images_offer" FromRole="offer" ToRole="images" />
@@ -762,16 +764,16 @@
           </Key>
           <Property Name="IdProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="IdCategory" Type="Int32" Nullable="false" />
+          <Property Name="IdStore" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" />
           <Property Name="StartDatetime" Type="DateTime" Precision="0" />
           <Property Name="ExpirationDatetime" Type="DateTime" Precision="0" />
+          <Property Name="ImagePath" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <Property Name="ImagePath" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="IdCategory" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="IdStore" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="Double" />
           <NavigationProperty Name="category" Relationship="CuponeraModel.FK_product_category" FromRole="product" ToRole="category" />
           <NavigationProperty Name="images" Relationship="CuponeraModel.FK_images_product" FromRole="product" ToRole="images" />
           <NavigationProperty Name="offer" Relationship="CuponeraModel.FK_offer_product" FromRole="product" ToRole="offer" />
@@ -845,12 +847,12 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Pricing" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="SortFactor" Type="Int32" Nullable="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="Icon" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
           <NavigationProperty Name="companySubscription" Relationship="CuponeraModel.FK_companySubscription_subscription" FromRole="subscription" ToRole="companySubscription" />
-          <Property Name="Duration" Type="Int32" Nullable="false" />
-          <Property Name="Icon" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="userCompany">
           <Key>
@@ -873,6 +875,8 @@
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="56" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="geoRequest" Relationship="CuponeraModel.FK_geoRequest_UserProfile" FromRole="UserProfile" ToRole="geoRequest" />
           <NavigationProperty Name="userCompany" Relationship="CuponeraModel.FK_userCompany_UserProfile" FromRole="UserProfile" ToRole="userCompany" />
           <NavigationProperty Name="webpages_Roles" Relationship="CuponeraModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
@@ -1221,16 +1225,16 @@
           <EntitySetMapping Name="product">
             <EntityTypeMapping TypeName="CuponeraModel.product">
               <MappingFragment StoreEntitySet="product">
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="IdStore" ColumnName="IdStore" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
-                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="ExpirationDatetime" ColumnName="ExpirationDatetime" />
                 <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IdStore" ColumnName="IdStore" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
               </MappingFragment>
@@ -1295,11 +1299,11 @@
           <EntitySetMapping Name="subscription">
             <EntityTypeMapping TypeName="CuponeraModel.subscription">
               <MappingFragment StoreEntitySet="subscription">
-                <ScalarProperty Name="Icon" ColumnName="Icon" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="SortFactor" ColumnName="SortFactor" />
                 <ScalarProperty Name="Pricing" ColumnName="Pricing" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1321,6 +1325,8 @@
           <EntitySetMapping Name="UserProfile">
             <EntityTypeMapping TypeName="CuponeraModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>

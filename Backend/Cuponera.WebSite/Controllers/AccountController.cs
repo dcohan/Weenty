@@ -79,9 +79,8 @@ namespace Cuponera.WebSite.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Email = model.Email, Active=false });
+                    return RedirectToAction("Index", "Thankyou");
                 }
                 catch (MembershipCreateUserException e)
                 {
