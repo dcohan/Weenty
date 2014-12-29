@@ -12,7 +12,7 @@ public class ProfileResponse extends BaseResponse {
 	private String profileID;
 
 	@JsonProperty("Geolocation")
-	private int geolocation;
+	private boolean geolocation;
 
 
 	public String getProfileID() {
@@ -23,11 +23,11 @@ public class ProfileResponse extends BaseResponse {
 		this.profileID = profileID;
 	}
 
-	public int isGeolocation() {
+	public boolean isGeolocation() {
 		return geolocation;
 	}
 
-	public void setGeolocation(int geolocation) {
+	public void setGeolocation(boolean geolocation) {
 		this.geolocation = geolocation;
 	}
 	

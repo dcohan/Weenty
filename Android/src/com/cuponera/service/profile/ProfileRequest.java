@@ -69,7 +69,7 @@ public abstract class ProfileRequest extends AsyncPoolRequest<ProfileResponse> {
 	@Override
 	public void onServiceReturned(ProfileResponse result) {
 		Settings.getInstance(context).setProfileId(result.getProfileID());
-		Settings.getInstance(context).setLocationEnable(result.isGeolocation() == 1 ? true : false);
+		Settings.getInstance(context).setLocationEnable(result.isGeolocation());
 	}
 
 }
