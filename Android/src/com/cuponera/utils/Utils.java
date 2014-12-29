@@ -24,6 +24,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cuponera.R;
 import com.squareup.picasso.Picasso;
 
 public class Utils {
@@ -142,7 +143,8 @@ public class Utils {
 	}
 
 	public static void loadImageFromUrl(Context context, ImageView imageView, String url) {
-		Picasso.with(context).load(url).into(imageView);
+
+		Picasso.with(context).load(url).placeholder(R.drawable.logo_prehome).error(R.drawable.noimage).into(imageView);
 	}
 
 	public static boolean hasInternetConnection(Context context) {
@@ -186,6 +188,5 @@ public class Utils {
 			return null;
 		}
 	}
-
 
 }
