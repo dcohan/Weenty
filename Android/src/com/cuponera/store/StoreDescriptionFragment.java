@@ -1,5 +1,7 @@
 package com.cuponera.store;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +10,7 @@ import android.view.View.OnClickListener;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
+import com.cuponera.model.Images;
 import com.cuponera.model.Store;
 import com.cuponera.product.ProductFragment;
 import com.cuponera.service.images.ImagesRequest;
@@ -25,6 +28,7 @@ public class StoreDescriptionFragment extends BaseFragment {
 	private static final String ARGS_STORE = "args_store";
 	private static final String ARGS_ID_CATEGORY = "args_id_category";
 	private Store store;
+	private ArrayList<Images> images;
 
 	public static StoreDescriptionFragment newInstance(int idCategory, Store s) {
 
@@ -49,8 +53,9 @@ public class StoreDescriptionFragment extends BaseFragment {
 			@Override
 			public void onServiceReturned(ImagesResponse response) {
 				if (response != null && response.getImages().size() > 0) {
+					images = response.getImages();
 					FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-					transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(response.getImages()));
+					transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(images));
 					transaction.commit();
 				} else {
 					mViewProxy.findFrameLayout(R.id.gallery_adapter).setVisibility(View.GONE);
@@ -62,13 +67,23 @@ public class StoreDescriptionFragment extends BaseFragment {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		if (images != null && images.size() > 0) {
+			FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
+			transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(images));
+			transaction.commit();
+		}
+	}
+
+	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
 		FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
 		transaction.replace(R.id.store_bottom, StoreBottomFragment.newInstance(store));
 		transaction.commit();
-		
+
 		mViewProxy.findTextView(R.id.product_company).setText(store.getName());
 		if (store.hasOffers() || store.hasProducts()) {
 			mViewProxy.findView(R.id.offer_circle).setVisibility(View.VISIBLE);

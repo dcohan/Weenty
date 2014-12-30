@@ -1,5 +1,7 @@
 package com.cuponera.product;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentTransaction;
@@ -7,6 +9,7 @@ import android.view.View;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
+import com.cuponera.model.Images;
 import com.cuponera.model.Product;
 import com.cuponera.model.Store;
 import com.cuponera.service.images.ImagesRequest;
@@ -20,6 +23,7 @@ public class ProductDescriptionFragment extends BaseFragment {
 	private static final String ARGS_STORE = "args_store";
 	private Product product;
 	private Store store;
+	private ArrayList<Images> images;
 
 	@Override
 	protected int getLayout() {
@@ -48,8 +52,9 @@ public class ProductDescriptionFragment extends BaseFragment {
 			@Override
 			public void onServiceReturned(ImagesResponse response) {
 				if (response != null && response.getImages().size() > 0) {
+					images = response.getImages();
 					FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-					transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(response.getImages()));
+					transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(images));
 					transaction.commit();
 				} else {
 					mViewProxy.findFrameLayout(R.id.gallery_adapter).setVisibility(View.GONE);
@@ -58,6 +63,16 @@ public class ProductDescriptionFragment extends BaseFragment {
 		};
 		request.setIdProduct(product.getIdProduct());
 		request.execute(false);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (images != null && images.size() > 0) {
+			FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
+			transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(images));
+			transaction.commit();
+		}
 	}
 
 	@Override
