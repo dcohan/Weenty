@@ -19,20 +19,17 @@
             android:scaleType="fitXY"
             android:src="@drawable/menu_dropdown" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/menuButton"
-            android:orientation="vertical"
             android:padding="2dp" >
 
             <ImageView
                 android:id="@+id/app_logo"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginRight="40dp"
-                android:layout_weight="0.55"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_alignLeft="@+id/headerTitle"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/unknown"
                 android:padding="1dp"
@@ -43,12 +40,10 @@
                 android:id="@+id/headerTitle"
                 style="@style/HeaderText"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:textColor="@color/city_color"
-                android:layout_marginLeft="45dp"
-                android:layout_marginRight="40dp"
-                android:layout_weight="0.45" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_below="@+id/app_logo"
+                android:textColor="@color/city_color" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
