@@ -37,6 +37,9 @@ public class Store extends BaseModel {
 	@JsonProperty("Email")
 	private String email;
 
+	@JsonProperty("WebPage")
+	private String webPage;
+
 	@JsonProperty("FacebookUrl")
 	private String facebookUrl;
 
@@ -200,6 +203,14 @@ public class Store extends BaseModel {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getWebPage() {
+		return webPage;
+	}
+
+	public void setWebPage(String webPage) {
+		this.webPage = webPage;
 	}
 
 }

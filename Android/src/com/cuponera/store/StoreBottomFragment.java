@@ -41,35 +41,47 @@ public class StoreBottomFragment extends BaseFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		store = getArguments().getParcelable(ARGS_STORE);
-		mViewProxy.findTextView(R.id.store_phone).setText(store.getContactNumber());
+
 		mViewProxy.findTextView(R.id.store_address).setText(store.getAddress());
 		mViewProxy.findTextView(R.id.store_mail).setText(store.getEmail());
 
+		OnClickListener mailClick = new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent result = new Intent(android.content.Intent.ACTION_SENDTO);
+				result.setType("plain/text");
+				result.setData(Uri.parse("mailto:" + store.getEmail()));
+				result.putExtra(android.content.Intent.EXTRA_EMAIL, store.getEmail());
+				result.putExtra(android.content.Intent.EXTRA_SUBJECT, store.getName());
+				startActivity(result);
+
+			}
+		};
+		OnClickListener phoneClick = new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent callIntent = new Intent(Intent.ACTION_CALL);
+				callIntent.setData(Uri.parse("tel:" + store.getContactNumber()));
+				startActivity(callIntent);
+
+			}
+		};
+
 		if (!ValidationUtils.isNullOrEmpty(store.getContactNumber())) {
+			mViewProxy.findTextView(R.id.store_phone).setText(store.getContactNumber());
+			mViewProxy.findTextView(R.id.store_phone).setVisibility(View.VISIBLE);
+			mViewProxy.findTextView(R.id.store_phone).setOnClickListener(phoneClick);
 			mViewProxy.findImageView(R.id.product_phone_image).setVisibility(View.VISIBLE);
-			mViewProxy.findImageView(R.id.product_phone_image).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent callIntent = new Intent(Intent.ACTION_CALL);
-					callIntent.setData(Uri.parse("tel:" + store.getContactNumber()));
-					startActivity(callIntent);
-				}
-			});
+			mViewProxy.findImageView(R.id.product_phone_image).setOnClickListener(phoneClick);
 		}
 
 		if (!ValidationUtils.isNullOrEmpty(store.getEmail())) {
 			mViewProxy.findImageView(R.id.product_mail).setVisibility(View.VISIBLE);
-			mViewProxy.findImageView(R.id.product_mail).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent result = new Intent(android.content.Intent.ACTION_SENDTO);
-					result.setType("plain/text");
-					result.setData(Uri.parse("mailto:" + store.getEmail()));
-					result.putExtra(android.content.Intent.EXTRA_EMAIL, store.getEmail());
-					result.putExtra(android.content.Intent.EXTRA_SUBJECT, store.getName());
-					startActivity(result);
-				}
-			});
+			mViewProxy.findTextView(R.id.store_mail).setVisibility(View.VISIBLE);
+			mViewProxy.findImageView(R.id.product_mail).setOnClickListener(mailClick);
+			mViewProxy.findTextView(R.id.store_mail).setOnClickListener(mailClick);
 		}
 
 		mViewProxy.findImageView(R.id.product_map).setOnClickListener(new OnClickListener() {
@@ -94,6 +106,23 @@ public class StoreBottomFragment extends BaseFragment {
 			});
 
 		}
-	}
 
+		if (!ValidationUtils.isNullOrEmpty(store.getWebPage())) {
+			mViewProxy.findTextView(R.id.store_web_page).setVisibility(View.VISIBLE);
+			mViewProxy.findTextView(R.id.store_web_page).setText(store.getWebPage());
+			mViewProxy.findTextView(R.id.store_web_page).setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (store.getWebPage().contains("http")) {
+						getBaseActivity().openURL(store.getWebPage());
+					} else {
+						getBaseActivity().openURL("http://" + store.getWebPage());
+					}
+
+				}
+			});
+
+		}
+	}
 }
