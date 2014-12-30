@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Cuponera.WebSite.Helpers;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -10,6 +11,7 @@ namespace Cuponera.WebSite.Controllers
     {
         public ActionResult Index()
         {
+            EmailHelper.SendNewUserActivation("cohandv@gmail.com");
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
             return View();

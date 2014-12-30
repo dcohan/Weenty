@@ -144,12 +144,23 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdUserCompany,IdUser,IdCompany,IsAdmin,IdStore")] userCompany userCompany)
+        public async Task<ActionResult> Create([Bind(Include = "IdUserCompany,IdUser,IdCompany,IsAdmin,IdStore")] userCompany userCompany, bool isAdmin)
         {
             if (ModelState.IsValid)
             {
-                db.userCompany.Add(userCompany);
-                await db.SaveChangesAsync();
+                var user = db.UserProfile.Where(up => up.UserId.Equals(userCompany.IdUser)).FirstOrDefault();
+                if (isAdmin)
+                {
+                    var adminRole = db.webpages_Roles.Where(r => r.RoleName.Equals("admin")).FirstOrDefault();
+                    user.webpages_Roles.Add(adminRole);
+                    await db.SaveChangesAsync();
+                }
+                else
+                {
+                    db.userCompany.Add(userCompany);
+                    await db.SaveChangesAsync();
+                    EmailHelper.SendNewUserActivation(user.Email);
+                }
                 return RedirectToAction("Index");
             }
 
@@ -187,12 +198,28 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdUserCompany,IdUser,IdCompany,IsAdmin,IdStore")] userCompany userCompany)
+        public async Task<ActionResult> Edit([Bind(Include = "IdUserCompany,IdUser,IdCompany,IsAdmin,IdStore")] userCompany userCompany, bool isAdmin)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(userCompany).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                if (isAdmin)
+                {
+                    var adminRole = db.webpages_Roles.Where(r => r.RoleName.Equals("admin")).FirstOrDefault();
+                    var user = db.UserProfile.Where(up => up.UserId.Equals(userCompany.IdUser)).FirstOrDefault();
+                    user.webpages_Roles.Add(adminRole);
+                    await db.SaveChangesAsync();
+                }
+                else
+                {
+                    db.Entry(userCompany).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+
+                    if (userCompany.UserProfile.Active == null || !(bool)userCompany.UserProfile.Active)
+                    {
+                        EmailHelper.SendNewUserActivation(userCompany.UserProfile.Email);
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
             GetCompany(userCompany);

@@ -10,6 +10,8 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using Cuponera.WebSite.Filters;
 using Cuponera.WebSite.Models;
+using Simplify.Mail;
+using Cuponera.WebSite.Helpers;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -80,6 +82,7 @@ namespace Cuponera.WebSite.Controllers
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Email = model.Email, Active=false });
+                    EmailHelper.SendNewUserNotificationToAdministrators(model.Email);
                     return RedirectToAction("Index", "Thankyou");
                 }
                 catch (MembershipCreateUserException e)

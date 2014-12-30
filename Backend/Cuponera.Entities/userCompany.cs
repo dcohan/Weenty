@@ -22,8 +22,6 @@ namespace Cuponera.Entities
     
         public virtual company company { get; set; }
         public virtual store store { get; set; }
-        public virtual userCompany userCompany1 { get; set; }
-        public virtual userCompany userCompany2 { get; set; }
         public virtual UserProfile UserProfile { get; set; }
     }
 }

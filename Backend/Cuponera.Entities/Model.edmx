@@ -426,18 +426,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_userCompany_userCompany">
-          <End Role="userCompany" Type="Self.userCompany" Multiplicity="1" />
-          <End Role="userCompany1" Type="Self.userCompany" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="userCompany">
-              <PropertyRef Name="IdUserCompany" />
-            </Principal>
-            <Dependent Role="userCompany1">
-              <PropertyRef Name="IdUserCompany" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_userCompany_UserProfile">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="userCompany" Type="Self.userCompany" Multiplicity="*" />
@@ -542,10 +530,6 @@
             <End Role="store" EntitySet="store" />
             <End Role="userCompany" EntitySet="userCompany" />
           </AssociationSet>
-          <AssociationSet Name="FK_userCompany_userCompany" Association="Self.FK_userCompany_userCompany">
-            <End Role="userCompany" EntitySet="userCompany" />
-            <End Role="userCompany1" EntitySet="userCompany" />
-          </AssociationSet>
           <AssociationSet Name="FK_userCompany_UserProfile" Association="Self.FK_userCompany_UserProfile">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="userCompany" EntitySet="userCompany" />
@@ -633,10 +617,6 @@
           <AssociationSet Name="FK_userCompany_store" Association="CuponeraModel.FK_userCompany_store">
             <End Role="store" EntitySet="store" />
             <End Role="userCompany" EntitySet="userCompany" />
-          </AssociationSet>
-          <AssociationSet Name="FK_userCompany_userCompany" Association="CuponeraModel.FK_userCompany_userCompany">
-            <End Role="userCompany" EntitySet="userCompany" />
-            <End Role="userCompany1" EntitySet="userCompany" />
           </AssociationSet>
           <AssociationSet Name="FK_userCompany_UserProfile" Association="CuponeraModel.FK_userCompany_UserProfile">
             <End Role="UserProfile" EntitySet="UserProfile" />
@@ -865,8 +845,6 @@
           <Property Name="IdStore" Type="Int32" />
           <NavigationProperty Name="company" Relationship="CuponeraModel.FK_userCompany_company" FromRole="userCompany" ToRole="company" />
           <NavigationProperty Name="store" Relationship="CuponeraModel.FK_userCompany_store" FromRole="userCompany" ToRole="store" />
-          <NavigationProperty Name="userCompany1" Relationship="CuponeraModel.FK_userCompany_userCompany" FromRole="userCompany" ToRole="userCompany1" />
-          <NavigationProperty Name="userCompany2" Relationship="CuponeraModel.FK_userCompany_userCompany" FromRole="userCompany1" ToRole="userCompany" />
           <NavigationProperty Name="UserProfile" Relationship="CuponeraModel.FK_userCompany_UserProfile" FromRole="userCompany" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="UserProfile">
@@ -1079,18 +1057,6 @@
             </Principal>
             <Dependent Role="userCompany">
               <PropertyRef Name="IdStore" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_userCompany_userCompany">
-          <End Type="CuponeraModel.userCompany" Role="userCompany" Multiplicity="1" />
-          <End Type="CuponeraModel.userCompany" Role="userCompany1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="userCompany">
-              <PropertyRef Name="IdUserCompany" />
-            </Principal>
-            <Dependent Role="userCompany1">
-              <PropertyRef Name="IdUserCompany" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
