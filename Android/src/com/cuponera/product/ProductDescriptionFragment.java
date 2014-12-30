@@ -11,6 +11,7 @@ import com.cuponera.model.Product;
 import com.cuponera.model.Store;
 import com.cuponera.service.images.ImagesRequest;
 import com.cuponera.service.images.ImagesResponse;
+import com.cuponera.store.StoreBottomFragment;
 import com.cuponera.utils.ImageGallery;
 
 public class ProductDescriptionFragment extends BaseFragment {
@@ -62,7 +63,9 @@ public class ProductDescriptionFragment extends BaseFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
+		FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
+		transaction.replace(R.id.store_bottom, StoreBottomFragment.newInstance(store));
+		transaction.commit();
 		mViewProxy.findTextView(R.id.product_company).setText(store.getName());
 		if (product.getIdOffer() > 0) {
 			mViewProxy.findTextView(R.id.product_name).setText(product.getoTitle());
@@ -72,7 +75,7 @@ public class ProductDescriptionFragment extends BaseFragment {
 			mViewProxy.findTextView(R.id.product_price).setText("$" + String.valueOf(product.getpPrice()));
 		}
 		mViewProxy.findTextView(R.id.product_description).setText(product.getpDescription());
-	
+
 	}
 
 }

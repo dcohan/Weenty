@@ -1,5 +1,7 @@
 package com.cuponera.navigation;
 
+import java.util.Locale;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -102,7 +104,7 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 
 	public void setTitle(String title) {
 		mViewProxy.findTextView(R.id.headerTitle).setText(
-				ValidationUtils.isNullOrEmpty(Settings.getInstance(getActivity()).getCity()) ? "San Bernardo" : Settings.getInstance(getActivity()).getCity());
+				ValidationUtils.isNullOrEmpty(Settings.getInstance(getActivity()).getCity()) ? "SAN BERNARDO" : Settings.getInstance(getActivity()).getCity().toUpperCase(Locale.ROOT));
 	}
 
 	public MenuFragment getMenu() {
