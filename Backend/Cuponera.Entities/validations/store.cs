@@ -51,6 +51,9 @@ namespace Cuponera.Entities
         [Display(Name = "Horario de atención")]
         public string StoreHours { get; set; }
 
+        [Display(Name = "Página Web")]
+        public string WebPage { get; set; }
+
         [Display(Name = "Facebook URL")]
         [RegularExpression(@"^(https?:\/\/)www.facebook.com\/(\w+)$", ErrorMessage = "El Facebook URL no es válido.")]
         public string FacebookUrl { get; set; }

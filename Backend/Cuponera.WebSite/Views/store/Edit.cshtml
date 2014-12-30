@@ -200,6 +200,15 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.WebPage, "Página Web", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WebPage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WebPage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
             @Html.LabelFor(model => model.FacebookUrl, "Facebook URL", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FacebookUrl, new { htmlAttributes = new { @class = "form-control" } })
