@@ -34,14 +34,15 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<state> Getstate()
         {
-            return db.state;
+            return db.state.Where(s => s.DeletionDatetime == null);
         }
 
         // GET: odata/state(5)
         [EnableQuery]
         public SingleResult<state> Getstate([FromODataUri] int key)
         {
-            return SingleResult.Create(db.state.Where(state => state.IdState == key));
+
+            return SingleResult.Create(db.state.Where(state => state.IdState == key && state.DeletionDatetime == null));
         }
 
         [Authorize]
