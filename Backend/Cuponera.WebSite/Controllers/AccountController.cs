@@ -12,6 +12,7 @@ using Cuponera.WebSite.Filters;
 using Cuponera.WebSite.Models;
 using Simplify.Mail;
 using Cuponera.WebSite.Helpers;
+using Cuponera.Entities;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -19,6 +20,8 @@ namespace Cuponera.WebSite.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private CuponeraEntities db = new CuponeraEntities();
+
         //
         // GET: /Account/Login
 
@@ -69,6 +72,39 @@ namespace Cuponera.WebSite.Controllers
         }
 
         //
+        // GET: /Account/ConfirmationFailure
+
+        [AllowAnonymous]
+        public ActionResult ConfirmationFailure()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Account/ConfirmationSuccess
+
+        [AllowAnonymous]
+        public ActionResult ConfirmationSuccess()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult RegisterConfirmation(string Id) //Id=ConfirmationToken
+        {
+            if (WebSecurity.ConfirmAccount(Id))
+            {
+                //Activar el usuario
+                db.UserProfile.Where(u => u.UserId.Equals(db.webpages_Membership.Where(m => m.ConfirmationToken.Equals(Id)).FirstOrDefault().UserId)).FirstOrDefault().Active = true;
+                db.SaveChanges();
+
+                //get userId and perfom some operations related to it
+                return RedirectToAction("ConfirmationSuccess");
+            }
+            return RedirectToAction("ConfirmationFailure");
+        }
+
+        //
         // POST: /Account/Register
 
         [HttpPost]
@@ -81,7 +117,7 @@ namespace Cuponera.WebSite.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Email = model.Email, Active=false });
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Email = model.Email, Active=false }, true);
                     EmailHelper.SendNewUserNotificationToAdministrators(model.Email);
                     return RedirectToAction("Index", "Thankyou");
                 }
@@ -267,12 +303,12 @@ namespace Cuponera.WebSite.Controllers
                 // Insert a new user into the database
                 using (UsersContext db = new UsersContext())
                 {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                    Cuponera.WebSite.Models.UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+                        db.UserProfiles.Add(new Cuponera.WebSite.Models.UserProfile { UserName = model.UserName });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);

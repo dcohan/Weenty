@@ -20,6 +20,11 @@ namespace Cuponera.WebSite.Controllers
     {
         private CuponeraEntities db = new CuponeraEntities();
 
+        private string GetToken(int UserId)
+        {
+            return db.webpages_Membership.Where(m => m.UserId.Equals(UserId)).Select(m => m.ConfirmationToken).FirstOrDefault();
+        }
+
         public void GetCompany(userCompany userCompany=null)
         {
             var companies = db.company.Where(c => !c.DeletionDatetime.HasValue);
@@ -149,18 +154,18 @@ namespace Cuponera.WebSite.Controllers
             if (ModelState.IsValid)
             {
                 var user = db.UserProfile.Where(up => up.UserId.Equals(userCompany.IdUser)).FirstOrDefault();
+                
                 if (isAdmin)
                 {
                     var adminRole = db.webpages_Roles.Where(r => r.RoleName.Equals("admin")).FirstOrDefault();
                     user.webpages_Roles.Add(adminRole);
                     await db.SaveChangesAsync();
                 }
-                else
-                {
-                    db.userCompany.Add(userCompany);
-                    await db.SaveChangesAsync();
-                    EmailHelper.SendNewUserActivation(user.Email);
-                }
+                 
+                db.userCompany.Add(userCompany);
+                await db.SaveChangesAsync();
+                EmailHelper.SendNewUserActivation(user.Email, GetToken(user.UserId));
+                
                 return RedirectToAction("Index");
             }
 
@@ -202,22 +207,20 @@ namespace Cuponera.WebSite.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = db.UserProfile.Where(up => up.UserId.Equals(userCompany.IdUser)).FirstOrDefault();
                 if (isAdmin)
                 {
                     var adminRole = db.webpages_Roles.Where(r => r.RoleName.Equals("admin")).FirstOrDefault();
-                    var user = db.UserProfile.Where(up => up.UserId.Equals(userCompany.IdUser)).FirstOrDefault();
                     user.webpages_Roles.Add(adminRole);
                     await db.SaveChangesAsync();
                 }
-                else
-                {
-                    db.Entry(userCompany).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
 
-                    if (userCompany.UserProfile.Active == null || !(bool)userCompany.UserProfile.Active)
-                    {
-                        EmailHelper.SendNewUserActivation(userCompany.UserProfile.Email);
-                    }
+                db.Entry(userCompany).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+
+                if (user.Active == null || !(bool)user.Active)
+                {
+                    EmailHelper.SendNewUserActivation(userCompany.UserProfile.Email, GetToken(user.UserId));
                 }
 
                 return RedirectToAction("Index");

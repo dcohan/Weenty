@@ -727,6 +727,9 @@
     <Content Include="Views\userCompany\Index.cshtml" />
     <Content Include="Views\Shared\Menu.cshtml" />
     <Content Include="Views\Thankyou\Index.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ConfirmationSuccess.cshtml" />
+    <Content Include="Views\Account\ConfirmationFailure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
