@@ -213,6 +213,15 @@ namespace Cuponera.WebSite.Controllers
 
                 store.ImagePath = imagePath;
 
+                if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+                {
+                    var stores = db.userCompany.Where(uc => uc.IdUser == CuponeraIdentity.CurrentUserId && uc.IdCompany == store.IdCompany);
+                    if (stores.Count() == 0)
+                    {
+                        return View(store);
+                    }
+                }
+
 
                 db.store.Add(store);
                 await db.SaveChangesAsync();
@@ -264,7 +273,7 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdStore,Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description, WebPage, IdCategory")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
+        public async Task<ActionResult> Edit([Bind(Include = "IdStore,Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description,WebPage,IdCategory,IdCompany")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
         {
             if (ModelState.IsValid)
             {
@@ -296,14 +305,16 @@ namespace Cuponera.WebSite.Controllers
 
                 if (Latitude != null) { store.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
                 if (Longitude != null) { store.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
-                //var userId = ((CuponeraIdentity)Thread.CurrentPrincipal.Identity).UserId;
-                int idUser = 1;
 
-                var idCompany = db.userCompany.Where(uc => uc.IdUser == idUser);
-                if (idCompany.ToList().Count() > 0)
+                if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
                 {
-                    store.IdCompany = Convert.ToInt32(idCompany.FirstOrDefault().IdCompany);
+                    var stores = db.userCompany.Where(uc => uc.IdUser == CuponeraIdentity.CurrentUserId && uc.IdCompany == store.IdCompany);
+                    if (stores.Count() == 0)
+                    {
+                        return View(store);
+                    }
                 }
+
 
 
                 db.Entry(store).State = EntityState.Modified;
