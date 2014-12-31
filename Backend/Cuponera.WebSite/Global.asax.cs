@@ -23,7 +23,7 @@ namespace Cuponera.WebSite
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
@@ -39,5 +39,28 @@ namespace Cuponera.WebSite
                 HttpContext.Current.User = principal;
             }
         }
+
+        protected void Application_Error(Object sender, EventArgs e)
+        {
+            var exception = Server.GetLastError();
+            if (exception is HttpUnhandledException)
+            {
+                //Server.Transfer("~/Error.html");
+            }
+            if (exception is HttpException && exception.Message.Contains("was not found on controller"))
+            {
+                //Server.Transfer("~/Error/NotFound");
+            }
+
+            if (exception != null)
+            {
+                
+                //Server.Transfer("~/Error");
+            }
+            else
+            {
+                //Server.Transfer("~/Error/NotFound");
+            }
+        }   
     }
 }

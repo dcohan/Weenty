@@ -255,6 +255,9 @@ namespace Cuponera.WebSite.Models
         [Display(Name = "Confirmar password")]
         [Compare("Password", ErrorMessage = "El password y su confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Empresa")]
+        public string Company { get; set; }
     }
 
     public class ExternalLogin

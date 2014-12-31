@@ -181,9 +181,17 @@ namespace Cuponera.WebSite.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Email = model.Email, Active=false }, true);
-                    EmailHelper.SendNewUserNotificationToAdministrators(model.Email);
-                    return RedirectToAction("Index", "Thankyou");
+                    //Validate Email first
+                    if (db.UserProfile.Where(u => u.Email.ToLower().Equals(model.Email.ToLower().Replace(" ", ""))).Count() > 0)
+                    {
+                        ModelState.AddModelError("", "Ya exite un usuario usando ese mail");
+                    }
+                    else
+                    {
+                        WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Email = model.Email, Active = false }, true);
+                        EmailHelper.SendNewUserNotificationToAdministrators(model);
+                        return RedirectToAction("Index", "Thankyou");
+                    }
                 }
                 catch (MembershipCreateUserException e)
                 {

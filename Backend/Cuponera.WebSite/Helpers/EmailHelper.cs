@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using Cuponera.Entities;
+using Cuponera.WebSite.Models;
 using Simplify.Mail;
 
 namespace Cuponera.WebSite.Helpers
@@ -20,16 +21,48 @@ namespace Cuponera.WebSite.Helpers
             _subject = "Weenty - Notificación";
         }
 
-        public static void SendNewUserNotificationToAdministrators(string Email)
+        public static void SendNewUserNotificationToAdministrators(RegisterModel model)
         {
+            Dictionary<string, string> emailList = new Dictionary<string, string>();
             using (CuponeraEntities db = new CuponeraEntities())
             {
-                foreach (var user in db.webpages_Roles.Where(r => r.RoleName.Equals("admin")).Select(r => r.UserProfile))
+                bool emailSentToCompanyAdmins = false;
+                var companies = db.company.Where(c => c.Name.ToLower().Contains(model.Company.ToLower()));
+                if (companies.Count() > 0)
                 {
-                    foreach(var u in user)
+                    foreach (var company in companies)
                     {
-                        MailSender.Default.Send(MailSender.Default.Settings.SmtpUserName, u.Email, _subject,  PrepareBody(u.UserName,"Hay un nuevo usuario esperando la asignación a una compañia: "+Email));
+                        foreach(var usercompany in company.userCompany)
+                        {
+                            if (usercompany.IsAdmin)
+                            {
+                                emailSentToCompanyAdmins = true;
+                                if (!emailList.ContainsKey(usercompany.UserProfile.UserName))
+                                {
+                                    emailList.Add(usercompany.UserProfile.UserName, usercompany.UserProfile.Email);
+                                }
+                            }
+                        }
                     }
+                }
+                
+                if (!emailSentToCompanyAdmins)//Send the email to BO admins
+                {
+                    foreach (var user in db.webpages_Roles.Where(r => r.RoleName.Equals("admin")).Select(r => r.UserProfile))
+                    {
+                        foreach (var u in user)
+                        {
+                            if (!emailList.ContainsKey(u.UserName))
+                            {
+                                emailList.Add(u.UserName, u.Email);
+                            }
+                        }
+                    }
+                }
+
+                foreach (var email in emailList)
+                {
+                    MailSender.Default.Send(MailSender.Default.Settings.SmtpUserName, email.Value, _subject, PrepareBody(email.Key, "Hay un nuevo usuario esperando la asignación a una compañia: " + email.Value));
                 }
             }
         }
