@@ -34,6 +34,12 @@ namespace Cuponera.WebSite.Helpers
             }
         }
 
+        public static void SendPasswordRecovery(string Email, string token)
+        {
+            MailSender.Default.Send(MailSender.Default.Settings.SmtpUserName, Email, _subject, PrepareBody(Email, "Usted ha solicitado un cambio de contraseña, por favor seleccione abra el link para cambiar su contraseña<br /><br /><a href='" + _serverPath + "/Account/ChangePassword?Id=" + token + "'>" + _serverPath + "/Account/ChangePassword?Id=" + token + "</a> "));
+        }
+
+
         public static void SendNewUserActivation(string Email, string token)
         {
             MailSender.Default.Send(MailSender.Default.Settings.SmtpUserName, Email, _subject, PrepareBody(Email, "Usted ha sido asignado a una compañia, por favor seleccione abra el link para activar su cuenta<br /><br /><a href='" + _serverPath + "/Account/RegisterConfirmation?Id=" + token + "'>" + _serverPath + "/Account/RegisterConfirmation?Id=" + token + "</a> "));

@@ -173,6 +173,23 @@ namespace Cuponera.WebSite.Models
         public string ExternalLoginData { get; set; }
     }
 
+    public class ChangePasswordModel
+    {
+        [Required]
+        [DataType(DataType.Password)]
+        [StringLength(100, ErrorMessage = "La {0} debe ser al menos de {2} caracteres de largo.", MinimumLength = 6)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirmar nueva password")]
+        [Compare("Password", ErrorMessage = "La nueva password no coincide.")]
+        public string ConfirmPassword { get; set; }
+
+        public string Token { get; set; }
+        public string UserName { get; set; }
+    }
+
     public class LocalPasswordModel
     {
         [Required]
@@ -205,6 +222,14 @@ namespace Cuponera.WebSite.Models
 
         [Display(Name = "Recordarme?")]
         public bool RememberMe { get; set; }
+    }
+
+    public class ForgotPasswordModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        [RegularExpression(@"^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-zA-Z0-9]{1}[a-zA-Z0-9\-]{0,62}[a-zA-Z0-9]{1})|[a-zA-Z])\.)+[a-zA-Z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$", ErrorMessage = "El formato de e-mail no es válido.")]
+        public string Email { get; set; }
     }
 
     public class RegisterModel

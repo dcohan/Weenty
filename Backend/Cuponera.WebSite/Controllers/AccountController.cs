@@ -105,6 +105,70 @@ namespace Cuponera.WebSite.Controllers
         }
 
         //
+        // GET: /Account/ForgotPasswordEmailSent
+
+        [AllowAnonymous]
+        public ActionResult ForgotPasswordEmailSent()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Account/ChangePassword
+
+        [AllowAnonymous]
+        public ActionResult ChangePassword(string Id) //Id=ConfirmationToken
+        {
+            var userId = WebSecurity.GetUserIdFromPasswordResetToken(Id);
+            ViewBag.Token = Id;
+            ViewBag.UserName = db.UserProfile.Where(u => u.UserId.Equals(userId)).Select(u => u.UserName).FirstOrDefault();
+            return View();
+        }
+
+        //
+        // POST: /Account/ChangePassword
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ChangePassword(ChangePasswordModel model) 
+        {
+            if (ModelState.IsValid && WebSecurity.ResetPassword(model.Token, model.Password))
+            {
+                WebSecurity.Login(model.UserName, model.Password);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
+        //
+        // GET: /Account/ForgotPassword
+
+        [AllowAnonymous]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        //
+        // Post: /Account/ForgotPassword
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ForgotPassword(ForgotPasswordModel register)
+        {
+            var user = db.UserProfile.Where( u => u.Email.ToLower().Equals(register.Email.ToLower()) ).FirstOrDefault();
+            if (user != null)
+            {
+                var token = WebSecurity.GeneratePasswordResetToken(user.UserName);
+                EmailHelper.SendPasswordRecovery(register.Email, token);
+                return RedirectToAction("ForgotPasswordEmailSent");
+            }
+            
+            ModelState.AddModelError("UnknownAccount", "No existe ninguna cuenta con esa dirección de mail.");
+            return View();
+        }
+
+        //
         // POST: /Account/Register
 
         [HttpPost]
