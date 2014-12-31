@@ -41,6 +41,7 @@ namespace Cuponera.Entities
         public string ImagePath { get; set; }
         public string Description { get; set; }
         public string WebPage { get; set; }
+        public Nullable<int> IdCategory { get; set; }
     
         public virtual company company { get; set; }
         public virtual ICollection<images> images { get; set; }
@@ -48,5 +49,8 @@ namespace Cuponera.Entities
         public virtual ICollection<product> product { get; set; }
         public virtual state state { get; set; }
         public virtual ICollection<userCompany> userCompany { get; set; }
+        public virtual category category { get; set; }
+        public virtual store store1 { get; set; }
+        public virtual store store2 { get; set; }
     }
 }

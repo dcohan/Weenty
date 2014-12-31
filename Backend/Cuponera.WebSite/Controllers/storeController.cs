@@ -46,6 +46,26 @@ namespace Cuponera.WebSite.Controllers
             }
         }
 
+        public void GetCategories(store store = null)
+        {
+            var categories = db.category.Where(s => s.DeletionDatetime == null);
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+                categories = db.store.Where(s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore) &&
+                                                     s.DeletionDatetime == null).Select(s => s.category);
+            }
+
+            if (store != null)
+            {
+                ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name", store.IdCompany);
+            }
+            else
+            {
+                ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name");
+            }
+        }
+
+
         [AuthorizeUserStoreAttribute]
         private IEnumerable<store> get(bool all, int idCompany, string name, string zipCode, int idState, int idUser, int pageNumber)
         {
@@ -148,6 +168,7 @@ namespace Cuponera.WebSite.Controllers
             if (store.Latitude != null) { ViewBag.Latitude = store.Latitude.ToString().Replace(",", "."); }
             if (store.Longitude != null) { ViewBag.Longitude = store.Longitude.ToString().Replace(",", "."); }
             GetCompanies(store);
+            GetCategories(store);
             return View(store);
         }
 
@@ -163,6 +184,7 @@ namespace Cuponera.WebSite.Controllers
                                     Text = s.Name
                                 });
             GetCompanies();
+            GetCategories();
             return View();
         }
 
@@ -172,7 +194,7 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,IdCompany,StoreHours,Email,FacebookUrl,WhatsApp,Description, WebPage")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,IdCompany,StoreHours,Email,FacebookUrl,WhatsApp,Description, WebPage, IdCategory")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload)
         {
             if (ModelState.IsValid)
             {
@@ -201,6 +223,7 @@ namespace Cuponera.WebSite.Controllers
             }
 
             GetCompanies(store);
+            GetCategories(store);
             return View(store);
         }
 
@@ -231,6 +254,7 @@ namespace Cuponera.WebSite.Controllers
             if (store.Longitude != null) { ViewBag.Longitude = store.Longitude.ToString().Replace(",", "."); }
 
             GetCompanies(store);
+            GetCategories(store);
             return View(store);
         }
 
@@ -240,7 +264,7 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdStore,Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description, WebPage")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
+        public async Task<ActionResult> Edit([Bind(Include = "IdStore,Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description, WebPage, IdCategory")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
         {
             if (ModelState.IsValid)
             {
@@ -292,6 +316,7 @@ namespace Cuponera.WebSite.Controllers
                 return RedirectToAction("Index");
             }
             GetCompanies(store);
+            GetCategories(store);
             return View(store);
         }
 

@@ -157,22 +157,23 @@
           <Property Name="IdStore" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdCompany" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
-          <Property Name="ContactNumber" Type="nvarchar" MaxLength="40" />
           <Property Name="Latitude" Type="float" />
           <Property Name="Longitude" Type="float" />
           <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="ContactNumber" Type="nvarchar" MaxLength="40" />
+          <Property Name="IdCategory" Type="int" />
           <Property Name="IdState" Type="int" />
           <Property Name="StoreHours" Type="nvarchar(max)" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="250" />
           <Property Name="Email" Type="nvarchar" MaxLength="80" />
+          <Property Name="WebPage" Type="varchar" MaxLength="200" />
           <Property Name="FacebookUrl" Type="nvarchar" MaxLength="200" />
           <Property Name="WhatsApp" Type="nvarchar" MaxLength="20" />
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-          <Property Name="ImagePath" Type="varchar" MaxLength="250" />
-          <Property Name="Description" Type="varchar" MaxLength="1000" />
-          <Property Name="WebPage" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="subscription">
           <Key>
@@ -379,27 +380,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_store_company">
-          <End Role="company" Type="Self.company" Multiplicity="1" />
+        <Association Name="FK_store_category">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
           <End Role="store" Type="Self.store" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="company">
-              <PropertyRef Name="IdCompany" />
+            <Principal Role="category">
+              <PropertyRef Name="IdCategory" />
             </Principal>
             <Dependent Role="store">
-              <PropertyRef Name="IdCompany" />
+              <PropertyRef Name="IdCategory" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_store_state">
-          <End Role="state" Type="Self.state" Multiplicity="0..1" />
-          <End Role="store" Type="Self.store" Multiplicity="*" />
+        <Association Name="FK_store_store">
+          <End Role="store" Type="Self.store" Multiplicity="1" />
+          <End Role="store1" Type="Self.store" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="state">
-              <PropertyRef Name="IdState" />
+            <Principal Role="store">
+              <PropertyRef Name="IdStore" />
             </Principal>
-            <Dependent Role="store">
-              <PropertyRef Name="IdState" />
+            <Dependent Role="store1">
+              <PropertyRef Name="IdStore" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -515,13 +516,13 @@
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
             <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_store_company" Association="Self.FK_store_company">
-            <End Role="company" EntitySet="company" />
+          <AssociationSet Name="FK_store_category" Association="Self.FK_store_category">
+            <End Role="category" EntitySet="category" />
             <End Role="store" EntitySet="store" />
           </AssociationSet>
-          <AssociationSet Name="FK_store_state" Association="Self.FK_store_state">
-            <End Role="state" EntitySet="state" />
+          <AssociationSet Name="FK_store_store" Association="Self.FK_store_store">
             <End Role="store" EntitySet="store" />
+            <End Role="store1" EntitySet="store" />
           </AssociationSet>
           <AssociationSet Name="FK_userCompany_company" Association="Self.FK_userCompany_company">
             <End Role="company" EntitySet="company" />
@@ -627,6 +628,14 @@
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
             <End Role="UserProfile" EntitySet="UserProfile" />
           </AssociationSet>
+          <AssociationSet Name="FK_store_category" Association="CuponeraModel.FK_store_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="store" EntitySet="store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_store_store" Association="CuponeraModel.FK_store_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="store1" EntitySet="store" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="category">
           <Key>
@@ -638,6 +647,7 @@
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
           <NavigationProperty Name="product" Relationship="CuponeraModel.FK_product_category" FromRole="category" ToRole="product" />
+          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_store_category" FromRole="category" ToRole="store" />
         </EntityType>
         <EntityType Name="company">
           <Key>
@@ -820,6 +830,10 @@
           <NavigationProperty Name="state" Relationship="CuponeraModel.FK_store_state" FromRole="store" ToRole="state" />
           <NavigationProperty Name="userCompany" Relationship="CuponeraModel.FK_userCompany_store" FromRole="store" ToRole="userCompany" />
           <Property Name="WebPage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdCategory" Type="Int32" />
+          <NavigationProperty Name="category" Relationship="CuponeraModel.FK_store_category" FromRole="store" ToRole="category" />
+          <NavigationProperty Name="store1" Relationship="CuponeraModel.FK_store_store" FromRole="store" ToRole="store1" />
+          <NavigationProperty Name="store2" Relationship="CuponeraModel.FK_store_store" FromRole="store1" ToRole="store" />
         </EntityType>
         <EntityType Name="subscription">
           <Key>
@@ -1078,6 +1092,30 @@
           <End Type="CuponeraModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
           <End Type="CuponeraModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
+        <Association Name="FK_store_category">
+          <End Type="CuponeraModel.category" Role="category" Multiplicity="0..1" />
+          <End Type="CuponeraModel.store" Role="store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="IdCategory" />
+            </Principal>
+            <Dependent Role="store">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_store_store">
+          <End Type="CuponeraModel.store" Role="store" Multiplicity="1" />
+          <End Type="CuponeraModel.store" Role="store1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="IdStore" />
+            </Principal>
+            <Dependent Role="store1">
+              <PropertyRef Name="IdStore" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1243,6 +1281,7 @@
           <EntitySetMapping Name="store">
             <EntityTypeMapping TypeName="CuponeraModel.store">
               <MappingFragment StoreEntitySet="store">
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
                 <ScalarProperty Name="WebPage" ColumnName="WebPage" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />

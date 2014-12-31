@@ -39,6 +39,8 @@
         <AssociationConnector Association="CuponeraModel.FK_userCompany_store" />
         <AssociationConnector Association="CuponeraModel.FK_userCompany_UserProfile" />
         <AssociationConnector Association="CuponeraModel.webpages_UsersInRoles" />
+        <AssociationConnector Association="CuponeraModel.FK_store_category" />
+        <AssociationConnector Association="CuponeraModel.FK_store_store" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

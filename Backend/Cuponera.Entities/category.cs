@@ -17,6 +17,7 @@ namespace Cuponera.Entities
         public category()
         {
             this.product = new HashSet<product>();
+            this.store = new HashSet<store>();
         }
     
         public int IdCategory { get; set; }
@@ -26,5 +27,6 @@ namespace Cuponera.Entities
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
     
         public virtual ICollection<product> product { get; set; }
+        public virtual ICollection<store> store { get; set; }
     }
 }
