@@ -21,8 +21,16 @@ namespace Cuponera.WebSite.Controllers
 
         private IEnumerable<company> get(bool all, string name, int pageNumber)
         {
-            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
-            IEnumerable<company> companies = cb.Getcompany(all, name);
+            IQueryable<company> companies = db.company;
+            if (!all)
+            {
+                companies = db.company.Where(c => !c.DeletionDatetime.HasValue);
+            }
+
+            if (name != null)
+            {
+                companies = companies.Where(c => c.Name.Contains(name));
+            }
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
@@ -49,6 +57,7 @@ namespace Cuponera.WebSite.Controllers
             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)companies.Count() / pageSize));
 
             int elemsToSkip = pageSize * (pageNumber - 1);
+            companies = companies.OrderBy(c => c.Name);
             return companies.Skip(elemsToSkip).Take(pageSize);
         }
 
