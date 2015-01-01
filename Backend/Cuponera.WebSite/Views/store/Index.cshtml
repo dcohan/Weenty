@@ -79,10 +79,10 @@
                     {
                         <tr data-item-id="@item.IdStore">
                             <td>
-                                <span class="item-name">@Html.DisplayFor(modelItem => item.company.Name)</span>
+                                <span class="@(item.company.DeletionDatetime != null ? "deleted" : "")">@Html.DisplayFor(modelItem => item.company.Name)</span>
                             </td>
                             <td>
-                                <span>@Html.DisplayFor(modelItem => item.Name)</span>
+                                <span class="item-name">@Html.DisplayFor(modelItem => item.Name)</span>
                             </td>
                             <td>
                                 <span>@Html.DisplayFor(modelItem => item.state.Name)</span>
