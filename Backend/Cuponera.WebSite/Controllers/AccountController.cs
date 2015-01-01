@@ -60,6 +60,10 @@ namespace Cuponera.WebSite.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    return RedirectToLocal(returnUrl);
+                }
                 return RedirectToAction("Welcome");
             }
 
