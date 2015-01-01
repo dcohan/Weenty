@@ -21,6 +21,18 @@ namespace Cuponera.WebSite.Controllers
     public class AccountController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();
+        
+        [HttpGet]
+        public ActionResult Welcome()
+        {
+            if (WebSecurity.CurrentUserId <= 0)
+            {
+                return RedirectToAction("Login");
+            }
+
+            return View();
+        }
+
 
         //
         // GET: /Account/Login
@@ -28,9 +40,15 @@ namespace Cuponera.WebSite.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (WebSecurity.CurrentUserId > 0)
+            {
+                return RedirectToAction("Welcome");
+            }
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
+
 
         //
         // POST: /Account/Login
@@ -42,7 +60,7 @@ namespace Cuponera.WebSite.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToLocal(returnUrl);
+                return RedirectToAction("Welcome");
             }
 
             // If we got this far, something failed, redisplay form
