@@ -181,7 +181,7 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	public void showLoading() {
 		if (loadingDialog == null || !loadingDialog.isShowing()) {
-			loadingDialog = new ProgressDialog(this);
+			loadingDialog = new ProgressDialog(this, R.style.ProgressBar);
 			loadingDialog.setCancelable(false);
 			loadingDialog.setMessage("Cargando...");
 			loadingDialog.show();
