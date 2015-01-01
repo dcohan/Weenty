@@ -70,7 +70,7 @@ namespace Cuponera.WebSite.Controllers
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())))
-                                 .Where(o => (all || o.DeletionDatetime == null && o.product.DeletionDatetime == null));
+                                 .Where(o => (all || o.DeletionDatetime == null && o.product.DeletionDatetime == null && o.product.store.DeletionDatetime == null && o.product.store.company.DeletionDatetime == null));
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
@@ -78,11 +78,24 @@ namespace Cuponera.WebSite.Controllers
                                            CuponeraIdentity.CurrentAvaiableStores.Contains(o.product.IdStore));
             }
 
-            foreach (var offer in offers)
+            if (all)
             {
-                if (offer.product.DeletionDatetime != null)
+                foreach (var offer in offers)
                 {
-                    offer.DeletionDatetime = offer.product.DeletionDatetime;
+                    if (offer.product.DeletionDatetime != null)
+                    {
+                        offer.DeletionDatetime = offer.product.DeletionDatetime;
+                    }
+
+                    if (offer.product.store.DeletionDatetime != null)
+                    {
+                        offer.DeletionDatetime = offer.product.store.DeletionDatetime;
+                    }
+
+                    if (offer.product.store.company.DeletionDatetime != null)
+                    {
+                        offer.DeletionDatetime = offer.product.store.company.DeletionDatetime;
+                    }
                 }
             }
 

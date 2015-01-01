@@ -83,19 +83,34 @@ namespace Cuponera.WebSite.Controllers
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             var products = db.product.Where(p => (title == null || p.Title.ToLower().Contains(title.ToLower())))
                                      .Where(p => (category == null || category == 0 || p.IdCategory == category))
-                                     .Where(p => all || p.DeletionDatetime == null);
+                                     .Where(p => all || p.DeletionDatetime == null && p.store.DeletionDatetime == null && p.store.company.DeletionDatetime == null);
+            
+            if (all) {
+                foreach (var product in products)
+                {
+                    if (product.store.DeletionDatetime != null)
+                    {
+                        product.DeletionDatetime = product.store.DeletionDatetime;
+                    }
 
-             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
-             {
-                products = products.Where(p => CuponeraIdentity.AdminCompany == p.store.IdCompany ||  
-                                               CuponeraIdentity.CurrentAvaiableStores.Contains(p.IdStore));
-             }
+                    if (product.store.company.DeletionDatetime != null)
+                    {
+                        product.DeletionDatetime = product.store.company.DeletionDatetime;
+                    }
+                }
+            }
 
-             var permitedProducts = products.OrderBy(o => o.Title);
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+            products = products.Where(p => CuponeraIdentity.AdminCompany == p.store.IdCompany ||  
+                                            CuponeraIdentity.CurrentAvaiableStores.Contains(p.IdStore));
+            }
 
-             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)permitedProducts.Count() / pageSize));
+            var permitedProducts = products.OrderBy(o => o.Title);
 
-             return View(permitedProducts.ToPagedList(page, pageSize));
+            ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)permitedProducts.Count() / pageSize));
+
+            return View(permitedProducts.ToPagedList(page, pageSize));
         }
 
         // GET: /product/Details/5

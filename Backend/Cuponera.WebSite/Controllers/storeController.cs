@@ -67,7 +67,7 @@ namespace Cuponera.WebSite.Controllers
 
 
         [AuthorizeUserStoreAttribute]
-        private IEnumerable<store> get(bool all, int idCompany, string name, string zipCode, int idState, int idUser, int pageNumber)
+        private IEnumerable<store> get(bool all, int idCompany, string name, string zipCode, int idState, int pageNumber)
         {
             IQueryable<store> stores = db.store;
             if (!all)
@@ -138,8 +138,7 @@ namespace Cuponera.WebSite.Controllers
         // GET: store
         public async Task<ActionResult> Index(bool all = false, int company = 0, string name = null, string zipCode = null, int state = 0, int page = 1)
         {
-            var idUser = 1;
-            var stores = get(all, company, name, zipCode, state, idUser, page);
+            var stores = get(all, company, name, zipCode, state, page);
 
             ViewBag.CanSelectCompany = true;
             return View(stores);
