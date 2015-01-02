@@ -56,10 +56,5 @@ public class CustomPagerAdapter extends PagerAdapter {
 
 		return itemView;
 	}
-	
 
-	@Override
-	public float getPageWidth(int position) {
-		return 0.85f;
-	}
 }

@@ -116,6 +116,7 @@ public class SearchFragment extends BaseFragment {
 		customPagerAdapter = new CustomPagerAdapter(getActivity(), category);
 		customPagerAdapter.notifyDataSetChanged();
 		viewPager.setAdapter(customPagerAdapter);
+
 	}
 
 	private void fillAdapter() {
