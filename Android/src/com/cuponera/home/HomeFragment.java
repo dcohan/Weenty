@@ -1,14 +1,9 @@
 package com.cuponera.home;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,8 +45,6 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 			};
 			stateRequest.execute();
 
-		} else {
-			getMuni();
 		}
 		mViewProxy.findTextView(R.id.hotel).setOnClickListener(dashboardListener);
 		mViewProxy.findTextView(R.id.gastronomic).setOnClickListener(dashboardListener);
@@ -111,34 +104,6 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 		return false;
 	}
 
-	private void getMuni() {
-		double latitude = Settings.getInstance(getActivity()).getLatitude();
-		double longitude = Settings.getInstance(getActivity()).getLongitude();
-
-		if (latitude != 0 && longitude != 0) {
-			Geocoder geoCoder = new Geocoder(getActivity(), Locale.getDefault());
-			try {
-				List<Address> addresses = geoCoder.getFromLocation(latitude, longitude, 1);
-				if (showMuni(addresses)) {
-					mViewProxy.findImageView(R.id.munucipio).setOnClickListener(new OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							getBaseActivity().openURL("http://www.lacosta.gov.ar/");
-
-						}
-					});
-				}
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-	}
-
-	private boolean showMuni(List<Address> addresses) {
-		return addresses.size() > 0 && addresses.get(0).getLocality() != null;
-	}
-
 	private void dynamicPopup(final ArrayList<State> statesArray) {
 		AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
 		builderSingle.setTitle("Elegir");
@@ -159,7 +124,6 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 						if (navBarFragment != null) {
 							navBarFragment.setTitle(state.getName());
 						}
-						getMuni();
 					}
 				}
 			}
