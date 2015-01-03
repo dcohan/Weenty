@@ -38,7 +38,7 @@ namespace Cuponera.WebSite.Controllers
         private bool StoreEnabled(int IdStore)
         {
             var store = db.store.Where(s => s.IdStore.Equals(IdStore)).FirstOrDefault();
-            if (store.DeletionDatetime.HasValue || CompanyEnabled(store.IdCompany))
+            if (store.DeletionDatetime.HasValue || !CompanyEnabled(store.IdCompany))
             {
                 return false;
             }
@@ -50,8 +50,8 @@ namespace Cuponera.WebSite.Controllers
 
         private bool ProductEnabled(int IdProduct)
         {
-            var product = db.product.Where(s => s.IdStore.Equals(IdProduct)).FirstOrDefault();
-            if (product.DeletionDatetime.HasValue || StoreEnabled(product.IdStore))
+            var product = db.product.Where(p => p.IdProduct.Equals(IdProduct)).FirstOrDefault();
+            if (product.DeletionDatetime.HasValue || !StoreEnabled(product.IdStore))
             {
                 return false;
             }
