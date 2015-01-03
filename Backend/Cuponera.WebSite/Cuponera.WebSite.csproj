@@ -220,6 +220,7 @@
     <Compile Include="Controllers\UploadImagesBaseController.cs" />
     <Compile Include="Controllers\userCompanyController.cs" />
     <Compile Include="Controllers\Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Controllers\ValidatorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -645,6 +646,7 @@
     <Content Include="Scripts\knockout-3.2.0.js" />
     <Content Include="Scripts\maps.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\ValidateEnabledObjectHierachy.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -736,6 +738,7 @@
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Account\Welcome.cshtml" />
+    <Content Include="Views\Validator\ValidateStore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

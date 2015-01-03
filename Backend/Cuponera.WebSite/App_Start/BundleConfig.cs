@@ -33,6 +33,10 @@ namespace Cuponera.WebSite
             bundles.Add(new ScriptBundle("~/bundles/globalization").Include(
                       "~/Scripts/globalize/globalize.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/ValidateEnabledObjectHierachy").Include(
+                      "~/Scripts/ValidateEnabledObjectHierachy.js"));
+            
+
             bundles.Add(new ScriptBundle("~/bundles/imagesUploader").Include(
           "~/Scripts/imagesUploader.js"));
 

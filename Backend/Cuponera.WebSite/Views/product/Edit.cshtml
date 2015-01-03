@@ -9,12 +9,15 @@
 
 @Scripts.Render("~/bundles/globalization")
 @Scripts.Render("~/bundles/globalization_ar")
+@Scripts.Render("~/bundles/ValidateEnabledObjectHierachy")
 
 <script type="text/javascript">
     var images_to_remove = [];
     var images = [];
 
     $(function () {
+        AddWarningOnInactiveObjects("IdStore","product");
+
         $('#fileUpload').change(function(e){
             var files = e.target.files;
             if (!files.length) { return; }
@@ -81,6 +84,7 @@
         <h4>Producto</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <span id="inactive" class="text-danger field-validation-error">La sucursal o empresa está desactivada!</span>
         @Html.HiddenFor(model => model.IdProduct)
 
         <div class="form-group">
