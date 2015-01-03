@@ -25,7 +25,7 @@
         AddWarningOnInactiveObjects("IdProduct","offer");
 
         $('#IdProduct').change(function (k, v){
-            $('.advertisment').addClass('hidden');
+            $('.advertisement').addClass('hidden');
             var product_id = $(this).val();
             if (!product_id) { return; }
 
@@ -37,7 +37,7 @@
                 if (cp.id == product_id){
                     found = true;
                     if (!cp.active) {
-                        $('.advertisment').removeClass('hidden');
+                        $('.advertisement').removeClass('hidden');
                     }
                 }
             }
@@ -96,7 +96,6 @@
             dateFormat: "dd/mm/yy"
         });
 
-        document.getElementsByClassName('hidden');
         $(".hidden").removeClass('input-validation-error');
 
     });
@@ -127,7 +126,7 @@
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
         <div class="form-group float-left">
             @Html.LabelFor(model => model.IdProduct, "Producto *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -136,7 +135,7 @@
             </div>
         </div>
 
-        <div class="advertisment float-right">
+        <div class="advertisement float-right">
             Atención: el producto elegido está desactivado.
         </div>
 
