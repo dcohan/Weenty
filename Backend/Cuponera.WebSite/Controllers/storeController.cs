@@ -31,7 +31,7 @@ namespace Cuponera.WebSite.Controllers
         {
             IQueryable<company> companies = db.company;
             
-            if (store.company.DeletionDatetime == null){
+            if (store != null && store.company != null && store.company.DeletionDatetime == null){
                 companies = companies.Where(s => s.DeletionDatetime == null);
             }
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
@@ -44,10 +44,23 @@ namespace Cuponera.WebSite.Controllers
             ViewBag.IdCompany = new SelectList(companies, "IdCompany", "Name", store != null ? store.IdCompany : 0);
         }
 
+        public void GetStates(store store = null)
+        {
+            IQueryable<state> states = db.state;
+            if (store != null && store.state != null && store.state.DeletionDatetime == null)
+            {
+                states = states.Where(s => s.DeletionDatetime == null);
+            }
+
+            ViewBag.IdState = new SelectList(states, "IdState", "Name", store != null ? store.IdState : 0);
+            ViewBag.States = states;
+
+        }
+
         public void GetCategories(store store = null)
         {
             IQueryable<category> categories = db.category;
-            if(store.category.DeletionDatetime == null){
+            if(store != null && store.category != null && store.category.DeletionDatetime == null){
                 categories = categories.Where(s => s.DeletionDatetime == null);
             }
 
@@ -173,12 +186,7 @@ namespace Cuponera.WebSite.Controllers
         public ActionResult Create()
         {
             IEnumerable<state> states = (new stateController()).get(false);
-            ViewBag.States = states.Select(s =>
-                                new SelectListItem()
-                                {
-                                    Value = s.IdState.ToString(),
-                                    Text = s.Name
-                                });
+            GetStates();
             GetCompanies();
             GetCategories();
             return View();
@@ -247,19 +255,16 @@ namespace Cuponera.WebSite.Controllers
             }
 
 
-            IEnumerable<state> states = (new stateController()).get(false);
-            ViewBag.States = states.Select(s =>
-                                new SelectListItem()
-                                {
-                                    Value = s.IdState.ToString(),
-                                    Text = s.Name
-                                });
+
+            
 
             if (store.Latitude != null) { ViewBag.Latitude = store.Latitude.ToString().Replace(",", "."); }
             if (store.Longitude != null) { ViewBag.Longitude = store.Longitude.ToString().Replace(",", "."); }
 
+            GetStates(store);
             GetCompanies(store);
             GetCategories(store);
+
             return View(store);
         }
 
