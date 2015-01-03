@@ -31,7 +31,7 @@ namespace Cuponera.WebSite.Controllers
         {
             IQueryable<company> companies = db.company;
             
-            if (store != null && store.company != null && store.company.DeletionDatetime == null){
+            if (store == null || (store != null && store.company != null && store.company.DeletionDatetime == null)){
                 companies = companies.Where(s => s.DeletionDatetime == null);
             }
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
@@ -47,7 +47,7 @@ namespace Cuponera.WebSite.Controllers
         public void GetStates(store store = null)
         {
             IQueryable<state> states = db.state;
-            if (store != null && store.state != null && store.state.DeletionDatetime == null)
+            if (store == null || (store != null && store.state != null && store.state.DeletionDatetime == null))
             {
                 states = states.Where(s => s.DeletionDatetime == null);
             }
@@ -60,7 +60,7 @@ namespace Cuponera.WebSite.Controllers
         public void GetCategories(store store = null)
         {
             IQueryable<category> categories = db.category;
-            if(store != null && store.category != null && store.category.DeletionDatetime == null){
+            if(store == null || (store != null && store.category != null && store.category.DeletionDatetime == null)){
                 categories = categories.Where(s => s.DeletionDatetime == null);
             }
 
