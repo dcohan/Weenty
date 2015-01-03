@@ -29,7 +29,11 @@ namespace Cuponera.WebSite.Controllers
         [Authorize]
         public void GetCompanies(store store = null)
         {
-            var companies = db.company.Where(s => s.DeletionDatetime == null);
+            IQueryable<company> companies = db.company;
+            
+            if (store.company.DeletionDatetime == null){
+                companies = companies.Where(s => s.DeletionDatetime == null);
+            }
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
                 companies = db.store.Where( s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore) &&
@@ -48,7 +52,11 @@ namespace Cuponera.WebSite.Controllers
 
         public void GetCategories(store store = null)
         {
-            var categories = db.category.Where(s => s.DeletionDatetime == null);
+            IQueryable<category> categories = db.category;
+            if(store.category.DeletionDatetime == null){
+                categories = categories.Where(s => s.DeletionDatetime == null);
+            }
+
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
                 categories = db.store.Where(s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore) &&
@@ -166,6 +174,7 @@ namespace Cuponera.WebSite.Controllers
 
             if (store.Latitude != null) { ViewBag.Latitude = store.Latitude.ToString().Replace(",", "."); }
             if (store.Longitude != null) { ViewBag.Longitude = store.Longitude.ToString().Replace(",", "."); }
+            
             GetCompanies(store);
             GetCategories(store);
             return View(store);
