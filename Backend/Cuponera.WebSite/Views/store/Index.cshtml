@@ -85,7 +85,7 @@
                                 <span class="item-name">@Html.DisplayFor(modelItem => item.Name)</span>
                             </td>
                             <td>
-                                <span>@Html.DisplayFor(modelItem => item.state.Name)</span>
+                                <span class="@(item.state.DeletionDatetime != null ? "deleted" : "")">@Html.DisplayFor(modelItem => item.state.Name)</span>
                             </td>
                             <td class="current-status">
                                 @if (item.DeletionDatetime == null)
