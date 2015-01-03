@@ -39,15 +39,9 @@ namespace Cuponera.WebSite.Controllers
                 companies = db.store.Where( s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore) &&
                                                      s.DeletionDatetime == null).Select(s => s.company);
             }
-        
-            if (store != null)
-            {
-                ViewBag.IdCompany = new SelectList(companies, "IdCompany", "Name", store.IdCompany);
-            }
-            else
-            {
-                ViewBag.IdCompany = new SelectList(companies, "IdCompany", "Name");
-            }
+
+            ViewBag.Companies = companies;
+            ViewBag.IdCompany = new SelectList(companies, "IdCompany", "Name", store != null ? store.IdCompany : 0);
         }
 
         public void GetCategories(store store = null)
@@ -63,14 +57,8 @@ namespace Cuponera.WebSite.Controllers
                                                      s.DeletionDatetime == null).Select(s => s.category);
             }
 
-            if (store != null)
-            {
-                ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name", store.IdCompany);
-            }
-            else
-            {
-                ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name");
-            }
+            ViewBag.Categories = categories;
+            ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name", store != null ? store.IdCompany : 0);
         }
 
 
