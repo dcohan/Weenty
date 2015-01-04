@@ -1,41 +1,4 @@
-﻿var advertisement = {
-    showIfHasTo: function ($elem, list) {
-        this._hideLabel($elem);
-
-        var id = $elem.val();
-        if (!id) { return; }
-
-        var found = false;
-        var c;
-        for (var i = 0; i < list.length && !found; i++) {
-            c = list[i];
-
-            if (c.id == id) {
-                found = true;
-                if (!c.active) {
-                    this._showLabel($elem);
-                }
-            }
-        }
-    },
-
-    _hideLabel: function($elem) {
-        var $label = this._getLabel($elem);
-        $label.addClass('hidden');  
-    },
-
-    _showLabel: function ($elem) {
-        var $label = this._getLabel($elem);
-        $label.removeClass('hidden');
-    },
-
-    _getLabel: function ($elem) {
-        return $elem.parent().parent().parent().find('.advertisement');
-    }
-}
-
-
-function confirmDelete(id) {
+﻿function confirmDelete(id) {
     deleteElement({ controller: globals.controller, id: id });
 }
 
