@@ -248,6 +248,17 @@ namespace Cuponera.WebSite.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
+        // GET: Product/Activate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Activate(int id)
+        {
+            Cuponera.Backend.Controllers.productController cb = new Backend.Controllers.productController();
+            await cb.Activate(id);
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
         // POST: /product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
