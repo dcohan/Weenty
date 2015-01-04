@@ -41,7 +41,6 @@ public class WeatherFragment extends BaseFragment {
 					mViewProxy.findTextView(R.id.max_temp).setText((int) result.getMainWeather().get(0).getTemp().getMax() + "¡");
 					mViewProxy.findTextView(R.id.humidity).setText((int) result.getMainWeather().get(0).getHumidity() + "%");
 
-					Settings.getInstance(getActivity()).setCity(result.getWeatherCity().getCityName());
 					String weekDay;
 					SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
 
