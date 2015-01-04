@@ -6,6 +6,17 @@
 
 <h2>@Model.Title</h2>
 
+@Scripts.Render("~/bundles/ValidateEnabledObjectHierachy")
+
+<script type="text/javascript">
+    var images_to_remove = [];
+    var images = [];
+
+    $(function () {
+        AddWarningOnInactiveObjects("IdStore","product","productInactive");
+    });
+</script>
+
 <div>
     <h4>Producto</h4>
     <hr />
@@ -28,6 +39,15 @@
     <div class="item-description">
         <b>Sucursal:</b> @Html.DisplayFor(model => model.store.Name)
     </div>
+
+    <div class="item-description">
+            <div id="IdStore" class="hidden">@Html.DisplayFor(model => model.IdStore)</div>
+            <div style="clear:both"></div>
+            <div id="productInactive" class="advertisement float-left" style="clear:both">
+                Atención: la empresa o la sucursal elegida está desactivada.
+            </div>
+    </div>
+    <div style="clear:both"></div>
 
     <div class="item-description">
         <b>Fecha de inicio:</b> @Html.DisplayFor(model => model.StartDatetime)

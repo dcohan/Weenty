@@ -1,18 +1,32 @@
-﻿function AddWarningOnInactiveObjects(idObject, typeObject) {
+﻿function AddWarningOnInactiveObjects(idObject, typeObject, divid) {
 
-    document.getElementById("inactive").style.display = "none";
+    $('#'+divid).addClass('hidden');
 
-    $("#" + idObject).change(function () {
-        if ($("#"+idObject).val() > 0) {
-            $.get('/Validator/ValidateStore?IdObject=' + $("#" + idObject).val()+"&TypeObject="+typeObject, null, function (data, textStatus, jqXHR) {
-                if (data.toLowerCase().trim() == 'true') {
-                    document.getElementById("inactive").style.display = "none";
-                } else {
-                    document.getElementById("inactive").style.display = "inline";
-                }
-            });
-        }
+    //If is a combo
+    $("#" + idObject).change(function() {
+        triggerValidation(idObject, typeObject, divid);
     });
 
-    $("#" + idObject).trigger('change');
+    triggerValidation(idObject, typeObject, divid);
+}
+
+function triggerValidation(idObject, typeObject, divid) {
+
+    if($("#"+idObject).val() > 0) {
+        id = $("#"+idObject).val();
+    } else {
+        if($("#"+idObject).text().trim().length > 0) {
+            id = $("#"+idObject).text();
+        }
+    }
+
+    if (id) {
+        $.get('/Validator/ValidateStore?IdObject=' +id + "&TypeObject=" +typeObject, null, function (data, textStatus, jqXHR) {
+            if (data.toLowerCase().trim() == 'true') {
+                $('#'+divid).addClass('hidden');
+            } else {
+                $('#'+divid).removeClass('hidden');
+            }
+        });
+    }
 }

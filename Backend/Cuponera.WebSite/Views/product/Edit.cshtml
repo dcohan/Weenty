@@ -16,7 +16,7 @@
     var images = [];
 
     $(function () {
-        AddWarningOnInactiveObjects("IdStore","product");
+        AddWarningOnInactiveObjects("IdStore","product","productInactive");
 
         $('#fileUpload').change(function(e){
             var files = e.target.files;
@@ -84,7 +84,6 @@
         <h4>Producto</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <span id="inactive" class="text-danger field-validation-error">La sucursal o empresa está desactivada!</span>
         @Html.HiddenFor(model => model.IdProduct)
 
         <div class="form-group">
@@ -125,7 +124,12 @@
                 @Html.DropDownList("IdStore")
                 @Html.ValidationMessageFor(model => model.IdStore, "", new { @class = "text-danger" })
             </div>
+            <div style="clear:both"></div>
+            <div id="productInactive" class="advertisement float-left" style="clear:both">
+                Atención: la empresa o la sucursal elegida está desactivada.
+            </div>
         </div>
+        <div style="clear:both"></div>
 
         <div class="form-group">
             <label class="control-label col-md-2" for="StartDatetime">Fecha Inicio *</label>

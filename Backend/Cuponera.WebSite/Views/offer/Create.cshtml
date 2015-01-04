@@ -13,7 +13,7 @@
 <script type="text/javascript">
 
     $(function () {
-        AddWarningOnInactiveObjects("IdProduct","offer");
+        AddWarningOnInactiveObjects("IdProduct","offer","productInactive");
         
         $('#fileUpload').change(function (e) {
             var files = e.target.files;
@@ -55,7 +55,6 @@
         <h4>Oferta</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <span id="inactive" class="text-danger field-validation-error">La sucursal o empresa está desactivada!</span>
         <div class="form-group">
             @Html.LabelFor(model => model.Title, "Nombre *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -78,7 +77,12 @@
                 @Html.DropDownListFor(model => model.IdProduct, null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdProduct, "", new { @class = "text-danger" })
             </div>
+            <div style="clear:both"></div>
+            <div id="productInactive" class="advertisement float-left" style="clear:both">
+                Atención: la empresa, la sucursal o el producto elegido está desactivado.
+            </div>
         </div>
+        <div style="clear:both"></div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Price, "Precio ($) *", new { @class = "control-label col-md-2" })

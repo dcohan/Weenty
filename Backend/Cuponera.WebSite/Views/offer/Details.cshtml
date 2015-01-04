@@ -6,12 +6,29 @@
 
 <h2>@Model.product.Title</h2>
 
+@Scripts.Render("~/bundles/ValidateEnabledObjectHierachy")
+
+<script type="text/javascript">
+
+    $(function () {
+        AddWarningOnInactiveObjects("IdProduct", "offer", "productInactive");
+    });
+</script>
+
 <div>
     <h4>Oferta</h4>
     <hr />
     <div class="item-description">
         <b>Producto:</b> @Html.DisplayFor(model => model.product.Title)
     </div>
+    <div class="item-description">
+        <div style="clear:both"></div>
+        <div id="IdProduct" class="hidden">@Html.DisplayFor(model => model.IdProduct)</div>
+        <div id="productInactive" class="advertisement float-left" style="clear:both">
+            Atención: la empresa, la sucursal o el producto elegido está desactivado.
+        </div>
+    </div>
+    <div style="clear:both"></div>
 
     <div class="item-description">
         <b>Nombre:</b> @Html.DisplayFor(model => model.Title)
@@ -71,11 +88,11 @@
             <img src="../../Images/x.ico" alt="inactive" class="inactive" />
         }
     </div>
-    
-     
 
 
-</div>
+
+
+    </div>
 <p>
     @Html.ActionLink("Editar", "Edit", new { id = Model.IdOffer }) |
     @Html.ActionLink("Volver", "Index")

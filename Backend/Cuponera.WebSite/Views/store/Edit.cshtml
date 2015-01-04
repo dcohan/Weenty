@@ -18,7 +18,7 @@
     var images = [];
 
     $(function () {
-        AddWarningOnInactiveObjects("IdCompany", "store");
+        AddWarningOnInactiveObjects("IdCompany", "store", "companyInactive");
 
         $('#fileUpload').change(function(e){
             var files = e.target.files;
@@ -123,11 +123,10 @@
                     @Html.ValidationMessageFor(model => model.IdCategory, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="advertisement float-right">
+            <div style="clear:both"></div>
+            <div class="advertisement float-left" style="clear:both">
                 Atención: la categoría elegida está desactivada.
             </div>
-
         </div>
         <div style="clear:both"></div>
 
@@ -141,7 +140,10 @@
                 </div>
             </div>
 
-            <span id="inactive" class="advertisement float-left" style="clear:both">Atención: La empresa está desactivada</span>
+            <div style="clear:both"></div>
+            <div id="companyInactive" class="advertisement float-left" style="clear:both">
+                Atención: la empresa elegida está desactivada.
+            </div>
 
         </div>
         <div style="clear:both"></div>
@@ -175,10 +177,7 @@
                 </div>
             </div>
 
-
-            <div class="advertisement float-right">
-                Atención: la ciudad elegida está desactivada.
-            </div>
+            <span id="inactive" class="advertisement float-left" style="clear:both">Atención: la ciudad elegida está desactivada.</span>
 
         </div>
         <div style="clear:both"></div>
@@ -191,7 +190,7 @@
 
         <div class="float-left map" id="googleMap"></div>
 
-        <div class="advertisement float-right">
+        <div class="advertisement float-left">
         </div>
         @Html.HiddenFor(model => model.Latitude, htmlAttributes: new { @id = "latitude" })
         @Html.HiddenFor(model => model.Longitude, htmlAttributes: new { @id = "longitude" })

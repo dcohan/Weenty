@@ -16,7 +16,7 @@
     }
 
     $(function () {
-        AddWarningOnInactiveObjects("IdCompany", "store");
+        AddWarningOnInactiveObjects("IdCompany", "store", "companyInactive");
 
         map = maps.initialize({
             editable: true
@@ -104,7 +104,11 @@
             <div class="col-md-10">
                 @Html.DropDownList("IdCompany", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdCompany, "", new { @class = "text-danger" })
-                <span id="inactive" class="text-danger field-validation-error">La sucursal o empresa está desactivada!</span>
+            </div>
+
+            <div style="clear:both"></div>
+            <div id="companyInactive" class="advertisement float-left" style="clear:both">
+                Atención: la empresa elegida está desactivada.
             </div>
         </div>
         <br />

@@ -6,11 +6,14 @@
 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
 @Scripts.Render("~/bundles/googlemaps")
-
+@Scripts.Render("~/bundles/ValidateEnabledObjectHierachy")
 
 
 <script type="text/javascript">
     $(function () {
+
+        AddWarningOnInactiveObjects("IdCompany", "store", "companyInactive");
+
         var map = maps.initialize({
             editable: false
         });
@@ -31,6 +34,14 @@
     <div class="item-description">
         <b>Empresa:</b> @ViewBag.CompanyName
     </div>
+    <div class="item-description">
+        <div style="clear:both"></div>
+        <div id="IdCompany" class="hidden">@Html.DisplayFor(model => model.IdCompany)</div>
+        <div id="companyInactive" class="advertisement float-left" style="clear:both">
+            Atención: la empresa elegida está desactivada.
+        </div>
+    </div>
+    <div style="clear:both"></div>
 
     <div class="item-description">
         <b>@Html.DisplayNameFor(model => model.Name):</b> @Html.DisplayFor(model => model.Name)
