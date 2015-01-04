@@ -31,7 +31,7 @@ namespace Cuponera.WebSite.Controllers
         public void GetProducts(offer offer=null)
         {
             IQueryable<product> products = db.product;
-            if (offer!= null && offer.product.DeletionDatetime == null) { 
+            if (offer!= null && offer.product!=null && offer.product.DeletionDatetime == null) { 
                 products = products.Where(p => p.DeletionDatetime == null);
             }
 
