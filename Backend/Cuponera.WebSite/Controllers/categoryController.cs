@@ -133,6 +133,7 @@ namespace Cuponera.WebSite.Controllers
                 return HttpNotFound();
             }
 
+            category.DeletionDatetime = DateTime.Now;
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
