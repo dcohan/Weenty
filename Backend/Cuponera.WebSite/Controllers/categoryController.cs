@@ -34,7 +34,7 @@ namespace Cuponera.WebSite.Controllers
         public string GetAllBasicData()
         {
             Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
-            IEnumerable<category> categories = cb.Getcategory(false);
+            IEnumerable<category> categories = cb.Getcategory(false).OrderBy(c => c.Name);
 
             return Helpers.JSONHelper.SerializeJSON(categories.ToList().Select(category => new { id = category.IdCategory, name = category.Name }));
         }

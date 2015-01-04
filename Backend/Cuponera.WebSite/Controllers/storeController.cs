@@ -40,6 +40,8 @@ namespace Cuponera.WebSite.Controllers
                                                      s.DeletionDatetime == null).Select(s => s.company);
             }
 
+            companies = companies.OrderBy(c => c.Name);
+
             ViewBag.Companies = companies;
             ViewBag.IdCompany = new SelectList(companies, "IdCompany", "Name", store != null ? store.IdCompany : 0);
         }
@@ -51,6 +53,8 @@ namespace Cuponera.WebSite.Controllers
             {
                 states = states.Where(s => s.DeletionDatetime == null);
             }
+
+            states = states.OrderBy(s => s.Name);
 
             ViewBag.IdState = new SelectList(states, "IdState", "Name", store != null ? store.IdState : 0);
             ViewBag.States = states;
@@ -69,6 +73,8 @@ namespace Cuponera.WebSite.Controllers
                 categories = db.store.Where(s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore) &&
                                                      s.DeletionDatetime == null).Select(s => s.category);
             }
+
+            categories = categories.OrderBy(c => c.Name);
 
             ViewBag.Categories = categories;
             ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name", store != null ? store.IdCompany : 0);
