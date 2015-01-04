@@ -14,7 +14,6 @@ import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.service.weather.WeatherRequest;
 import com.cuponera.service.weather.WeatherResponse;
-import com.cuponera.settings.Settings;
 import com.cuponera.utils.ErrorHandler;
 import com.cuponera.utils.Utils;
 
@@ -41,7 +40,6 @@ public class WeatherFragment extends BaseFragment {
 					mViewProxy.findTextView(R.id.max_temp).setText((int) result.getMainWeather().get(0).getTemp().getMax() + "¡");
 					mViewProxy.findTextView(R.id.humidity).setText((int) result.getMainWeather().get(0).getHumidity() + "%");
 
-					Settings.getInstance(getActivity()).setCity(result.getWeatherCity().getCityName());
 					String weekDay;
 					SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
 

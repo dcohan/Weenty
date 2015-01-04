@@ -5,7 +5,12 @@
         android:width="1dp"
         android:color="@color/gray_light" />
 
-    <solid android:color="@color/orange_strong" />
+    <gradient
+        android:centerX="0"
+        android:centerY="1"
+        android:endColor="#f99100"
+        android:startColor="@color/orange_strong"
+        android:type="linear" />
 
     <corners
         android:bottomLeftRadius="8dp"

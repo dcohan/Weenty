@@ -13,7 +13,7 @@ using Cuponera.WebSite.Helpers;
 
 namespace Cuponera.WebSite.Controllers
 {
-    [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
+    [AllowAnonymous]
     public class geoRequestController : Controller
     {
         private CuponeraEntities db = new CuponeraEntities();

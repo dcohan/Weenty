@@ -11,6 +11,7 @@
 }
 
 function triggerValidation(idObject, typeObject, divid) {
+    var id;
 
     if($("#"+idObject).val() > 0) {
         id = $("#"+idObject).val();
