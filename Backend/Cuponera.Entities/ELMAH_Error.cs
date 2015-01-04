@@ -12,16 +12,18 @@ namespace Cuponera.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class images
+    public partial class ELMAH_Error
     {
-        public int IdImage { get; set; }
-        public string ImagePath { get; set; }
-        public Nullable<int> IdProduct { get; set; }
-        public Nullable<int> IdOffer { get; set; }
-        public Nullable<int> IdStore { get; set; }
-    
-        public virtual offer offer { get; set; }
-        public virtual product product { get; set; }
-        public virtual store store { get; set; }
+        public System.Guid ErrorId { get; set; }
+        public string Application { get; set; }
+        public string Host { get; set; }
+        public string Type { get; set; }
+        public string Source { get; set; }
+        public string Message { get; set; }
+        public string User { get; set; }
+        public int StatusCode { get; set; }
+        public System.DateTime TimeUtc { get; set; }
+        public int Sequence { get; set; }
+        public string AllXml { get; set; }
     }
 }
