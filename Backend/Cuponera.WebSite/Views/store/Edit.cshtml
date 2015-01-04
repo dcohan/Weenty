@@ -124,7 +124,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IdStore)
-        <span id="inactive" class="text-danger field-validation-error">La sucursal o empresa está desactivada!</span>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, "Nombre *", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -164,13 +164,11 @@
                 <div class="col-md-10">
                     @Html.DropDownList("IdCompany", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IdCompany, "", new { @class = "text-danger" })
+                    
                 </div>
             </div>
 
-
-            <div class="advertisement float-right">
-                Atención: la empresa elegida está desactivada.
-            </div>
+            <span id="inactive" class="advertisement float-left" style="clear:both">Atención: La empresa está desactivada</span>
 
         </div>
         <div style="clear:both"></div>
