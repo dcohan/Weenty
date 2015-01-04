@@ -13,11 +13,14 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
 using Cuponera.Entities;
+using System.Threading;
 
 namespace Cuponera.WebSite.Models
 {
+    
     public class CuponeraIdentity : IIdentity
     {
+        
         public CuponeraIdentity(IIdentity baseIdentity)
         {
             IsAuthenticated = baseIdentity.IsAuthenticated;
@@ -29,6 +32,12 @@ namespace Cuponera.WebSite.Models
                 using (CuponeraEntities db = new CuponeraEntities())
                 {
                     var _user = db.UserProfile.FirstOrDefault(u => u.UserName.ToLower() == Name.ToLower());
+                    if (_user == null)
+                    {
+                        LogoutMethod();
+                        return;
+                    }
+
                     HttpContext.Current.Session["userId"] = _user.UserId;
                     HttpContext.Current.Session["userActive"] = _user.Active;
 
@@ -57,6 +66,14 @@ namespace Cuponera.WebSite.Models
                     }
                 }
             }
+        }
+
+        private void LogoutMethod()
+        {
+            InitializeSimpleMembershipAttribute i = new InitializeSimpleMembershipAttribute();
+            i.OnActionExecuting(null);
+
+            WebSecurity.Logout();
         }
 
         public string AuthenticationType

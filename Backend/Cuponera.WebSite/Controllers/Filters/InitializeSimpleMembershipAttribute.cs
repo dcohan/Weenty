@@ -11,9 +11,9 @@ namespace Cuponera.WebSite.Filters
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public sealed class InitializeSimpleMembershipAttribute : ActionFilterAttribute
     {
-        private static SimpleMembershipInitializer _initializer;
-        private static object _initializerLock = new object();
-        private static bool _isInitialized;
+        public static SimpleMembershipInitializer _initializer;
+        public static object _initializerLock = new object();
+        public static bool _isInitialized;
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -21,7 +21,7 @@ namespace Cuponera.WebSite.Filters
             LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
         }
 
-        private class SimpleMembershipInitializer
+        public class SimpleMembershipInitializer
         {
             public SimpleMembershipInitializer()
             {
