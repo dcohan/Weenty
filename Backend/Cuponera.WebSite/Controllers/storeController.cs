@@ -68,12 +68,6 @@ namespace Cuponera.WebSite.Controllers
                 categories = categories.Where(s => s.DeletionDatetime == null);
             }
 
-            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
-            {
-                categories = db.store.Where(s => CuponeraIdentity.CurrentAvaiableStores.Contains(s.IdStore) &&
-                                                     s.DeletionDatetime == null).Select(s => s.category);
-            }
-
             categories = categories.OrderBy(c => c.Name);
 
             ViewBag.Categories = categories;

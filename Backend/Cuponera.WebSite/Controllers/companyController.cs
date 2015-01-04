@@ -191,8 +191,18 @@ namespace Cuponera.WebSite.Controllers
         // GET: company/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
-            await cb.Delete(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            company company = await db.company.FindAsync(id);
+            if (company == null)
+            {
+                return HttpNotFound();
+            }
+
+            company.DeletionDatetime = DateTime.Now;
+            await db.SaveChangesAsync();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
@@ -203,8 +213,18 @@ namespace Cuponera.WebSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Activate(int id)
         {
-            Cuponera.Backend.Controllers.companyController cb = new Backend.Controllers.companyController();
-            await cb.Activate(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            company company = await db.company.FindAsync(id);
+            if (company == null)
+            {
+                return HttpNotFound();
+            }
+
+            company.DeletionDatetime = null;
+            await db.SaveChangesAsync();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
