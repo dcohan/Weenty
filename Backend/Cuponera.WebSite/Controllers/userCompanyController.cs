@@ -243,6 +243,7 @@ namespace Cuponera.WebSite.Controllers
             return View(userCompany);
         }
 
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // GET: userCompany/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
@@ -255,7 +256,34 @@ namespace Cuponera.WebSite.Controllers
             {
                 return HttpNotFound();
             }
-            return View(userCompany);
+
+            userCompany.DeletionDatetime = DateTime.Now;
+            await db.SaveChangesAsync();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
+        // GET: userCompany/Activate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Activate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            userCompany userCompany = await db.userCompany.FindAsync(id);
+            if (userCompany == null)
+            {
+                return HttpNotFound();
+            }
+
+            userCompany.DeletionDatetime = null;
+            await db.SaveChangesAsync();
+
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         // POST: userCompany/Delete/5

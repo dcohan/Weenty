@@ -12,16 +12,12 @@ namespace Cuponera.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class images
+    public partial class sysdiagrams
     {
-        public int IdImage { get; set; }
-        public string ImagePath { get; set; }
-        public Nullable<int> IdProduct { get; set; }
-        public Nullable<int> IdOffer { get; set; }
-        public Nullable<int> IdStore { get; set; }
-    
-        public virtual offer offer { get; set; }
-        public virtual product product { get; set; }
-        public virtual store store { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
