@@ -116,22 +116,21 @@
         </div>
 
         <div>
-            <div class="form-group float-left">
+            <div class="form-group">
                 @Html.LabelFor(model => model.IdCategory, "Categoría *", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("IdCategory", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IdCategory, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div style="clear:both"></div>
-            <div class="advertisement float-left" style="clear:both">
+
+            <div id="categoryInactive" class="advertisement hidden">
                 Atención: la categoría elegida está desactivada.
             </div>
         </div>
-        <div style="clear:both"></div>
 
         <div>
-            <div class="form-group float-left">
+            <div class="form-group">
                 @Html.LabelFor(model => model.IdCompany, "Compañia *", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("IdCompany", null, htmlAttributes: new { @class = "form-control" })
@@ -140,13 +139,11 @@
                 </div>
             </div>
 
-            <div style="clear:both"></div>
-            <div id="companyInactive" class="advertisement float-left" style="clear:both">
+            <div id="companyInactive" class="advertisement">
                 Atención: la empresa elegida está desactivada.
             </div>
 
         </div>
-        <div style="clear:both"></div>
 
 
         <br />
@@ -169,7 +166,7 @@
         </div>
 
         <div>
-            <div class="form-group float-left">
+            <div class="form-group">
                 @Html.LabelFor(model => model.IdState, "Localidad *", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("IdState", null, htmlAttributes: new { @class = "form-control" })
@@ -177,10 +174,12 @@
                 </div>
             </div>
 
-            <span id="inactive" class="advertisement float-left" style="clear:both">Atención: la ciudad elegida está desactivada.</span>
+
+            <div id="stateInactive" class="advertisement hidden">
+                Atención: la ciudad elegida está desactivada.
+            </div>
 
         </div>
-        <div style="clear:both"></div>
 
 
         <div class="form-group">
