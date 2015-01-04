@@ -1,9 +1,13 @@
 package com.cuponera.utils;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import android.content.Context;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -11,8 +15,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.cuponera.service.profile.ProfileResponse;
-import com.cuponera.service.profile.UpdateProfileRequest;
+import com.cuponera.BaseActivity;
+import com.cuponera.R;
+import com.cuponera.navigation.NavBarFragment;
 import com.cuponera.settings.Settings;
 
 public class LocationServices implements LocationListener {
@@ -59,23 +64,21 @@ public class LocationServices implements LocationListener {
 	public void onLocationChanged(final Location location) {
 		this.setLocation(location);
 		Log.d("location", location.toString());
-		UpdateProfileRequest request = new UpdateProfileRequest(context) {
+		Settings.getInstance(context).setLongitude(location.getLongitude());
+		Settings.getInstance(context).setLatitude(location.getLatitude());
 
-			@Override
-			public void onServiceReturned(ProfileResponse result) {
-				if (result != null) {
-					Settings.getInstance(context).setLongitude(location.getLongitude());
-					Settings.getInstance(context).setLatitude(location.getLatitude());
-				}
+		Geocoder geoCoder = new Geocoder(context, Locale.getDefault());
+		try {
+			List<Address> address = geoCoder.getFromLocation(-37.1167, -56.8333, 1);
+			String finalAddress = address.get(0).getLocality();
+			Settings.getInstance(context).setCity(finalAddress);
+			NavBarFragment navBarFragment = (NavBarFragment) ((BaseActivity) context).getSupportFragmentManager().findFragmentById(R.id.navBar);
+			if (navBarFragment != null) {
+				navBarFragment.setTitle(finalAddress);
 			}
 
-			@Override
-			public void loadFailed() {
-			}
-
-		};
-
-		request.execute();
+		} catch (Exception e) {
+		}
 	}
 
 	@Override

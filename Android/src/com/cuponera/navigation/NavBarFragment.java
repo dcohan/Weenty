@@ -12,8 +12,6 @@ import com.cuponera.BaseFragment;
 import com.cuponera.R;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.search.SearchFragment;
-import com.cuponera.service.weather.WeatherRequest;
-import com.cuponera.service.weather.WeatherResponse;
 import com.cuponera.settings.Settings;
 import com.cuponera.utils.Utils;
 import com.cuponera.utils.ValidationUtils;
@@ -76,35 +74,12 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 			}
 		});
 
-		WeatherRequest request = new WeatherRequest(getActivity()) {
-
-			@Override
-			public void showLoading() {
-			}
-
-			@Override
-			public void hideLoading() {
-			}
-
-			@Override
-			protected void serviceReady(WeatherResponse result) {
-				if (result != null && result.getWeatherCity() != null) {
-					Settings.getInstance(getActivity()).setCity(result.getWeatherCity().getCityName());
-					setTitle(result.getWeatherCity().getCityName());
-				}
-
-			}
-		};
-
-		if (Settings.getInstance(getActivity()).getLatitude() != 0 && !request.isResultCached()) {
-			request.execute(false);
-		}
-
 	}
 
 	public void setTitle(String title) {
 		mViewProxy.findTextView(R.id.headerTitle).setText(
-				ValidationUtils.isNullOrEmpty(Settings.getInstance(getActivity()).getCity()) ? "SAN BERNARDO" : Settings.getInstance(getActivity()).getCity().toUpperCase(Locale.ROOT));
+				ValidationUtils.isNullOrEmpty(Settings.getInstance(getActivity()).getCity()) ? "SAN BERNARDO" : Settings.getInstance(getActivity()).getCity()
+						.toUpperCase(Locale.ROOT));
 	}
 
 	public MenuFragment getMenu() {
