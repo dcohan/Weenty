@@ -38,29 +38,15 @@ namespace Cuponera.WebSite.Controllers
              }
 
              var permitedStores = stores.OrderBy(s => s.Name);
-
-            if (product == null)
-            {
-                ViewBag.IdStore = new SelectList(permitedStores, "IdStore", "Name");
-            }
-            else
-            {
-                ViewBag.IdStore = new SelectList(permitedStores, "IdStore", "Name", product.IdStore);
-            }
+             ViewBag.IdStore = new SelectList(permitedStores, "IdStore", "Name", product != null ? product.IdStore : 0);
         }
 
         private void GetCategories(product product=null)
         {
-            var categories = db.category.Where(c => c.DeletionDatetime == null);
+            var categories = db.category.Where(c => c.DeletionDatetime == null).OrderBy(c => c.Name);
 
-            if (product == null)
-            {
-                ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name");
-            }
-            else
-            {
-                ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name", product.IdCategory);
-            }
+
+            ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name", product != null ? product.IdCategory : 0);
         }
 
         private bool Validate(product product)
