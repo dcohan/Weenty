@@ -17,31 +17,8 @@
     var images_to_remove = [];
     var images = [];
 
-    var companies = [];
-    @foreach (var company in ViewBag.Companies)
-    {
-        @:companies.push({id: @company.IdCompany, active: '@(company.DeletionDatetime == null)'.toLowerCase() == 'true' });
-    }
-
-    var categories = [];
-    @foreach (var category in ViewBag.Categories)
-    {
-        @:categories.push({id: @category.IdCategory, active: '@(category.DeletionDatetime == null)'.toLowerCase() == 'true' });
-    }
-
-    var states = [];
-    @foreach (var state in ViewBag.States)
-    {
-        @:states.push({id: @state.IdState, active: '@(state.DeletionDatetime == null)'.toLowerCase() == 'true' });
-    }
-
     $(function () {
-
         AddWarningOnInactiveObjects("IdCompany", "store");
-
-        $('#IdState').change(function (k, v){
-            advertisement.showIfHasTo($(this), states);
-        });
 
         $('#fileUpload').change(function(e){
             var files = e.target.files;
@@ -105,10 +82,6 @@
                 }
             });
         });
-        
-        advertisement.showIfHasTo($('#IdCompany'), companies);
-        advertisement.showIfHasTo($('#IdCategory'), categories);
-        advertisement.showIfHasTo($('#IdState'), states);
     });
 </script>
 
