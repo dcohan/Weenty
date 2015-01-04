@@ -134,6 +134,7 @@ namespace Cuponera.WebSite.Controllers
             }
 
             category.DeletionDatetime = DateTime.Now;
+            await db.SaveChangesAsync();
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
