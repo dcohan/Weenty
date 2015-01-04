@@ -22,9 +22,10 @@ namespace Cuponera.WebSite.Controllers
         private IEnumerable<company> get(bool all, string name, int pageNumber)
         {
             IQueryable<company> companies = db.company;
+
             if (!all)
             {
-                companies = db.company.Where(c => !c.DeletionDatetime.HasValue);
+                companies = companies.Where(c => !c.DeletionDatetime.HasValue);
             }
 
             if (name != null)
@@ -52,6 +53,27 @@ namespace Cuponera.WebSite.Controllers
                     }
                 }
             }
+
+
+            /* BEGIN Replace its deletion datetime if the subscription is not present or is expired */
+            company company;
+            for (var i = 0; i < companies.Count(); i++)
+            {
+                company = companies.ToList()[i];
+
+                if (company.companySubscription.Count() == 0 || company.companySubscription.FirstOrDefault().EndDate < DateTime.Now)
+                {
+                    company.DeletionDatetime = DateTime.Now;
+                }
+            }
+
+            if (!all)
+            {
+                companies = companies.Where(c => !c.DeletionDatetime.HasValue);
+            }
+            /* END Replace its deletion datetime if the subscription is not present or is expired */
+
+
 
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)companies.Count() / pageSize));
