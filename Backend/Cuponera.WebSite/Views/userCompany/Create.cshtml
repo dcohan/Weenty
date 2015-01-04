@@ -29,7 +29,7 @@
             <div class="form-group">
                 @Html.Label("Es Admin?", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.CheckBox("isAdminBO", Model.UserProfile.webpages_Roles.Count() > 0)
+                    @Html.CheckBox("isAdminBO")
                 </div>
             </div>
         }

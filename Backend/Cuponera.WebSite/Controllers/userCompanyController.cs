@@ -142,6 +142,7 @@ namespace Cuponera.WebSite.Controllers
             ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany");
             ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany");            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName");
             ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName");            return View();
+            ViewBag.isAdminBO = 0;
         }
 
         // POST: userCompany/Create

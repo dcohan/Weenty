@@ -59,7 +59,7 @@ namespace Cuponera.WebSite.Helpers
                         case "company":
                             stores.AddRange(db.company.Where(c => c.IdCompany.Equals(idEntity)).FirstOrDefault().store.Select(s => s.IdStore));
 
-                            if (MustBeCompanyAdmin && db.userCompany.Where(uc => uc.IdUser.Equals(userId) && uc.IsAdmin).Count() <= 0)
+                            if (MustBeCompanyAdmin && db.userCompany.Where(uc => uc.IdCompany.Equals(idEntity) && uc.IdUser.Equals(userId) && uc.IsAdmin).Count() <= 0)
                             {
                                 return false;
                             }
