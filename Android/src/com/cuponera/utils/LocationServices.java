@@ -69,7 +69,7 @@ public class LocationServices implements LocationListener {
 
 		Geocoder geoCoder = new Geocoder(context, Locale.getDefault());
 		try {
-			List<Address> address = geoCoder.getFromLocation(-37.1167, -56.8333, 1);
+			List<Address> address = geoCoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 			String finalAddress = address.get(0).getLocality();
 			Settings.getInstance(context).setCity(finalAddress);
 			NavBarFragment navBarFragment = (NavBarFragment) ((BaseActivity) context).getSupportFragmentManager().findFragmentById(R.id.navBar);
