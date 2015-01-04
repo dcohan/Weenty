@@ -74,8 +74,8 @@
             geocoder.checkIfUserCanAskForCoordinates({
                 done: function () {
                     var address = $('#address').val();
-                    var selected_state_id = $('#states').val();
-                    var city = $('#states').find('option[value=' + selected_state_id + ']').html();
+                    var selected_state_id = $('#IdState').val();
+                    var city = $('#IdState').find('option[value=' + selected_state_id + ']').html();
                     var province = 'Buenos Aires';
                     var country = 'Argentina';
                     geocoder.getCoordinatesByAddress(address, city, province, country);
