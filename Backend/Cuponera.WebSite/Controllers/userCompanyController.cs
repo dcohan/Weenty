@@ -149,19 +149,21 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdUserCompany,IdUser,IdCompany,IsAdmin,IdStore")] userCompany userCompany, bool isAdmin)
+        public async Task<ActionResult> Create([Bind(Include = "IdUserCompany,IdUser,IdCompany,IsAdmin,IdStore")] userCompany userCompany, bool? isAdminBO)
         {
             if (ModelState.IsValid)
             {
                 var user = db.UserProfile.Where(up => up.UserId.Equals(userCompany.IdUser)).FirstOrDefault();
-                
-                if (isAdmin)
+                if (new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
                 {
-                    AddUserToCompany(user);
-                }
-                else
-                {
-                    RemoveUserToCompany(user);
+                    if ((bool)isAdminBO)
+                    {
+                        AddUserToCompany(user);
+                    }
+                    else
+                    {
+                        RemoveUserToCompany(user);
+                    }
                 }
                  
                 db.userCompany.Add(userCompany);
@@ -205,18 +207,21 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdUserCompany,IdUser,IdCompany,IsAdmin,IdStore")] userCompany userCompany, bool isAdminBO)
+        public async Task<ActionResult> Edit([Bind(Include = "IdUserCompany,IdUser,IdCompany,IsAdmin,IdStore")] userCompany userCompany, bool? isAdminBO)
         {
             if (ModelState.IsValid)
             {
                 var user = db.UserProfile.Where(up => up.UserId.Equals(userCompany.IdUser)).FirstOrDefault();
-                if (isAdminBO)
+                if (new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
                 {
-                    AddUserToCompany(user);
-                }
-                else
-                {
-                    RemoveUserToCompany(user);
+                    if ((bool)isAdminBO)
+                    {
+                        AddUserToCompany(user);
+                    }
+                    else
+                    {
+                        RemoveUserToCompany(user);
+                    }
                 }
 
                 db.Entry(userCompany).State = EntityState.Modified;

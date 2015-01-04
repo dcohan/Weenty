@@ -29,6 +29,8 @@ namespace Cuponera.WebSite.Models
 
             if (HttpContext.Current.Session != null)
             {
+                HttpContext.Current.Session.RemoveAll();
+
                 using (CuponeraEntities db = new CuponeraEntities())
                 {
                     var _user = db.UserProfile.FirstOrDefault(u => u.UserName.ToLower() == Name.ToLower());
@@ -37,9 +39,10 @@ namespace Cuponera.WebSite.Models
                         LogoutMethod();
                         return;
                     }
-
+                    
                     HttpContext.Current.Session["userId"] = _user.UserId;
                     HttpContext.Current.Session["userActive"] = _user.Active;
+                    
 
                     if (_user.Active!=null && (bool)_user.Active)
                     {

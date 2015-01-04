@@ -36,9 +36,6 @@ namespace Cuponera.WebSite.Helpers
                 if (MustBeAdmin) return false;
             }
 
-
-
-
             //Define Entity and Id of entity
             string entity = httpContext.Request.Url.Segments[1].Replace("/", string.Empty);
 
@@ -62,7 +59,7 @@ namespace Cuponera.WebSite.Helpers
                         case "company":
                             stores.AddRange(db.company.Where(c => c.IdCompany.Equals(idEntity)).FirstOrDefault().store.Select(s => s.IdStore));
 
-                            if (MustBeCompanyAdmin && db.userCompany.Where(uc => uc.IdCompany.Equals(idEntity) && uc.IdUser.Equals(userId) && uc.IsAdmin).Count() <= 0)
+                            if (MustBeCompanyAdmin && db.userCompany.Where(uc => uc.IdUser.Equals(userId) && uc.IsAdmin).Count() <= 0)
                             {
                                 return false;
                             }
@@ -73,7 +70,7 @@ namespace Cuponera.WebSite.Helpers
                             break;
 
                         case "userCompany":
-                            if (MustBeCompanyAdmin && db.userCompany.Where(uc => uc.IdUserCompany.Equals(idEntity) && uc.IdUser.Equals(userId) && uc.IsAdmin).Count() <= 0)
+                            if (MustBeCompanyAdmin && db.userCompany.Where(uc => uc.IdUser.Equals(userId) && uc.IsAdmin).Count() <= 0)
                             {
                                 return false;
                             }
