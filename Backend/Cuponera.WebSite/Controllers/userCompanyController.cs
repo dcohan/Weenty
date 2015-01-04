@@ -157,9 +157,11 @@ namespace Cuponera.WebSite.Controllers
                 
                 if (isAdmin)
                 {
-                    var adminRole = db.webpages_Roles.Where(r => r.RoleName.Equals("admin")).FirstOrDefault();
-                    user.webpages_Roles.Add(adminRole);
-                    await db.SaveChangesAsync();
+                    AddUserToCompany(user);
+                }
+                else
+                {
+                    RemoveUserToCompany(user);
                 }
                  
                 db.userCompany.Add(userCompany);
@@ -203,16 +205,18 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdUserCompany,IdUser,IdCompany,IsAdmin,IdStore")] userCompany userCompany, bool isAdmin)
+        public async Task<ActionResult> Edit([Bind(Include = "IdUserCompany,IdUser,IdCompany,IsAdmin,IdStore")] userCompany userCompany, bool isAdminBO)
         {
             if (ModelState.IsValid)
             {
                 var user = db.UserProfile.Where(up => up.UserId.Equals(userCompany.IdUser)).FirstOrDefault();
-                if (isAdmin)
+                if (isAdminBO)
                 {
-                    var adminRole = db.webpages_Roles.Where(r => r.RoleName.Equals("admin")).FirstOrDefault();
-                    user.webpages_Roles.Add(adminRole);
-                    await db.SaveChangesAsync();
+                    AddUserToCompany(user);
+                }
+                else
+                {
+                    RemoveUserToCompany(user);
                 }
 
                 db.Entry(userCompany).State = EntityState.Modified;
@@ -257,6 +261,26 @@ namespace Cuponera.WebSite.Controllers
             db.userCompany.Remove(userCompany);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        private void AddUserToCompany(Cuponera.Entities.UserProfile user)
+        {
+            var adminRole = db.webpages_Roles.Where(r => r.RoleName.Equals("admin")).FirstOrDefault();
+            if (user.webpages_Roles.Where(ur => ur.RoleId.Equals(adminRole.RoleId)).FirstOrDefault() == null)
+            {
+                user.webpages_Roles.Add(adminRole);
+                db.SaveChangesAsync();
+            }
+        }
+
+        private void RemoveUserToCompany(Cuponera.Entities.UserProfile user)
+        {
+            var adminRole = db.webpages_Roles.Where(r => r.RoleName.Equals("admin")).FirstOrDefault();
+            if (user.webpages_Roles.Where(ur => ur.RoleId.Equals(adminRole.RoleId)).FirstOrDefault() != null)
+            {
+                user.webpages_Roles.Remove(adminRole);
+                db.SaveChangesAsync();
+            }
         }
 
         protected override void Dispose(bool disposing)
