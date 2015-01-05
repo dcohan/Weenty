@@ -22,7 +22,7 @@ public abstract class CategoryRequest extends AsyncPoolRequest<CategoryResponse>
 
 	private static void initCache() {
 		if (categoryCache == null) {
-			categoryCache = CacheBuilder.newBuilder().maximumSize(500).expireAfterAccess(5, TimeUnit.MINUTES).build();
+			categoryCache = CacheBuilder.newBuilder().maximumSize(500).expireAfterAccess(10, TimeUnit.MINUTES).build();
 		}
 	}
 

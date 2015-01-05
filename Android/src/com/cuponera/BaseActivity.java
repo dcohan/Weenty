@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 
 import com.cuponera.admin.AdminFragment;
+import com.cuponera.analytics.AnalyticsHelpers;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.event.EventListener;
@@ -25,8 +26,10 @@ import com.cuponera.search.SearchFragment;
 import com.cuponera.settings.Settings;
 import com.cuponera.settings.SettingsFragment;
 import com.cuponera.store.StoreFragment;
+import com.cuponera.utils.Const;
 import com.cuponera.utils.LocationServices;
 import com.cuponera.utils.WebViewWithHeaderFragment;
+import com.google.android.gms.analytics.GoogleAnalytics;
 
 public class BaseActivity extends FragmentActivity implements MenuInterface {
 
@@ -38,10 +41,7 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		// GoogleAnalyticsTracker analytics = new GoogleAnalyticsTracker();
-		// analytics.startTracking(this);
-		// AnalyticsHelper.addTracker(analytics);
-		// AnalyticsHelper.startTracking(this);
+		GoogleAnalytics.getInstance(this).newTracker(Const.GAId);
 	}
 
 	@Override
@@ -110,12 +110,14 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	@Override
 	public void onAdminButton() {
+		AnalyticsHelpers.getInstance().logScreen(AnalyticsHelpers.ADMINISTRATION);
 		startFragment(new AdminFragment());
 
 	}
 
 	@Override
 	public void onSpecialOffers() {
+		AnalyticsHelpers.getInstance().logScreen(AnalyticsHelpers.HIGHLIGHTED);
 		startFragment(new OfferFragment());
 
 	}
@@ -127,16 +129,19 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	@Override
 	public void onMoreButton() {
+		AnalyticsHelpers.getInstance().logScreen(AnalyticsHelpers.MORE);
 		startFragment(new MoreFragment());
 	}
 
 	@Override
 	public void onSearchButton() {
+		AnalyticsHelpers.getInstance().logScreen(AnalyticsHelpers.SEARCH);
 		startFragment(new SearchFragment());
 	}
 
 	@Override
 	public void onPreferenceButton() {
+		AnalyticsHelpers.getInstance().logScreen(AnalyticsHelpers.PREFERENCES);
 		startFragment(new SettingsFragment());
 
 	}
