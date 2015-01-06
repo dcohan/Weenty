@@ -54,7 +54,7 @@ namespace Cuponera.WebSite.Controllers
 
         public void GetStore(userCompany userCompany = null)
         {
-            var stores = db.store.Where(s => !s.DeletionDatetime.HasValue);
+            var stores = db.store.Where(s => !s.DeletionDatetime.HasValue && s.company.DeletionDatetime == null);
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
