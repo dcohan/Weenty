@@ -46,25 +46,14 @@ namespace Cuponera.WebSite.Models
 
                     if (_user.Active!=null && (bool)_user.Active)
                     {
-
-                        var userCompany = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId) && uc.IsAdmin).FirstOrDefault();
+                        var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId) && !uc.DeletionDatetime.HasValue).Select(s => s.IdStore).ToList();
+                        HttpContext.Current.Session["AvailableStores"] = stores;
 
                         //Is Admin
-                        if (userCompany != null)
+                        var userCompany = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId) && uc.IsAdmin).FirstOrDefault();
+                        if (userCompany != null && userCompany.IsAdmin)
                         {
-                            if (userCompany.IsAdmin)
-                            {
-                                HttpContext.Current.Session["AdminCompany"] = userCompany.IdCompany;
-                            }
-                            var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId)).Select(s => s.IdStore).ToList();
-
-                            HttpContext.Current.Session["AvailableStores"] = stores;
-                        }
-                        else
-                        {
-                            var stores = db.userCompany.Where(uc => uc.IdUser.Equals(CuponeraIdentity.CurrentUserId)).Select(s => s.IdStore).ToList();
-
-                            HttpContext.Current.Session["AvailableStores"] = stores;
+                            HttpContext.Current.Session["AdminCompany"] = userCompany.IdCompany;
                         }
                     }
                 }
