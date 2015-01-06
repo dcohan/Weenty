@@ -62,20 +62,32 @@ namespace Cuponera.WebSite.Helpers
 
                 foreach (var email in emailList)
                 {
-                    MailSender.Default.Send(MailSender.Default.Settings.SmtpUserName, email.Value, _subject, PrepareBody(email.Key, "Hay un nuevo usuario esperando la asignación a una compañia: " + email.Value));
+                    SendSafeEmail(email.Value, PrepareBody(email.Key, "Hay un nuevo usuario esperando la asignación a una compañia: " + email.Value));
                 }
             }
         }
 
         public static void SendPasswordRecovery(string Email, string token)
         {
-            MailSender.Default.Send(MailSender.Default.Settings.SmtpUserName, Email, _subject, PrepareBody(Email, "Usted ha solicitado un cambio de contraseña, por favor seleccione abra el link para cambiar su contraseña<br /><br /><a href='" + _serverPath + "/Account/ChangePassword?Id=" + token + "'>" + _serverPath + "/Account/ChangePassword?Id=" + token + "</a> "));
+            SendSafeEmail(Email, PrepareBody(Email, "Usted ha solicitado un cambio de contraseña, por favor seleccione abra el link para cambiar su contraseña<br /><br /><a href='" + _serverPath + "/Account/ChangePassword?Id=" + token + "'>" + _serverPath + "/Account/ChangePassword?Id=" + token + "</a> "));
         }
 
 
         public static void SendNewUserActivation(string Email, string token)
         {
-            MailSender.Default.Send(MailSender.Default.Settings.SmtpUserName, Email, _subject, PrepareBody(Email, "Usted ha sido asignado a una compañia, por favor seleccione abra el link para activar su cuenta<br /><br /><a href='" + _serverPath + "/Account/RegisterConfirmation?Id=" + token + "'>" + _serverPath + "/Account/RegisterConfirmation?Id=" + token + "</a> "));
+            SendSafeEmail(Email, PrepareBody(Email, "Usted ha sido asignado a una compañia, por favor seleccione abra el link para activar su cuenta<br /><br /><a href='" + _serverPath + "/Account/RegisterConfirmation?Id=" + token + "'>" + _serverPath + "/Account/RegisterConfirmation?Id=" + token + "</a> "));
+        }
+
+        private static void SendSafeEmail(string Email, string Body)
+        {
+            try
+            {
+                MailSender.Default.Send(MailSender.Default.Settings.SmtpUserName, Email, _subject, Body);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorLog.GetDefault(HttpContext.Current).Log(new Elmah.Error(ex));
+            }
         }
 
         private static string PrepareBody(string username, string content)
