@@ -105,6 +105,16 @@ namespace Cuponera.WebSite.Helpers
                             }
 
                             break;
+                        case "userCompany":
+                            if (MustBeCompanyAdmin && db.userCompany.Where(uc => uc.IdUser.Equals(userId) && uc.IsAdmin).Count() <= 0)
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                            break;
 
                     }
                 }

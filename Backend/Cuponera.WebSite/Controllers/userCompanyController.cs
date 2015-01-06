@@ -12,6 +12,7 @@ using Cuponera.WebSite.Helpers;
 using System.Configuration;
 using Cuponera.WebSite.Models;
 using PagedList;
+using WebMatrix.WebData;
 
 namespace Cuponera.WebSite.Controllers
 {
@@ -110,6 +111,24 @@ namespace Cuponera.WebSite.Controllers
             return ucs.ToPagedList(page, pageSize);
         }
 
+        private void GetUsers(userCompany userCompany=null)
+        {
+            var users = db.UserProfile.Where(u => u.UserId != CuponeraIdentity.CurrentUserId);
+            if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
+            {
+                users = users.Where(u => u.webpages_Roles.Count() == 0 );
+            }
+
+            if (userCompany != null)
+            {
+                ViewBag.IdUser = new SelectList(users, "UserId", "UserName", userCompany.IdUser);
+            }
+            else
+            {
+                ViewBag.IdUser = new SelectList(users, "UserId", "UserName");
+            }
+        }
+
         // GET: userCompany
         public async Task<ActionResult> Index(bool all = false, int company = 0, int page = 1)
         {
@@ -139,10 +158,10 @@ namespace Cuponera.WebSite.Controllers
         {
             GetCompany();
             GetStore();
-            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany");
-            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany");            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName");
-            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName");            return View();
+            GetUsers();
+            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany");            
             ViewBag.isAdminBO = 0;
+            return View();
         }
 
         // POST: userCompany/Create
@@ -176,9 +195,8 @@ namespace Cuponera.WebSite.Controllers
 
             GetCompany(userCompany);
             GetStore(userCompany);
+            GetUsers(userCompany);
             ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);
-            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName", userCompany.IdUser);
-            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName", userCompany.IdUser);            return View(userCompany);
             return View(userCompany); 
        }
 
@@ -197,9 +215,8 @@ namespace Cuponera.WebSite.Controllers
 
             GetCompany(userCompany);
             GetStore(userCompany);
+            GetUsers(userCompany);
             ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);
-            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName", userCompany.IdUser);
-            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName", userCompany.IdUser);
             return View(userCompany);
         }
 
@@ -237,9 +254,8 @@ namespace Cuponera.WebSite.Controllers
             }
             GetCompany(userCompany);
             GetStore(userCompany);
+            GetUsers(userCompany);
             ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);
-            ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany", userCompany.IdUserCompany);
-            ViewBag.IdUser = new SelectList(db.UserProfile, "UserId", "UserName", userCompany.IdUser);
             return View(userCompany);
         }
 
@@ -303,7 +319,7 @@ namespace Cuponera.WebSite.Controllers
             if (user.webpages_Roles.Where(ur => ur.RoleId.Equals(adminRole.RoleId)).FirstOrDefault() == null)
             {
                 user.webpages_Roles.Add(adminRole);
-                db.SaveChangesAsync();
+                db.SaveChanges();
             }
         }
 
@@ -313,7 +329,7 @@ namespace Cuponera.WebSite.Controllers
             if (user.webpages_Roles.Where(ur => ur.RoleId.Equals(adminRole.RoleId)).FirstOrDefault() != null)
             {
                 user.webpages_Roles.Remove(adminRole);
-                db.SaveChangesAsync();
+                db.SaveChanges();
             }
         }
 
