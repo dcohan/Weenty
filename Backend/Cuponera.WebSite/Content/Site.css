@@ -1041,5 +1041,5 @@ img.preview{
 }
 
 .account-operation {
-    width: 200px;
+    width: 200px !important;
 }
