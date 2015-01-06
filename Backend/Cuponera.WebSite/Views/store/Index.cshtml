@@ -110,7 +110,14 @@
                                 }
                                 else
                                 {
-                                    <a href="#" class="addIcon" title="Activar" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                    if (item.Modifiable)
+                                    {
+                                        <a href="#" class="addIcon" title="Activar" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink("Detalle", "Details", new { id = item.IdStore }, new { @class = "warningIcon", title = "La empresa no se encuentra activa y no puede ser activada." })
+                                    }
                                 }
                             </td>
                         </tr>

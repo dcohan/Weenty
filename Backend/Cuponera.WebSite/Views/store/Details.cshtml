@@ -136,6 +136,12 @@
         {
             <img src="../../Images/x.ico" alt="inactive" title="inactive" class="inactive" />
         }
+
+        <br />
+        @if (!Model.Modifiable)
+        {
+            <span class="error">El producto no está visible debido a las advertencias mostradas.</span>
+        }
     </div>
 </div>
 <p>
