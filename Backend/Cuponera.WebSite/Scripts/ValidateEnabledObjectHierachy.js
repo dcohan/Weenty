@@ -23,11 +23,35 @@ function triggerValidation(idObject, typeObject, divid) {
 
     if (id) {
         $.get('/Validator/ValidateEntity?IdObject=' + id + "&TypeObject=" + typeObject, null, function (data, textStatus, jqXHR) {
-            if (data.toLowerCase().trim() == 'true') {
-                $('#'+divid).addClass('hidden');
-            } else {
+            data = $.parseJSON(data);
+
+            $('#' + divid).addClass('hidden');
+            if (data.length) {
+                $('#inactiveElements').html(translate(data).join(', '));
                 $('#'+divid).removeClass('hidden');
             }
         });
     }
+}
+
+
+function translate(entities) {
+    var translatedEntities = [];
+    $(entities).each(function (k, elem) {
+        switch (elem) {
+            case 'company':
+                translatedEntities.push('la empresa');
+                break;
+            case 'store':
+                translatedEntities.push('la sucursal');
+                break;
+            case 'product':
+                translatedEntities.push('el producto');
+                break;
+            default:
+                translatedEntities.push('');
+        }
+    });
+
+    return translatedEntities;
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,53 +13,57 @@ namespace Cuponera.WebSite.Controllers
         protected CuponeraEntities db = new CuponeraEntities();
 
         // GET: Validator
-        public ActionResult ValidateEntity(int IdObject, string typeObject)
+        public string ValidateEntity(int IdObject, string typeObject)
         {
+            var inactiveEntities = new ArrayList();
+
             switch(typeObject)
             { 
-                case "product": 
-                    ViewBag.IsValid = StoreEnabled(IdObject);
+                case "product":
+                    inactiveEntities = StoreEnabled(IdObject, inactiveEntities);
                     break;
                 case "offer":
-                    ViewBag.IsValid = ProductEnabled(IdObject);
+                    inactiveEntities = ProductEnabled(IdObject, inactiveEntities);
                     break;
                 case "store":
-                    ViewBag.IsValid = CompanyEnabled(IdObject);
+                    inactiveEntities = CompanyEnabled(IdObject, inactiveEntities);
                     break;
             }
 
-            return View();
+
+            return Helpers.JSONHelper.SerializeJSON(inactiveEntities);
         }
 
-        private bool CompanyEnabled(int IdCompany)
+        private ArrayList CompanyEnabled(int IdCompany, ArrayList inactiveEntities)
         {
-            return !(db.company.Where(c => c.IdCompany.Equals(IdCompany) && c.DeletionDatetime.HasValue).FirstOrDefault() != null);
+            if (db.company.Where(c => c.IdCompany.Equals(IdCompany) && c.DeletionDatetime.HasValue).FirstOrDefault() != null)
+            {
+                inactiveEntities.Add("company");
+            }
+
+            return inactiveEntities;
         }
 
-        private bool StoreEnabled(int IdStore)
+        private ArrayList StoreEnabled(int IdStore, ArrayList inactiveEntities)
         {
             var store = db.store.Where(s => s.IdStore.Equals(IdStore)).FirstOrDefault();
-            if (store.DeletionDatetime.HasValue || !CompanyEnabled(store.IdCompany))
-            {
-                return false;
+            inactiveEntities = CompanyEnabled(store.IdCompany, inactiveEntities);
+            if (store.DeletionDatetime.HasValue){
+                inactiveEntities.Add("store");
             }
-            else
-            {
-                return true;
-            }
-        }
 
-        private bool ProductEnabled(int IdProduct)
+            return inactiveEntities;
+         }
+
+        private ArrayList ProductEnabled(int IdProduct, ArrayList inactiveEntities)
         {
             var product = db.product.Where(p => p.IdProduct.Equals(IdProduct)).FirstOrDefault();
-            if (product.DeletionDatetime.HasValue || !StoreEnabled(product.IdStore))
-            {
-                return false;
+            inactiveEntities = StoreEnabled(product.IdStore, inactiveEntities);
+            if (product.DeletionDatetime.HasValue){
+                inactiveEntities.Add("product");
             }
-            else
-            {
-                return true;
-            }
+
+            return inactiveEntities;
         }
     }
 }
