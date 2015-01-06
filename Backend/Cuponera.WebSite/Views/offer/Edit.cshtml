@@ -108,6 +108,12 @@
     <div class="form-horizontal">
         <h4>Oferta</h4>
         <hr />
+        <div id="productInactive" class="alert-warning">
+            <img src="~/Images/warningIcon.png" alt="warning" />
+            Atención: la empresa, la sucursal o el producto elegido está desactivado.
+        </div>
+
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IdOffer)
         <div class="form-group">
@@ -126,18 +132,13 @@
             </div>
         </div>
         
-        <div class="form-group float-left">
+        <div class="form-group">
             @Html.LabelFor(model => model.IdProduct, "Producto *", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.IdProduct, null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdProduct, "", new { @class = "text-danger" })
             </div>
-            <div style="clear:both"></div>
-            <div id="productInactive" class="advertisement float-left" style="clear:both">
-                Atención: la empresa, la sucursal o el producto elegido está desactivado.
-            </div>
         </div>
-        <div style="clear:both"></div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Price, "Precio ($) *", new { @class = "control-label col-md-2" })
