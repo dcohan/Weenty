@@ -10,6 +10,16 @@
     <h4>Empresa</h4>
     <hr />
 
+    @if (!Model.Modifiable)
+    {
+        <div class="item-description">
+            <div class="alert-warning">
+                <img src="~/Images/warningIcon.png" alt="warning" />
+                Atención: la empresa no tiene una suscripción activa.
+            </div>
+        </div>
+    }
+
     <div class="item-description">
         <b>@Html.DisplayNameFor(model => model.Name):</b> @Html.DisplayFor(model => model.Name)
     </div>

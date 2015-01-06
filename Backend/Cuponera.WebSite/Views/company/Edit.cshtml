@@ -14,6 +14,16 @@
     <div class="form-horizontal">
         <h4>Empresa</h4>
         <hr />
+
+        @if (!Model.Modifiable) { 
+            <div class="item-description">
+                <div class="alert-warning">
+                    <img src="~/Images/warningIcon.png" alt="warning" />
+                    Atención: la empresa no tiene una suscripción activa.
+                </div>
+            </div>
+        }
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IdCompany)
 
