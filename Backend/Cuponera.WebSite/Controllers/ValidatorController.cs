@@ -12,7 +12,7 @@ namespace Cuponera.WebSite.Controllers
         protected CuponeraEntities db = new CuponeraEntities();
 
         // GET: Validator
-        public ActionResult ValidateStore(int IdObject, string typeObject)
+        public ActionResult ValidateEntity(int IdObject, string typeObject)
         {
             switch(typeObject)
             { 

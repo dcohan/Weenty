@@ -22,7 +22,7 @@ function triggerValidation(idObject, typeObject, divid) {
     }
 
     if (id) {
-        $.get('/Validator/ValidateStore?IdObject=' +id + "&TypeObject=" +typeObject, null, function (data, textStatus, jqXHR) {
+        $.get('/Validator/ValidateEntity?IdObject=' + id + "&TypeObject=" + typeObject, null, function (data, textStatus, jqXHR) {
             if (data.toLowerCase().trim() == 'true') {
                 $('#'+divid).addClass('hidden');
             } else {
