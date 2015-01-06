@@ -36,6 +36,9 @@ namespace Cuponera.Entities
         {
             get
             {
+                if (store == null) {
+                    return true;
+                }
                 return store.DeletionDatetime == null && store.company.DeletionDatetime == null && store.company.companySubscription.Where(cs => cs.EndDate >= DateTime.Now).FirstOrDefault() != null;
             }
         }

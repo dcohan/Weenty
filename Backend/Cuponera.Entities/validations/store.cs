@@ -17,6 +17,10 @@ namespace Cuponera.Entities
         {
             get
             {
+                if (company == null)
+                {
+                    return true;
+                }
                 return company.DeletionDatetime == null && company.companySubscription.Where(cs => cs.EndDate >= DateTime.Now).FirstOrDefault() != null;
             }
         }

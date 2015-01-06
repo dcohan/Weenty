@@ -19,6 +19,10 @@ namespace Cuponera.Entities
         {
             get
             {
+                if (product == null)
+                {
+                    return true;
+                }
                 bool producEnabled = !product.DeletionDatetime.HasValue;
                 bool storeEnabled = !product.store.DeletionDatetime.HasValue;
                 bool companyEnabled = !product.store.company.DeletionDatetime.HasValue && (product.store.company.companySubscription.Where(cs => cs.EndDate >= DateTime.Now).FirstOrDefault() != null);
