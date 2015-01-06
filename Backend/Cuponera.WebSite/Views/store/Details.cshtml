@@ -30,18 +30,20 @@
 <h2>@Html.DisplayFor(model => model.Name)</h2>
 
 <div>
-    <br />
+    <h4>Sucursal</h4>
+    <hr />
+
     <div class="item-description">
-        <b>Empresa:</b> @ViewBag.CompanyName
-    </div>
-    <div class="item-description">
-        <div style="clear:both"></div>
-        <div id="IdCompany" class="hidden">@Html.DisplayFor(model => model.IdCompany)</div>
-        <div id="companyInactive" class="advertisement float-left" style="clear:both">
+        <div id="IdProduct" class="hidden">@Html.DisplayFor(model => model.IdCompany)</div>
+        <div id="productInactive" class="alert-warning">
+            <img src="~/Images/warningIcon.png" alt="warning" />
             Atención: la empresa elegida está desactivada.
         </div>
     </div>
-    <div style="clear:both"></div>
+
+    <div class="item-description">
+        <b>Empresa:</b> @ViewBag.CompanyName
+    </div>
 
     <div class="item-description">
         <b>@Html.DisplayNameFor(model => model.Name):</b> @Html.DisplayFor(model => model.Name)
