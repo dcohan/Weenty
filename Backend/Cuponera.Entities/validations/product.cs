@@ -28,6 +28,17 @@ namespace Cuponera.Entities
                 }
             }
         }
+
+        /// <summary>
+        /// It is modifiable when is not deleted, and has an active subscription
+        /// </summary>
+        public bool Modifiable
+        {
+            get
+            {
+                return store.DeletionDatetime == null && store.company.DeletionDatetime == null && store.company.companySubscription.Where(cs => cs.EndDate >= DateTime.Now).FirstOrDefault() != null;
+            }
+        }
     }
     public class productMetadata
     {
