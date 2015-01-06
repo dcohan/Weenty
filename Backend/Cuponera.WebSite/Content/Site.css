@@ -114,6 +114,13 @@ a.addIcon {
     text-indent: -9999px; 
 }
 
+a.warningIcon{
+    background: url(../Images/warningIcon.png) no-repeat top left;
+    display: block;
+    background-size: 100% Auto;
+    text-indent: -9999px; 
+}
+
 
 a.detailsIcon {
     background: url(../Images/details.png) no-repeat top left;
