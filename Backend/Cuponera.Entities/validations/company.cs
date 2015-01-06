@@ -17,7 +17,7 @@ namespace Cuponera.Entities
         {
             get
             {
-                return !DeletionDatetime.HasValue && companySubscription.Where(cs => cs.EndDate >= DateTime.Now).FirstOrDefault() != null;
+                return companySubscription.Where(cs => cs.EndDate >= DateTime.Now).FirstOrDefault() != null;
             }
         }
     }
