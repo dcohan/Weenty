@@ -22,7 +22,7 @@ public abstract class WeatherRequest extends AsyncPoolRequest<WeatherResponse> {
 
 	private static void initCache() {
 		if (weatherCache == null) {
-			weatherCache = CacheBuilder.newBuilder().maximumSize(800).expireAfterAccess(5, TimeUnit.MINUTES).build();
+			weatherCache = CacheBuilder.newBuilder().maximumSize(800).expireAfterAccess(10, TimeUnit.MINUTES).build();
 		}
 	}
 

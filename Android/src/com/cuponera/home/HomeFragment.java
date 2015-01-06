@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
+import com.cuponera.analytics.AnalyticsHelpers;
 import com.cuponera.model.State;
 import com.cuponera.navigation.HeaderImageInterface;
 import com.cuponera.navigation.HeaderInterface;
@@ -30,6 +31,11 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 		return R.layout.fragment_home;
 	}
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		AnalyticsHelpers.getInstance().logScreen(AnalyticsHelpers.HOME);
+	}
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);

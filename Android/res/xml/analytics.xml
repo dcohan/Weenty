@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
+
+    <!-- Replace placeholder ID with your tracking ID -->
+    <string name="ga_trackingId">UA-58212056-1</string>
+
+    <!-- Enable automatic activity tracking -->
+    <bool name="ga_autoActivityTracking">false</bool>
+
+    <!-- Enable automatic exception tracking -->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <!-- Enable debug mode that will print useful information about what data is being sent to Google Analytics in your logs -->
+    <bool name="ga_debug">false</bool>
+
+    <!-- The dispatch period in seconds. Defaults to 30 minutes. -->
+    <integer name="ga_dispatchPeriod">20</integer>
+
+    <!-- The amount of time (in seconds) your application can stay in the background before the session is ended. Default is 30 seconds. Negative value disables EasyTracker session management. -->
+    <integer name="ga_sessionTimeout">900000</integer>
+
+</resources>
