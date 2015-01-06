@@ -10,7 +10,16 @@ namespace Cuponera.Entities
     [MetadataType(typeof(storeMetadata))]
     public partial class store
     {
-
+        /// <summary>
+        /// It is modifiable when is not deleted, and has an active subscription
+        /// </summary>
+        public bool Modifiable
+        {
+            get
+            {
+                return company.DeletionDatetime == null && company.companySubscription.Where(cs => cs.EndDate >= DateTime.Now).FirstOrDefault() != null;
+            }
+        }
     }
     public class storeMetadata
     {
