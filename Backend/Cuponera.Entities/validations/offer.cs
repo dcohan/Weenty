@@ -10,6 +10,11 @@ namespace Cuponera.Entities
     [MetadataType(typeof(offerMetadata))]
     public partial class offer
     {
+
+        public bool Active
+        {
+            get { return true; }
+        }
         public bool Modifiable
         {
             get
