@@ -88,7 +88,7 @@ namespace Cuponera.WebSite.Controllers
                     }
 
                     if (offer.product.store.DeletionDatetime != null)
-                    {
+                    {   
                         offer.DeletionDatetime = offer.product.store.DeletionDatetime;
                     }
 

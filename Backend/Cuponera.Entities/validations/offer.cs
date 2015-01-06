@@ -10,22 +10,14 @@ namespace Cuponera.Entities
     [MetadataType(typeof(offerMetadata))]
     public partial class offer
     {
-        public bool Active
+        public bool Modifiable
         {
             get
             {
-                return !DeletionDatetime.HasValue;
-            }
-            set
-            {
-                if (value)
-                {
-                    DeletionDatetime = null;
-                }
-                else
-                {
-                    DeletionDatetime = DateTime.Now;
-                }
+                bool producEnabled = !product.DeletionDatetime.HasValue;
+                bool storeEnabled = !product.store.DeletionDatetime.HasValue;
+                bool companyEnabled = !product.store.company.DeletionDatetime.HasValue && (product.store.company.companySubscription.Where(cs => cs.EndDate >= DateTime.Now).FirstOrDefault() != null);
+                return producEnabled && storeEnabled && companyEnabled;
             }
         }
     }
@@ -41,9 +33,6 @@ namespace Cuponera.Entities
         [MaxLength(500, ErrorMessage = "la descripción de la oferta debe tener como máximo de 500 caracteres."), MinLength(10, ErrorMessage = "La descripción de la oferta debe tener como mínimo 10 caracteres.")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
-
-        [Display(Name="Activo")]
-        public bool Active { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar una fecha de activación válida.")]
         [Display(Name = "Fecha inicio")]

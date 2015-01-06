@@ -76,7 +76,7 @@
                             <span>@Html.DisplayFor(modelItem => item.Price)</span>
                         </td>
                         <td class="current-status">
-                            @if (item.Active)
+                            @if (item.DeletionDatetime == null)
                             {
                                 <img src="Images/tick.ico" alt="active" class="active" style="" />
                             }
@@ -99,9 +99,18 @@
                             }
                             else
                             {
-                                <a href="#" class="addIcon" title="Activar" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                if (item.Modifiable)
+                                {
+                                    <a href="#" class="addIcon" title="Activar" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Detalle", "Details", new { id = item.IdOffer }, new { @class = "warningIcon", title = "La oferta no se encuentra activa y no puede ser activada." })
+                                }
                             }
                         </td>
+
+
 
                     </tr>
                 }
