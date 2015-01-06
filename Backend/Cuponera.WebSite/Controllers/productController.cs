@@ -29,7 +29,7 @@ namespace Cuponera.WebSite.Controllers
 
         private void GetStores(product product=null)
         {
-            var stores = db.store.Where(s => s.DeletionDatetime == null);
+            var stores = db.store.Where(s => s.DeletionDatetime == null && s.company.DeletionDatetime == null);
 
              if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
              {
