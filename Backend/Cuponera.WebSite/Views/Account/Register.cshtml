@@ -1,18 +1,17 @@
 ﻿@model Cuponera.WebSite.Models.RegisterModel
 @{
-    ViewBag.Title = "Registrar";
+    ViewBag.Title = "Registrate";
 }
 
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Crear una nueva cuenta.</h2>
+    <h1>@ViewBag.Title</h1>
 </hgroup>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
 
-    <fieldset>
+    <fieldset class="account-operation">
         <ol>
             <li>
                 @Html.LabelFor(m => m.UserName)

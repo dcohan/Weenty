@@ -30,12 +30,17 @@
         <b>Estado:</b>
         @if (Model.DeletionDatetime == null)
         {
-            <img src="../../Images/tick.ico" alt="active" class="active" />
-            
+            <img src="../../Images/tick.ico" alt="active" class="active" />            
         }
         else
         {
             <img src="../../Images/x.ico" alt="inactive" class="inactive" />
+        }
+
+        <br />
+        @if (!Model.Modifiable)
+        {
+            <span class="error">El producto no está visible por alguna razón ajena a él.</span>
         }
     </div>
 </div>
