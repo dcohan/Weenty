@@ -83,6 +83,12 @@
     <div class="form-horizontal">
         <h4>Producto</h4>
         <hr />
+        <div id="productInactive" class="alert-warning">
+            <img src="~/Images/warningIcon.png" alt="warning" />
+            Atención: la empresa o la sucursal elegida está desactivada.
+        </div>
+
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IdProduct)
 
@@ -124,12 +130,7 @@
                 @Html.DropDownList("IdStore")
                 @Html.ValidationMessageFor(model => model.IdStore, "", new { @class = "text-danger" })
             </div>
-            <div style="clear:both"></div>
-            <div id="productInactive" class="advertisement float-left" style="clear:both">
-                Atención: la empresa o la sucursal elegida está desactivada.
-            </div>
         </div>
-        <div style="clear:both"></div>
 
         <div class="form-group">
             <label class="control-label col-md-2" for="StartDatetime">Fecha Inicio *</label>

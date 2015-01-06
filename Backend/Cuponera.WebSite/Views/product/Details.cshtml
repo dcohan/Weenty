@@ -20,6 +20,15 @@
 <div>
     <h4>Producto</h4>
     <hr />
+
+    <div class="item-description">
+        <div id="IdStore" class="hidden">@Html.DisplayFor(model => model.IdStore)</div>
+        <div id="productInactive" class="alert-warning">
+            <img src="~/Images/warningIcon.png" alt="warning" />
+            Atención: la empresa o la sucursal elegida está desactivada.
+        </div>
+    </div>
+
     <div class="item-description">
         <b>Nombre:</b> @Html.DisplayFor(model => model.Title)
     </div>
@@ -39,15 +48,6 @@
     <div class="item-description">
         <b>Sucursal:</b> @Html.DisplayFor(model => model.store.Name)
     </div>
-
-    <div class="item-description">
-            <div id="IdStore" class="hidden">@Html.DisplayFor(model => model.IdStore)</div>
-            <div style="clear:both"></div>
-            <div id="productInactive" class="advertisement float-left" style="clear:both">
-                Atención: la empresa o la sucursal elegida está desactivada.
-            </div>
-    </div>
-    <div style="clear:both"></div>
 
     <div class="item-description">
         <b>Fecha de inicio:</b> @Html.DisplayFor(model => model.StartDatetime)
