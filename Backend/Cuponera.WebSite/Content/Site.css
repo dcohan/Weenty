@@ -1039,3 +1039,7 @@ img.preview{
 #loginForm p {
     width: 300px;
 }
+
+.account-operation {
+    width: 200px;
+}
