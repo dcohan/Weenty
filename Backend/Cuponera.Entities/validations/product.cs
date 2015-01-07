@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cuponera.Entities.validations;
 
 namespace Cuponera.Entities
 {
@@ -60,10 +61,12 @@ namespace Cuponera.Entities
         [Required(ErrorMessage = "Debe ingresar una fecha de activación válida.")]
         [Display(Name = "Fecha inicio")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [CurrentDate()]
         public DateTime StartDatetime { get; set; }
 
         [Display(Name = "Fecha fin")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [CurrentDate()]
         public Nullable<DateTime> ExpirationDatetime { get; set; }
 
         [Required(ErrorMessage = "Debe asociar el producto a una categoria.")]

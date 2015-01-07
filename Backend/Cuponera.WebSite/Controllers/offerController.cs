@@ -65,6 +65,17 @@ namespace Cuponera.WebSite.Controllers
             return true;
         }
 
+        private bool ValidateProductOffers(offer offer)
+        {
+            if (db.offer.Where(o => o.IdOffer!=offer.IdOffer && o.IdProduct.Equals(offer.IdProduct) && !o.DeletionDatetime.HasValue && (!o.ExpirationDatetime.HasValue) || o.ExpirationDatetime > DateTime.Now).FirstOrDefault() != null)
+            {
+                ModelState.AddModelError("DuplicateOffer", "El producto ya tiene una oferta vigente.");
+                return false;
+            }
+
+            return true;
+        }
+
         // GET: product
         public async Task<ActionResult> Index(bool all = false, string title = null, int? category = null, int page = 1)
         {
@@ -149,6 +160,12 @@ namespace Cuponera.WebSite.Controllers
                 return View(offer);
             }
 
+            
+            if (!ValidateProductOffers(offer))
+            {
+                GetProducts(offer);
+                return View(offer);
+            }
 
             if (ModelState.IsValid)
             {
@@ -209,7 +226,6 @@ namespace Cuponera.WebSite.Controllers
 
             try
             {
-
                 if (ModelState.IsValid)
                 {
                     fileUpload = FilterFiles(fileUpload);
@@ -286,6 +302,11 @@ namespace Cuponera.WebSite.Controllers
 
             offer offer = await db.offer.FindAsync(id);
             if (offer == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (!ValidateProductOffers(offer))
             {
                 return HttpNotFound();
             }

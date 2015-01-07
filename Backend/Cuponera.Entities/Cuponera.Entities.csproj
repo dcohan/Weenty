@@ -123,6 +123,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="validations\companySubscription.cs" />
+    <Compile Include="validations\CurrentDateAttribute.cs" />
     <Compile Include="validations\userCompany.cs" />
     <Compile Include="validations\subscription.cs" />
     <Compile Include="validations\state.cs" />

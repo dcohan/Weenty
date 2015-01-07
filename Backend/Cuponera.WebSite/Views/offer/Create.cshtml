@@ -13,7 +13,7 @@
 <script type="text/javascript">
 
     $(function () {
-        AddWarningOnInactiveObjects("IdProduct","offer","productInactive");
+        AddWarningOnInactiveObjects("IdProduct", "offer", "productInactive");
         
         $('#fileUpload').change(function (e) {
             var files = e.target.files;
@@ -76,11 +76,9 @@
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.IdProduct, null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdProduct, "", new { @class = "text-danger" })
+                @Html.ValidationMessage("DuplicateOffer");
             </div>
             <div style="clear:both"></div>
-            <div id="productInactive" class="advertisement float-left" style="clear:both">
-                Atención: la empresa, la sucursal o el producto elegido está desactivado.
-            </div>
         </div>
         <div style="clear:both"></div>
 
