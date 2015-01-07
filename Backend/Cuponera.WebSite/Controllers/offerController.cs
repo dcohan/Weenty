@@ -66,10 +66,11 @@ namespace Cuponera.WebSite.Controllers
         }
 
         // GET: product
-        public async Task<ActionResult> Index(bool all = false, string title = null, int page = 1)
+        public async Task<ActionResult> Index(bool all = false, string title = null, int? category = null, int page = 1)
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())))
+                                 .Where(o => (category == null || category == 0 || o.product.IdCategory == category))
                                  .Where(o => (all || o.DeletionDatetime == null && o.product.DeletionDatetime == null && o.product.store.DeletionDatetime == null && o.product.store.company.DeletionDatetime == null));
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
@@ -261,11 +262,39 @@ namespace Cuponera.WebSite.Controllers
             }
 
             offer offer = await db.offer.FindAsync(id);
+            if (offer == null)
+            {
+                return HttpNotFound();
+            }
+
             offer.DeletionDatetime = DateTime.Now;
             db.Entry(offer).State = EntityState.Modified;
             await db.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        // GET: Offer/Activate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Activate(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            offer offer = await db.offer.FindAsync(id);
+            if (offer == null)
+            {
+                return HttpNotFound();
+            }
+
+            offer.DeletionDatetime = null;
+            db.Entry(offer).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         protected override void Dispose(bool disposing)

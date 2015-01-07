@@ -21,11 +21,17 @@ namespace Cuponera.WebSite.Controllers
 
         private IEnumerable<company> get(bool all, string name, int pageNumber)
         {
-            IQueryable<company> companies = db.company;
+            IQueryable<company> companies = null;
 
             if (!all)
             {
-                companies = companies.Where(c => !c.DeletionDatetime.HasValue);
+                //IQueryable<company> companies = db.company.Where(c => !c.DeletionDatetime.HasValue || companySubscription.Where(cs => cs.EndDate >= DateTime.Now).FirstOrDefault() != null);
+                var companiesWithOutActiveSubcriptions = db.companySubscription.Where(cs => cs.EndDate < DateTime.Now).Select(cs => cs.IdCompany);
+                companies = db.company.Where(c => !(c.DeletionDatetime.HasValue || companiesWithOutActiveSubcriptions.Contains(c.IdCompany) || c.companySubscription.Count() == 0));
+            }
+            else
+            {
+                companies = db.company;
             }
 
             if (name != null)

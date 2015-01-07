@@ -37,7 +37,7 @@ function callServer(args) {
                    data = JSON.parse(data);
                    args.success(data, textStatus, jqXHR);
                } catch (err) {
-                   alert('No tiene permisos para borrar el elemento.')
+                   alert('No tiene permisos para modificar el elemento.')
                    
                }
            } else {
