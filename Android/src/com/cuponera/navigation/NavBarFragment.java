@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
+import com.cuponera.analytics.AnalyticsHelpers;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.search.SearchFragment;
 import com.cuponera.settings.Settings;
@@ -41,6 +42,7 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 			@Override
 			public void onClick(View v) {
 				Utils.hideKeyboard(getActivity(), getView());
+				AnalyticsHelpers.getInstance().logScreen(AnalyticsHelpers.SEARCH);
 				getBaseActivity().startFragment(new SearchFragment());
 			}
 		});
@@ -50,6 +52,7 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 			@Override
 			public void onClick(View v) {
 				Utils.hideKeyboard(getActivity(), getView());
+				AnalyticsHelpers.getInstance().logScreen(AnalyticsHelpers.WEATHER);
 				getBaseActivity().startFragment(new WeatherFragment());
 			}
 		});

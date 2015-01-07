@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.cuponera.BaseActivity;
 import com.cuponera.R;
+import com.cuponera.analytics.AnalyticsHelpers;
 import com.cuponera.model.Category;
 import com.cuponera.store.StoreFragment;
 import com.cuponera.utils.BaseListAdapter;
@@ -40,6 +41,7 @@ public class MoreAdapter extends BaseListAdapter {
 
 			@Override
 			public void onClick(View v) {
+				AnalyticsHelpers.getInstance().logScreenWithEvent(AnalyticsHelpers.MORE, c.getName());
 				FragmentTransaction transaction = ((BaseActivity) activity).getSupportFragmentManager().beginTransaction();
 				transaction.setCustomAnimations(R.anim.transition_slide_in_left, R.anim.transition_slide_out_left);
 				transaction.replace(R.id.container, StoreFragment.newInstance(c.getId(), c.getName()));

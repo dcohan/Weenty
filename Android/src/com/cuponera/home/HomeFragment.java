@@ -36,6 +36,7 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 		super.onCreate(savedInstanceState);
 		AnalyticsHelpers.getInstance().logScreen(AnalyticsHelpers.HOME);
 	}
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
@@ -70,30 +71,41 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 
 			switch (v.getId()) {
 			case R.id.hotel:
+				logEvents(getResources().getString(R.string.menu_hotel));
 				getBaseActivity().openStore(Const.HOTEL, getResources().getString(R.string.menu_hotel));
 				break;
 			case R.id.gastronomic:
+				logEvents(getResources().getString(R.string.menu_grastronomic));
 				getBaseActivity().openStore(Const.GASTRONOMIC, getResources().getString(R.string.menu_grastronomic));
 				break;
 			case R.id.store:
+				logEvents(getResources().getString(R.string.menu_store));
 				getBaseActivity().openStore(Const.STORE, getResources().getString(R.string.menu_store));
 				break;
 			case R.id.beach:
+				logEvents(getResources().getString(R.string.menu_beach));
 				getBaseActivity().openStore(Const.BEACH, getResources().getString(R.string.menu_beach));
 				break;
 			case R.id.highlighted:
+				logEvents(getResources().getString(R.string.menu_highlighted));
 				getBaseActivity().startFragment(new OfferFragment());
 				break;
 			case R.id.cinema:
+				logEvents(getResources().getString(R.string.menu_cinema));
 				getBaseActivity().openStore(Const.CINEMA, getResources().getString(R.string.menu_cinema));
 				break;
 			case R.id.munucipio:
+				logEvents("http://www.lacosta.gov.ar/");
 				getBaseActivity().openURL("http://www.lacosta.gov.ar/");
 				break;
 			}
 
 		}
 	};
+
+	private void logEvents(String event) {
+		AnalyticsHelpers.getInstance().logScreenWithEvent(AnalyticsHelpers.HOME, event);
+	}
 
 	@Override
 	public String getTitle() {

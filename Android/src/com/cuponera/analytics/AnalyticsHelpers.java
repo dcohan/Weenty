@@ -15,6 +15,9 @@ public class AnalyticsHelpers extends Application {
 	public static final String SEARCH = "Search";
 	public static final String HIGHLIGHTED = "Destacados";
 	public static final String ADMINISTRATION = "Administracion";
+	public static final String WEATHER = "Clima";
+	public static final String MAP_ALL = "Mapa Todos";
+	public static final String MAP = "Mapa";
 
 	private static AnalyticsHelpers instance;
 	private Tracker tracker;
@@ -44,5 +47,12 @@ public class AnalyticsHelpers extends Application {
 		tracker.setScreenName(screen);
 		tracker.send(new HitBuilders.AppViewBuilder().build());
 
+	}
+
+	public void logScreenWithEvent(String screen, String event) {
+		if (tracker == null) {
+			tracker = getTracker();
+		}
+		tracker.send(new HitBuilders.EventBuilder().setCategory(screen).setAction(event).setLabel(null).build());
 	}
 }

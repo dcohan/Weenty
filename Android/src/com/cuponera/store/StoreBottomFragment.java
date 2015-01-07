@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
+import com.cuponera.analytics.AnalyticsHelpers;
 import com.cuponera.map.GoogleMapFragment;
 import com.cuponera.model.Store;
 import com.cuponera.utils.ValidationUtils;
@@ -87,6 +88,7 @@ public class StoreBottomFragment extends BaseFragment {
 		mViewProxy.findImageView(R.id.product_map).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				AnalyticsHelpers.getInstance().logScreenWithEvent(AnalyticsHelpers.MAP, store.getName());
 				ArrayList<Store> storeArray = new ArrayList<Store>();
 				storeArray.add(store);
 				if (storeArray.get(0) != null && storeArray.get(0).getLatitude() != 0) {

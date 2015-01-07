@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
+import com.cuponera.analytics.AnalyticsHelpers;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.map.GoogleMapFragment;
@@ -88,6 +89,7 @@ public class StoreFragment extends BaseFragment {
 
 			@Override
 			public void onClick(View v) {
+				AnalyticsHelpers.getInstance().logScreen(AnalyticsHelpers.MAP_ALL);
 				getBaseActivity().pushFragment(GoogleMapFragment.newInstance(store), true);
 			}
 		});
