@@ -1060,3 +1060,7 @@ img.preview{
     border: 1px solid transparent;
     border-radius: 4px;
 }
+
+.table-all tbody td{
+    max-width: 125px;
+}
