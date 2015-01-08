@@ -88,7 +88,7 @@ namespace Cuponera.WebSite.Controllers
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
-            products = products.Where(p => CuponeraIdentity.AdminCompany == p.store.IdCompany ||  
+                products = products.Where(p => CuponeraIdentity.AdminCompany == p.store.IdCompany ||  
                                             CuponeraIdentity.CurrentAvaiableStores.Contains(p.IdStore));
             }
 
@@ -249,7 +249,6 @@ namespace Cuponera.WebSite.Controllers
             await db.SaveChangesAsync();
             db.Configuration.ValidateOnSaveEnabled = true;
 
-
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
@@ -258,8 +257,23 @@ namespace Cuponera.WebSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Activate(int id)
         {
-            Cuponera.Backend.Controllers.productController cb = new Backend.Controllers.productController();
-            await cb.Activate(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            product product = await db.product.FindAsync(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            product.DeletionDatetime = null;
+
+
+            db.Configuration.ValidateOnSaveEnabled = false;
+            await db.SaveChangesAsync();
+            db.Configuration.ValidateOnSaveEnabled = true;
+
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

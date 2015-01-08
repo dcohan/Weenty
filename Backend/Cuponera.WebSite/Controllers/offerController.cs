@@ -285,7 +285,10 @@ namespace Cuponera.WebSite.Controllers
 
             offer.DeletionDatetime = DateTime.Now;
             db.Entry(offer).State = EntityState.Modified;
+
+            db.Configuration.ValidateOnSaveEnabled = false;
             await db.SaveChangesAsync();
+            db.Configuration.ValidateOnSaveEnabled = true;
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
@@ -313,7 +316,10 @@ namespace Cuponera.WebSite.Controllers
 
             offer.DeletionDatetime = null;
             db.Entry(offer).State = EntityState.Modified;
+
+            db.Configuration.ValidateOnSaveEnabled = false;
             await db.SaveChangesAsync();
+            db.Configuration.ValidateOnSaveEnabled = true;
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
