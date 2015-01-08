@@ -243,7 +243,12 @@ namespace Cuponera.WebSite.Controllers
             }
 
             product.DeletionDatetime = DateTime.Now;
+
+
+            db.Configuration.ValidateOnSaveEnabled = false;
             await db.SaveChangesAsync();
+            db.Configuration.ValidateOnSaveEnabled = true;
+
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
