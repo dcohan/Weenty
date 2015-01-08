@@ -7,12 +7,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
+import com.cuponera.analytics.AnalyticsHelpers;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
+import com.cuponera.map.GoogleMapFragment;
 import com.cuponera.model.Store;
 import com.cuponera.service.offer.OfferRequest;
 import com.cuponera.service.store.StoreResponse;
@@ -24,7 +27,7 @@ public class OfferFragment extends BaseFragment {
 
 	@Override
 	protected int getLayout() {
-		return R.layout.fragment_product;
+		return R.layout.fragment_store;
 	}
 
 	private ArrayList<Store> store;
@@ -37,8 +40,13 @@ public class OfferFragment extends BaseFragment {
 			@Override
 			public void onServiceReturned(StoreResponse result) {
 				if (result != null) {
-					store = result.getStore();
-					fillAdapter();
+					if (result.getStore().size() > 0) {
+						store = result.getStore();
+						fillAdapter();
+					} else {
+						EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.NO_RESULTS_FOUND));
+						getBaseActivity().onHomeButton();
+					}
 				} else {
 					EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.SYSTEM_SERVER_ERROR));
 
@@ -60,9 +68,18 @@ public class OfferFragment extends BaseFragment {
 	private void fillAdapter() {
 		adapter = new StoreAdapter(getBaseActivity(), store);
 		adapter.notifyDataSetChanged();
-		mViewProxy.findListView(R.id.product_listview).setAdapter(adapter);
+		mViewProxy.findListView(R.id.store_listview).setAdapter(adapter);
+		mViewProxy.findTextView(R.id.store_category).setText(getResources().getString(R.string.menu_highlighted));
+		mViewProxy.findImageView(R.id.location_stores_image).setOnClickListener(new OnClickListener() {
 
-		mViewProxy.findListView(R.id.product_listview).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onClick(View v) {
+				AnalyticsHelpers.getInstance().logScreen(AnalyticsHelpers.MAP_ALL);
+				getBaseActivity().pushFragment(GoogleMapFragment.newInstance(store), true);
+			}
+		});
+
+		mViewProxy.findListView(R.id.store_listview).setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
