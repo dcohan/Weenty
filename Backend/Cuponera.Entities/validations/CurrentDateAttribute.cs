@@ -11,7 +11,7 @@ namespace Cuponera.Entities.validations
     {
         public CurrentDateAttribute()
         {
-            ErrorMessage = "La fecha debe ser mayor a la actual.";
+            ErrorMessage = "La fecha debe ser mayor a la fecha de hoy.";
         }
 
         public override bool IsValid(object value)
