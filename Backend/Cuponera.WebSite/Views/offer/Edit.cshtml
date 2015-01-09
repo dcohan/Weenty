@@ -1,11 +1,14 @@
 ﻿@model Cuponera.Entities.offer
 
 @{
-    ViewBag.Title = "Editar oferta del producto " + Model.product.Title;
+    if (Model.product != null) { 
+        ViewBag.Title = "Editar oferta del producto " + Model.product != null ? Model.product.Title : "";
+    }
 }
 
-
-<h2>@Model.product.Title</h2>
+@if (Model.product != null) { 
+    <h2>@Model.product.Title</h2>
+}
 
 @Scripts.Render("~/bundles/globalization")
 @Scripts.Render("~/bundles/globalization_ar")
