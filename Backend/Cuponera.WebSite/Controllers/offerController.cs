@@ -54,8 +54,8 @@ namespace Cuponera.WebSite.Controllers
                 return false;
             }
 
-            if (db.offer.Where(o => !o.DeletionDatetime.HasValue && o.IdOffer != offer.IdOffer && o.ExpirationDatetime < DateTime.Now
-                                && o.ExpirationDatetime < offer.StartDatetime && o.IdProduct == offer.IdProduct).Count() > 0)
+            if (db.offer.Where(o => !o.DeletionDatetime.HasValue && o.IdOffer != offer.IdOffer && (!o.ExpirationDatetime.HasValue || (o.ExpirationDatetime.HasValue && o.ExpirationDatetime < DateTime.Now
+                                && o.ExpirationDatetime > offer.StartDatetime)) && o.IdProduct == offer.IdProduct).Count() > 0)
             {
                 ModelState.AddModelError("ServerValidations", "Existe otra oferta en curso, no puede haber mas de una oferta vigente para un producto.");
                 GetProducts(offer);
@@ -67,7 +67,8 @@ namespace Cuponera.WebSite.Controllers
 
         private bool ValidateProductOffers(offer offer)
         {
-            if (db.offer.Where(o => o.IdOffer!=offer.IdOffer && o.IdProduct.Equals(offer.IdProduct) && !o.DeletionDatetime.HasValue && (!o.ExpirationDatetime.HasValue) || o.ExpirationDatetime > DateTime.Now).FirstOrDefault() != null)
+            var a = db.offer.Where(o => o.IdOffer != offer.IdOffer && o.IdProduct == offer.IdProduct && !o.DeletionDatetime.HasValue && (!o.ExpirationDatetime.HasValue || o.ExpirationDatetime > DateTime.Now)).FirstOrDefault();
+            if (db.offer.Where(o => o.IdOffer!=offer.IdOffer && o.IdProduct == offer.IdProduct && !o.DeletionDatetime.HasValue && (!o.ExpirationDatetime.HasValue || o.ExpirationDatetime > DateTime.Now)).FirstOrDefault() != null)
             {
                 ModelState.AddModelError("DuplicateOffer", "El producto ya tiene una oferta vigente.");
                 return false;
@@ -216,11 +217,16 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdOffer,Title,Description,StartDatetime,ExpirationDatetime,IdProduct,Price")] offer offer, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
+        public async Task<ActionResult> Edit([Bind(Include = "IdOffer,Title,Description,StartDatetime,ExpirationDatetime,IdProduct,Price,Product")] offer offer, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
         {
 
 			if (!Validate(offer))
             {
+                var products = db.product.Where(p => p.IdProduct == offer.IdProduct);
+                if (products.Count() > 0)
+                {
+                    offer.product = products.FirstOrDefault();
+                }
                 return View(offer);
             }
 
@@ -259,6 +265,13 @@ namespace Cuponera.WebSite.Controllers
                     //Save aditional images
                     UploadImages(fileUpload, offer.IdOffer);
                     return RedirectToAction("Index");
+                }
+
+
+                var products = db.product.Where(p => p.IdProduct == offer.IdProduct);
+                if (products.Count() > 0)
+                {
+                    offer.product = products.FirstOrDefault();
                 }
                 GetProducts(offer);
                 return View(offer);
