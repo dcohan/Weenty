@@ -36,7 +36,7 @@ namespace Cuponera.Entities
     {
         [Display(Name="Titulo")]
         [Required(ErrorMessage = "Debe ingresar un titulo válido para la oferta.")]
-        [MaxLength(500, ErrorMessage = "El titulo de la oferta debe tener como máximo de 500 caracteres."), MinLength(5, ErrorMessage = "El titulo de la oferta debe tener como mínimo 10 caracteres.")]
+        [MaxLength(500, ErrorMessage = "El titulo de la oferta debe tener como máximo de 500 caracteres."), MinLength(5, ErrorMessage = "El titulo de la oferta debe tener como mínimo 5 caracteres.")]
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar una descripción válida para la oferta.")]
