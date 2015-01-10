@@ -47,7 +47,9 @@ public class CustomPagerAdapter extends PagerAdapter {
 		itemView = inflater.inflate(R.layout.search_adapter, container, false);
 
 		TextView topTextItem = (TextView) itemView.findViewById(R.id.topText);
-
+		if (position + 1 == getCount()) {
+			topTextItem.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+		}
 		Category c = items.get(position);
 
 		topTextItem.setText(c.getName());

@@ -1,11 +1,9 @@
 package com.cuponera.service.config;
 
 public enum Endpoint {
-	production("https", ""),
+	production("http", "todovending.com.ar"),
 
-	dev("http", "e-nordelta.com.ar"),
-	
-	local("http","192.168.1.103:6569");
+	dev("http", "e-nordelta.com.ar");
 
 	private String apiHost;
 	private String apiProtocol;

@@ -8,7 +8,7 @@ public class AdminFragment extends WebViewWithHeaderFragment {
 
 	@Override
 	protected String getUrl() {
-		return BuildConfig.endpoint.getApiProtocol() + "://e-pilar.com.ar";
+		return BuildConfig.endpoint.getApiProtocol() + "://weenty.com";
 	}
 
 	@Override
