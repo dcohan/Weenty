@@ -216,6 +216,7 @@
     <Compile Include="Controllers\categoryController.cs" />
     <Compile Include="Controllers\companyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TermsAndConditionsController.cs" />
     <Compile Include="Controllers\ThankyouController.cs" />
     <Compile Include="Controllers\UploadImagesBaseController.cs" />
     <Compile Include="Controllers\userCompanyController.cs" />
@@ -739,6 +740,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Account\Welcome.cshtml" />
     <Content Include="Views\Validator\ValidateStore.cshtml" />
+    <Content Include="Views\TermsAndConditions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
