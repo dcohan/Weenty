@@ -31,7 +31,7 @@ namespace Cuponera.Entities
         public Nullable<double> Longitude { get; set; }
         public string ZipCode { get; set; }
         public string ContactNumber { get; set; }
-        public Nullable<int> IdCategory { get; set; }
+        public int IdCategory { get; set; }
         public Nullable<int> IdState { get; set; }
         public string StoreHours { get; set; }
         public string ImagePath { get; set; }
