@@ -34,7 +34,7 @@ namespace Cuponera.Backend.Controllers
         [EnableQuery]
         public IQueryable<state> Getstate()
         {
-            return db.state.Where(s => s.DeletionDatetime == null);
+            return db.state.Where(s => s.DeletionDatetime == null).OrderBy(s => s.Name);
         }
 
         // GET: odata/state(5)
