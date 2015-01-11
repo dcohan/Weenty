@@ -22,13 +22,20 @@ var geo = {
 			    var mapProp = {
 			   		center: new google.maps.LatLng(this.__defCenter.lat, this.__defCenter.lng),
 			    	zoom: this.__defZoom,
-			    	mapTypeId: this.__defMapTypeId
+			    	mapTypeId: this.__defMapTypeId,
+
+			    	zoomControl: true,
+			    	zoomControlOptions: {
+			    	     position: google.maps.ControlPosition.RIGHT_TOP
+			    	}
+
 				};
 
 			  	var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 			  	var wrapperMap = this.wrapper(map);
 
 			  	var internal = this;
+
 
                 if (args && args.editable) {
 				    google.maps.event.addListener(wrapperMap.map, 'click', function(event) {
