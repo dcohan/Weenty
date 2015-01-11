@@ -42,6 +42,16 @@ public class SettingsFragment extends BaseFragment {
 					StateRequest stateRequest = new StateRequest(getActivity()) {
 
 						@Override
+						public void hideLoading() {
+							getBaseActivity().hideLoading();
+						}
+
+						@Override
+						public void showLoading() {
+							getBaseActivity().showLoading();
+						}
+
+						@Override
 						protected void serviceReady(StateResponse result) {
 							if (result != null && result.getState().size() > 0)
 								getBaseActivity().dynamicPopup(result.getState());
