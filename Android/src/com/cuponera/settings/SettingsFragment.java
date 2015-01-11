@@ -7,21 +7,11 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
-import com.cuponera.navigation.HeaderImageInterface;
-import com.cuponera.navigation.HeaderInterface;
 import com.cuponera.service.profile.UpdateProfileRequest;
+import com.cuponera.service.state.StateRequest;
+import com.cuponera.service.state.StateResponse;
 
-public class SettingsFragment extends BaseFragment implements HeaderInterface {
-
-	@Override
-	public String getTitle() {
-		return null;
-	}
-
-	@Override
-	public HeaderImageInterface getRightImage() {
-		return null;
-	}
+public class SettingsFragment extends BaseFragment {
 
 	@Override
 	protected int getLayout() {
@@ -47,6 +37,20 @@ public class SettingsFragment extends BaseFragment implements HeaderInterface {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				Settings.getInstance(getActivity()).setLocationEnable(isChecked);
+
+				if (!isChecked) {
+					StateRequest stateRequest = new StateRequest(getActivity()) {
+
+						@Override
+						protected void serviceReady(StateResponse result) {
+							if (result != null && result.getState().size() > 0)
+								getBaseActivity().dynamicPopup(result.getState());
+						}
+					};
+					if (!stateRequest.isResultCached()) {
+						stateRequest.execute();
+					}
+				}
 
 				UpdateProfileRequest request = new UpdateProfileRequest(getActivity()) {
 

@@ -103,7 +103,11 @@ public class StoreBottomFragment extends BaseFragment {
 
 				@Override
 				public void onClick(View v) {
-					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/" + store.getFacebookUrl())));
+					if (store.getFacebookUrl().contains("http")) {
+						getBaseActivity().openURL(store.getFacebookUrl());
+					} else {
+						getBaseActivity().openURL("http://" + store.getFacebookUrl());
+					}
 				}
 			});
 

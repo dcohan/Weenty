@@ -1,5 +1,7 @@
 package com.cuponera;
 
+import java.util.ArrayList;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -10,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
+import android.widget.ArrayAdapter;
 
 import com.cuponera.admin.AdminFragment;
 import com.cuponera.analytics.AnalyticsHelpers;
@@ -18,6 +21,7 @@ import com.cuponera.event.EventBus;
 import com.cuponera.event.EventListener;
 import com.cuponera.home.HomeActivity;
 import com.cuponera.home.HomeFragment;
+import com.cuponera.model.State;
 import com.cuponera.more.MoreFragment;
 import com.cuponera.navigation.MenuFragment.MenuInterface;
 import com.cuponera.navigation.NavBarFragment;
@@ -292,6 +296,34 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 			}
 
 		}
+	}
+
+	public void dynamicPopup(final ArrayList<State> statesArray) {
+		AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+		builderSingle.setTitle("Elegir");
+		final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item);
+		for (State state : statesArray) {
+			arrayAdapter.add(state.getName());
+		}
+		builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				for (State state : statesArray) {
+					if (state.getName().equalsIgnoreCase(arrayAdapter.getItem(which))) {
+						Settings.getInstance(BaseActivity.this).setLatitude(state.getLatitude());
+						Settings.getInstance(BaseActivity.this).setLongitude(state.getLongitude());
+						Settings.getInstance(BaseActivity.this).setCity(state.getName());
+						NavBarFragment navBarFragment = (NavBarFragment) getSupportFragmentManager().findFragmentById(R.id.navBar);
+						if (navBarFragment != null) {
+							navBarFragment.setTitle(state.getName());
+						}
+						break;
+					}
+				}
+			}
+		});
+		builderSingle.show();
 	}
 
 	@Override
