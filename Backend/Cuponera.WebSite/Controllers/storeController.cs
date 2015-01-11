@@ -71,7 +71,7 @@ namespace Cuponera.WebSite.Controllers
             categories = categories.OrderBy(c => c.Name);
 
             ViewBag.Categories = categories;
-            ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name", store != null ? store.IdCompany : 0);
+            ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name", store != null ? store.IdCategory : 0);
         }
 
 
