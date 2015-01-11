@@ -14,6 +14,8 @@ import com.cuponera.analytics.AnalyticsHelpers;
 import com.cuponera.model.Category;
 import com.cuponera.store.StoreFragment;
 import com.cuponera.utils.BaseListAdapter;
+import com.cuponera.utils.Utils;
+import com.cuponera.utils.ValidationUtils;
 import com.cuponera.utils.ViewProxy;
 
 public class MoreAdapter extends BaseListAdapter {
@@ -36,6 +38,9 @@ public class MoreAdapter extends BaseListAdapter {
 		ViewProxy mViewProxy = new ViewProxy(activity, R.layout.adapter_more);
 		final Category c = category.get(position);
 		mViewProxy.findTextView(R.id.more_title).setText(c.getName());
+		if (!ValidationUtils.isNullOrEmpty(c.getImagePath())) {
+			Utils.loadImageFromUrl(activity, mViewProxy.findImageView(R.id.category_image), c.getImagePath());
+		}
 
 		mViewProxy.getView().setOnClickListener(new OnClickListener() {
 

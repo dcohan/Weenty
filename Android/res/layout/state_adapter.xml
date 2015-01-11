@@ -14,7 +14,7 @@
         android:drawableLeft="@drawable/ic_action_arrow_left"
         android:drawableRight="@drawable/ic_action_arrow_right"
         android:gravity="center_vertical|center_horizontal"
-        android:textColor="@color/pink"
+        android:textColor="@color/green_strong"
         android:textIsSelectable="false"
         android:textSize="19sp" />
 

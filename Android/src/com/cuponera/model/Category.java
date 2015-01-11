@@ -10,6 +10,9 @@ public class Category extends BaseModel {
 	@JsonProperty("Name")
 	private String name;
 
+	@JsonProperty("ImagePath")
+	private String imagePath;
+
 	public int getId() {
 		return id;
 	}
@@ -24,6 +27,14 @@ public class Category extends BaseModel {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 }
