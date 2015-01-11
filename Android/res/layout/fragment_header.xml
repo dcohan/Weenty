@@ -9,15 +9,32 @@
         android:layout_height="@dimen/headerHeight"
         android:background="@drawable/web_view_header_background" >
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/menuButton"
-            android:layout_width="wrap_content"
+            android:layout_width="32dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/unknown"
-            android:scaleType="fitXY"
-            android:src="@drawable/menu_dropdown" />
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="3dp" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/white" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/white" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/white" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -46,6 +63,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/images_icons"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"

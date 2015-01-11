@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
@@ -21,7 +22,7 @@ import com.cuponera.weather.WeatherFragment;
 public class NavBarFragment extends BaseFragment implements MenuInterface {
 
 	private MenuFragment menu;
-	private ImageView menuButton;
+	private LinearLayout menuButton;
 	private FrameLayout menuOutside;
 
 	@Override
@@ -57,9 +58,9 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 			}
 		});
 
-		menuButton = mViewProxy.findImageView(R.id.menuButton);
+		menuButton = mViewProxy.findLinearLayout(R.id.menuButton);
 
-		Utils.setCalibri(getActivity(), mViewProxy.findTextView(R.id.headerTitle));
+		Utils.setCalibri(getActivity(), (TextView) mViewProxy.findView(R.id.headerTitle));
 		menuButton.setOnClickListener(new OnClickListener() {
 
 			@Override
