@@ -33,7 +33,7 @@ namespace Cuponera.WebSite.Controllers
             ViewBag.Pages = Convert.ToInt32(Math.Ceiling((double)states.Count() / pageSize));
 
             int elemsToSkip = pageSize * (pageNumber - 1);
-            return states.Skip(elemsToSkip).Take(pageSize);
+            return states.Skip(elemsToSkip).Take(pageSize).OrderBy(s => s.Name);
         }
 
 
