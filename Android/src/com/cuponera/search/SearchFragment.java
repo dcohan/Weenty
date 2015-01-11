@@ -19,10 +19,14 @@ import com.cuponera.R;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.model.Category;
+import com.cuponera.model.State;
 import com.cuponera.model.Store;
 import com.cuponera.service.category.CategoryRequest;
 import com.cuponera.service.category.CategoryResponse;
+import com.cuponera.service.state.StateRequest;
+import com.cuponera.service.state.StateResponse;
 import com.cuponera.service.store.StoreResponse;
+import com.cuponera.settings.Settings;
 import com.cuponera.store.StoreAdapter;
 import com.cuponera.store.StoreDescriptionFragment;
 import com.cuponera.utils.ErrorHandler;
@@ -31,10 +35,13 @@ import com.cuponera.utils.Utils;
 public class SearchFragment extends BaseFragment {
 
 	private ArrayList<Category> category;
+	private ArrayList<State> state;
 	private ArrayList<Store> store;
 	private StoreAdapter adapter;
 	private ViewPager viewPager;
+	private ViewPager viewPagerState;
 	private CustomPagerAdapter customPagerAdapter;
+	private CustomPageStateAdapter customPagerStateAdapter;
 
 	@Override
 	protected int getLayout() {
@@ -46,6 +53,7 @@ public class SearchFragment extends BaseFragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		category = new ArrayList<Category>();
+		state = new ArrayList<State>();
 		CategoryRequest request = new CategoryRequest(getActivity()) {
 
 			@Override
@@ -58,6 +66,36 @@ public class SearchFragment extends BaseFragment {
 
 		if (!request.isResultCached()) {
 			request.execute();
+		}
+
+		StateRequest stateRequest = new StateRequest(getActivity()) {
+
+			@Override
+			public void hideLoading() {
+				getBaseActivity().hideLoading();
+			}
+
+			@Override
+			public void showLoading() {
+				getBaseActivity().showLoading();
+			}
+
+			@Override
+			protected void serviceReady(StateResponse result) {
+				if (result != null && result.getState().size() > 0) {
+					state.addAll(result.getState());
+					State s = new State();
+					s.setName("TODAS LAS CIUDADES");
+					s.setLatitude(Settings.getInstance(getActivity()).getLatitude());
+					s.setLongitude(Settings.getInstance(getActivity()).getLongitude());
+					state.add(0, s);
+					fillState();
+
+				}
+			}
+		};
+		if (!stateRequest.isResultCached()) {
+			stateRequest.execute();
 		}
 		mViewProxy.findEditText(R.id.search_edit).setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
@@ -90,6 +128,8 @@ public class SearchFragment extends BaseFragment {
 				}
 			}
 		};
+		request.setLatitude(state.get(viewPagerState.getCurrentItem()).getLatitude());
+		request.setLongitude(state.get(viewPagerState.getCurrentItem()).getLongitude());
 		request.setIdCategory(category.get(viewPager.getCurrentItem()).getId());
 		try {
 			request.setName(URLEncoder.encode(mViewProxy.findEditText(R.id.search_edit).getText().toString(), "UTF-8"));
@@ -116,6 +156,14 @@ public class SearchFragment extends BaseFragment {
 		customPagerAdapter = new CustomPagerAdapter(getActivity(), category);
 		customPagerAdapter.notifyDataSetChanged();
 		viewPager.setAdapter(customPagerAdapter);
+
+	}
+
+	private void fillState() {
+		viewPagerState = (ViewPager) getActivity().findViewById(R.id.viewPager_state);
+		customPagerStateAdapter = new CustomPageStateAdapter(getActivity(), state);
+		customPagerStateAdapter.notifyDataSetChanged();
+		viewPagerState.setAdapter(customPagerStateAdapter);
 
 	}
 

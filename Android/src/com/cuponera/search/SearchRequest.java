@@ -7,20 +7,20 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.cuponera.pool.AsyncPoolRequest;
 import com.cuponera.pool.AsyncPoolLoader.HTTPMethod;
+import com.cuponera.pool.AsyncPoolRequest;
 import com.cuponera.service.store.StoreResponse;
-import com.cuponera.settings.Settings;
 
 public class SearchRequest extends AsyncPoolRequest<StoreResponse> implements Parcelable {
 
 	private int idCategory;
 	private String name;
+	private double latitude;
+	private double longitude;
 
 	@Override
 	public String getPath() {
-		return "/GetNearestStoresByName?idCategory=" + getIdCategory() + "&Latitude=" + Settings.getInstance(context).getLatitude() + "&Longitude="
-				+ Settings.getInstance(context).getLongitude() + "&Name=" + getName();
+		return "/GetNearestStoresByName?idCategory=" + getIdCategory() + "&Latitude=" + latitude + "&Longitude=" + longitude + "&Name=" + getName();
 	}
 
 	public SearchRequest(Context context) {
@@ -101,6 +101,22 @@ public class SearchRequest extends AsyncPoolRequest<StoreResponse> implements Pa
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
 }
