@@ -22,8 +22,31 @@
                     controller: 'company',
                     action: 'GetAllBasicData'
                 }
-            }]
-        }
+            },
+            {
+                controlType: 'select',
+                controlId: 'store',
+                controlDefaultValue: '@(Request.Params["store"] != null ? @Request.Params["store"] : "")',
+                label: 'Sucursal',
+                visible: @(ViewBag.CanSelectCompany != null && ViewBag.CanSelectCompany ? "true" : "false"),
+                source: {
+                    include_all: true,
+                    controller: 'store',
+                    action: 'GetAllBasicData'
+                }
+            },
+            {
+                controlType: 'select',
+                controlId: 'user',
+                controlDefaultValue: '@(Request.Params["user"] != null ? @Request.Params["user"] : "")',
+            label: 'Usuario',
+            source: {
+                include_all: true,
+                controller: 'userCompany',
+                action: 'GetAllBasicData'
+            }
+        }]
+    }
     };
 
     $(document).ready(function () {

@@ -78,7 +78,7 @@ namespace Cuponera.WebSite.Controllers
             }
         }
 
-        public IEnumerable<userCompany> get(bool all = false, int idCompany = 0, int page = 1)
+        public IEnumerable<userCompany> get(bool all = false, int idCompany = 0, int idStore=0, int idUser=0, int page = 1)
         {
             IEnumerable<userCompany> ucs = db.userCompany;
 
@@ -96,6 +96,16 @@ namespace Cuponera.WebSite.Controllers
             if (idCompany > 0)
             {
                 ucs = ucs.Where(u => u.IdCompany.Equals(idCompany));
+            }
+
+            if (idStore > 0)
+            {
+                ucs = ucs.Where(u => u.IdStore.Equals(idStore));
+            }
+
+            if (idUser > 0)
+            {
+                ucs = ucs.Where(u => u.IdUser.Equals(idUser));
             }
 
             if (!all)
@@ -130,9 +140,9 @@ namespace Cuponera.WebSite.Controllers
         }
 
         // GET: userCompany
-        public async Task<ActionResult> Index(bool all = false, int company = 0, int page = 1)
+        public async Task<ActionResult> Index(bool all = false, int company = 0, int store = 0, int user = 0, int page = 1 )
         {
-            var users = get(all, company, page);
+            var users = get(all, company, store , user, page);
             return View(users);
         }
 
@@ -162,6 +172,13 @@ namespace Cuponera.WebSite.Controllers
             ViewBag.IdUserCompany = new SelectList(db.userCompany, "IdUserCompany", "IdUserCompany");            
             ViewBag.isAdminBO = 0;
             return View();
+        }
+
+        [Authorize]
+        public string GetAllBasicData()
+        {
+            //select 
+            return Helpers.JSONHelper.SerializeJSON(db.UserProfile.Where(u => u.webpages_Roles.Count() == 0).Select(user => new { id = user.UserId, name = user.UserName }));
         }
 
         // POST: userCompany/Create
