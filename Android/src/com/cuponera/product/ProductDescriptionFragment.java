@@ -16,6 +16,7 @@ import com.cuponera.service.images.ImagesRequest;
 import com.cuponera.service.images.ImagesResponse;
 import com.cuponera.store.StoreBottomFragment;
 import com.cuponera.utils.ImageGallery;
+import com.cuponera.utils.ValidationUtils;
 
 public class ProductDescriptionFragment extends BaseFragment {
 
@@ -47,12 +48,27 @@ public class ProductDescriptionFragment extends BaseFragment {
 		super.onCreate(savedInstanceState);
 		product = getArguments().getParcelable(ARGS_PRODUCT);
 		store = getArguments().getParcelable(ARGS_STORE);
+
+		Images i = new Images();
+
+		if (isOffer()) {
+			if (!ValidationUtils.isNullOrEmpty(product.getoImagePath())) {
+				i.setImagePath(product.getoImagePath());
+				images.add(i);
+			}
+		} else {
+			if (!ValidationUtils.isNullOrEmpty(product.getpImagePath())) {
+				i.setImagePath(product.getpImagePath());
+				images.add(i);
+			}
+
+		}
 		ImagesRequest request = new ImagesRequest(getBaseActivity()) {
 
 			@Override
 			public void onServiceReturned(ImagesResponse response) {
 				if (response != null && response.getImages().size() > 0) {
-					images = response.getImages();
+					images.addAll(response.getImages());
 					FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
 					transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(images));
 					transaction.commit();
@@ -82,7 +98,7 @@ public class ProductDescriptionFragment extends BaseFragment {
 		transaction.replace(R.id.store_bottom, StoreBottomFragment.newInstance(store));
 		transaction.commit();
 		mViewProxy.findTextView(R.id.product_company).setText(store.getName());
-		if (product.getIdOffer() > 0) {
+		if (isOffer()) {
 			mViewProxy.findTextView(R.id.product_name).setText(product.getoTitle());
 			mViewProxy.findTextView(R.id.product_price).setText("$" + String.valueOf(product.getoPrice()));
 		} else {
@@ -90,6 +106,11 @@ public class ProductDescriptionFragment extends BaseFragment {
 			mViewProxy.findTextView(R.id.product_price).setText("$" + String.valueOf(product.getpPrice()));
 		}
 		mViewProxy.findTextView(R.id.product_description).setText(product.getpDescription());
+
+	}
+
+	private boolean isOffer() {
+		return product.getIdOffer() > 0;
 
 	}
 

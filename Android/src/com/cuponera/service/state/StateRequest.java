@@ -61,7 +61,7 @@ public abstract class StateRequest extends AsyncPoolRequest<StateResponse> {
 
 	@Override
 	public void onServiceReturned(StateResponse result) {
-		String uriHash = "/category";
+		String uriHash = "/state";
 		if (!emptyResponse(result)) {
 			stateCache.put(uriHash, result);
 		}

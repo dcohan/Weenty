@@ -44,6 +44,7 @@ public class StoreBottomFragment extends BaseFragment {
 		store = getArguments().getParcelable(ARGS_STORE);
 
 		mViewProxy.findTextView(R.id.store_address).setText(store.getAddress());
+		
 		mViewProxy.findTextView(R.id.store_mail).setText(store.getEmail());
 
 		OnClickListener mailClick = new OnClickListener() {
