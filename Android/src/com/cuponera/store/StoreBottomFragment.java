@@ -13,7 +13,10 @@ import com.cuponera.BaseFragment;
 import com.cuponera.R;
 import com.cuponera.analytics.AnalyticsHelpers;
 import com.cuponera.map.GoogleMapFragment;
+import com.cuponera.model.State;
 import com.cuponera.model.Store;
+import com.cuponera.service.state.StateRequest;
+import com.cuponera.service.state.StateResponse;
 import com.cuponera.utils.ValidationUtils;
 
 public class StoreBottomFragment extends BaseFragment {
@@ -43,8 +46,28 @@ public class StoreBottomFragment extends BaseFragment {
 		super.onViewCreated(view, savedInstanceState);
 		store = getArguments().getParcelable(ARGS_STORE);
 
+		StateRequest stateRequest = new StateRequest(getActivity()) {
+
+			@Override
+			protected void serviceReady(StateResponse response) {
+				if (response != null && response.getState().size() > 0) {
+					for (State s : response.getState()) {
+						if (s.equals(store.getIdState())) {
+							mViewProxy.findTextView(R.id.store_state).setText(s.getName());
+							break;
+						}
+
+					}
+
+				}
+			}
+		};
+		if (!stateRequest.isResultCached()) {
+			stateRequest.execute();
+		}
+
 		mViewProxy.findTextView(R.id.store_address).setText(store.getAddress());
-		
+
 		mViewProxy.findTextView(R.id.store_mail).setText(store.getEmail());
 
 		OnClickListener mailClick = new OnClickListener() {
