@@ -24,7 +24,7 @@ public class ProductDescriptionFragment extends BaseFragment {
 	private static final String ARGS_STORE = "args_store";
 	private Product product;
 	private Store store;
-	private ArrayList<Images> images;
+	private ArrayList<Images> images = new ArrayList<Images>();
 
 	@Override
 	protected int getLayout() {
@@ -69,9 +69,9 @@ public class ProductDescriptionFragment extends BaseFragment {
 			public void onServiceReturned(ImagesResponse response) {
 				if (response != null && response.getImages().size() > 0) {
 					images.addAll(response.getImages());
-					FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-					transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(images));
-					transaction.commit();
+					makeImageTransaction();
+				} else if (images != null && images.size() > 0) {
+					makeImageTransaction();
 				} else {
 					mViewProxy.findFrameLayout(R.id.gallery_adapter).setVisibility(View.GONE);
 				}
@@ -81,13 +81,17 @@ public class ProductDescriptionFragment extends BaseFragment {
 		request.execute(false);
 	}
 
+	private void makeImageTransaction() {
+		FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
+		transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(images));
+		transaction.commit();
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		if (images != null && images.size() > 0) {
-			FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-			transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(images));
-			transaction.commit();
+			makeImageTransaction();
 		}
 	}
 

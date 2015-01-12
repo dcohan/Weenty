@@ -7,6 +7,9 @@ public class State extends BaseModel {
 	@JsonProperty("Name")
 	private String name;
 
+	@JsonProperty("IdState")
+	private int idState;
+
 	@JsonProperty("Link")
 	private String link;
 
@@ -47,4 +50,13 @@ public class State extends BaseModel {
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
+
+	public int getIdState() {
+		return idState;
+	}
+
+	public void setIdState(int idState) {
+		this.idState = idState;
+	}
+
 }

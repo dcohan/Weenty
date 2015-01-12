@@ -26,7 +26,7 @@
             android:layout_width="@dimen/offer_circle"
             android:layout_height="@dimen/offer_circle"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="11dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/offer_circle"
             android:visibility="gone" />

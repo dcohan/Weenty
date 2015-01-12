@@ -52,7 +52,7 @@ public class StoreBottomFragment extends BaseFragment {
 			protected void serviceReady(StateResponse response) {
 				if (response != null && response.getState().size() > 0) {
 					for (State s : response.getState()) {
-						if (s.equals(store.getIdState())) {
+						if (s.getIdState() == store.getIdState()) {
 							mViewProxy.findTextView(R.id.store_state).setText(s.getName());
 							break;
 						}

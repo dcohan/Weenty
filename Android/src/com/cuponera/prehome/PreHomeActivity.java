@@ -45,7 +45,9 @@ public class PreHomeActivity extends BaseActivity {
 
 			@Override
 			public void onServiceReturned(PrehomeResponse result) {
-				getSettings().setPrehomeImage(result.getPreHomeImages().get(0).getPrehomeImage());
+				if (result != null && result.getPreHomeImages() != null && result.getPreHomeImages().size() > 0) {
+					getSettings().setPrehomeImage(result.getPreHomeImages().get(0).getPrehomeImage());
+				}
 				continueCicle();
 			}
 
