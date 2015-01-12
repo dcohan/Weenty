@@ -62,7 +62,7 @@ namespace Cuponera.WebSite.Helpers
 
                 foreach (var email in emailList)
                 {
-                    SendSafeEmail(email.Value, PrepareBody(email.Key, "Hay un nuevo usuario esperando la asignación a una compañia: " + email.Value));
+                    SendSafeEmail(email.Value, PrepareBody(email.Key, string.Format("Hay un nuevo usuario: {0}, esperando la asignación a la compañia con el siguiente nombre sugerido: {1} ",model.Email, model.Company)));
                 }
             }
         }
