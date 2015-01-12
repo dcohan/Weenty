@@ -48,12 +48,17 @@ public class StoreDescriptionFragment extends BaseFragment {
 		super.onCreate(savedInstanceState);
 		store = getArguments().getParcelable(ARGS_STORE);
 
+		if (!ValidationUtils.isNullOrEmpty(store.getImagePath())) {
+			Images i = new Images();
+			i.setImagePath(store.getImagePath());
+			images.add(i);
+		}
 		ImagesRequest request = new ImagesRequest(getBaseActivity()) {
 
 			@Override
 			public void onServiceReturned(ImagesResponse response) {
 				if (response != null && response.getImages().size() > 0) {
-					images = response.getImages();
+					images.addAll(response.getImages());
 					FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
 					transaction.replace(R.id.gallery_adapter, ImageGallery.newInstance(images));
 					transaction.commit();
