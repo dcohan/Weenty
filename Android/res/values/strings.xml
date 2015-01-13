@@ -31,6 +31,9 @@
     <string name="home_search">Explorar</string>
     <string name="contact">Contacto</string>
     <string name="about_store">Acerca del local</string>
+    <string name="filter">Filtrar</string>
+    <string name="open">Abrir</string>
+    <string name="close">Cerrar</string>
 
     <!-- Settings -->
     <string name="min">min</string>

@@ -4,15 +4,18 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.cuponera.BaseFragment;
 import com.cuponera.R;
 import com.cuponera.analytics.AnalyticsHelpers;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
+import com.cuponera.filter.FilterAdapter;
 import com.cuponera.map.GoogleMapFragment;
 import com.cuponera.model.Store;
 import com.cuponera.service.store.StoreRequest;
@@ -26,6 +29,8 @@ public class StoreFragment extends BaseFragment {
 	private static final String ARGS_NAME_CATEGORY = "args_name_category";
 	private ArrayList<Store> store;
 	private StoreAdapter adapter;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
 
 	@Override
 	protected int getLayout() {
@@ -55,6 +60,9 @@ public class StoreFragment extends BaseFragment {
 				if (result != null && result.getStore() != null && result.getStore().size() > 0) {
 					store = result.getStore();
 					fillAdapter();
+
+					setFilters();
+
 				} else {
 					EventBus.getInstance().dispatchEvent(new ErrorEvent(0, ErrorHandler.NO_RESULTS_FOUND));
 					getBaseActivity().onHomeButton();
@@ -110,4 +118,28 @@ public class StoreFragment extends BaseFragment {
 		});
 	}
 
+	private void setFilters() {
+		mDrawerLayout = (DrawerLayout) mViewProxy.findView(R.id.drawer_layout);
+		mDrawerList = (ListView) mViewProxy.findListView(R.id.right_drawer);
+		FilterAdapter adapter = new FilterAdapter(getActivity(), store);
+		mDrawerList.setAdapter(adapter);
+		mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+			}
+		});
+
+		mViewProxy.findTextView(R.id.filter_category).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+					mDrawerLayout.closeDrawer(mDrawerList);
+				} else {
+					mDrawerLayout.openDrawer(mDrawerList);
+				}
+			}
+		});
+	}
 }
