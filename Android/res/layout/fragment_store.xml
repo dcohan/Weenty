@@ -66,12 +66,12 @@
 
         <ListView
             android:id="@+id/right_drawer"
-            android:layout_width="240dp"
+            android:layout_width="230dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:background="#111"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp" />
+            android:background="@color/white"
+            android:divider="@color/gray_light_light"
+            android:dividerHeight="1dp" />
     </android.support.v4.widget.DrawerLayout>
 
     <ImageView

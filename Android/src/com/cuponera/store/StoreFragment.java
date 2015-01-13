@@ -31,6 +31,7 @@ public class StoreFragment extends BaseFragment {
 	private StoreAdapter adapter;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
+	private FilterAdapter filterAdapter;
 
 	@Override
 	protected int getLayout() {
@@ -76,8 +77,12 @@ public class StoreFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (adapter != null)
+		if (adapter != null) {
 			fillAdapter();
+		}
+		if (filterAdapter != null) {
+			setFilters();
+		}
 	}
 
 	private void fillAdapter() {
@@ -119,14 +124,21 @@ public class StoreFragment extends BaseFragment {
 	}
 
 	private void setFilters() {
+		Utils.setCalibri(getActivity(), mViewProxy.findTextView(R.id.filter_category));
 		mDrawerLayout = (DrawerLayout) mViewProxy.findView(R.id.drawer_layout);
 		mDrawerList = (ListView) mViewProxy.findListView(R.id.right_drawer);
-		FilterAdapter adapter = new FilterAdapter(getActivity(), store);
-		mDrawerList.setAdapter(adapter);
+		filterAdapter = new FilterAdapter(getActivity(), store);
+		mDrawerList.setAdapter(filterAdapter);
 		mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+				if (view.isEnabled()) {
+					view.setBackgroundColor(getResources().getColor(R.color.green_strong));
+					view.setEnabled(false);
+				} else {
+					view.setBackgroundColor(getResources().getColor(R.color.white));
+					view.setEnabled(true);
+				}
 			}
 		});
 
@@ -142,4 +154,5 @@ public class StoreFragment extends BaseFragment {
 			}
 		});
 	}
+
 }
