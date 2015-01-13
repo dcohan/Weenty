@@ -1,23 +1,25 @@
-﻿using System;
+﻿using Cuponera.Entities;
+using Cuponera.WebSite.Helpers;
+using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Cuponera.Entities;
-using System.Configuration;
-using Cuponera.WebSite.Helpers;
 
 namespace Cuponera.WebSite.Controllers
 {
-    public class categoryController : Controller
+    public class categoryController : UploadImagesBaseController
     {
         private CuponeraEntities db = new CuponeraEntities();
 
-
+        public categoryController()
+            : base(UploadImagesEnum.category)
+        {
+        }
         private IEnumerable<category> get(bool all, string name, int pageNumber)
         {
             Cuponera.Backend.Controllers.categoryController cb = new Backend.Controllers.categoryController();
@@ -38,7 +40,7 @@ namespace Cuponera.WebSite.Controllers
 
             return Helpers.JSONHelper.SerializeJSON(categories.ToList().Select(category => new { id = category.IdCategory, name = category.Name }));
         }
-        
+
 
         // GET: category
         public async Task<ActionResult> Index(bool all = false, string name = null, int page = 1)
@@ -75,10 +77,16 @@ namespace Cuponera.WebSite.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
-        public async Task<ActionResult> Create([Bind(Include = "IdCategory,Name,CreationDatetime,ModificationDatetime,DeletionDatetime")] category category)
+        public async Task<ActionResult> Create([Bind(Include = "IdCategory,Name,ImagePath,CreationDatetime,ModificationDatetime,DeletionDatetime")] category category, List<HttpPostedFileBase> fileUpload)
         {
             if (ModelState.IsValid)
             {
+                fileUpload = FilterFiles(fileUpload);
+                if (fileUpload.Count() == 1)
+                {
+                    category.ImagePath = GeneratePhisicalFile(fileUpload.FirstOrDefault());
+                }
+
                 db.category.Add(category);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -109,10 +117,11 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdCategory,Name,CreationDatetime,ModificationDatetime,DeletionDatetime")] category category)
+        public async Task<ActionResult> Edit([Bind(Include = "IdCategory,Name,ImagePath,CreationDatetime,ModificationDatetime,DeletionDatetime")] category category, List<HttpPostedFileBase> fileUpload)
         {
             if (ModelState.IsValid)
             {
+                if (fileUpload.Count > 0) { category.ImagePath = GeneratePhisicalFile(fileUpload.FirstOrDefault()); }
                 db.Entry(category).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

@@ -12,6 +12,9 @@
         <b>@Html.DisplayNameFor(model => model.Name):</b> @Html.DisplayFor(model => model.Name)
     </div>
 
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.ImagePath):</b> <img class="icon" src="@Model.ImagePath" title="@Model.Name" alt="@Model.Name" />
+    </div>
 
     <div class="item-description">
         <b>Estado:</b>

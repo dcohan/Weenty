@@ -70,6 +70,21 @@
     <Compile Include="geoRequest.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetNearestStoresByName_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetNearestStoresWithOffers_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetNearestStores_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetProductAndOffers_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSubscriptionsForCompanies_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="images.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -110,10 +125,13 @@
     <Compile Include="store.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="subscription.cs">
+    <Compile Include="storeCategory.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagrams.cs">
+    <Compile Include="subcategory.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="subscription.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="userCompany.cs">

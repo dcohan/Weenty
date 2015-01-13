@@ -12,24 +12,21 @@ namespace Cuponera.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class category
+    public partial class subcategory
     {
-        public category()
+        public subcategory()
         {
-            this.subcategory = new HashSet<subcategory>();
-            this.product = new HashSet<product>();
             this.storeCategory = new HashSet<storeCategory>();
         }
     
-        public int IdCategory { get; set; }
+        public int IdSubCategory { get; set; }
         public string Name { get; set; }
+        public int IdCategory { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
-        public string ImagePath { get; set; }
     
-        public virtual ICollection<subcategory> subcategory { get; set; }
-        public virtual ICollection<product> product { get; set; }
+        public virtual category category { get; set; }
         public virtual ICollection<storeCategory> storeCategory { get; set; }
     }
 }

@@ -14,6 +14,7 @@
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="company">
           <Key>
@@ -191,6 +192,29 @@
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
         </EntityType>
+        <EntityType Name="storeCategory">
+          <Key>
+            <PropertyRef Name="IdStoreCategory" />
+          </Key>
+          <Property Name="IdStoreCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdStore" Type="int" Nullable="false" />
+          <Property Name="IdCategory" Type="int" Nullable="false" />
+          <Property Name="IdSubCategory" Type="int" Nullable="false" />
+          <Property Name="CreationDatetime" Type="datetime" />
+          <Property Name="ModificationDatetime" Type="datetime" />
+          <Property Name="DeletionDatetime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="subcategory">
+          <Key>
+            <PropertyRef Name="IdSubCategory" />
+          </Key>
+          <Property Name="IdSubCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdCategory" Type="int" Nullable="false" />
+          <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
+          <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
+          <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
+        </EntityType>
         <EntityType Name="subscription">
           <Key>
             <PropertyRef Name="IdSubscription" />
@@ -204,16 +228,6 @@
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="userCompany">
           <Key>
@@ -277,6 +291,18 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK__subcatego__IdCat__03F0984C">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="subcategory" Type="Self.subcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="IdCategory" />
+            </Principal>
+            <Dependent Role="subcategory">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_companySubscription_company">
           <End Role="company" Type="Self.company" Multiplicity="1" />
           <End Role="companySubscription" Type="Self.companySubscription" Multiplicity="*" />
@@ -409,18 +435,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_store_category">
-          <End Role="category" Type="Self.category" Multiplicity="0..1" />
-          <End Role="store" Type="Self.store" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="category">
-              <PropertyRef Name="IdCategory" />
-            </Principal>
-            <Dependent Role="store">
-              <PropertyRef Name="IdCategory" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_store_company">
           <End Role="company" Type="Self.company" Multiplicity="1" />
           <End Role="store" Type="Self.store" Multiplicity="*" />
@@ -442,6 +456,42 @@
             </Principal>
             <Dependent Role="store">
               <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_storeCategory_category">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="storeCategory" Type="Self.storeCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="IdCategory" />
+            </Principal>
+            <Dependent Role="storeCategory">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_storeCategory_store">
+          <End Role="store" Type="Self.store" Multiplicity="1" />
+          <End Role="storeCategory" Type="Self.storeCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="IdStore" />
+            </Principal>
+            <Dependent Role="storeCategory">
+              <PropertyRef Name="IdStore" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_storeCategory_subcategory">
+          <End Role="subcategory" Type="Self.subcategory" Multiplicity="1" />
+          <End Role="storeCategory" Type="Self.storeCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subcategory">
+              <PropertyRef Name="IdSubCategory" />
+            </Principal>
+            <Dependent Role="storeCategory">
+              <PropertyRef Name="IdSubCategory" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -493,6 +543,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CheckIfUserCanAskForCoordinates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idUser" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Distance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="lat1" Type="float" Mode="In" />
+          <Parameter Name="long1" Type="float" Mode="In" />
+          <Parameter Name="lat2" Type="float" Mode="In" />
+          <Parameter Name="long2" Type="float" Mode="In" />
+        </Function>
+        <Function Name="ELMAH_GetErrorsXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Application" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="ELMAH_GetErrorXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Application" Type="nvarchar" Mode="In" />
+          <Parameter Name="ErrorId" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="ELMAH_LogError" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ErrorId" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Application" Type="nvarchar" Mode="In" />
+          <Parameter Name="Host" Type="nvarchar" Mode="In" />
+          <Parameter Name="Type" Type="nvarchar" Mode="In" />
+          <Parameter Name="Source" Type="nvarchar" Mode="In" />
+          <Parameter Name="Message" Type="nvarchar" Mode="In" />
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+          <Parameter Name="AllXml" Type="ntext" Mode="In" />
+          <Parameter Name="StatusCode" Type="int" Mode="In" />
+          <Parameter Name="TimeUtc" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="GetNearestStores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCategory" Type="int" Mode="In" />
+          <Parameter Name="Latitude" Type="float" Mode="In" />
+          <Parameter Name="Longitude" Type="float" Mode="In" />
+        </Function>
+        <Function Name="GetNearestStoresByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCategory" Type="int" Mode="In" />
+          <Parameter Name="Latitude" Type="float" Mode="In" />
+          <Parameter Name="Longitude" Type="float" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetNearestStoresWithOffers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Latitude" Type="float" Mode="In" />
+          <Parameter Name="Longitude" Type="float" Mode="In" />
+        </Function>
+        <Function Name="GetProductAndOffers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdStore" Type="int" Mode="In" />
+          <Parameter Name="IdCategoria" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetSubscriptionsForCompanies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="CuponeraModelStoreContainer">
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="company" EntityType="Self.company" Schema="dbo" store:Type="Tables" />
@@ -507,14 +608,19 @@
           <EntitySet Name="profile" EntityType="Self.profile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="state" EntityType="Self.state" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="store" EntityType="Self.store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="storeCategory" EntityType="Self.storeCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="subcategory" EntityType="Self.subcategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="subscription" EntityType="Self.subscription" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userCompany" EntityType="Self.userCompany" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__subcatego__IdCat__03F0984C" Association="Self.FK__subcatego__IdCat__03F0984C">
+            <End Role="category" EntitySet="category" />
+            <End Role="subcategory" EntitySet="subcategory" />
+          </AssociationSet>
           <AssociationSet Name="FK_companySubscription_company" Association="Self.FK_companySubscription_company">
             <End Role="company" EntitySet="company" />
             <End Role="companySubscription" EntitySet="companySubscription" />
@@ -559,10 +665,6 @@
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
             <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_store_category" Association="Self.FK_store_category">
-            <End Role="category" EntitySet="category" />
-            <End Role="store" EntitySet="store" />
-          </AssociationSet>
           <AssociationSet Name="FK_store_company" Association="Self.FK_store_company">
             <End Role="company" EntitySet="company" />
             <End Role="store" EntitySet="store" />
@@ -570,6 +672,18 @@
           <AssociationSet Name="FK_store_state" Association="Self.FK_store_state">
             <End Role="state" EntitySet="state" />
             <End Role="store" EntitySet="store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_storeCategory_category" Association="Self.FK_storeCategory_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="storeCategory" EntitySet="storeCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_storeCategory_store" Association="Self.FK_storeCategory_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="storeCategory" EntitySet="storeCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_storeCategory_subcategory" Association="Self.FK_storeCategory_subcategory">
+            <End Role="subcategory" EntitySet="subcategory" />
+            <End Role="storeCategory" EntitySet="storeCategory" />
           </AssociationSet>
           <AssociationSet Name="FK_userCompany_company" Association="Self.FK_userCompany_company">
             <End Role="company" EntitySet="company" />
@@ -593,9 +707,55 @@
     <edmx:ConceptualModels>
       <Schema Namespace="CuponeraModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CuponeraEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="CheckIfUserCanAskForCoordinates">
+          <Parameter Name="idUser" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ELMAH_GetErrorsXml" ReturnType="Collection(String)">
+            <Parameter Name="Application" Mode="In" Type="String" />
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="TotalCount" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ELMAH_GetErrorXml" ReturnType="Collection(String)">
+            <Parameter Name="Application" Mode="In" Type="String" />
+            <Parameter Name="ErrorId" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="ELMAH_LogError">
+            <Parameter Name="ErrorId" Mode="In" Type="Guid" />
+            <Parameter Name="Application" Mode="In" Type="String" />
+            <Parameter Name="Host" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+            <Parameter Name="Source" Mode="In" Type="String" />
+            <Parameter Name="Message" Mode="In" Type="String" />
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="AllXml" Mode="In" Type="String" />
+            <Parameter Name="StatusCode" Mode="In" Type="Int32" />
+            <Parameter Name="TimeUtc" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetNearestStores" ReturnType="Collection(CuponeraModel.GetNearestStores_Result)">
+            <Parameter Name="IdCategory" Mode="In" Type="Int32" />
+            <Parameter Name="Latitude" Mode="In" Type="Double" />
+            <Parameter Name="Longitude" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="GetNearestStoresByName" ReturnType="Collection(CuponeraModel.GetNearestStoresByName_Result)">
+            <Parameter Name="IdCategory" Mode="In" Type="Int32" />
+            <Parameter Name="Latitude" Mode="In" Type="Double" />
+            <Parameter Name="Longitude" Mode="In" Type="Double" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetNearestStoresWithOffers" ReturnType="Collection(CuponeraModel.GetNearestStoresWithOffers_Result)">
+            <Parameter Name="Latitude" Mode="In" Type="Double" />
+            <Parameter Name="Longitude" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductAndOffers" ReturnType="Collection(CuponeraModel.GetProductAndOffers_Result)">
+            <Parameter Name="IdStore" Mode="In" Type="Int32" />
+            <Parameter Name="IdCategoria" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetSubscriptionsForCompanies" ReturnType="Collection(CuponeraModel.GetSubscriptionsForCompanies_Result)" />
           <EntitySet Name="category" EntityType="CuponeraModel.category" />
           <EntitySet Name="company" EntityType="CuponeraModel.company" />
           <EntitySet Name="companySubscription" EntityType="CuponeraModel.companySubscription" />
+          <EntitySet Name="ELMAH_Error" EntityType="CuponeraModel.ELMAH_Error" />
           <EntitySet Name="geoRequest" EntityType="CuponeraModel.geoRequest" />
           <EntitySet Name="images" EntityType="CuponeraModel.images" />
           <EntitySet Name="occasion" EntityType="CuponeraModel.occasion" />
@@ -605,19 +765,25 @@
           <EntitySet Name="profile" EntityType="CuponeraModel.profile" />
           <EntitySet Name="state" EntityType="CuponeraModel.state" />
           <EntitySet Name="store" EntityType="CuponeraModel.store" />
+          <EntitySet Name="storeCategory" EntityType="CuponeraModel.storeCategory" />
+          <EntitySet Name="subcategory" EntityType="CuponeraModel.subcategory" />
           <EntitySet Name="subscription" EntityType="CuponeraModel.subscription" />
           <EntitySet Name="userCompany" EntityType="CuponeraModel.userCompany" />
           <EntitySet Name="UserProfile" EntityType="CuponeraModel.UserProfile" />
           <EntitySet Name="webpages_Membership" EntityType="CuponeraModel.webpages_Membership" />
           <EntitySet Name="webpages_OAuthMembership" EntityType="CuponeraModel.webpages_OAuthMembership" />
           <EntitySet Name="webpages_Roles" EntityType="CuponeraModel.webpages_Roles" />
+          <AssociationSet Name="FK__subcatego__IdCat__03F0984C" Association="CuponeraModel.FK__subcatego__IdCat__03F0984C">
+            <End Role="category" EntitySet="category" />
+            <End Role="subcategory" EntitySet="subcategory" />
+          </AssociationSet>
           <AssociationSet Name="FK_product_category" Association="CuponeraModel.FK_product_category">
             <End Role="category" EntitySet="category" />
             <End Role="product" EntitySet="product" />
           </AssociationSet>
-          <AssociationSet Name="FK_store_category" Association="CuponeraModel.FK_store_category">
+          <AssociationSet Name="FK_storeCategory_category" Association="CuponeraModel.FK_storeCategory_category">
             <End Role="category" EntitySet="category" />
-            <End Role="store" EntitySet="store" />
+            <End Role="storeCategory" EntitySet="storeCategory" />
           </AssociationSet>
           <AssociationSet Name="FK_companySubscription_company" Association="CuponeraModel.FK_companySubscription_company">
             <End Role="company" EntitySet="company" />
@@ -667,9 +833,17 @@
             <End Role="state" EntitySet="state" />
             <End Role="store" EntitySet="store" />
           </AssociationSet>
+          <AssociationSet Name="FK_storeCategory_store" Association="CuponeraModel.FK_storeCategory_store">
+            <End Role="store" EntitySet="store" />
+            <End Role="storeCategory" EntitySet="storeCategory" />
+          </AssociationSet>
           <AssociationSet Name="FK_userCompany_store" Association="CuponeraModel.FK_userCompany_store">
             <End Role="store" EntitySet="store" />
             <End Role="userCompany" EntitySet="userCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_storeCategory_subcategory" Association="CuponeraModel.FK_storeCategory_subcategory">
+            <End Role="subcategory" EntitySet="subcategory" />
+            <End Role="storeCategory" EntitySet="storeCategory" />
           </AssociationSet>
           <AssociationSet Name="FK_userCompany_UserProfile" Association="CuponeraModel.FK_userCompany_UserProfile">
             <End Role="UserProfile" EntitySet="UserProfile" />
@@ -679,9 +853,98 @@
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
             <End Role="UserProfile" EntitySet="UserProfile" />
           </AssociationSet>
-          <EntitySet Name="ELMAH_Error" EntityType="CuponeraModel.ELMAH_Error" />
-          <EntitySet Name="sysdiagrams" EntityType="CuponeraModel.sysdiagrams" />
         </EntityContainer>
+        <ComplexType Name="GetNearestStores_Result">
+          <Property Type="Int32" Name="IdStore" Nullable="false" />
+          <Property Type="Int32" Name="IdCompany" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Latitude" Nullable="true" />
+          <Property Type="Double" Name="Longitude" Nullable="true" />
+          <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="ContactNumber" Nullable="true" MaxLength="40" />
+          <Property Type="Int32" Name="IdCategory" Nullable="true" />
+          <Property Type="Int32" Name="IdState" Nullable="true" />
+          <Property Type="String" Name="StoreHours" Nullable="true" />
+          <Property Type="String" Name="ImagePath" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="WebPage" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="FacebookUrl" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="WhatsApp" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="CreationDatetime" Nullable="true" />
+          <Property Type="DateTime" Name="ModificationDatetime" Nullable="true" />
+          <Property Type="DateTime" Name="DeletionDatetime" Nullable="true" />
+          <Property Type="Double" Name="Distance" Nullable="true" />
+          <Property Type="Int32" Name="HasOffers" Nullable="false" />
+          <Property Type="Int32" Name="HasProducts" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetNearestStoresByName_Result">
+          <Property Type="Int32" Name="IdStore" Nullable="false" />
+          <Property Type="Int32" Name="IdCompany" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Latitude" Nullable="true" />
+          <Property Type="Double" Name="Longitude" Nullable="true" />
+          <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="ContactNumber" Nullable="true" MaxLength="40" />
+          <Property Type="Int32" Name="IdCategory" Nullable="true" />
+          <Property Type="Int32" Name="IdState" Nullable="true" />
+          <Property Type="String" Name="StoreHours" Nullable="true" />
+          <Property Type="String" Name="ImagePath" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="WebPage" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="FacebookUrl" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="WhatsApp" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="CreationDatetime" Nullable="true" />
+          <Property Type="DateTime" Name="ModificationDatetime" Nullable="true" />
+          <Property Type="DateTime" Name="DeletionDatetime" Nullable="true" />
+          <Property Type="Double" Name="Distance" Nullable="true" />
+          <Property Type="Int32" Name="HasOffers" Nullable="false" />
+          <Property Type="Int32" Name="HasProducts" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetNearestStoresWithOffers_Result">
+          <Property Type="Int32" Name="IdStore" Nullable="false" />
+          <Property Type="Int32" Name="IdCompany" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Latitude" Nullable="true" />
+          <Property Type="Double" Name="Longitude" Nullable="true" />
+          <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="ContactNumber" Nullable="true" MaxLength="40" />
+          <Property Type="Int32" Name="IdCategory" Nullable="true" />
+          <Property Type="Int32" Name="IdState" Nullable="true" />
+          <Property Type="String" Name="StoreHours" Nullable="true" />
+          <Property Type="String" Name="ImagePath" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="WebPage" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="FacebookUrl" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="WhatsApp" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="CreationDatetime" Nullable="true" />
+          <Property Type="DateTime" Name="ModificationDatetime" Nullable="true" />
+          <Property Type="DateTime" Name="DeletionDatetime" Nullable="true" />
+          <Property Type="Double" Name="Distance" Nullable="true" />
+          <Property Type="Int32" Name="HasOffers" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetProductAndOffers_Result">
+          <Property Type="String" Name="PTitle" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PImagePath" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="PDescription" Nullable="true" MaxLength="1000" />
+          <Property Type="Int32" Name="IdProduct" Nullable="false" />
+          <Property Type="Double" Name="PPrice" Nullable="true" />
+          <Property Type="String" Name="OTitle" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OImagePath" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="IdOffer" Nullable="true" />
+          <Property Type="Double" Name="OPrice" Nullable="true" />
+          <Property Type="String" Name="ODescription" Nullable="true" MaxLength="1000" />
+        </ComplexType>
+        <ComplexType Name="GetSubscriptionsForCompanies_Result">
+          <Property Type="Int32" Name="IdCompany" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdSubscription" Nullable="true" />
+        </ComplexType>
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="IdCategory" />
@@ -691,8 +954,10 @@
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
+          <Property Name="ImagePath" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="subcategory" Relationship="CuponeraModel.FK__subcatego__IdCat__03F0984C" FromRole="category" ToRole="subcategory" />
           <NavigationProperty Name="product" Relationship="CuponeraModel.FK_product_category" FromRole="category" ToRole="product" />
-          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_store_category" FromRole="category" ToRole="store" />
+          <NavigationProperty Name="storeCategory" Relationship="CuponeraModel.FK_storeCategory_category" FromRole="category" ToRole="storeCategory" />
         </EntityType>
         <EntityType Name="company">
           <Key>
@@ -723,6 +988,22 @@
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
           <NavigationProperty Name="company" Relationship="CuponeraModel.FK_companySubscription_company" FromRole="companySubscription" ToRole="company" />
           <NavigationProperty Name="subscription" Relationship="CuponeraModel.FK_companySubscription_subscription" FromRole="companySubscription" ToRole="subscription" />
+        </EntityType>
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Guid" Nullable="false" />
+          <Property Name="Application" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Source" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusCode" Type="Int32" Nullable="false" />
+          <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AllXml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="geoRequest">
           <Key>
@@ -870,13 +1151,41 @@
           <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="category" Relationship="CuponeraModel.FK_store_category" FromRole="store" ToRole="category" />
           <NavigationProperty Name="company" Relationship="CuponeraModel.FK_store_company" FromRole="store" ToRole="company" />
           <NavigationProperty Name="images" Relationship="CuponeraModel.FK_images_store" FromRole="store" ToRole="images" />
           <NavigationProperty Name="occasion" Relationship="CuponeraModel.FK_event_store" FromRole="store" ToRole="occasion" />
           <NavigationProperty Name="product" Relationship="CuponeraModel.FK_product_store" FromRole="store" ToRole="product" />
           <NavigationProperty Name="state" Relationship="CuponeraModel.FK_store_state" FromRole="store" ToRole="state" />
+          <NavigationProperty Name="storeCategory" Relationship="CuponeraModel.FK_storeCategory_store" FromRole="store" ToRole="storeCategory" />
           <NavigationProperty Name="userCompany" Relationship="CuponeraModel.FK_userCompany_store" FromRole="store" ToRole="userCompany" />
+        </EntityType>
+        <EntityType Name="storeCategory">
+          <Key>
+            <PropertyRef Name="IdStoreCategory" />
+          </Key>
+          <Property Name="IdStoreCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdStore" Type="Int32" Nullable="false" />
+          <Property Name="IdCategory" Type="Int32" Nullable="false" />
+          <Property Name="IdSubCategory" Type="Int32" Nullable="false" />
+          <Property Name="CreationDatetime" Type="DateTime" Precision="3" />
+          <Property Name="ModificationDatetime" Type="DateTime" Precision="3" />
+          <Property Name="DeletionDatetime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="category" Relationship="CuponeraModel.FK_storeCategory_category" FromRole="storeCategory" ToRole="category" />
+          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_storeCategory_store" FromRole="storeCategory" ToRole="store" />
+          <NavigationProperty Name="subcategory" Relationship="CuponeraModel.FK_storeCategory_subcategory" FromRole="storeCategory" ToRole="subcategory" />
+        </EntityType>
+        <EntityType Name="subcategory">
+          <Key>
+            <PropertyRef Name="IdSubCategory" />
+          </Key>
+          <Property Name="IdSubCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdCategory" Type="Int32" Nullable="false" />
+          <Property Name="CreationDatetime" Type="DateTime" Precision="0" />
+          <Property Name="ModificationDatetime" Type="DateTime" Precision="0" />
+          <Property Name="DeletionDatetime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="category" Relationship="CuponeraModel.FK__subcatego__IdCat__03F0984C" FromRole="subcategory" ToRole="category" />
+          <NavigationProperty Name="storeCategory" Relationship="CuponeraModel.FK_storeCategory_subcategory" FromRole="subcategory" ToRole="storeCategory" />
         </EntityType>
         <EntityType Name="subscription">
           <Key>
@@ -902,12 +1211,12 @@
           <Property Name="IdCompany" Type="Int32" Nullable="false" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
           <Property Name="IdStore" Type="Int32" />
-          <NavigationProperty Name="company" Relationship="CuponeraModel.FK_userCompany_company" FromRole="userCompany" ToRole="company" />
-          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_userCompany_store" FromRole="userCompany" ToRole="store" />
-          <NavigationProperty Name="UserProfile" Relationship="CuponeraModel.FK_userCompany_UserProfile" FromRole="userCompany" ToRole="UserProfile" />
           <Property Name="CreationDatetime" Type="DateTime" Precision="3" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="3" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="company" Relationship="CuponeraModel.FK_userCompany_company" FromRole="userCompany" ToRole="company" />
+          <NavigationProperty Name="store" Relationship="CuponeraModel.FK_userCompany_store" FromRole="userCompany" ToRole="store" />
+          <NavigationProperty Name="UserProfile" Relationship="CuponeraModel.FK_userCompany_UserProfile" FromRole="userCompany" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -954,6 +1263,18 @@
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserProfile" Relationship="CuponeraModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
         </EntityType>
+        <Association Name="FK__subcatego__IdCat__03F0984C">
+          <End Type="CuponeraModel.category" Role="category" Multiplicity="1" />
+          <End Type="CuponeraModel.subcategory" Role="subcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="IdCategory" />
+            </Principal>
+            <Dependent Role="subcategory">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_product_category">
           <End Type="CuponeraModel.category" Role="category" Multiplicity="1" />
           <End Type="CuponeraModel.product" Role="product" Multiplicity="*" />
@@ -966,14 +1287,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_store_category">
-          <End Type="CuponeraModel.category" Role="category" Multiplicity="0..1" />
-          <End Type="CuponeraModel.store" Role="store" Multiplicity="*" />
+        <Association Name="FK_storeCategory_category">
+          <End Type="CuponeraModel.category" Role="category" Multiplicity="1" />
+          <End Type="CuponeraModel.storeCategory" Role="storeCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="category">
               <PropertyRef Name="IdCategory" />
             </Principal>
-            <Dependent Role="store">
+            <Dependent Role="storeCategory">
               <PropertyRef Name="IdCategory" />
             </Dependent>
           </ReferentialConstraint>
@@ -1122,6 +1443,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_storeCategory_store">
+          <End Type="CuponeraModel.store" Role="store" Multiplicity="1" />
+          <End Type="CuponeraModel.storeCategory" Role="storeCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="store">
+              <PropertyRef Name="IdStore" />
+            </Principal>
+            <Dependent Role="storeCategory">
+              <PropertyRef Name="IdStore" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_userCompany_store">
           <End Type="CuponeraModel.store" Role="store" Multiplicity="0..1" />
           <End Type="CuponeraModel.userCompany" Role="userCompany" Multiplicity="*" />
@@ -1131,6 +1464,18 @@
             </Principal>
             <Dependent Role="userCompany">
               <PropertyRef Name="IdStore" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_storeCategory_subcategory">
+          <End Type="CuponeraModel.subcategory" Role="subcategory" Multiplicity="1" />
+          <End Type="CuponeraModel.storeCategory" Role="storeCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subcategory">
+              <PropertyRef Name="IdSubCategory" />
+            </Principal>
+            <Dependent Role="storeCategory">
+              <PropertyRef Name="IdSubCategory" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1150,41 +1495,131 @@
           <End Type="CuponeraModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
           <End Type="CuponeraModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
-        <EntityType Name="ELMAH_Error">
-          <Key>
-            <PropertyRef Name="ErrorId" />
-          </Key>
-          <Property Name="ErrorId" Type="Guid" Nullable="false" />
-          <Property Name="Application" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Source" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StatusCode" Type="Int32" Nullable="false" />
-          <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AllXml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CuponeraModelStoreContainer" CdmEntityContainer="CuponeraEntities">
+          <FunctionImportMapping FunctionImportName="CheckIfUserCanAskForCoordinates" FunctionName="CuponeraModel.Store.CheckIfUserCanAskForCoordinates" />
+          <FunctionImportMapping FunctionImportName="ELMAH_GetErrorsXml" FunctionName="CuponeraModel.Store.ELMAH_GetErrorsXml" />
+          <FunctionImportMapping FunctionImportName="ELMAH_GetErrorXml" FunctionName="CuponeraModel.Store.ELMAH_GetErrorXml" />
+          <FunctionImportMapping FunctionImportName="ELMAH_LogError" FunctionName="CuponeraModel.Store.ELMAH_LogError" />
+          <FunctionImportMapping FunctionImportName="GetNearestStores" FunctionName="CuponeraModel.Store.GetNearestStores">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CuponeraModel.GetNearestStores_Result">
+                <ScalarProperty Name="IdStore" ColumnName="IdStore" />
+                <ScalarProperty Name="IdCompany" ColumnName="IdCompany" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+                <ScalarProperty Name="IdState" ColumnName="IdState" />
+                <ScalarProperty Name="StoreHours" ColumnName="StoreHours" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WebPage" ColumnName="WebPage" />
+                <ScalarProperty Name="FacebookUrl" ColumnName="FacebookUrl" />
+                <ScalarProperty Name="WhatsApp" ColumnName="WhatsApp" />
+                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
+                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
+                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="HasOffers" ColumnName="HasOffers" />
+                <ScalarProperty Name="HasProducts" ColumnName="HasProducts" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetNearestStoresByName" FunctionName="CuponeraModel.Store.GetNearestStoresByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CuponeraModel.GetNearestStoresByName_Result">
+                <ScalarProperty Name="IdStore" ColumnName="IdStore" />
+                <ScalarProperty Name="IdCompany" ColumnName="IdCompany" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+                <ScalarProperty Name="IdState" ColumnName="IdState" />
+                <ScalarProperty Name="StoreHours" ColumnName="StoreHours" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WebPage" ColumnName="WebPage" />
+                <ScalarProperty Name="FacebookUrl" ColumnName="FacebookUrl" />
+                <ScalarProperty Name="WhatsApp" ColumnName="WhatsApp" />
+                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
+                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
+                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="HasOffers" ColumnName="HasOffers" />
+                <ScalarProperty Name="HasProducts" ColumnName="HasProducts" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetNearestStoresWithOffers" FunctionName="CuponeraModel.Store.GetNearestStoresWithOffers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CuponeraModel.GetNearestStoresWithOffers_Result">
+                <ScalarProperty Name="IdStore" ColumnName="IdStore" />
+                <ScalarProperty Name="IdCompany" ColumnName="IdCompany" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+                <ScalarProperty Name="IdState" ColumnName="IdState" />
+                <ScalarProperty Name="StoreHours" ColumnName="StoreHours" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WebPage" ColumnName="WebPage" />
+                <ScalarProperty Name="FacebookUrl" ColumnName="FacebookUrl" />
+                <ScalarProperty Name="WhatsApp" ColumnName="WhatsApp" />
+                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
+                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
+                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="HasOffers" ColumnName="HasOffers" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductAndOffers" FunctionName="CuponeraModel.Store.GetProductAndOffers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CuponeraModel.GetProductAndOffers_Result">
+                <ScalarProperty Name="PTitle" ColumnName="PTitle" />
+                <ScalarProperty Name="PImagePath" ColumnName="PImagePath" />
+                <ScalarProperty Name="PDescription" ColumnName="PDescription" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="PPrice" ColumnName="PPrice" />
+                <ScalarProperty Name="OTitle" ColumnName="OTitle" />
+                <ScalarProperty Name="OImagePath" ColumnName="OImagePath" />
+                <ScalarProperty Name="IdOffer" ColumnName="IdOffer" />
+                <ScalarProperty Name="OPrice" ColumnName="OPrice" />
+                <ScalarProperty Name="ODescription" ColumnName="ODescription" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSubscriptionsForCompanies" FunctionName="CuponeraModel.Store.GetSubscriptionsForCompanies">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CuponeraModel.GetSubscriptionsForCompanies_Result">
+                <ScalarProperty Name="IdCompany" ColumnName="IdCompany" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdSubscription" ColumnName="IdSubscription" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="category">
             <EntityTypeMapping TypeName="CuponeraModel.category">
               <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
@@ -1217,6 +1652,23 @@
                 <ScalarProperty Name="IdSubscription" ColumnName="IdSubscription" />
                 <ScalarProperty Name="IdCompany" ColumnName="IdCompany" />
                 <ScalarProperty Name="IdCompanySubscription" ColumnName="IdCompanySubscription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ELMAH_Error">
+            <EntityTypeMapping TypeName="CuponeraModel.ELMAH_Error">
+              <MappingFragment StoreEntitySet="ELMAH_Error">
+                <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1364,6 +1816,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="storeCategory">
+            <EntityTypeMapping TypeName="CuponeraModel.storeCategory">
+              <MappingFragment StoreEntitySet="storeCategory">
+                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
+                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
+                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
+                <ScalarProperty Name="IdSubCategory" ColumnName="IdSubCategory" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+                <ScalarProperty Name="IdStore" ColumnName="IdStore" />
+                <ScalarProperty Name="IdStoreCategory" ColumnName="IdStoreCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subcategory">
+            <EntityTypeMapping TypeName="CuponeraModel.subcategory">
+              <MappingFragment StoreEntitySet="subcategory">
+                <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
+                <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
+                <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdSubCategory" ColumnName="IdSubCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="subscription">
             <EntityTypeMapping TypeName="CuponeraModel.subscription">
               <MappingFragment StoreEntitySet="subscription">
@@ -1445,34 +1922,6 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="ELMAH_Error">
-            <EntityTypeMapping TypeName="CuponeraModel.ELMAH_Error">
-              <MappingFragment StoreEntitySet="ELMAH_Error">
-                <ScalarProperty Name="AllXml" ColumnName="AllXml" />
-                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
-                <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="User" ColumnName="User" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="Source" ColumnName="Source" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Host" ColumnName="Host" />
-                <ScalarProperty Name="Application" ColumnName="Application" />
-                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="CuponeraModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

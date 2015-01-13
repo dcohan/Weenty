@@ -10,19 +10,9 @@
 namespace Cuponera.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class store
+    public partial class GetNearestStores_Result
     {
-        public store()
-        {
-            this.images = new HashSet<images>();
-            this.occasion = new HashSet<occasion>();
-            this.product = new HashSet<product>();
-            this.storeCategory = new HashSet<storeCategory>();
-            this.userCompany = new HashSet<userCompany>();
-        }
-    
         public int IdStore { get; set; }
         public int IdCompany { get; set; }
         public string Name { get; set; }
@@ -32,7 +22,7 @@ namespace Cuponera.Entities
         public Nullable<double> Longitude { get; set; }
         public string ZipCode { get; set; }
         public string ContactNumber { get; set; }
-        public int IdCategory { get; set; }
+        public Nullable<int> IdCategory { get; set; }
         public Nullable<int> IdState { get; set; }
         public string StoreHours { get; set; }
         public string ImagePath { get; set; }
@@ -43,13 +33,8 @@ namespace Cuponera.Entities
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
-    
-        public virtual company company { get; set; }
-        public virtual ICollection<images> images { get; set; }
-        public virtual ICollection<occasion> occasion { get; set; }
-        public virtual ICollection<product> product { get; set; }
-        public virtual state state { get; set; }
-        public virtual ICollection<storeCategory> storeCategory { get; set; }
-        public virtual ICollection<userCompany> userCompany { get; set; }
+        public Nullable<double> Distance { get; set; }
+        public int HasOffers { get; set; }
+        public int HasProducts { get; set; }
     }
 }
