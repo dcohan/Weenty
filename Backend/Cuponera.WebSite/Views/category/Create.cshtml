@@ -5,7 +5,21 @@
 }
 
 <h2>Agregar categoría</h2>
+<script type="text/javascript">
+    $(function () {
+        $('#fileUpload').change(function (e) {
+            var files = e.target.files;
+            if (!files.length) { return; }
 
+            $('.files-name').empty();
+            $(files).each(function (k, v) {
+                $('.files-name').append(
+                    $('<div></div>').html(v.name)
+                );
+            });
+        });
+    });
+</script>
 
 @using (Html.BeginForm()) 
 {
