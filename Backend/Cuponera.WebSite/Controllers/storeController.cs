@@ -67,23 +67,21 @@ namespace Cuponera.WebSite.Controllers
         {
             IQueryable<storeCategory> categoriesAndSubcategories = db.storeCategory.Where(sc => sc.DeletionDatetime == null);
             ArrayList categories = new ArrayList();
-            List<SelectListItem> dropdownCategories = new List<SelectListItem>();
 
-            foreach (category category in db.category.Where(c => c.DeletionDatetime == null))
+            foreach (category category in db.category.Where(c => c.DeletionDatetime == null).OrderBy(c => c.Name))
             {
-                dropdownCategories.Add(new SelectListItem { Value = "C-" + category.IdCategory, Text = category.Name });
-                categories.Add(new { Id = "C-" + category.IdCategory, Name = category.Name });
-            }
+                categories.Add(new { Id = "C-" + category.IdCategory, Name = category.Name, Category = category.Name });
 
-            foreach (subcategory subcategory in db.subcategory.Where(c => c.DeletionDatetime == null))
-            {
-                dropdownCategories.Add(new SelectListItem { Value = "S-" + subcategory.IdSubCategory, Text = subcategory.category.Name + " - " + subcategory.Name });
-                categories.Add(new { Id = "S-" + subcategory.IdSubCategory, Name = subcategory.category.Name + " - " + subcategory.Name });
+                foreach (subcategory subcategory in db.subcategory.Where(c => c.DeletionDatetime == null && c.IdCategory.Equals(category.IdCategory)).OrderBy(s => s.Name))
+                {
+                    
+                    categories.Add(new { Id = "S-" + subcategory.IdSubCategory, Name = "      " + subcategory.category.Name + " - " + subcategory.Name, Category = category.Name });
+                }
             }
 
 
             ViewBag.Categories = categories;
-            ViewBag.IdCategory = dropdownCategories;
+            ViewBag.IdCategory = new SelectList(categories, "Id", "Name", "Category", 1);
         }
 
 

@@ -144,7 +144,7 @@
             @Html.Label( "Categoría *", htmlAttributes: new { @class = "control-label col-md-2" })
             <input type="text" id="selectedCategories" name="selectedCategories" />
             <div class="col-md-10">
-                @Html.DropDownList("categories", (List<SelectListItem>)ViewBag.IdCategory, new { @class = "category_select" })
+                @Html.DropDownList("IdCategory")
                 <img src="~/Images/plus.ico" alt="Agregar" title="Agregar" class="small-icon plus" />
             </div>
         </div>
