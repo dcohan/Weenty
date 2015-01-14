@@ -227,7 +227,7 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,IdCompany,StoreHours,Email,FacebookUrl,WhatsApp,Description,WebPage,IdCategory")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string selectedCategories)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,IdCompany,StoreHours,Email,FacebookUrl,WhatsApp,Description,WebPage")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string selectedCategories)
         {
             if (ModelState.IsValid)
             {
@@ -366,7 +366,7 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdStore,Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description,WebPage,IdCategory,IdCompany")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
+        public async Task<ActionResult> Edit([Bind(Include = "IdStore,Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description,WebPage,IdCompany")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
         {
             if (ModelState.IsValid)
             {

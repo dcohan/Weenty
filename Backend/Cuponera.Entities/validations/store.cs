@@ -30,10 +30,6 @@ namespace Cuponera.Entities
         [Display(Name = "Compañía")]
         public int IdCompany { get; set; }
 
-        [Display(Name = "Categoría")]
-        [Required(ErrorMessage = "Debe ingresar la categoría.")]
-        public int IdCategory { get; set; }
-
         [Display(Name = "Nombre")]
         [Required(ErrorMessage = "Debe ingresar el nombre.")]
         [MaxLength(100, ErrorMessage = "El nombre de la sucursal debe tener como máximo de 100 caracteres."), MinLength(2, ErrorMessage = "El nombre de la sucursal debe tener como mínimo 2 caracteres.")]

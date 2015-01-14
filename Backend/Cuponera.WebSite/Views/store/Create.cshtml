@@ -141,7 +141,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IdCategory, "Categoría *", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label( "Categoría *", htmlAttributes: new { @class = "control-label col-md-2" })
             <input type="text" id="selectedCategories" name="selectedCategories" />
             <div class="col-md-10">
                 @Html.DropDownList("categories", (List<SelectListItem>)ViewBag.IdCategory, new { @class = "category_select" })

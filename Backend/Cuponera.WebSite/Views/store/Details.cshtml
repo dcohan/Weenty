@@ -54,7 +54,28 @@
     </div>
 
     <div class="item-description">
-        <b>@Html.DisplayNameFor(model => model.IdCategory):</b> @Html.DisplayFor(model => model.category.Name)
+        @if (Model.storeCategory.Where(sc => sc.IdCategory != null && !sc.DeletionDatetime.HasValue).Count() > 0)
+        { 
+            <b>@Html.DisplayName("Categorias"):</b>
+            <br />
+            foreach (var item in Model.storeCategory.Where(sc => sc.IdCategory != null && !sc.DeletionDatetime.HasValue).OrderBy(sc => sc.category.Name))
+            {
+                <p style="text-indent: 80px;border-bottom: 0;border-top: 0;margin-bottom: 0;margin-top:  0;">@Html.DisplayName(item.category.Name)</p>
+            }
+        }
+    </div>
+
+    <div class="item-description">
+        @if (Model.storeCategory.Where(sc => sc.IdSubCategory != null && !sc.DeletionDatetime.HasValue).Count() > 0)
+        { 
+            <b>@Html.DisplayName("Sub-Categorias"):</b>
+            <br />
+            foreach (var item in Model.storeCategory.Where(sc => sc.IdSubCategory != null && !sc.DeletionDatetime.HasValue).OrderBy(sc => sc.subcategory.Name))
+            {
+                
+                <p style="text-indent: 80px;border-bottom: 0;border-top: 0;margin-bottom: 0;margin-top:  0;">@Html.DisplayName(item.subcategory.Name)</p>
+            }
+        }
     </div>
 
     <div class="item-description">

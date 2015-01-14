@@ -16,7 +16,7 @@ namespace Cuponera.Entities
     {
         public int IdStoreCategory { get; set; }
         public int IdStore { get; set; }
-        public int IdCategory { get; set; }
+        public Nullable<int> IdCategory { get; set; }
         public Nullable<int> IdSubCategory { get; set; }
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
