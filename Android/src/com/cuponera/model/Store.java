@@ -61,6 +61,9 @@ public class Store extends BaseModel {
 	@JsonProperty("Description")
 	private String description;
 
+	@JsonProperty("Categoria")
+	private String categoria;
+
 	public double getDistance() {
 		return distance;
 	}
@@ -211,6 +214,14 @@ public class Store extends BaseModel {
 
 	public void setWebPage(String webPage) {
 		this.webPage = webPage;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 }
