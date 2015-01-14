@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="IdCategory" />
@@ -199,7 +199,7 @@
           <Property Name="IdStoreCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdStore" Type="int" Nullable="false" />
           <Property Name="IdCategory" Type="int" Nullable="false" />
-          <Property Name="IdSubCategory" Type="int" Nullable="false" />
+          <Property Name="IdSubCategory" Type="int" />
           <Property Name="CreationDatetime" Type="datetime" />
           <Property Name="ModificationDatetime" Type="datetime" />
           <Property Name="DeletionDatetime" Type="datetime" />
@@ -484,7 +484,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_storeCategory_subcategory">
-          <End Role="subcategory" Type="Self.subcategory" Multiplicity="1" />
+          <End Role="subcategory" Type="Self.subcategory" Multiplicity="0..1" />
           <End Role="storeCategory" Type="Self.storeCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="subcategory">
@@ -853,7 +853,7 @@
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
             <End Role="UserProfile" EntitySet="UserProfile" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="GetNearestStores_Result">
           <Property Type="Int32" Name="IdStore" Nullable="false" />
           <Property Type="Int32" Name="IdCompany" Nullable="false" />
@@ -1166,7 +1166,7 @@
           <Property Name="IdStoreCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdStore" Type="Int32" Nullable="false" />
           <Property Name="IdCategory" Type="Int32" Nullable="false" />
-          <Property Name="IdSubCategory" Type="Int32" Nullable="false" />
+          <Property Name="IdSubCategory" Type="Int32" Nullable="true" />
           <Property Name="CreationDatetime" Type="DateTime" Precision="3" />
           <Property Name="ModificationDatetime" Type="DateTime" Precision="3" />
           <Property Name="DeletionDatetime" Type="DateTime" Precision="3" />
@@ -1468,7 +1468,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_storeCategory_subcategory">
-          <End Type="CuponeraModel.subcategory" Role="subcategory" Multiplicity="1" />
+          <End Type="CuponeraModel.subcategory" Role="subcategory" Multiplicity="0..1" />
           <End Type="CuponeraModel.storeCategory" Role="storeCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="subcategory">
@@ -1922,7 +1922,7 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

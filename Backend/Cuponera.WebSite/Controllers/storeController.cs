@@ -258,7 +258,7 @@ namespace Cuponera.WebSite.Controllers
                 }
 
                 db.store.Add(store);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
 
                 InsertCategoriesFromStore(categories, store);
 
