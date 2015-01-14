@@ -140,6 +140,7 @@
     <Compile Include="UserProfile.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="validations\subcategory.cs" />
     <Compile Include="validations\companySubscription.cs" />
     <Compile Include="validations\CurrentDateAttribute.cs" />
     <Compile Include="validations\userCompany.cs" />

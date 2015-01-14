@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Cuponera.Entities.subcategory>
+
+@{
+    ViewBag.Title = "Subcategoría";
+}
+
+<script type="text/javascript">
+    var globals = {
+        controller: 'subcategory',
+        filters: {
+            include: ['all'],
+            custom: [{
+                controlType: 'text',
+                controlId: 'name',
+                controlDefaultValue: '@(Request.Params["name"] != null ? @Request.Params["name"] : "")',
+                label: 'Nombre'
+            }, {
+                controlType: 'select',
+                controlId: 'category',
+                controlDefaultValue: '@(Request.Params["category"] != null ? @Request.Params["category"] : "")',
+                label: 'Categoría',
+                source: {
+                    include_all: true,
+                    controller: 'category',
+                    action: 'GetAllBasicData'
+                }
+            }]
+        }
+    };
+</script>
+
+<h2>Subcategoría</h2>
+
+
+<div class="list-content">
+    @Html.Partial("AntiForgeryTokenForm")
+    @Html.Partial("Filters")
+
+
+
+    @if (Model.Count() == 0)
+    {
+        <div class="no-data">No hay datos.</div>
+    }
+    else
+    {
+        <div class="table-all">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Categoría padre
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr data-item-id="@item.IdSubCategory">
+                            <td>
+                                <span class="item-name">@Html.DisplayFor(modelItem => item.category.Name)</span>
+                            </td>
+                            <td>
+                                <span class="item-name">@Html.DisplayFor(modelItem => item.Name)</span>
+                            </td>
+                            <td class="current-status">
+                                @if (item.DeletionDatetime == null)
+                                {
+                                    <img src="Images/tick.ico" alt="active" class="active" />
+                                }
+                                else
+                                {
+                                    <img src="Images/x.ico" alt="inactive" class="inactive" />
+                                }
+                            </td>
+                            <td class="operation first">
+                                @Html.ActionLink("Detalle", "Details", new { id = item.IdSubCategory }, new { @class = "detailsIcon", title = "Detalle" })
+                            </td>
+                            <td class="operation">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.IdSubCategory }, new { @class = "editIcon", title = "Editar" })
+                            </td>
+                            <td class="operation">
+                                @if (item.DeletionDatetime == null)
+                                {
+                                    <a href="#" class="removeIcon" title="Eliminar" data-popup-to-open="dialog-confirm-deactivate">Eliminar</a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="addIcon" title="Activar" data-popup-to-open="dialog-confirm-activate">Activar</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.Partial("Paginator")
+        </div>
+
+        <div style="clear:both;"></div>
+    }
+    <p>
+        @Html.ActionLink("Nuevo", "Create")
+    </p>
+</div>

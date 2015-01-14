@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -64,16 +65,25 @@ namespace Cuponera.WebSite.Controllers
 
         public void GetCategories(store store = null)
         {
-            /*
-            IQueryable<category> categories = db.category;
-            if(store == null || (store != null && store.category != null && store.category.DeletionDatetime == null)){
-                categories = categories.Where(s => s.DeletionDatetime == null);
+            IQueryable<storeCategory> categoriesAndSubcategories = db.storeCategory.Where(sc => sc.DeletionDatetime == null);
+            ArrayList categories = new ArrayList();
+            List<SelectListItem> dropdownCategories = new List<SelectListItem>();
+
+            foreach (category category in db.category.Where(c => c.DeletionDatetime == null))
+            {
+                dropdownCategories.Add(new SelectListItem { Value = "C-" + category.IdCategory, Text = category.Name });
+                categories.Add(new { Id = "C-" + category.IdCategory, Name = category.Name });
             }
 
-            categories = categories.OrderBy(c => c.Name);
+            foreach (subcategory subcategory in db.subcategory.Where(c => c.DeletionDatetime == null))
+            {
+                dropdownCategories.Add(new SelectListItem { Value = "S-" + subcategory.IdSubCategory, Text = subcategory.category.Name + " - " + subcategory.Name });
+                categories.Add(new { Id = "S-" + subcategory.IdSubCategory, Name = subcategory.category.Name + " - " + subcategory.Name });
+            }
+
 
             ViewBag.Categories = categories;
-            ViewBag.IdCategory = new SelectList(categories, "IdCategory", "Name", store != null ? store.IdCategory : 0);*/
+            ViewBag.IdCategory = dropdownCategories;
         }
 
 
@@ -194,16 +204,35 @@ namespace Cuponera.WebSite.Controllers
             return View();
         }
 
+        private List<string> GetNonRepeatedCategories(string categories)
+        {
+            List<string> categoriesList = new List<string>();
+
+            string[] _categories = categories.Split(new char[] { ',' });
+            foreach (var _category in _categories)
+            {
+                if (!categoriesList.Contains(_category))
+                {
+                    categoriesList.Add(_category);
+                }
+            }
+
+            return categoriesList;
+                
+        }
+
         [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]
         // POST: store/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,IdCompany,StoreHours,Email,FacebookUrl,WhatsApp,Description, WebPage, IdCategory")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Address,ContactNumber,ZipCode,IdState,IdCompany,StoreHours,Email,FacebookUrl,WhatsApp,Description,WebPage,IdCategory")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string selectedCategories)
         {
             if (ModelState.IsValid)
             {
+                var categories = GetNonRepeatedCategories(selectedCategories);
+
                 if (Latitude != null) { store.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
                 if (Longitude != null) { store.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
 
@@ -228,9 +257,10 @@ namespace Cuponera.WebSite.Controllers
                     }
                 }
 
-
                 db.store.Add(store);
                 await db.SaveChangesAsync();
+
+                InsertCategoriesFromStore(categories, store);
 
                 //Save aditional images
                 UploadImages(fileUpload, store.IdStore);
@@ -240,6 +270,66 @@ namespace Cuponera.WebSite.Controllers
             GetCompanies(store);
             GetCategories(store);
             return View(store);
+        }
+
+        private void InsertCategoriesFromStore(List<string> categories, store store){
+            IQueryable<storeCategory> sc;
+            foreach (var category in db.storeCategory.Where(scs => scs.IdStore == store.IdStore))
+            {
+                category.DeletionDatetime = DateTime.Now;
+            }
+
+
+            // TERMINAR LA INSERCIÓN.
+            foreach (var category in categories)
+            {
+                if (category.Contains("C-"))
+                {
+                    //is a category
+                    int id = Convert.ToInt32(category.Split(new char[] { 'C', '-' })[2]);
+
+                    sc = db.storeCategory.Where(scs => scs.IdCategory == id && scs.IdStore == store.IdStore);
+                    if (sc.Count() == 0)
+                    {
+                        db.storeCategory.Add(new storeCategory()
+                        {
+                            IdStore = store.IdStore,
+                            IdCategory = Convert.ToInt32(id)
+                        });
+                    }
+                    else
+                    {
+                        sc.FirstOrDefault().DeletionDatetime = null;
+                    }
+                }
+                else
+                {
+                    //is a subcategory
+                    int id = Convert.ToInt32(category.Split(new char[] { 'S', '-' })[2]);
+                    sc = db.storeCategory.Where(scs => scs.IdCategory == id && scs.IdStore == store.IdStore);
+
+                    if (sc.Count() == 0)
+                    {
+                        db.storeCategory.Add(new storeCategory()
+                        {
+                            IdStore = store.IdStore,
+                            IdSubCategory = Convert.ToInt32(id)
+                        });
+
+                    }
+                    else
+                    {
+                        sc.FirstOrDefault().DeletionDatetime = null;
+                    }
+
+                }
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e) { }
         }
 
         [AuthorizeUserStoreAttribute(MustBeCompanyAdmin = true)]

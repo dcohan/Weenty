@@ -1064,3 +1064,8 @@ img.preview{
 .table-all tbody td{
     max-width: 150px;
 }
+
+.plus, .minus{
+    cursor: pointer;
+    vertical-align: middle;
+}

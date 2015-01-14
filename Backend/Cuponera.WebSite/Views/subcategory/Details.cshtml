@@ -1,0 +1,35 @@
+﻿@model Cuponera.Entities.subcategory
+
+@{
+    ViewBag.Title = "Detalle " + Model.Name;
+}
+
+<h2>@Html.DisplayFor(model => model.Name)</h2>
+
+<div>
+    <br />
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.Name):</b> @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="item-description">
+        <b>@Html.DisplayNameFor(model => model.category.Name):</b> @Html.DisplayFor(model => Model.category.Name)
+    </div>
+
+    <div class="item-description">
+        <b>Estado:</b>
+        @if (Model.DeletionDatetime == null)
+        {
+            <img src="../../Images/tick.ico" alt="active" title="active" class="active" />
+
+        }
+        else
+        {
+            <img src="../../Images/x.ico" alt="inactive" title="inactive" class="inactive" />
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdSubCategory }) |
+    @Html.ActionLink("Volver", "Index")
+</p>

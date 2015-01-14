@@ -128,8 +128,9 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.IdCategory, "Categoría *", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("IdCategory", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IdCategory, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(model => model.IdCategory, (List<SelectListItem>)ViewBag.IdCategory)
+                    <img src="~/Images/plus.ico" alt="Agregar" title="Agregar" class="small-icon plus" />
+                    <input type="hidden" id="selectedCategories" name="selectedCategories" />
                 </div>
             </div>
 
