@@ -1,4 +1,59 @@
-﻿function confirmDelete(id) {
+﻿function initializeCategoriesCombo() {
+    //get stores
+    var categories = $('#selectedCategories').val().split(',');
+
+    $.each(categories, function (i) {
+        if (categories[i].length > 0) {
+            createNewCategoriesCombo($('#itemCategory' + i), i, categories[i]);
+        }
+    });
+}
+
+function createNewCategoriesCombo($elem, index, value) {
+    $formGroup = $elem.closest('.form-group');
+    $container = $elem.parent().clone(true);
+    if ($container.find('.minus').length == 0) {
+        $minus = $('<img>').prop('src', '/Images/minus.ico')
+                           .prop('alt', 'Remover')
+                           .prop('title', 'Remover')
+                           .addClass('small-icon')
+                           .addClass('minus')
+                           .on('click', function () {
+                               removeSelectedCategoriesCombo($(this));
+                           });
+
+        if (index = typeof index !== 'undefined') {
+            $minus.id = 'itemCategory' + index;
+        }
+
+        $container.append($minus);
+
+        value = typeof value !== 'undefined' ? value : '';
+        $("#combobox").val(value);
+    }
+
+    $elem.addClass('hidden');
+    $formGroup.append($container);
+    
+}
+
+function removeSelectedCategoriesCombo($elem) {
+    $container = $elem.parent();
+    $container.closest('.form-group').find('.plus.hidden:last').removeClass('hidden');
+    $container.remove();
+    calculateSelectedCategories();
+}
+
+function calculateSelectedCategories() {
+    var categories = [];
+    $('.category_select').each(function () {
+        categories.push($(this).val());
+    })
+
+    $('#selectedCategories').val(categories.join(','));
+}
+
+function confirmDelete(id) {
     deleteElement({ controller: globals.controller, id: id });
 }
 
