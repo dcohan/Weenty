@@ -74,11 +74,9 @@ namespace Cuponera.WebSite.Controllers
 
                 foreach (subcategory subcategory in db.subcategory.Where(c => c.DeletionDatetime == null && c.IdCategory.Equals(category.IdCategory)).OrderBy(s => s.Name))
                 {
-                    
-                    categories.Add(new { Id = "S-" + subcategory.IdSubCategory, Name = "      " + subcategory.category.Name + " - " + subcategory.Name, Category = category.Name });
+                    categories.Add(new { Id = "S-" + subcategory.IdSubCategory, Name = subcategory.Name, Category = category.Name });
                 }
             }
-
 
             ViewBag.Categories = categories;
             ViewBag.IdCategory = new SelectList(categories, "Id", "Name", "Category", 1);
