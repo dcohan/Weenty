@@ -2,18 +2,18 @@
     //get stores
     var categories = $('#selectedCategories').val().split(',');
 
-    if (categories.length == 1 && categories[0].length == 0) {
-        createNewCategoriesCombo($('.plusHidden'), 0, categories[i]);
-    }
-
     $.each(categories, function (i) {
         if (categories[i].length > 0) {
-            createNewCategoriesCombo($('.plusHidden'), i + 1, categories[i]);
+            if (i === 0) {
+                $('#IdCategory').val(categories[i]);
+            } else {
+              createNewCategoriesCombo($('.plus:last'), categories[i]);
+            }
         }
     });
 }
 
-function createNewCategoriesCombo($elem, index, value) {
+function createNewCategoriesCombo($elem, value) {
     $formGroup = $elem.closest('.form-group');
     $container = $elem.parent().clone(true);
     if ($container.find('.minus').length == 0) {
@@ -27,8 +27,9 @@ function createNewCategoriesCombo($elem, index, value) {
                            });
 
         $container.append($minus);
+    }
 
-        value = typeof value !== 'undefined' ? value : '';
+    if (value && value.length > 0) {
         $container.find('select').val(value);
     }
 
@@ -39,8 +40,10 @@ function createNewCategoriesCombo($elem, index, value) {
 
 function removeSelectedCategoriesCombo($elem) {
     $container = $elem.parent();
-    $container.closest('.form-group').find('.plus.hidden:last').removeClass('hidden');
+    var $formGroup = $container.closest('.form-group');
     $container.remove();
+
+    $formGroup.find('.plus:last').removeClass('hidden');
     calculateSelectedCategories();
 }
 
@@ -51,6 +54,16 @@ function calculateSelectedCategories() {
     })
 
     $('#selectedCategories').val(categories.join(','));
+
+    enableDeleteCategoryCombo(categories.length === 1);
+}
+
+function enableDeleteCategoryCombo(hideRemoveOption) {
+    if (hideRemoveOption) {
+        $('.minus').addClass('hidden');
+    } else {
+        $('.minus').removeClass('hidden');
+    }
 }
 
 function confirmDelete(id) {
