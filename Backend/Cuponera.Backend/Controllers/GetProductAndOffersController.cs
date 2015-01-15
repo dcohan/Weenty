@@ -20,6 +20,8 @@ namespace Cuponera.Backend.Controllers
             var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
             var response = new { value = db.GetProductAndOffers(idStore, idCategory) };
 
+            
+
             return response;
         }
 
@@ -77,16 +79,35 @@ namespace Cuponera.Backend.Controllers
                             cObject.IdCategory = (int)_sc.IdCategory;
                             cObject.Name = db.category.Find(_sc.IdCategory).Name;
 
+                            categoryList.Add(cObject);
                         }
                         else
                         {
                             scObject.IdSubCategory = (int)_sc.IdSubCategory;
-                            scObject.Name = db.subcategory.Find(_sc.IdSubCategory).Name;
+                            var subcategory = db.subcategory.Find(_sc.IdSubCategory);
+                            bool found = false;
+                            
+                            foreach (var c in categoryList)
+                            {
+                                if (c.IdCategory == subcategory.category.IdCategory)
+                                {
+                                    found = true;
+                                    subCategoryList = c.subcategory.ToList();
+                                }
+                            }
+
+                            
+                            scObject.Name = subcategory.Name;
                             subCategoryList.Add(scObject);
                             cObject.subcategory = subCategoryList;
+                            cObject.IdCategory = subcategory.category.IdCategory;
+                            cObject.Name = subcategory.category.Name;
 
+                            if (!found)
+                            {
+                                categoryList.Add(cObject);
+                            }
                         }
-                        categoryList.Add(cObject);
                     }
 
 
