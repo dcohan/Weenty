@@ -117,6 +117,7 @@
     <Compile Include="Controllers\geoRequestController.cs" />
     <Compile Include="Controllers\GetProductAndOffersController.cs" />
     <Compile Include="Controllers\imagesController.cs" />
+    <Compile Include="Controllers\List.cs" />
     <Compile Include="Controllers\occasionController.cs" />
     <Compile Include="Controllers\offerController.cs" />
     <Compile Include="Controllers\preHomeImagesController.cs" />

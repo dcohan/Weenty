@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Cuponera.Entities;
+using System.Collections;
 
 namespace Cuponera.Backend.Controllers
 {
@@ -30,7 +31,7 @@ namespace Cuponera.Backend.Controllers
             var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
             var response = new { value = db.GetNearestStores(IdCategory, Latitude, Longitude) };
 
-            return response;
+            return new { value = parseResponse(db.GetNearestStores(IdCategory, Latitude, Longitude)) };
         }
 
         // GET: GetNearestStoresByName
@@ -38,9 +39,8 @@ namespace Cuponera.Backend.Controllers
         public object GetNearestStoresByName([FromUri] int IdCategory, [FromUri] double Latitude, [FromUri] double Longitude, [FromUri] String Name)
         {
             var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
-            var response = new { value = db.GetNearestStoresByName(IdCategory, Latitude, Longitude, Name) };
 
-            return response;
+            return new { value = parseResponse(db.GetNearestStoresByName(IdCategory, Latitude, Longitude, Name) };
         }
 
         // GET: GetNearestStoresWithOffers
@@ -48,9 +48,75 @@ namespace Cuponera.Backend.Controllers
         public object GetNearestStoresWithOffers([FromUri] double Latitude, [FromUri] double Longitude)
         {
             var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
-            var response = new { value = db.GetNearestStoresWithOffers(Latitude, Longitude) };
 
-            return response;
+            return new { value = parseResponse(db.GetNearestStoresWithOffers(Latitude, Longitude) };
+        }
+
+        private object parseResponse(List<GetNearestStores> response)
+        {
+            ArrayList stores = new ArrayList();
+            List<category> categoryList;
+            List<subcategory> subCategoryList;
+            IQueryable<storeCategory> sc;
+            foreach (GetNearestStores store in response)
+            {
+
+                categoryList = new List<category>();
+                subCategoryList = new List<subcategory>();
+
+                sc = db.storeCategory.Where(scs => scs.IdStore == store.IdStore);
+                if (sc.Count() > 0)
+                {
+                    foreach (storeCategory _sc in sc)
+                    {
+                        category cObject = new category();
+                        subcategory scObject = new subcategory();
+
+                        if (_sc.IdCategory != null)
+                        {
+                            cObject.IdCategory = (int)_sc.IdCategory;
+                            cObject.Name = db.category.Find(_sc.IdCategory).Name;
+
+                        }
+                        else
+                        {
+                            scObject.IdSubCategory = (int)_sc.IdSubCategory;
+                            scObject.Name = db.subcategory.Find(_sc.IdSubCategory).Name;
+                            subCategoryList.Add(scObject);
+                            cObject.subcategory = subCategoryList;
+
+                        }
+                        categoryList.Add(cObject);
+                    }
+
+
+                }
+
+                stores.Add(new
+                {
+                    IdStore = store.IdStore,
+                    Name = store.Name,
+                    Address = store.Address,
+                    ContactNumber = store.ContactNumber,
+                    ZipCode = store.ZipCode,
+                    Latitude = store.Latitude,
+                    Longitude = store.Longitude,
+                    IdState = store.IdState,
+                    StoreHours = store.StoreHours,
+                    Email = store.Email,
+                    WebPage = store.WebPage,
+                    FacebookUrl = store.FacebookUrl,
+                    WhatsApp = store.WhatsApp,
+                    ImagePath = store.ImagePath,
+                    Description = store.Description,
+                    Distance = store.Distance,
+                    HasOffers = store.HasOffers,
+                    HasProducts = store.HasProducts,
+                    CategoriesAndSubcategories = categoryList.Select(c => new { c.IdCategory, c.Name, c.subcategory })
+                });
+            }
+
+            return stores;
         }
     }
 }

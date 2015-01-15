@@ -34,7 +34,7 @@ namespace Cuponera.Entities
         public int HasOffers { get; set; }
 
         public int HasProducts { get; set; }
-        public int IdCategory { get; set; }
+
     }
 
     public partial class CuponeraEntities
