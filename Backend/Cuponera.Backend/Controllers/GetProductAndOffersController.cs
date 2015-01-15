@@ -40,7 +40,7 @@ namespace Cuponera.Backend.Controllers
         {
             var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
 
-            return new { value = parseResponse(db.GetNearestStoresByName(IdCategory, Latitude, Longitude, Name) };
+            return new { value = parseResponse(db.GetNearestStoresByName(IdCategory, Latitude, Longitude, Name)) };
         }
 
         // GET: GetNearestStoresWithOffers
@@ -49,7 +49,7 @@ namespace Cuponera.Backend.Controllers
         {
             var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
 
-            return new { value = parseResponse(db.GetNearestStoresWithOffers(Latitude, Longitude) };
+            return new { value = parseResponse(db.GetNearestStoresWithOffers(Latitude, Longitude)) };
         }
 
         private object parseResponse(List<GetNearestStores> response)
