@@ -39,12 +39,11 @@ namespace Cuponera.Entities
 
     public partial class CuponeraEntities
     {
-        public List<GetProductAndOffers> GetProductAndOffers(int IdStore, int IdCategoria)
+        public List<GetProductAndOffers> GetProductAndOffers(int IdStore)
         {
             return Database.SqlQuery<GetProductAndOffers>(
-                    "dbo.GetProductAndOffers @IdStore, @IdCategoria",
-                    new SqlParameter("IdStore", IdStore),
-                    new SqlParameter("IdCategoria", IdCategoria)
+                    "dbo.GetProductAndOffers @IdStore",
+                    new SqlParameter("IdStore", IdStore)
                 ).ToList<GetProductAndOffers>();
         }
 
