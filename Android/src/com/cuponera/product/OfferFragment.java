@@ -112,6 +112,7 @@ public class OfferFragment extends BaseFragment {
 			for (int j = 0; j < store.get(i).getCategory().size(); j++) {
 				for (int k = 0; k < store.get(i).getCategory().get(j).getSubCategory().size(); k++) {
 					if (!ValidationUtils.isNullOrEmpty(store.get(i).getCategory().get(j).getSubCategory().get(k).getName())) {
+						boolean added = true;
 						SubCategory subObject = new SubCategory();
 
 						subObject.setId(store.get(i).getCategory().get(j).getSubCategory().get(k).getId());
@@ -119,7 +120,16 @@ public class OfferFragment extends BaseFragment {
 						ArrayList<Integer> idSt = new ArrayList<Integer>();
 						idSt.add(store.get(i).getIdStore());
 						subObject.setIdStores(idSt);
-						sc.add(subObject);
+						for (SubCategory subca : sc) {
+							if (subca.getName().equalsIgnoreCase(store.get(i).getCategory().get(j).getSubCategory().get(k).getName())) {
+								added = false;
+								break;
+							}
+
+						}
+						if (added) {
+							sc.add(subObject);
+						}
 					}
 				}
 
