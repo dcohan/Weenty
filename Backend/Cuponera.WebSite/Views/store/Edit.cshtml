@@ -94,6 +94,10 @@
             calculateSelectedCategories();
         });
 
+        $('.minus').click(function () {
+            removeSelectedCategoriesCombo($(this));
+        });
+
         calculateSelectedCategories();
 
     });
@@ -144,6 +148,7 @@
             <div class="col-md-10">
                 @Html.DropDownList("IdCategory", null, new { @class = "category_select" })
                 <img src="~/Images/plus.ico" alt="Agregar" title="Agregar" class="small-icon plus" />
+                <img src="~/Images/minus.ico" alt="Agregar" title="Agregar" class="small-icon minus" />
             </div>
         </div>
 
@@ -201,8 +206,10 @@
 
         <div class="float-left map" id="googleMap"></div>
 
+        <!--
         <div class="advertisement float-left">
         </div>
+        -->
         @Html.HiddenFor(model => model.Latitude, htmlAttributes: new { @id = "latitude" })
         @Html.HiddenFor(model => model.Longitude, htmlAttributes: new { @id = "longitude" })
 

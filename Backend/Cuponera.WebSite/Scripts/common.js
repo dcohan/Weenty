@@ -54,6 +54,16 @@ function calculateSelectedCategories() {
     })
 
     $('#selectedCategories').val(categories.join(','));
+
+    enableDeleteCategoryCombo(categories.length === 1);
+}
+
+function enableDeleteCategoryCombo(hideRemoveOption) {
+    if (hideRemoveOption) {
+        $('.minus').addClass('hidden');
+    } else {
+        $('.minus').removeClass('hidden');
+    }
 }
 
 function confirmDelete(id) {
