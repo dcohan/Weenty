@@ -77,7 +77,7 @@ namespace Cuponera.WebSite.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeUserStoreAttribute(MustBeAdmin = true)]
-        public async Task<ActionResult> Create([Bind(Include = "IdCategory,Name,ImagePath,CreationDatetime,ModificationDatetime,DeletionDatetime")] category category, List<HttpPostedFileBase> fileUpload)
+        public async Task<ActionResult> Create([Bind(Include = "Name")] category category, List<HttpPostedFileBase> fileUpload)
         {
             if (ModelState.IsValid)
             {

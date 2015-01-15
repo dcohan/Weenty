@@ -22,7 +22,7 @@
     });
 </script>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "category", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
