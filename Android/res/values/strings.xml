@@ -12,12 +12,12 @@
     <!-- Menu -->
     <string name="menu_home">Inicio</string>
     <string name="menu_admin">Administración</string>
-    <string name="menu_hotel">Hoteles</string>
+    <string name="menu_hotel">Alojamiento</string>
     <string name="menu_store">Tiendas</string>
     <string name="menu_beach">Balnearios</string>
-    <string name="menu_cinema">Espectáculos</string>
+    <string name="menu_cinema">Entretenimiento</string>
     <string name="menu_highlighted">Destacados</string>
-    <string name="menu_grastronomic">Restaurantes</string>
+    <string name="menu_grastronomic">Gastronomia</string>
     <string name="menu_more">Rubros</string>
     <string name="menu_search">Buscar</string>
     <string name="menu_settings">Preferencias</string>
