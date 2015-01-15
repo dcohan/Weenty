@@ -31,6 +31,9 @@ public class FilterAdapter extends BaseListAdapter {
 		ViewProxy mViewProxy = new ViewProxy(activity, R.layout.adapter_right_filter, false);
 		SubCategory s = sc.get(position);
 		mViewProxy.findTextView(R.id.filter_text).setText(s.getName());
+		if (s.isSelected()) {
+			mViewProxy.findTextView(R.id.filter_text).setBackgroundColor(activity.getResources().getColor(R.color.green_strong));
+		}
 		return mViewProxy.getView();
 	}
 

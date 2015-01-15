@@ -15,7 +15,6 @@ import com.cuponera.service.product.ProductRequest;
 
 public class ProductFragment extends BaseFragment {
 
-	private static final String ARGS_ID_CATEGORY = "args_id_category";
 	private static final String ARGS_STORE = "args_store";
 	private ProductAdapter adapter;
 	private Store store;
@@ -26,13 +25,12 @@ public class ProductFragment extends BaseFragment {
 		return R.layout.fragment_product;
 	}
 
-	public static ProductFragment newInstance(int idCategory, Store s) {
+	public static ProductFragment newInstance(Store s) {
 
 		ProductFragment fragment = new ProductFragment();
 		Bundle b = fragment.getArguments();
 		if (b == null)
 			b = new Bundle();
-		b.putInt(ARGS_ID_CATEGORY, idCategory);
 		b.putParcelable(ARGS_STORE, s);
 
 		fragment.setArguments(b);
@@ -54,7 +52,7 @@ public class ProductFragment extends BaseFragment {
 			}
 		};
 		request.setIdStore(store.getIdStore());
-		request.setIdCategory(getArguments().getInt(ARGS_ID_CATEGORY));
+		request.setIdCategory(0);
 		request.execute(false);
 	}
 

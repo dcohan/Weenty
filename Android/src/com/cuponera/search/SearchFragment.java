@@ -177,7 +177,7 @@ public class SearchFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(category.get(viewPager.getCurrentItem()).getId(), store.get(position)));
+				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(store.get(position)));
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}

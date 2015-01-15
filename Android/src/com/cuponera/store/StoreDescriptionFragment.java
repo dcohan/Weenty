@@ -26,18 +26,16 @@ public class StoreDescriptionFragment extends BaseFragment {
 	}
 
 	private static final String ARGS_STORE = "args_store";
-	private static final String ARGS_ID_CATEGORY = "args_id_category";
 	private Store store;
 	private ArrayList<Images> images = new ArrayList<Images>();
 
-	public static StoreDescriptionFragment newInstance(int idCategory, Store s) {
+	public static StoreDescriptionFragment newInstance(Store s) {
 
 		StoreDescriptionFragment fragment = new StoreDescriptionFragment();
 		Bundle b = fragment.getArguments();
 		if (b == null)
 			b = new Bundle();
 
-		b.putInt(ARGS_ID_CATEGORY, idCategory);
 		b.putParcelable(ARGS_STORE, (Parcelable) s);
 		fragment.setArguments(b);
 		return fragment;
@@ -105,7 +103,7 @@ public class StoreDescriptionFragment extends BaseFragment {
 			@Override
 			public void onClick(View v) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container, ProductFragment.newInstance(getArguments().getInt(ARGS_ID_CATEGORY), store));
+				transaction.replace(R.id.container, ProductFragment.newInstance(store));
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}

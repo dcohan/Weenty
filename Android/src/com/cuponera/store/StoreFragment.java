@@ -35,6 +35,7 @@ public class StoreFragment extends BaseFragment {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private FilterAdapter filterAdapter;
+	private ArrayList<Store> filteredArrayToShow;
 
 	@Override
 	protected int getLayout() {
@@ -119,7 +120,7 @@ public class StoreFragment extends BaseFragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
 				transaction.setCustomAnimations(R.anim.transition_slide_in_left, R.anim.transition_slide_out_left);
-				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(getArguments().getInt(ARGS_ID_CATEGORY), store.get(position)));
+				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(store.get(position)));
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}
@@ -137,9 +138,12 @@ public class StoreFragment extends BaseFragment {
 				for (int k = 0; k < store.get(i).getCategory().get(j).getSubCategory().size(); k++) {
 					if (!ValidationUtils.isNullOrEmpty(store.get(i).getCategory().get(j).getSubCategory().get(k).getName())) {
 						SubCategory subObject = new SubCategory();
-						subObject.setName(store.get(i).getCategory().get(j).getSubCategory().get(k).getName());
+
 						subObject.setId(store.get(i).getCategory().get(j).getSubCategory().get(k).getId());
-						subObject.setIdStore(store.get(i).getIdStore());
+						subObject.setName(store.get(i).getCategory().get(j).getSubCategory().get(k).getName());
+						ArrayList<Integer> idSt = new ArrayList<Integer>();
+						idSt.add(store.get(i).getIdStore());
+						subObject.setIdStores(idSt);
 						sc.add(subObject);
 					}
 				}
@@ -152,12 +156,26 @@ public class StoreFragment extends BaseFragment {
 		mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if (view.isEnabled()) {
+				if (!sc.get(position).isSelected()) {
+					sc.get(position).setSelected(true);
 					view.setBackgroundColor(getResources().getColor(R.color.green_strong));
-					view.setEnabled(false);
 				} else {
+					sc.get(position).setSelected(false);
 					view.setBackgroundColor(getResources().getColor(R.color.white));
-					view.setEnabled(true);
+				}
+				ArrayList<Integer> toFilter = new ArrayList<Integer>();
+
+				for (SubCategory subcategory : sc) {
+					if (subcategory.isSelected()) {
+						toFilter.addAll(subcategory.getIdStores());
+					}
+				}
+				if (toFilter.size() > 0) {
+					getSetFilters(toFilter);
+				} else {
+					adapter = new StoreAdapter(getBaseActivity(), store);
+					adapter.notifyDataSetChanged();
+					mViewProxy.findListView(R.id.store_listview).setAdapter(adapter);
 				}
 			}
 		});
@@ -171,7 +189,24 @@ public class StoreFragment extends BaseFragment {
 				} else {
 					mDrawerLayout.openDrawer(mDrawerList);
 				}
+
 			}
 		});
+	}
+
+	private synchronized void getSetFilters(ArrayList<Integer> idFilter) {
+
+		filteredArrayToShow = new ArrayList<Store>();
+		for (int i = 0; i < store.size(); i++) {
+			for (Integer idStore : idFilter) {
+				if (idStore == store.get(i).getIdStore()) {
+					filteredArrayToShow.add(store.get(i));
+				}
+			}
+		}
+		adapter = new StoreAdapter(getBaseActivity(), filteredArrayToShow);
+		adapter.notifyDataSetChanged();
+		mViewProxy.findListView(R.id.store_listview).setAdapter(adapter);
+
 	}
 }

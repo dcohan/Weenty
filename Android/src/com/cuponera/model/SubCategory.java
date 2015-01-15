@@ -1,5 +1,7 @@
 package com.cuponera.model;
 
+import java.util.ArrayList;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class SubCategory extends BaseModel {
@@ -9,8 +11,10 @@ public class SubCategory extends BaseModel {
 
 	@JsonProperty("Name")
 	private String name;
-	
-	private int idStore;
+
+	private ArrayList<Integer> idStores;
+
+	private boolean isSelected;
 
 	public int getId() {
 		return id;
@@ -28,13 +32,20 @@ public class SubCategory extends BaseModel {
 		this.name = name;
 	}
 
-	public int getIdStore() {
-		return idStore;
+	public boolean isSelected() {
+		return isSelected;
 	}
 
-	public void setIdStore(int idStore) {
-		this.idStore = idStore;
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
 	}
 
-	
+	public ArrayList<Integer> getIdStores() {
+		return idStores;
+	}
+
+	public void setIdStores(ArrayList<Integer> idStores) {
+		this.idStores = idStores;
+	}
+
 }

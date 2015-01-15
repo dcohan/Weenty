@@ -63,6 +63,8 @@ public class Store extends BaseModel {
 	@JsonProperty("CategoriesAndSubcategories")
 	private ArrayList<Category> category;
 
+	private boolean isFiltered;
+
 	public double getDistance() {
 		return distance;
 	}
@@ -213,6 +215,14 @@ public class Store extends BaseModel {
 
 	public void setCategory(ArrayList<Category> category) {
 		this.category = category;
+	}
+
+	public boolean isFiltered() {
+		return isFiltered;
+	}
+
+	public void setFiltered(boolean isFiltered) {
+		this.isFiltered = isFiltered;
 	}
 
 }

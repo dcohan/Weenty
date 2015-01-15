@@ -27,7 +27,7 @@ public class StoreAdapter extends BaseListAdapter {
 		return store != null ? store.size() : 1;
 	}
 
-	public Object getItem(int position) {
+	public Store getItem(int position) {
 		return store.get(position);
 	}
 
