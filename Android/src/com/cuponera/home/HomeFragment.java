@@ -14,6 +14,7 @@ import com.cuponera.service.state.StateRequest;
 import com.cuponera.service.state.StateResponse;
 import com.cuponera.settings.Settings;
 import com.cuponera.utils.Const;
+import com.cuponera.utils.LocationServices;
 import com.cuponera.utils.Utils;
 
 public class HomeFragment extends BaseFragment implements HeaderInterface {
@@ -38,7 +39,8 @@ public class HomeFragment extends BaseFragment implements HeaderInterface {
 			@Override
 			protected void serviceReady(StateResponse result) {
 				if (result != null && result.getState().size() > 0) {
-					if (!Settings.getInstance(getActivity()).isLocationEnable() && Settings.getInstance(getBaseActivity()).getLatitude() == 0) {
+					if ((!Settings.getInstance(getActivity()).isLocationEnable() || !LocationServices.getInstance(getActivity()).isLocationEnabled())
+							&& Settings.getInstance(getBaseActivity()).getLatitude() == 0) {
 						getBaseActivity().dynamicPopup(result.getState());
 					}
 				}
