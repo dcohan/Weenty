@@ -23,13 +23,14 @@ import com.cuponera.service.store.StoreRequest;
 import com.cuponera.service.store.StoreResponse;
 import com.cuponera.utils.ErrorHandler;
 import com.cuponera.utils.Utils;
+import com.cuponera.utils.ValidationUtils;
 
 public class StoreFragment extends BaseFragment {
 
 	private static final String ARGS_ID_CATEGORY = "args_id_category";
 	private static final String ARGS_NAME_CATEGORY = "args_name_category";
 	private ArrayList<Store> store;
-	private ArrayList<SubCategory> subCategories;
+	private ArrayList<SubCategory> sc;
 	private StoreAdapter adapter;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -129,7 +130,24 @@ public class StoreFragment extends BaseFragment {
 		Utils.setCalibri(getActivity(), mViewProxy.findTextView(R.id.filter_category));
 		mDrawerLayout = (DrawerLayout) mViewProxy.findView(R.id.drawer_layout);
 		mDrawerList = (ListView) mViewProxy.findListView(R.id.right_drawer);
-		filterAdapter = new FilterAdapter(getActivity(), store);
+		sc = new ArrayList<SubCategory>();
+
+		for (int i = 0; i < store.size(); i++) {
+			for (int j = 0; j < store.get(i).getCategory().size(); j++) {
+				for (int k = 0; k < store.get(i).getCategory().get(j).getSubCategory().size(); k++) {
+					if (!ValidationUtils.isNullOrEmpty(store.get(i).getCategory().get(j).getSubCategory().get(k).getName())) {
+						SubCategory subObject = new SubCategory();
+						subObject.setName(store.get(i).getCategory().get(j).getSubCategory().get(k).getName());
+						subObject.setId(store.get(i).getCategory().get(j).getSubCategory().get(k).getId());
+						subObject.setIdStore(store.get(i).getIdStore());
+						sc.add(subObject);
+					}
+				}
+
+			}
+		}
+
+		filterAdapter = new FilterAdapter(getActivity(), sc);
 		mDrawerList.setAdapter(filterAdapter);
 		mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -156,5 +174,4 @@ public class StoreFragment extends BaseFragment {
 			}
 		});
 	}
-
 }

@@ -9,6 +9,8 @@ public class SubCategory extends BaseModel {
 
 	@JsonProperty("Name")
 	private String name;
+	
+	private int idStore;
 
 	public int getId() {
 		return id;
@@ -26,4 +28,13 @@ public class SubCategory extends BaseModel {
 		this.name = name;
 	}
 
+	public int getIdStore() {
+		return idStore;
+	}
+
+	public void setIdStore(int idStore) {
+		this.idStore = idStore;
+	}
+
+	
 }

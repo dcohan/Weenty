@@ -27,6 +27,10 @@ public class StoreAdapter extends BaseListAdapter {
 		return store != null ? store.size() : 1;
 	}
 
+	public Object getItem(int position) {
+		return store.get(position);
+	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewProxy mViewProxy = new ViewProxy(activity, R.layout.adapter_store, false);
