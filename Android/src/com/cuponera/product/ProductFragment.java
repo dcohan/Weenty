@@ -52,7 +52,6 @@ public class ProductFragment extends BaseFragment {
 			}
 		};
 		request.setIdStore(store.getIdStore());
-		request.setIdCategory(0);
 		request.execute(false);
 	}
 

@@ -12,12 +12,11 @@ import com.cuponera.pool.AsyncPoolRequest;
 
 public class ProductRequest extends AsyncPoolRequest<ProductResponse> implements Parcelable {
 
-	private int idCategory;
 	private int idStore;
 
 	@Override
 	public String getPath() {
-		return "/GetProductAndOffers?idStore=" + getIdStore() + "&idCategory=" + getIdCategory();
+		return "/GetProductAndOffers?idStore=" + getIdStore();
 	}
 
 	public ProductRequest(Context context) {
@@ -82,14 +81,6 @@ public class ProductRequest extends AsyncPoolRequest<ProductResponse> implements
 	@Override
 	public void onServiceReturned(ProductResponse result) {
 
-	}
-
-	public int getIdCategory() {
-		return idCategory;
-	}
-
-	public void setIdCategory(int idCategory) {
-		this.idCategory = idCategory;
 	}
 
 	public int getIdStore() {
