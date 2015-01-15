@@ -18,6 +18,7 @@ import com.cuponera.event.EventBus;
 import com.cuponera.filter.FilterAdapter;
 import com.cuponera.map.GoogleMapFragment;
 import com.cuponera.model.Store;
+import com.cuponera.model.SubCategory;
 import com.cuponera.service.store.StoreRequest;
 import com.cuponera.service.store.StoreResponse;
 import com.cuponera.utils.ErrorHandler;
@@ -28,6 +29,7 @@ public class StoreFragment extends BaseFragment {
 	private static final String ARGS_ID_CATEGORY = "args_id_category";
 	private static final String ARGS_NAME_CATEGORY = "args_name_category";
 	private ArrayList<Store> store;
+	private ArrayList<SubCategory> subCategories;
 	private StoreAdapter adapter;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;

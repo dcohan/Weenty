@@ -1,5 +1,7 @@
 package com.cuponera.model;
 
+import java.util.ArrayList;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class Category extends BaseModel {
@@ -12,6 +14,9 @@ public class Category extends BaseModel {
 
 	@JsonProperty("ImagePath")
 	private String imagePath;
+
+	@JsonProperty("subcategory")
+	private ArrayList<SubCategory> subCategory;
 
 	public int getId() {
 		return id;
@@ -35,6 +40,14 @@ public class Category extends BaseModel {
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+
+	public ArrayList<SubCategory> getSubCategory() {
+		return subCategory;
+	}
+
+	public void setSubCategory(ArrayList<SubCategory> subCategory) {
+		this.subCategory = subCategory;
 	}
 
 }

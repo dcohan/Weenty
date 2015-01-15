@@ -1,5 +1,7 @@
 package com.cuponera.model;
 
+import java.util.ArrayList;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class Store extends BaseModel {
@@ -55,14 +57,11 @@ public class Store extends BaseModel {
 	@JsonProperty("HasProducts")
 	private int hasProducts;
 
-	@JsonProperty("IdCategory")
-	private int idCategory;
-
 	@JsonProperty("Description")
 	private String description;
 
-	@JsonProperty("Categoria")
-	private String categoria;
+	@JsonProperty("CategoriesAndSubcategories")
+	private ArrayList<Category> category;
 
 	public double getDistance() {
 		return distance;
@@ -192,14 +191,6 @@ public class Store extends BaseModel {
 		this.hasProducts = hasProducts;
 	}
 
-	public int getIdCategory() {
-		return idCategory;
-	}
-
-	public void setIdCategory(int idCategory) {
-		this.idCategory = idCategory;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -216,12 +207,12 @@ public class Store extends BaseModel {
 		this.webPage = webPage;
 	}
 
-	public String getCategoria() {
-		return categoria;
+	public ArrayList<Category> getCategory() {
+		return category;
 	}
 
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
+	public void setCategory(ArrayList<Category> category) {
+		this.category = category;
 	}
 
 }

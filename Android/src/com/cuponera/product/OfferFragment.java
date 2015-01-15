@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.cuponera.BaseFragment;
@@ -16,6 +16,7 @@ import com.cuponera.analytics.AnalyticsHelpers;
 import com.cuponera.event.ErrorEvent;
 import com.cuponera.event.EventBus;
 import com.cuponera.map.GoogleMapFragment;
+import com.cuponera.model.Category;
 import com.cuponera.model.Store;
 import com.cuponera.service.offer.OfferRequest;
 import com.cuponera.service.store.StoreResponse;
@@ -82,8 +83,16 @@ public class OfferFragment extends BaseFragment {
 		mViewProxy.findListView(R.id.store_listview).setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				int category = 0;
+				for (Category c : store.get(position).getCategory()) {
+					if (c.getId() > 0) {
+						category = c.getId();
+						break;
+					}
+
+				}
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(store.get(position).getIdCategory(), store.get(position)));
+				transaction.replace(R.id.container, StoreDescriptionFragment.newInstance(category, store.get(position)));
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}
