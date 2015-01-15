@@ -82,6 +82,27 @@ namespace Cuponera.WebSite.Controllers
 
             ViewBag.Categories = categories;
             ViewBag.IdCategory = new SelectList(categories, "Id", "Name", "Category", 1);
+
+
+            if (store != null)
+            {
+                var categoriesFromStore=string.Empty;
+                foreach(var cat in store.storeCategory.Where( sc => !sc.DeletionDatetime.HasValue))
+                {
+                    if (cat.IdSubCategory!= null)
+                    {
+                        categoriesFromStore+="S-"+cat.IdSubCategory+",";
+                    }
+                    
+                    if (cat.IdCategory!= null)
+                    {
+                        categoriesFromStore+="C-"+cat.IdCategory+",";
+                    }                    
+
+                }
+
+                ViewBag.SelectedCategories = categoriesFromStore;
+            }
         }
 
 
@@ -364,10 +385,11 @@ namespace Cuponera.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdStore,Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description,WebPage,IdCompany")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath)
+        public async Task<ActionResult> Edit([Bind(Include = "IdStore,Name,Address,ContactNumber,ZipCode,IdState,StoreHours,Email,FacebookUrl,WhatsApp,Description,WebPage,IdCompany")] store store, string Latitude, string Longitude, List<HttpPostedFileBase> fileUpload, string imagesToRemove, string ImagePath, string selectedCategories)
         {
             if (ModelState.IsValid)
             {
+                var categories = GetNonRepeatedCategories(selectedCategories);
 
                 fileUpload = FilterFiles(fileUpload);
 
@@ -414,6 +436,8 @@ namespace Cuponera.WebSite.Controllers
                 db.SaveChanges();
                 //Save aditional images
                 UploadImages(fileUpload, store.IdStore);
+
+                InsertCategoriesFromStore(categories, store);
 
                 return RedirectToAction("Index");
             }

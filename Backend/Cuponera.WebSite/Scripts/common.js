@@ -2,9 +2,13 @@
     //get stores
     var categories = $('#selectedCategories').val().split(',');
 
+    if (categories.length == 1 && categories[0].length == 0) {
+        createNewCategoriesCombo($('.plusHidden'), 0, categories[i]);
+    }
+
     $.each(categories, function (i) {
         if (categories[i].length > 0) {
-            createNewCategoriesCombo($('#itemCategory' + i), i, categories[i]);
+            createNewCategoriesCombo($('.plusHidden'), i + 1, categories[i]);
         }
     });
 }
@@ -22,14 +26,10 @@ function createNewCategoriesCombo($elem, index, value) {
                                removeSelectedCategoriesCombo($(this));
                            });
 
-        if (index = typeof index !== 'undefined') {
-            $minus.id = 'itemCategory' + index;
-        }
-
         $container.append($minus);
 
         value = typeof value !== 'undefined' ? value : '';
-        $("#combobox").val(value);
+        $container.find('select').val(value);
     }
 
     $elem.addClass('hidden');

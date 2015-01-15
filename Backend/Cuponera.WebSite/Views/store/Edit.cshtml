@@ -82,6 +82,20 @@
                 }
             });
         });
+
+        initializeCategoriesCombo();
+
+        $('.category_select').change(function () {
+            calculateSelectedCategories();
+        });
+
+        $('.plus').click(function () {
+            createNewCategoriesCombo($(this));
+            calculateSelectedCategories();
+        });
+
+        calculateSelectedCategories();
+
     });
 </script>
 
@@ -124,18 +138,12 @@
             </div>
         </div>
 
-        <div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.IdCategory, "Categoría *", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.IdCategory, (List<SelectListItem>)ViewBag.IdCategory)
-                    <img src="~/Images/plus.ico" alt="Agregar" title="Agregar" class="small-icon plus" />
-                    <input type="hidden" id="selectedCategories" name="selectedCategories" />
-                </div>
-            </div>
-
-            <div id="categoryInactive" class="advertisement hidden">
-                Atención: la categoría elegida está desactivada.
+        <div class="form-group">
+            @Html.Label("Categoría *", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.TextBox("selectedCategories", (string)ViewBag.selectedCategories, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-10 hidden">
+                @Html.DropDownList("IdCategory", null, new { @class = "category_select" })
+                <img src="~/Images/plus.ico" alt="Agregar" title="Agregar" class="small-icon plus" />
             </div>
         </div>
 
