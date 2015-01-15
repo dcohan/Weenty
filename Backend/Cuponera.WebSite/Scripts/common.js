@@ -40,8 +40,10 @@ function createNewCategoriesCombo($elem, value) {
 
 function removeSelectedCategoriesCombo($elem) {
     $container = $elem.parent();
-    $container.closest('.form-group').find('.plus.hidden:last').removeClass('hidden');
+    var $formGroup = $container.closest('.form-group');
     $container.remove();
+
+    $formGroup.find('.plus:last').removeClass('hidden');
     calculateSelectedCategories();
 }
 
