@@ -105,11 +105,13 @@ public class ProductDescriptionFragment extends BaseFragment {
 		if (isOffer()) {
 			mViewProxy.findTextView(R.id.product_name).setText(product.getoTitle());
 			mViewProxy.findTextView(R.id.product_price).setText("$" + String.valueOf(product.getoPrice()));
+			mViewProxy.findTextView(R.id.product_description).setText(product.getoDescription());
 		} else {
 			mViewProxy.findTextView(R.id.product_name).setText(product.getpTitle());
 			mViewProxy.findTextView(R.id.product_price).setText("$" + String.valueOf(product.getpPrice()));
+			mViewProxy.findTextView(R.id.product_description).setText(product.getpDescription());
 		}
-		mViewProxy.findTextView(R.id.product_description).setText(product.getpDescription());
+		
 
 	}
 

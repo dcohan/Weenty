@@ -25,6 +25,9 @@ public class Product extends BaseModel {
 	@JsonProperty("OPrice")
 	private double oPrice;
 
+	@JsonProperty("ODescription")
+	private String oDescription;
+
 	@JsonProperty("IdProduct")
 	private int idProduct;
 
@@ -101,6 +104,14 @@ public class Product extends BaseModel {
 
 	public void setIdOffer(int idOffer) {
 		this.idOffer = idOffer;
+	}
+
+	public String getoDescription() {
+		return oDescription;
+	}
+
+	public void setoDescription(String oDescription) {
+		this.oDescription = oDescription;
 	}
 
 }
