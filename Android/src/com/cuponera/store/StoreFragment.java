@@ -210,7 +210,8 @@ public class StoreFragment extends BaseFragment {
 		for (int i = 0; i < store.size(); i++) {
 			for (Integer idStore : idFilter) {
 				if (idStore == store.get(i).getIdStore()) {
-					filteredArrayToShow.add(store.get(i));
+					if (!filteredArrayToShow.contains(store.get(i)))
+						filteredArrayToShow.add(store.get(i));
 				}
 			}
 		}
