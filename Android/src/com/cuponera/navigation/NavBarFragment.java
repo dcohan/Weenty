@@ -81,9 +81,13 @@ public class NavBarFragment extends BaseFragment implements MenuInterface {
 	}
 
 	public void setTitle(String title) {
-		mViewProxy.findTextView(R.id.headerTitle).setText(
-				ValidationUtils.isNullOrEmpty(Settings.getInstance(getActivity()).getCity()) ? "SAN BERNARDO" : Settings.getInstance(getActivity()).getCity()
-						.toUpperCase(Locale.ROOT));
+		if (ValidationUtils.isNullOrEmpty(Settings.getInstance(getActivity()).getCity())) {
+			Settings.getInstance(getBaseActivity()).setLatitude(-36.68815440493361);
+			Settings.getInstance(getBaseActivity()).setLongitude(-56.68224334716797);
+			mViewProxy.findTextView(R.id.headerTitle).setText("SAN BERNARDO");
+		} else {
+			mViewProxy.findTextView(R.id.headerTitle).setText(Settings.getInstance(getActivity()).getCity().toUpperCase(Locale.ROOT));
+		}
 	}
 
 	public MenuFragment getMenu() {

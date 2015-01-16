@@ -154,6 +154,14 @@ public class StoreFragment extends BaseFragment {
 						}
 						if (added) {
 							sc.add(subObject);
+						} else {
+							for (int l = 0; l < sc.size(); l++) {
+								if (sc.get(l).getName().equalsIgnoreCase(store.get(i).getCategory().get(j).getSubCategory().get(k).getName())) {
+									sc.get(l).getIdStores().add(store.get(i).getIdStore());
+									break;
+								}
+
+							}
 						}
 					}
 				}
