@@ -61,7 +61,7 @@ namespace Cuponera.Entities
         [Required(ErrorMessage = "Debe ingresar una fecha de activación válida.")]
         [Display(Name = "Fecha inicio")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        [CurrentDate()]
+ 
         public DateTime StartDatetime { get; set; }
 
         [Display(Name = "Fecha fin")]

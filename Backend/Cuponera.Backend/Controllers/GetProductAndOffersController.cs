@@ -103,7 +103,7 @@ namespace Cuponera.Backend.Controllers
                             cObject.IdCategory = subcategory.category.IdCategory;
                             cObject.Name = subcategory.category.Name;
 
-                            if (!found)
+                            if (found)
                             {
                                 categoryList.Add(cObject);
                             }
