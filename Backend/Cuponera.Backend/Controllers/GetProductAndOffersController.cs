@@ -20,7 +20,7 @@ namespace Cuponera.Backend.Controllers
             var jsonSerialiser = new System.Web.Script.Serialization.JavaScriptSerializer();
             var response = new { value = db.GetProductAndOffers(idStore) };
 
-            
+
 
             return response;
         }
@@ -65,8 +65,8 @@ namespace Cuponera.Backend.Controllers
 
                 categoryList = new List<category>();
                 subCategoryList = new List<subcategory>();
-
-                sc = db.storeCategory.Where(scs => scs.IdStore == store.IdStore);
+                int elementAtSub = 0;
+                sc = db.storeCategory.Where(scs => scs.IdStore == store.IdStore && scs.DeletionDatetime == null);
                 if (sc.Count() > 0)
                 {
                     foreach (storeCategory _sc in sc)
@@ -76,36 +76,46 @@ namespace Cuponera.Backend.Controllers
 
                         if (_sc.IdCategory != null)
                         {
-                            cObject.IdCategory = (int)_sc.IdCategory;
-                            cObject.Name = db.category.Find(_sc.IdCategory).Name;
-
-                            categoryList.Add(cObject);
-                        }
-                        else
-                        {
-                            scObject.IdSubCategory = (int)_sc.IdSubCategory;
-                            var subcategory = db.subcategory.Find(_sc.IdSubCategory);
-                            bool found = false;
-                            
-                            foreach (var c in categoryList)
-                            {
-                                if (c.IdCategory == subcategory.category.IdCategory)
-                                {
-                                    found = true;
-                                    subCategoryList = c.subcategory.ToList();
+                            bool foundedCategory = false;
+                            for (int i = 0; i < categoryList.Count; i++) {
+                                if (categoryList.ElementAt(i).IdCategory == _sc.IdCategory) {
+                                    foundedCategory = true;
+                                    break;
                                 }
                             }
-
-                            
-                            scObject.Name = subcategory.Name;
-                            subCategoryList.Add(scObject);
-                            cObject.subcategory = subCategoryList;
-                            cObject.IdCategory = subcategory.category.IdCategory;
-                            cObject.Name = subcategory.category.Name;
-
-                            if (found)
+                            if (!foundedCategory)
                             {
+                                cObject.IdCategory = (int)_sc.IdCategory;
+                                cObject.Name = db.category.Find(_sc.IdCategory).Name;
                                 categoryList.Add(cObject);
+                            }
+                        }
+                        else if(_sc.IdSubCategory != null)
+                        {
+
+
+                            scObject.IdSubCategory = (int)_sc.IdSubCategory;
+                            var subcategory = db.subcategory.Find(_sc.IdSubCategory);
+
+                            bool foundedSubCategory = false;
+                            for (int i = 0; i < subCategoryList.Count; i++)
+                            {
+                                if (subCategoryList.ElementAt(i).IdSubCategory == _sc.IdSubCategory)
+                                {
+                                    foundedSubCategory = true;
+                                    break;
+                                }
+                            }
+                            if (!foundedSubCategory)
+                            {
+
+                                scObject.Name = subcategory.Name;
+                                subCategoryList.Add(scObject);
+                                cObject.subcategory.Add(subCategoryList.ElementAt(elementAtSub));
+                                cObject.IdCategory = subcategory.category.IdCategory;
+                                cObject.Name = subcategory.category.Name;
+                                categoryList.Add(cObject);
+                                elementAtSub++;
                             }
                         }
                     }
