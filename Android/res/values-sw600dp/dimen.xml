@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="headerHeight">100dp</dimen>
+    <dimen name="menuWidth">400dp</dimen>
+    <dimen name="activity_horizontal_margin">25dp</dimen>
+    <dimen name="activity_vertical_margin">25dp</dimen>
+    <dimen name="navigation_drawer_width">340dp</dimen>
+    <dimen name="checkBox_padding">10dp</dimen>
+    <dimen name="screen_padding">10dp</dimen>
+    <dimen name="forms_text_size">19sp</dimen>
+    <dimen name="stores_info_text_size">16sp</dimen>
+    <dimen name="adapter_height">95dp</dimen>
+    <dimen name="temp_text_size">17sp</dimen>
+    <dimen name="home_text_size">25sp</dimen>
+    <dimen name="storename_text_size">25sp</dimen>
+    <dimen name="storedescription_text_size">19sp</dimen>
+    <dimen name="offer_circle">25dp</dimen>
+    <dimen name="icons_size">35dp</dimen>
+    <dimen name="width_weather">50dp</dimen>
+    <dimen name="weather_values_size">17sp</dimen>
+    <dimen name="next_weather_values_size">19sp</dimen>
+
+</resources>

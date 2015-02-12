@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingBottom="10dp" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/product_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="1dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="6dp"
+            android:textColor="@color/pink"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/offer_circle"
+            android:layout_width="@dimen/offer_circle"
+            android:layout_height="@dimen/offer_circle"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="11dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/offer_circle"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:id="@+id/gallery_adapter"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.29"
+                android:padding="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.66"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/about_store"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rectangle_corner_round_black"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:id="@+id/store_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/store_hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/store_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
