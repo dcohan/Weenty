@@ -4,7 +4,18 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CuponeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="banners">
+          <Key>
+            <PropertyRef Name="IdBanner" />
+          </Key>
+          <Property Name="IdBanner" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HomeBannerImage" Type="nvarchar" MaxLength="255" />
+          <Property Name="HomeBannerLink" Type="nvarchar" MaxLength="255" />
+          <Property Name="ListBannerImage" Type="nvarchar" MaxLength="255" />
+          <Property Name="ListBannerLink" Type="nvarchar" MaxLength="255" />
+          <Property Name="IdState" Type="int" />
+        </EntityType>
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="IdCategory" />
@@ -302,6 +313,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_banner_state">
+          <End Role="state" Type="Self.state" Multiplicity="0..1" />
+          <End Role="store" Type="Self.store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="IdState" />
+            </Principal>
+            <Dependent Role="store">
+              <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_companySubscription_company">
           <End Role="company" Type="Self.company" Multiplicity="1" />
           <End Role="companySubscription" Type="Self.companySubscription" Multiplicity="*" />
@@ -590,10 +613,10 @@
         </Function>
         <Function Name="GetProductAndOffers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdStore" Type="int" Mode="In" />
-          <Parameter Name="IdCategoria" Type="int" Mode="In" />
         </Function>
         <Function Name="GetSubscriptionsForCompanies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="CuponeraModelStoreContainer">
+          <EntitySet Name="banners" EntityType="Self.banners" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="company" EntityType="Self.company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="companySubscription" EntityType="Self.companySubscription" Schema="dbo" store:Type="Tables" />
@@ -619,6 +642,10 @@
           <AssociationSet Name="FK__subcatego__IdCat__03F0984C" Association="Self.FK__subcatego__IdCat__03F0984C">
             <End Role="category" EntitySet="category" />
             <End Role="subcategory" EntitySet="subcategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_banner_state" Association="Self.FK_banner_state">
+            <End Role="state" EntitySet="state" />
+            <End Role="store" EntitySet="store" />
           </AssociationSet>
           <AssociationSet Name="FK_companySubscription_company" Association="Self.FK_companySubscription_company">
             <End Role="company" EntitySet="company" />
@@ -747,8 +774,7 @@
             <Parameter Name="Longitude" Mode="In" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="GetProductAndOffers" ReturnType="Collection(CuponeraModel.GetProductAndOffers_Result)">
-            <Parameter Name="IdStore" Mode="In" Type="Int32" />
-            <Parameter Name="IdCategoria" Mode="In" Type="Int32" />
+          <Parameter Name="IdStore" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSubscriptionsForCompanies" ReturnType="Collection(CuponeraModel.GetSubscriptionsForCompanies_Result)" />
           <EntitySet Name="category" EntityType="CuponeraModel.category" />
@@ -852,6 +878,7 @@
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
             <End Role="UserProfile" EntitySet="UserProfile" />
           </AssociationSet>
+          <EntitySet Name="banners" EntityType="CuponeraModel.banners" />
           </EntityContainer>
         <ComplexType Name="GetNearestStores_Result">
           <Property Type="Int32" Name="IdStore" Nullable="false" />
@@ -1493,6 +1520,17 @@
           <End Type="CuponeraModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
           <End Type="CuponeraModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
+        <EntityType Name="banners">
+          <Key>
+            <PropertyRef Name="IdBanner" />
+          </Key>
+          <Property Name="IdBanner" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HomeBannerImage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="HomeBannerLink" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ListBannerImage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ListBannerLink" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IdState" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1919,6 +1957,18 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="banners">
+            <EntityTypeMapping TypeName="CuponeraModel.banners">
+              <MappingFragment StoreEntitySet="banners">
+                <ScalarProperty Name="IdState" ColumnName="IdState" />
+                <ScalarProperty Name="ListBannerLink" ColumnName="ListBannerLink" />
+                <ScalarProperty Name="ListBannerImage" ColumnName="ListBannerImage" />
+                <ScalarProperty Name="HomeBannerLink" ColumnName="HomeBannerLink" />
+                <ScalarProperty Name="HomeBannerImage" ColumnName="HomeBannerImage" />
+                <ScalarProperty Name="IdBanner" ColumnName="IdBanner" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

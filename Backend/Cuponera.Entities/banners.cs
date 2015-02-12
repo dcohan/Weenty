@@ -12,16 +12,13 @@ namespace Cuponera.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class images
+    public partial class banners
     {
-        public int IdImage { get; set; }
-        public string ImagePath { get; set; }
-        public Nullable<int> IdProduct { get; set; }
-        public Nullable<int> IdOffer { get; set; }
-        public Nullable<int> IdStore { get; set; }
-    
-        public virtual offer offer { get; set; }
-        public virtual product product { get; set; }
-        public virtual store store { get; set; }
+        public int IdBanner { get; set; }
+        public string HomeBannerImage { get; set; }
+        public string HomeBannerLink { get; set; }
+        public string ListBannerImage { get; set; }
+        public string ListBannerLink { get; set; }
+        public Nullable<int> IdState { get; set; }
     }
 }
