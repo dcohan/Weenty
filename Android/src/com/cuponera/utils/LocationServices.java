@@ -53,7 +53,7 @@ public class LocationServices implements LocationListener {
 
 	public void startTracking() {
 
-		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, TimeInterval, DistanceInterval, this);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, TimeInterval, DistanceInterval, this);
 	}
 
 	public void stopTracking() {

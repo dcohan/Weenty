@@ -188,5 +188,21 @@ public class Utils {
 			return null;
 		}
 	}
+	
+	public static boolean isTablet(Context context) {
+		return getDeviceType(context) == DeviceType.TABLET;
+	}
+
+	public static boolean isPhone(Context context) {
+		return getDeviceType(context) == DeviceType.PHONE;
+	}
+	
+	public static enum DeviceType {
+		PHONE, TABLET
+	}
+
+	public static DeviceType getDeviceType(Context ctx) {
+		return ctx.getResources().getBoolean(R.bool.isTablet) ? DeviceType.TABLET : DeviceType.PHONE;
+	}
 
 }
