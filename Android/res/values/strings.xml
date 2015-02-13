@@ -25,7 +25,7 @@
 
     <!-- Profile -->
     <string name="location_services">Localización</string>
-    <string name="admin_allowed">Adminsitración</string>
+    <string name="admin_allowed">Administración</string>
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="home_search">Explorar</string>
