@@ -27,6 +27,7 @@ namespace Cuponera.Entities
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<banners> banners { get; set; }
         public virtual DbSet<category> category { get; set; }
         public virtual DbSet<company> company { get; set; }
         public virtual DbSet<companySubscription> companySubscription { get; set; }
@@ -48,7 +49,6 @@ namespace Cuponera.Entities
         public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
         public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
-        public virtual DbSet<banners> banners { get; set; }
     
         public virtual int CheckIfUserCanAskForCoordinates(Nullable<int> idUser)
         {
@@ -197,6 +197,23 @@ namespace Cuponera.Entities
         public virtual ObjectResult<GetSubscriptionsForCompanies_Result> GetSubscriptionsForCompanies()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSubscriptionsForCompanies_Result>("GetSubscriptionsForCompanies");
+        }
+    
+        public virtual int GetNearestStores2(Nullable<int> idCategory, Nullable<double> latitude, Nullable<double> longitude)
+        {
+            var idCategoryParameter = idCategory.HasValue ?
+                new ObjectParameter("IdCategory", idCategory) :
+                new ObjectParameter("IdCategory", typeof(int));
+    
+            var latitudeParameter = latitude.HasValue ?
+                new ObjectParameter("Latitude", latitude) :
+                new ObjectParameter("Latitude", typeof(double));
+    
+            var longitudeParameter = longitude.HasValue ?
+                new ObjectParameter("Longitude", longitude) :
+                new ObjectParameter("Longitude", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetNearestStores2", idCategoryParameter, latitudeParameter, longitudeParameter);
         }
     }
 }

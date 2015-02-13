@@ -48,6 +48,7 @@ namespace Cuponera.Entities
         public virtual ICollection<occasion> occasion { get; set; }
         public virtual ICollection<product> product { get; set; }
         public virtual state state { get; set; }
+        public virtual state state1 { get; set; }
         public virtual ICollection<storeCategory> storeCategory { get; set; }
         public virtual ICollection<userCompany> userCompany { get; set; }
     }
