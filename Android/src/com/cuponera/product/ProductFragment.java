@@ -12,6 +12,7 @@ import com.cuponera.R;
 import com.cuponera.model.Product;
 import com.cuponera.model.Store;
 import com.cuponera.service.product.ProductRequest;
+import com.cuponera.utils.Utils;
 
 public class ProductFragment extends BaseFragment {
 
@@ -72,11 +73,13 @@ public class ProductFragment extends BaseFragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
 				transaction.setCustomAnimations(R.anim.transition_slide_in_left, R.anim.transition_slide_out_left);
-				transaction.replace(R.id.container, ProductDescriptionFragment.newInstance(products.get(position), store));
-				transaction.addToBackStack(null);
+				transaction.replace(Utils.isPhone(getActivity()) ? R.id.container : R.id.description_container,
+						ProductDescriptionFragment.newInstance(products.get(position), store));
+				if (Utils.isPhone(getActivity())) {
+					transaction.addToBackStack(null);
+				}
 				transaction.commit();
 			}
 		});
 	}
-
 }

@@ -120,8 +120,11 @@ public class StoreFragment extends BaseFragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
 				transaction.setCustomAnimations(R.anim.transition_slide_in_left, R.anim.transition_slide_out_left);
-				transaction.replace(Utils.isPhone(getActivity()) ? R.id.container : R.id.description_container, StoreDescriptionFragment.newInstance(store.get(position)));
-				transaction.addToBackStack(null);
+				transaction.replace(Utils.isPhone(getActivity()) ? R.id.container : R.id.description_container,
+						StoreDescriptionFragment.newInstance(store.get(position)));
+				if (Utils.isPhone(getActivity())) {
+					transaction.addToBackStack(null);
+				}
 				transaction.commit();
 			}
 		});
@@ -232,8 +235,11 @@ public class StoreFragment extends BaseFragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FragmentTransaction transaction = getBaseActivity().getSupportFragmentManager().beginTransaction();
 				transaction.setCustomAnimations(R.anim.transition_slide_in_left, R.anim.transition_slide_out_left);
-				transaction.replace(Utils.isPhone(getActivity()) ? R.id.container : R.id.description_container, StoreDescriptionFragment.newInstance(filteredArrayToShow.get(position)));
-				transaction.addToBackStack(null);
+				transaction.replace(Utils.isPhone(getActivity()) ? R.id.container : R.id.description_container,
+						StoreDescriptionFragment.newInstance(filteredArrayToShow.get(position)));
+				if (Utils.isPhone(getActivity())) {
+					transaction.addToBackStack(null);
+				}
 				transaction.commit();
 			}
 		});

@@ -19,5 +19,7 @@
     <dimen name="width_weather">50dp</dimen>
     <dimen name="weather_values_size">13sp</dimen>
     <dimen name="next_weather_values_size">15sp</dimen>
+    
+    <dimen name="stores_descriptions_sizes">16sp</dimen>
 
 </resources>
