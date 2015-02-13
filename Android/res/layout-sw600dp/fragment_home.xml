@@ -26,11 +26,16 @@
         android:orientation="horizontal"
         android:padding="10dp" >
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/home_view_weight" />
+
         <TextView
             android:id="@+id/hotel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25"
+            android:layout_weight="@dimen/home_rectangles_weight"
             android:background="@drawable/rectangle_corner_round"
             android:drawableBottom="@drawable/icon_hotel"
             android:gravity="center"
@@ -42,13 +47,13 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.12" />
+            android:layout_weight="@dimen/home_view_weight" />
 
         <TextView
             android:id="@+id/gastronomic"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25"
+            android:layout_weight="@dimen/home_rectangles_weight"
             android:background="@drawable/rectangle_corner_round"
             android:drawableBottom="@drawable/ic_action_restaurant"
             android:gravity="center"
@@ -60,13 +65,13 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.12" />
+            android:layout_weight="@dimen/home_view_weight" />
 
         <TextView
             android:id="@+id/store"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25"
+            android:layout_weight="@dimen/home_rectangles_weight"
             android:background="@drawable/rectangle_corner_round"
             android:drawableBottom="@drawable/shopping_bag"
             android:gravity="center"
@@ -74,12 +79,17 @@
             android:textColor="@color/white"
             android:textSize="@dimen/home_text_size"
             android:textStyle="bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/home_view_weight" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.12" />
+        android:layout_weight="0.06" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -89,11 +99,16 @@
         android:padding="10dp"
         android:textColor="@color/white" >
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/home_view_weight" />
+
         <TextView
             android:id="@+id/beach"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25"
+            android:layout_weight="@dimen/home_rectangles_weight"
             android:background="@drawable/rectangle_corner_round"
             android:drawableBottom="@drawable/balnearios"
             android:gravity="center"
@@ -105,13 +120,13 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.12" />
+            android:layout_weight="@dimen/home_view_weight" />
 
         <TextView
             android:id="@+id/cinema"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25"
+            android:layout_weight="@dimen/home_rectangles_weight"
             android:background="@drawable/rectangle_corner_round"
             android:drawableBottom="@drawable/espectaculos_usuarios"
             android:gravity="center"
@@ -123,13 +138,13 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.12" />
+            android:layout_weight="@dimen/home_view_weight" />
 
         <TextView
             android:id="@+id/highlighted"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25"
+            android:layout_weight="@dimen/home_rectangles_weight"
             android:background="@drawable/rectangle_corner_round_orange"
             android:drawableBottom="@drawable/destacados"
             android:gravity="center"
@@ -137,6 +152,11 @@
             android:textColor="@color/white"
             android:textSize="@dimen/home_text_size"
             android:textStyle="bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/home_view_weight" />
     </LinearLayout>
 
     <View

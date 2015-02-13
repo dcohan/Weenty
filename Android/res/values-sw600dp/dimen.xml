@@ -22,4 +22,11 @@
     <dimen name="next_weather_values_size">19sp</dimen>
     <dimen name="stores_descriptions_sizes">17sp</dimen>
 
+    <item name="home_rectangles_weight" format="float" type="dimen">0.15</item>
+    <item name="home_view_weight" format="float" type="dimen">0.05</item>
+
+    <dimen name="more_adapter_images_widht">40dp</dimen>
+    <dimen name="more_adapter_images_height">35dp</dimen>
+    <dimen name="more_adapter_text">20sp</dimen>
+
 </resources>

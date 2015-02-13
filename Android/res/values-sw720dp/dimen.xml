@@ -20,7 +20,13 @@
     <dimen name="width_weather">50dp</dimen>
     <dimen name="weather_values_size">17sp</dimen>
     <dimen name="next_weather_values_size">19sp</dimen>
-    
     <dimen name="stores_descriptions_sizes">19sp</dimen>
+
+    <item name="home_rectangles_weight" format="float" type="dimen">0.2</item>
+    <item name="home_view_weight" format="float" type="dimen">0.06</item>
+    
+        <dimen name="more_adapter_images_widht">43dp</dimen>
+    <dimen name="more_adapter_images_height">37dp</dimen>
+    <dimen name="more_adapter_text">23sp</dimen>
 
 </resources>
