@@ -18,7 +18,8 @@ namespace Cuponera.WebSite.Controllers
         product,
         store,
         subscription,
-        category
+        category,
+        state
     }
 
     public abstract class UploadImagesBaseController : Controller
