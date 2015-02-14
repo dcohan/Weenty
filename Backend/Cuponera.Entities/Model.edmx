@@ -201,6 +201,7 @@
           <Property Name="CreationDatetime" Type="datetime2" Precision="0" />
           <Property Name="ModificationDatetime" Type="datetime2" Precision="0" />
           <Property Name="DeletionDatetime" Type="datetime2" Precision="0" />
+          <Property Name="Nextel" Type="varchar" MaxLength="40" />
         </EntityType>
         <EntityType Name="storeCategory">
           <Key>
@@ -1210,6 +1211,7 @@
           <NavigationProperty Name="state1" Relationship="CuponeraModel.FK_store_state" FromRole="store" ToRole="state" />
           <NavigationProperty Name="storeCategory" Relationship="CuponeraModel.FK_storeCategory_store" FromRole="store" ToRole="storeCategory" />
           <NavigationProperty Name="userCompany" Relationship="CuponeraModel.FK_userCompany_store" FromRole="store" ToRole="userCompany" />
+          <Property Name="Nextel" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="storeCategory">
           <Key>
@@ -1869,6 +1871,7 @@
           <EntitySetMapping Name="store">
             <EntityTypeMapping TypeName="CuponeraModel.store">
               <MappingFragment StoreEntitySet="store">
+                <ScalarProperty Name="Nextel" ColumnName="Nextel" />
                 <ScalarProperty Name="DeletionDatetime" ColumnName="DeletionDatetime" />
                 <ScalarProperty Name="ModificationDatetime" ColumnName="ModificationDatetime" />
                 <ScalarProperty Name="CreationDatetime" ColumnName="CreationDatetime" />

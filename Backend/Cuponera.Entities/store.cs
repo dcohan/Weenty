@@ -42,6 +42,7 @@ namespace Cuponera.Entities
         public Nullable<System.DateTime> CreationDatetime { get; set; }
         public Nullable<System.DateTime> ModificationDatetime { get; set; }
         public Nullable<System.DateTime> DeletionDatetime { get; set; }
+        public string Nextel { get; set; }
     
         public virtual company company { get; set; }
         public virtual ICollection<images> images { get; set; }
