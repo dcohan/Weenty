@@ -72,16 +72,21 @@ namespace Cuponera.WebSite.Controllers
             if (state.Latitude != null) { ViewBag.Latitude = state.Latitude.ToString().Replace(",", "."); }
             if (state.Longitude != null) { ViewBag.Longitude = state.Longitude.ToString().Replace(",", "."); }
 
-            if (db.banners.Where(b => b.IdState == id).Count() > 0)
+
+            GetBanners(id.Value);
+            return View(state);
+        }
+
+        public void GetBanners(int IdState)
+        {
+            if (db.banners.Where(b => b.IdState == IdState).Count() > 0)
             {
-                var banner = db.banners.Where(b => b.IdState == id).FirstOrDefault();
+                var banner = db.banners.Where(b => b.IdState == IdState).FirstOrDefault();
                 ViewBag.HomeBannerLink = banner.HomeBannerLink;
                 ViewBag.HomeBannerImage = banner.HomeBannerImage;
                 ViewBag.ListBannerLink = banner.ListBannerLink;
                 ViewBag.ListBannerImage = banner.ListBannerImage;
             }
-
-            return View(state);
         }
 
         // GET: /state/Create
@@ -95,7 +100,7 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Name,Link")] state state, string Latitude, string Longitude)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Link")] state state, string Latitude, string Longitude, string HomeBannerLink, string ListBannerLink, List<HttpPostedFileBase> ListBannerImage, List<HttpPostedFileBase> HomeBannerImage)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +108,10 @@ namespace Cuponera.WebSite.Controllers
                 if (Longitude != null) { state.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
 
                 db.state.Add(state);
+
                 await db.SaveChangesAsync();
+
+                this.InsertBanners(state.IdState, HomeBannerLink, ListBannerLink, HomeBannerImage, ListBannerImage);
                 return RedirectToAction("Index");
             }
 
@@ -125,6 +133,7 @@ namespace Cuponera.WebSite.Controllers
 
             if (state.Latitude != null) { ViewBag.Latitude = state.Latitude.ToString().Replace(",", "."); }
             if (state.Longitude != null) { ViewBag.Longitude = state.Longitude.ToString().Replace(",", "."); }
+            GetBanners(id.Value);
 
             return View(state);
         }
@@ -134,51 +143,58 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdState,Name,Link")] state state, string Latitude, string Longitude, string HomeBannerLink, string ListBannerLink, List<HttpPostedFileBase> listBannerImage, List<HttpPostedFileBase> homeBannerImage)
+        public async Task<ActionResult> Edit([Bind(Include = "IdState,Name,Link")] state state, string Latitude, string Longitude, string HomeBannerLink, string ListBannerLink, List<HttpPostedFileBase> ListBannerImage, List<HttpPostedFileBase> HomeBannerImage)
         {
             if (ModelState.IsValid)
             {
                 if (Latitude != null) { state.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
                 if (Longitude != null) { state.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
 
-                string listBannerImagePath = null;
-                string homeBannerImagePath = null;
-                if (listBannerImage.Count > 0) {
-                    listBannerImagePath = GeneratePhisicalFile(listBannerImage.FirstOrDefault());
-                }
-                if (homeBannerImage.Count > 0)
-                {
-                    homeBannerImagePath = GeneratePhisicalFile(homeBannerImage.FirstOrDefault());
-                }
-                if (!String.IsNullOrEmpty(listBannerImagePath) || !String.IsNullOrEmpty(homeBannerImagePath))
-                {
-                    var existingBanner = db.banners.Where(b => b.IdState == state.IdState);
-                    if (existingBanner.Count() > 0)
-                    {
-                        var banner = existingBanner.FirstOrDefault();
-                        banner.HomeBannerLink = HomeBannerLink;
-                        banner.HomeBannerImage = homeBannerImagePath;
-                        banner.ListBannerImage = listBannerImagePath;
-                        banner.ListBannerLink = ListBannerLink;
-                    }
-                    else
-                    {
-                        db.banners.Add(new banners()
-                        {
-                            IdState = state.IdState,
-                            HomeBannerImage = homeBannerImagePath,
-                            ListBannerImage = listBannerImagePath,
-                            HomeBannerLink = HomeBannerLink,
-                            ListBannerLink = ListBannerLink
-                        });
-                    }
-                }
+                this.InsertBanners(state.IdState, HomeBannerLink, ListBannerLink, HomeBannerImage, ListBannerImage);
 
                 db.Entry(state).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(state);
+        }
+
+        public void InsertBanners(int IdState, string HomeBannerLink, string ListBannerLink, List<HttpPostedFileBase> HomeBannerImage, List<HttpPostedFileBase> ListBannerImage){
+            string listBannerImagePath = null;
+            string homeBannerImagePath = null;
+            if (ListBannerImage.Count > 0 && ListBannerImage.FirstOrDefault() != null)
+            {
+                listBannerImagePath = GeneratePhisicalFile(ListBannerImage.FirstOrDefault());
+            }
+            if (HomeBannerImage.Count > 0 && HomeBannerImage.FirstOrDefault() != null)
+            {
+                homeBannerImagePath = GeneratePhisicalFile(HomeBannerImage.FirstOrDefault());
+            }
+            if (!String.IsNullOrEmpty(listBannerImagePath) || !String.IsNullOrEmpty(homeBannerImagePath) || !String.IsNullOrEmpty(HomeBannerLink) || !String.IsNullOrEmpty(ListBannerLink))
+            {
+                var existingBanner = db.banners.Where(b => b.IdState == IdState);
+                if (existingBanner.Count() > 0)
+                {
+                    var banner = existingBanner.FirstOrDefault();
+                    banner.HomeBannerLink = HomeBannerLink;
+                    banner.HomeBannerImage = !String.IsNullOrEmpty(homeBannerImagePath) ? homeBannerImagePath : banner.HomeBannerImage;
+                    banner.ListBannerImage = !String.IsNullOrEmpty(listBannerImagePath) ? listBannerImagePath : banner.ListBannerImage;
+                    banner.ListBannerLink = ListBannerLink;
+                }
+                else
+                {
+                    db.banners.Add(new banners()
+                    {
+                        IdState = IdState,
+                        HomeBannerImage = homeBannerImagePath,
+                        ListBannerImage = listBannerImagePath,
+                        HomeBannerLink = HomeBannerLink,
+                        ListBannerLink = ListBannerLink
+                    });
+                }
+
+                this.db.SaveChanges();
+            }
         }
 
         // GET: /state/Delete/5

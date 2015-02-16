@@ -39,6 +39,27 @@
         <div class="map" id="googleMap"></div>
     }
     
+    @if (!String.IsNullOrEmpty(ViewBag.HomeBannerImage))
+    {
+        <b>Banner de home</b>
+        <br />
+        <img src="@ViewBag.HomeBannerImage" alt="Banner de home" title="Banner de home" class="preview" />
+        <br />
+
+        <b>Link:</b> @(!String.IsNullOrEmpty(ViewBag.HomeBannerLink) ? ViewBag.HomeBannerLink : "No se ha elegido ningún link")
+        <br /><br />
+    }
+
+    @if (!String.IsNullOrEmpty(ViewBag.ListBannerImage))
+    {
+        <b>Banner de listado</b>
+        <br />
+        <img src="@ViewBag.ListBannerImage" alt="Banner de listado" title="Banner de listado" class="preview" />
+        <br />
+        
+        <b>Link:</b> @(!String.IsNullOrEmpty(ViewBag.ListBannerLink) ? ViewBag.ListBannerLink : "No se ha elegido ningún link") 
+    }
+    
     <div class="item-description">
         <b>Estado:</b>
         @if (Model.DeletionDatetime == null)
