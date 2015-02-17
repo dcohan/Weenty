@@ -143,14 +143,14 @@ namespace Cuponera.WebSite.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdState,Name,Link")] state state, string Latitude, string Longitude, string HomeBannerLink, string ListBannerLink, List<HttpPostedFileBase> ListBannerImage, List<HttpPostedFileBase> HomeBannerImage)
+        public async Task<ActionResult> Edit([Bind(Include = "IdState,Name,Link")] state state, string Latitude, string Longitude, string HomeBannerLink, string ListBannerLink, List<HttpPostedFileBase> ListBannerImage, List<HttpPostedFileBase> HomeBannerImage, string deletedBannerHome, string deletedBannerList)
         {
             if (ModelState.IsValid)
             {
                 if (Latitude != null) { state.Latitude = Convert.ToDouble(Latitude.Replace(".", ",")); }
                 if (Longitude != null) { state.Longitude = Convert.ToDouble(Longitude.Replace(".", ",")); }
 
-                this.InsertBanners(state.IdState, HomeBannerLink, ListBannerLink, HomeBannerImage, ListBannerImage);
+                this.InsertBanners(state.IdState, HomeBannerLink, ListBannerLink, HomeBannerImage, ListBannerImage, deletedBannerHome == "on", deletedBannerList == "on");
 
                 db.Entry(state).State = EntityState.Modified;
                 await db.SaveChangesAsync();
@@ -159,7 +159,7 @@ namespace Cuponera.WebSite.Controllers
             return View(state);
         }
 
-        public void InsertBanners(int IdState, string HomeBannerLink, string ListBannerLink, List<HttpPostedFileBase> HomeBannerImage, List<HttpPostedFileBase> ListBannerImage){
+        public void InsertBanners(int IdState, string HomeBannerLink, string ListBannerLink, List<HttpPostedFileBase> HomeBannerImage, List<HttpPostedFileBase> ListBannerImage, bool deleteBannersHome = false, bool deleteBannersList = false){
             string listBannerImagePath = null;
             string homeBannerImagePath = null;
             if (ListBannerImage.Count > 0 && ListBannerImage.FirstOrDefault() != null)
@@ -173,16 +173,8 @@ namespace Cuponera.WebSite.Controllers
             if (!String.IsNullOrEmpty(listBannerImagePath) || !String.IsNullOrEmpty(homeBannerImagePath) || !String.IsNullOrEmpty(HomeBannerLink) || !String.IsNullOrEmpty(ListBannerLink))
             {
                 var existingBanner = db.banners.Where(b => b.IdState == IdState);
-                if (existingBanner.Count() > 0)
-                {
-                    var banner = existingBanner.FirstOrDefault();
-                    banner.HomeBannerLink = HomeBannerLink;
-                    banner.HomeBannerImage = !String.IsNullOrEmpty(homeBannerImagePath) ? homeBannerImagePath : banner.HomeBannerImage;
-                    banner.ListBannerImage = !String.IsNullOrEmpty(listBannerImagePath) ? listBannerImagePath : banner.ListBannerImage;
-                    banner.ListBannerLink = ListBannerLink;
-                }
-                else
-                {
+                
+                if (existingBanner.Count() == 0){
                     db.banners.Add(new banners()
                     {
                         IdState = IdState,
@@ -191,6 +183,50 @@ namespace Cuponera.WebSite.Controllers
                         HomeBannerLink = HomeBannerLink,
                         ListBannerLink = ListBannerLink
                     });
+                }
+                else
+                {
+                    var banner = existingBanner.FirstOrDefault();
+                    if (deleteBannersHome && deleteBannersList 
+                        || deleteBannersHome && String.IsNullOrEmpty(banner.ListBannerImage) && String.IsNullOrEmpty(listBannerImagePath)
+                        || deleteBannersList && String.IsNullOrEmpty(banner.HomeBannerImage) && String.IsNullOrEmpty(homeBannerImagePath))
+                    {                    
+                        db.banners.Remove(banner);
+                    }
+                    else
+                    {
+                        if (deleteBannersHome)
+                        {
+                            banner.HomeBannerImage = null;
+                            banner.HomeBannerLink = null;
+                        }
+                        if (!String.IsNullOrEmpty(homeBannerImagePath))
+                        {
+                            banner.HomeBannerImage = homeBannerImagePath;
+                        }
+                        if (!string.IsNullOrEmpty(HomeBannerLink))
+                        {
+                            banner.HomeBannerLink = HomeBannerLink;
+                        }
+
+
+                        if (deleteBannersList)
+                        {
+                            banner.ListBannerImage = null;
+                            banner.ListBannerLink = null;
+                        }
+
+                        if (!String.IsNullOrEmpty(listBannerImagePath))
+                        {
+                            banner.ListBannerImage = listBannerImagePath;
+                        }
+
+                        if (!string.IsNullOrEmpty(ListBannerLink))
+                        {
+                            banner.ListBannerLink = ListBannerLink;
+                        }
+                    }
+
                 }
 
                 this.db.SaveChanges();

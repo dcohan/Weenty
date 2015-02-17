@@ -1020,10 +1020,15 @@ img.preview{
     width: 80px;
 }
 
-.image-container-content, .image-container {
+.image-container-content, .image-container{
     display: inline-block;
     padding: 10px;
 }
+
+.image-container.left, .image-container-content.left{
+    padding: 0px !important;
+}
+
 
 .image-container-content .preview {
     position: relative; 

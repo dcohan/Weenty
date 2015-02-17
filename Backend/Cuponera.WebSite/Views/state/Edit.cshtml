@@ -49,6 +49,13 @@
                 }
             }, '../');
         });
+
+        $('.delete-icon').click(function(){
+            var $form = $(this).closest('.form-group');
+            $form.find('[type=checkbox]').prop('checked', true);
+            $form.find('.image-container').remove();
+            $form.find('.current-image').remove();
+        });
     });
 </script>
 
@@ -98,13 +105,21 @@
         <div style="clear:both;"></div>
         
         <div class="form-group">
+            <input type="checkbox" name="deletedBannerHome" id="deletedBannerHome" class="hidden" />
             <label class="control-label col-md-2" for="homeBannerLink">Banner de home</label>
+
             @if (!String.IsNullOrEmpty(ViewBag.HomeBannerImage))
             {
-                <label class="control-label col-md-2">Imagen actual:</label>
-                <img src="@ViewBag.HomeBannerImage" alt="Home banner" title="Home banner" class="preview" />
+                <label class="control-label col-md-2 current-image">Imagen actual:</label>
+                <div class="image-container left">
+                    <div class="image-container-content left">
+                        <img src="@ViewBag.HomeBannerImage" alt="Home banner" title="Home banner" class="preview" />
+                        <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+
+                    </div>
+                </div>
                 <br />
-            }
+            }            
 
             <div class="col-md-10">
                 <input type="file" class="fileUpload" name="homeBannerImage" />
@@ -116,11 +131,17 @@
         </div>
 
         <div class="form-group">
+            <input type="checkbox" name="deletedBannerList" id="deletedBannerList" class="hidden" />
             <label class="control-label col-md-2" for="homeBannerLink">Banner de listados</label>
             @if (!String.IsNullOrEmpty(ViewBag.ListBannerImage))
             {
-                <label class="control-label col-md-2">Imagen actual:</label>
-                <img src="@ViewBag.ListBannerImage" alt="Home banner" title="Home banner" class="preview" />
+                <label class="control-label col-md-2 current-image">Imagen actual:</label>
+                <div class="image-container left">
+                    <div class="image-container-content left">
+                        <img src="@ViewBag.ListBannerImage" alt="Listado banner" title="Listado banner" class="preview" />
+                        <img src="~/Images/x_images.png" class="small-icon delete-icon" />
+                   </div>
+                </div>
                 <br />
             }
 
