@@ -110,14 +110,18 @@ namespace Cuponera.WebSite.Controllers
             IQueryable<store> stores = db.store;
             if (!all)
             {
-                stores = stores.Where(s => !s.DeletionDatetime.HasValue && !s.company.DeletionDatetime.HasValue);
+                stores = stores.Where(
+                    s => !s.DeletionDatetime.HasValue && // store is active
+                    !s.company.DeletionDatetime.HasValue && !s.company.DeletionDatetime.HasValue && // company is active
+                    s.company.companySubscription.Where(cs => DateTime.Now < cs.EndDate).Count() > 0 // company has an active subscription
+                );
             }
 
             foreach (var store in stores)
             {
-                if (store.company.DeletionDatetime != null)
+                if (store.company.DeletionDatetime != null || store.company.companySubscription.Where(cs => DateTime.Now < cs.EndDate).Count() == 0)
                 {
-                    store.DeletionDatetime = store.company.DeletionDatetime;
+                    store.DeletionDatetime = DateTime.Now;
                 }
             }
 
