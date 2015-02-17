@@ -73,5 +73,8 @@ namespace Cuponera.Entities
 
         [Display(Name = "Whats App")]
         public string WhatsApp { get; set; }
+
+        [Display(Name = "Nextel")]
+        public string Nextel { get; set; }
     }
 }
