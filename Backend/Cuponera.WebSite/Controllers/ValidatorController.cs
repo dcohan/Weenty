@@ -36,7 +36,7 @@ namespace Cuponera.WebSite.Controllers
 
         private ArrayList CompanyEnabled(int IdCompany, ArrayList inactiveEntities)
         {
-            if (db.company.Where(c => c.IdCompany.Equals(IdCompany) && c.DeletionDatetime.HasValue).FirstOrDefault() != null)
+            if (db.company.Where(c => c.IdCompany.Equals(IdCompany) && (c.DeletionDatetime.HasValue || c.companySubscription.Where(cs => DateTime.Now < cs.EndDate).Count() == 0)).FirstOrDefault() != null)
             {
                 inactiveEntities.Add("company");
             }
