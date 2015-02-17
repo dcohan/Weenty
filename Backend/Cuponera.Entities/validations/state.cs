@@ -10,8 +10,10 @@ namespace Cuponera.Entities
     [MetadataType(typeof(stateMetadata))]
     public partial class state
     {
+        [Url(ErrorMessage = "Por favor inserte una URL válida")]
         public string HomeBannerLink { get; set; }
 
+        [Url(ErrorMessage = "Por favor inserte una URL válida")]
         public string ListBannerLink { get; set; }
     }
     public class stateMetadata
