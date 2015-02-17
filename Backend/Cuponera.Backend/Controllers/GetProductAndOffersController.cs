@@ -142,6 +142,7 @@ namespace Cuponera.Backend.Controllers
                     Description = store.Description,
                     Distance = store.Distance,
                     HasOffers = store.HasOffers,
+                    Nextel = store.Nextel,
                     HasProducts = store.HasProducts,
                     CategoriesAndSubcategories = categoryList.Select(c => new { c.IdCategory, c.Name, c.subcategory })
                 });
