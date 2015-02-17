@@ -52,10 +52,12 @@ namespace Cuponera.Entities
 
         [Display(Name = "Teléfono de contacto")]
         [MaxLength(20, ErrorMessage = "El teléfono debe tener como máximo de 20 caracteres."), MinLength(6, ErrorMessage = "El teléfono debe tener como mínimo 6 caracteres.")]
+        [Phone(ErrorMessage="Por favor inserte un teléfono válido")]
         public string ContactNumber { get; set; }
 
+        
         [Display(Name = "E-mail")]
-        [RegularExpression(@"^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-zA-Z0-9]{1}[a-zA-Z0-9\-]{0,62}[a-zA-Z0-9]{1})|[a-zA-Z])\.)+[a-zA-Z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$", ErrorMessage = "El formato de e-mail no es válido.")]
+        [EmailAddress(ErrorMessage = "Por favor inserte un e-mail válido")]
         public string Email { get; set; }
 
         [Display(Name = "Código Postal")]
@@ -65,6 +67,7 @@ namespace Cuponera.Entities
         public string StoreHours { get; set; }
 
         [Display(Name = "Página Web")]
+        [Url(ErrorMessage = "Por favor inserte una URL válida")]
         public string WebPage { get; set; }
 
         [Display(Name = "Facebook URL")]
@@ -75,6 +78,7 @@ namespace Cuponera.Entities
         public string WhatsApp { get; set; }
 
         [Display(Name = "Nextel")]
+        [Phone(ErrorMessage = "Por favor inserte un teléfono válido")]
         public string Nextel { get; set; }
     }
 }

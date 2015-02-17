@@ -40,7 +40,7 @@ namespace Cuponera.Entities
         public string Telephone { get; set; }
 
         [Display(Name = "E-mail")]
-        [RegularExpression(@"^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-zA-Z0-9]{1}[a-zA-Z0-9\-]{0,62}[a-zA-Z0-9]{1})|[a-zA-Z])\.)+[a-zA-Z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$", ErrorMessage = "El formato de e-mail no es válido.")]
+        [EmailAddress(ErrorMessage = "Por favor inserte un e-mail válido")]
         public string Email { get; set; }
     }
 }
