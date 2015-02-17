@@ -46,7 +46,7 @@
         <img src="@ViewBag.HomeBannerImage" alt="Banner de home" title="Banner de home" class="preview" />
         <br />
 
-        <b>Link:</b> @(!String.IsNullOrEmpty(ViewBag.HomeBannerLink) ? ViewBag.HomeBannerLink : "No se ha elegido ningún link")
+        <b>Link:</b> @(!String.IsNullOrEmpty(Model.HomeBannerLink) ? Model.HomeBannerLink : "No se ha elegido ningún link")
         <br /><br />
     }
 
@@ -57,7 +57,7 @@
         <img src="@ViewBag.ListBannerImage" alt="Banner de listado" title="Banner de listado" class="preview" />
         <br />
         
-        <b>Link:</b> @(!String.IsNullOrEmpty(ViewBag.ListBannerLink) ? ViewBag.ListBannerLink : "No se ha elegido ningún link") 
+        <b>Link:</b> @(!String.IsNullOrEmpty(Model.ListBannerLink) ? Model.ListBannerLink : "No se ha elegido ningún link") 
     }
     
     <div class="item-description">

@@ -73,18 +73,20 @@ namespace Cuponera.WebSite.Controllers
             if (state.Longitude != null) { ViewBag.Longitude = state.Longitude.ToString().Replace(",", "."); }
 
 
-            GetBanners(id.Value);
+            GetBanners(id.Value, state);
             return View(state);
         }
 
-        public void GetBanners(int IdState)
+        public void GetBanners(int IdState, state State)
         {
             if (db.banners.Where(b => b.IdState == IdState).Count() > 0)
             {
                 var banner = db.banners.Where(b => b.IdState == IdState).FirstOrDefault();
                 ViewBag.HomeBannerLink = banner.HomeBannerLink;
+                State.HomeBannerLink = banner.HomeBannerLink;
                 ViewBag.HomeBannerImage = banner.HomeBannerImage;
                 ViewBag.ListBannerLink = banner.ListBannerLink;
+                State.ListBannerLink = banner.ListBannerLink;
                 ViewBag.ListBannerImage = banner.ListBannerImage;
             }
         }
@@ -133,7 +135,7 @@ namespace Cuponera.WebSite.Controllers
 
             if (state.Latitude != null) { ViewBag.Latitude = state.Latitude.ToString().Replace(",", "."); }
             if (state.Longitude != null) { ViewBag.Longitude = state.Longitude.ToString().Replace(",", "."); }
-            GetBanners(id.Value);
+            GetBanners(id.Value, state);
 
             return View(state);
         }

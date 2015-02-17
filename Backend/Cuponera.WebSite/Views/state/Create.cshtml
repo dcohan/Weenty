@@ -106,7 +106,10 @@
 
             Las imagen seleccionada es: <div class="files-name"></div>
 
-            <input type="text" value="@ViewBag.HomeBannerLink" id="homeBannerLink" name="homeBannerLink" placeholder="Link" />
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HomeBannerLink, new { htmlAttributes = new { @class = "form-control", placeholder = "Link" } })
+                @Html.ValidationMessageFor(model => model.HomeBannerLink, "", new { @class = "text-danger" })
+            </div>
         </div>
 
         <div class="form-group">
@@ -124,7 +127,11 @@
 
             Las imagen seleccionada es: <div class="files-name"></div>
 
-            <input type="text" value="@ViewBag.ListBannerLink" id="listBannerLink" name="listBannerLink" placeholder="Link" />
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ListBannerLink, new { htmlAttributes = new { @class = "form-control", placeholder = "Link" } })
+                @Html.ValidationMessageFor(model => model.ListBannerLink, "", new { @class = "text-danger" })
+            </div>
+
         </div>
 
 
