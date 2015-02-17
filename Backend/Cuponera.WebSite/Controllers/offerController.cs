@@ -83,7 +83,7 @@ namespace Cuponera.WebSite.Controllers
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["ElementsPerPage"]);
             var offers = db.offer.Where(o => (title == null || o.Title.ToLower().Contains(title.ToLower())))
                                  .Where(o => (category == null || category == 0 || o.product.IdCategory == category))
-                                 .Where(o => (all || o.DeletionDatetime == null && o.product.DeletionDatetime == null && o.product.store.DeletionDatetime == null && o.product.store.company.DeletionDatetime == null));
+                                 .Where(o => (all || o.DeletionDatetime == null && o.product.DeletionDatetime == null && o.product.store.DeletionDatetime == null && o.product.store.company.DeletionDatetime == null && o.product.store.company.companySubscription.Where(cs => DateTime.Now < cs.EndDate).Count() > 0));
 
             if (!new CuponeraPrincipal(new CuponeraIdentity(User.Identity)).IsInRole("admin"))
             {
@@ -95,19 +95,8 @@ namespace Cuponera.WebSite.Controllers
             {
                 foreach (var offer in offers)
                 {
-                    if (offer.product.DeletionDatetime != null)
-                    {
-                        offer.DeletionDatetime = offer.product.DeletionDatetime;
-                    }
-
-                    if (offer.product.store.DeletionDatetime != null)
-                    {   
-                        offer.DeletionDatetime = offer.product.store.DeletionDatetime;
-                    }
-
-                    if (offer.product.store.company.DeletionDatetime != null)
-                    {
-                        offer.DeletionDatetime = offer.product.store.company.DeletionDatetime;
+                    if (offer.product.DeletionDatetime != null || offer.product.store.DeletionDatetime != null || offer.product.store.company.DeletionDatetime != null || offer.product.store.company.companySubscription.Where(cs => DateTime.Now < cs.EndDate).Count() == 0){
+                        offer.DeletionDatetime = DateTime.Now;
                     }
                 }
             }

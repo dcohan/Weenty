@@ -74,15 +74,11 @@ namespace Cuponera.WebSite.Controllers
             if (all) {
                 foreach (var product in products)
                 {
-                    if (product.store.DeletionDatetime != null)
+                    if (product.store.DeletionDatetime != null || product.store.company.DeletionDatetime != null || product.store.company.companySubscription.Where(cs => DateTime.Now < cs.EndDate).Count() == 0)
                     {
-                        product.DeletionDatetime = product.store.DeletionDatetime;
+                        product.DeletionDatetime = DateTime.Now;
                     }
 
-                    if (product.store.company.DeletionDatetime != null)
-                    {
-                        product.DeletionDatetime = product.store.company.DeletionDatetime;
-                    }
                 }
             }
 
