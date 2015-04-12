@@ -35,6 +35,7 @@ public class PreHomeActivity extends BaseActivity {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
 		super.onCreate(savedInstanceState);
 		navBarFragment.hide();
 		navBarFragment.getMenu().disable();

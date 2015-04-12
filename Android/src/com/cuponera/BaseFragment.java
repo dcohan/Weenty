@@ -1,5 +1,6 @@
 package com.cuponera;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,12 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cuponera.navigation.HeaderInterface;
+import com.cuponera.utils.Utils;
 import com.cuponera.utils.ViewProxy;
 
 public abstract class BaseFragment extends Fragment {
 	
 	protected ViewProxy mViewProxy;
 	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (Utils.isPhone(getActivity())) {
+			getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}else{
+			getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		}
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

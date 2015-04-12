@@ -57,6 +57,14 @@ public class ProductFragment extends BaseFragment {
 	}
 
 	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		if (Utils.isPhone(getActivity())) {
+			mViewProxy.findLinearLayout(R.id.description_container).setVisibility(View.GONE);
+		}
+	}
+
+	@Override
 	public void onResume() {
 		super.onResume();
 		if (adapter != null)

@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -32,6 +33,7 @@ import com.cuponera.settings.SettingsFragment;
 import com.cuponera.store.StoreFragment;
 import com.cuponera.utils.Const;
 import com.cuponera.utils.LocationServices;
+import com.cuponera.utils.Utils;
 import com.cuponera.utils.WebViewWithHeaderFragment;
 import com.google.android.gms.analytics.GoogleAnalytics;
 
@@ -50,6 +52,11 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		if (Utils.isPhone(this)) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}else{
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_base);
 
