@@ -52,11 +52,16 @@ public class BaseActivity extends FragmentActivity implements MenuInterface {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if (Utils.isPhone(this)) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		}else{
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		try {
+			if (Utils.isPhone(this)) {
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			} else {
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_base);
 

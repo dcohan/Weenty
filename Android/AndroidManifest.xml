@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cuponera"
-    android:versionCode="200012"
-    android:versionName="2.1.1" >
+    android:versionCode="200014"
+    android:versionName="2.2.1" >
 
     <permission
         android:name="com.cuponera.permission.C2D_MESSAGE"
